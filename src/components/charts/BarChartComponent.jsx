@@ -5,10 +5,17 @@ import {
 import './styles/charts.css';
 import { getYDomain } from '../../utils/dataTransformers';
 import { getTranslation } from '../../utils/translationHelpers';
+import {CHART_TYPES} from "../../data/chartTypes";
 
 
 const BarChartComponent = ({ data, chartType, translations, language }) => {
     const t = (key, section = null) => getTranslation(translations, language, key, section);
+
+    // Bestimme die richtigen dataKeys basierend auf dem Charttyp
+    const kiDataKey = chartType === CHART_TYPES.COMBINED ?
+        `${t('ki', 'labels')}Score` : t('ki', 'labels');
+    const humanDataKey = chartType === CHART_TYPES.COMBINED ?
+        `${t('human', 'labels')}Score` : t('human', 'labels');
 
     return (
         <ResponsiveContainer width="100%" height={250}>

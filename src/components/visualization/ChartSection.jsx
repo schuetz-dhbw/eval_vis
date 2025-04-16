@@ -5,8 +5,10 @@ import ComposedChartComponent from '../charts/ComposedChartComponent';
 import RadarChartComponent from '../charts/RadarChartComponent';
 import BarChartComponent from '../charts/BarChartComponent';
 import { CHART_TYPES } from '../../data/chartTypes';
+import {getWeightedData} from "../../utils/dataTransformers";
 
 const ChartSection = ({
+                          work,
                           scoresData,
                           combinedData,
                           radarData,
@@ -41,26 +43,35 @@ const ChartSection = ({
                 </div>
             </div>
 
-            {/* Spinnendiagramm */}
+            {/* Balkendiagramm */}
             <div className="chart-container full-width">
-                <h3 className="chart-title">{t('radar', 'chartTitles')}</h3>
-                <div className="chart-wrapper radar-wrapper">
-                    <RadarChartComponent
-                        data={radarData}
-                        chartType={chartType}
+                <h3 className="chart-title">
+                    {chartType === CHART_TYPES.COMBINED ?
+                        t('barWeighted', 'chartTitles') :
+                        t('bar', 'chartTitles')}
+                </h3>
+                <div className="chart-wrapper">
+                    <BarChartComponent
+                        data={chartType === CHART_TYPES.COMBINED ?
+                            getWeightedData(work, translations, language) : scoresData}
+                        chartType={chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType}
                         translations={translations}
                         language={language}
                     />
                 </div>
             </div>
 
-            {/* Balkendiagramm */}
+            {/* Spinnendiagramm */}
             <div className="chart-container full-width">
-                <h3 className="chart-title">{t('bar', 'chartTitles')}</h3>
-                <div className="chart-wrapper">
-                    <BarChartComponent
-                        data={scoresData}
-                        chartType={chartType}
+                <h3 className="chart-title">
+                    {chartType === CHART_TYPES.COMBINED ?
+                        `${t('radar', 'chartTitles')} (${t('weighted', 'chartTypes')})` :
+                        t('radar', 'chartTitles')}
+                </h3>
+                <div className="chart-wrapper radar-wrapper">
+                    <RadarChartComponent
+                        data={radarData}
+                        chartType={chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType}
                         translations={translations}
                         language={language}
                     />

@@ -12,11 +12,11 @@ const UsageHintsSection = ({ translations, language, chartType }) => {
             <ul className="hints-list">
                 <li><span className="term">{t('scores', 'hints')}</span> {t('scoresDesc', 'hints')}</li>
                 <li><span className="term">{t('weights', 'hints')}</span> {t('weightsDesc', 'hints')}</li>
-                <li><span className="term">{t('weighted', 'hints')}</span> {t('weightedDesc', 'hints')}</li>
                 <li><span className="term">{t('combined', 'hints')}</span> {t('combinedDesc', 'hints')}</li>
                 <li><span className="term">{t('statistics', 'hints')}</span> {t('statisticsDesc', 'hints')}</li>
+                <li><span className="term">{t('workTypeAnalysis', 'hints')}</span> {t('workTypeAnalysisDesc', 'hints')}</li>
                 <li>{t('tooltip', 'hints')}</li>
-                {chartType !== CHART_TYPES.STATISTICS && <li>{t('table', 'hints')}</li>}
+                {![CHART_TYPES.STATISTICS, CHART_TYPES.WORK_TYPE_ANALYSIS].includes(chartType) && (<li>{t('table', 'hints')}</li>)}
             </ul>
         </div>
     );

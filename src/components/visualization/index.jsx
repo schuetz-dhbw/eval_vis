@@ -86,6 +86,7 @@ const Visualization = () => {
                 />
             ) : (
                 <ChartSection
+                    work={work}
                     scoresData={scoresData}
                     combinedData={combinedData}
                     radarData={radarData}
@@ -95,11 +96,13 @@ const Visualization = () => {
                 />
             )}
 
+            {chartType !== CHART_TYPES.WORK_TYPE_ANALYSIS && (
             <DetailsSection
                 work={work}
                 translations={translations}
                 language={language}
             />
+            )}
 
             <UsageHintsSection
                 translations={translations}
