@@ -1,0 +1,29 @@
+.usage-hints {
+    margin-top: var(--padding-lg);
+    font-size: var(--font-size-base);
+    color: var(--color-text-light);
+    background-color: var(--background-even-row);
+    padding: var(--padding-lg);
+    border-radius: var(--border-radius);
+}
+
+.hints-title {
+    font-weight: 600;
+    margin-bottom: var(--padding-sm);
+    font-size: var(--font-size-base);
+}
+
+.hints-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    line-height: 1.5;
+}
+
+.hints-list li {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.term {
+    font-weight: 500;
+}

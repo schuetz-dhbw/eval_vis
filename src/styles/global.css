@@ -1,0 +1,28 @@
+body {
+    font-family: var(--font-family), sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    margin: 0;
+    padding: 0;
+}
+
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--padding-lg);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: span 1;
+    }
+
+    .recharts-cartesian-axis-tick-value {
+        font-size: var(--font-size-xs);
+    }
+}

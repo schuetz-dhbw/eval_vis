@@ -1,0 +1,22 @@
+.header-section {
+    text-align: center;
+    margin-bottom: var(--padding-lg);
+}
+
+.main-title {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    margin-bottom: var(--padding-sm);
+    color: var(--color-text);
+}
+
+.metrics {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--padding-lg);
+    line-height: 1.5;
+}
+
+.metric-label {
+    font-weight: 600;
+    margin-right: 4px;
+}
