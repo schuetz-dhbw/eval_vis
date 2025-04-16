@@ -1,178 +1,162 @@
 export const works = [
     {
-        title: "ZERO – Sie wissen, was du tust",
+        title: "ZERO – Sie wissen, was du tust von Marc Elsberg: Möglichkeiten und Gefahren der digitalen Überwachung",
         type: "Analytische Arbeit",
+        type_description: "Theoretische Erarbeitung, Diskussion",
         criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
         ki_scores: [78, 80, 79, 82, 76, 70, 80, 76, 75, 68, 73],
         human_scores: [54, 65, 40, 0, 0, 0, 58, 50, 50, 55, 57],
         ki_weights: [0.15, 0.10, 0.15, 0.05, 0.05, 0.05, 0.05, 0.10, 0.10, 0.10, 0.10],
-        human_weights: [0.20, 0.20, 0.10, 0.00, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10],
-        similarity: 0.8709,
-        distance: 12.223
+        human_weights: [0.20, 0.20, 0.10, 0.00, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10]
     },
     {
-        title: "CMS-Vergleich",
+        title: "Gegenüberstellung von Content-Management-Systemen: Wordpress, Drupal, Joomla, TYPO3",
         type: "Analytische Arbeit",
+        type_description: "Theoretische Erarbeitung, Evaluation",
         criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
         ki_scores: [84, 82, 86, 88, 80, 83, 82, 85, 83, 73, 75],
         human_scores: [95, 100, 0, 0, 100, 0, 100, 90, 100, 95, 95],
         ki_weights: [0.15, 0.10, 0.15, 0.05, 0.05, 0.05, 0.05, 0.10, 0.10, 0.10, 0.10],
-        human_weights: [0.20, 0.20, 0.00, 0.00, 0.15, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10],
-        similarity: 0.7928,
-        distance: 22.737
+        human_weights: [0.20, 0.20, 0.00, 0.00, 0.15, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10]
     },
     {
-        title: "Jetpack Compose",
+        title: "App-Entwicklung mit dem Jetpack Compose Framework",
         type: "Konstruktive Arbeit",
+        type_description: "Theoretische Erarbeitung, Evaluation, Implementierung",
         criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
         ki_scores: [85, 82, 90, 85, 75, 80, 82, 85, 83, 78, 75],
         human_scores: [100, 100, 100, 0, 100, 0, 100, 100, 100, 95, 100],
         ki_weights: [0.15, 0.10, 0.15, 0.05, 0.05, 0.05, 0.05, 0.10, 0.15, 0.10, 0.05],
-        human_weights: [0.20, 0.20, 0.10, 0.00, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10],
-        similarity: 0.8948,
-        distance: 17.050
+        human_weights: [0.20, 0.20, 0.10, 0.00, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10]
     },
     {
-        title: "Kotlin vs. Java",
+        title: "Java vs. Kotlin - Wird Kotlin Java ganzheitlich ersetzen?",
         type: "Konstruktive Arbeit",
+        type_description: "Theoretische Erarbeitung, Implementierung",
         criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
         ki_scores: [78, 76, 78, 82, 70, 65, 78, 80, 76, 70, 68],
         human_scores: [52, 65, 45, 0, 50, 0, 48, 48, 48, 85, 66],
         ki_weights: [0.15, 0.10, 0.15, 0.05, 0.05, 0.05, 0.05, 0.10, 0.10, 0.10, 0.10],
-        human_weights: [0.20, 0.20, 0.05, 0.00, 0.10, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10],
-        similarity: 0.8461,
-        distance: 13.130
+        human_weights: [0.20, 0.20, 0.05, 0.00, 0.10, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10]
     },
     {
-        title: "Pepper-CMS",
+        title: "Aufbau eines CMS zur Erstellung von Android Apps für den humanoiden Roboter Pepper",
         type: "Konstruktive Arbeit",
+        type_description: "Konzept, Implementierung, Dokumentation, Benutzeranleitung",
         criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
         ki_scores: [70, 75, 75, 70, 75, 70, 75, 72, 78, 72, 72],
         human_scores: [50, 60, 40, 45, 65, 0, 50, 48, 50, 45, 45],
         ki_weights: [0.15, 0.10, 0.15, 0.10, 0.05, 0.05, 0.05, 0.10, 0.10, 0.10, 0.05],
-        human_weights: [0.15, 0.10, 0.15, 0.05, 0.10, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10],
-        similarity: 0.9328,
-        distance: 10.220
+        human_weights: [0.15, 0.10, 0.15, 0.05, 0.10, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10]
     },
     {
-        title: "PWA vs. nativ",
+        title: "Vergleich von Progressive Web App mit nativen Apps am Beispiel einer Journaling App",
         type: "Konstruktive Arbeit",
+        type_description: "Theoretische Erarbeitung, Implementierung, Evaluation",
         criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
         ki_scores: [82, 80, 85, 87, 75, 78, 85, 88, 85, 75, 72],
         human_scores: [92, 100, 0, 0, 100, 0, 100, 92, 92, 92, 95],
         ki_weights: [0.15, 0.10, 0.15, 0.05, 0.05, 0.05, 0.05, 0.10, 0.10, 0.10, 0.10],
-        human_weights: [0.20, 0.20, 0.00, 0.00, 0.15, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10],
-        similarity: 0.7862,
-        distance: 22.668
+        human_weights: [0.20, 0.20, 0.00, 0.00, 0.15, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10]
     },
     {
-        title: "Crossplatform-Apps",
+        title: "Vergleich von verschiedenen Technologien für die Entwicklung von mobilen Cross-Plattform-Applikationen",
         type: "Konstruktive Arbeit",
+        type_description: "Theoretische Erarbeitung, Implementierung, Evaluation",
         criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
         ki_scores: [78, 82, 75, 85, 68, 76, 80, 85, 82, 78, 73],
         human_scores: [90, 95, 95, 90, 90, 0, 90, 90, 90, 100, 100],
         ki_weights: [0.15, 0.10, 0.15, 0.05, 0.05, 0.05, 0.05, 0.10, 0.10, 0.10, 0.10],
-        human_weights: [0.15, 0.15, 0.15, 0.05, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10],
-        similarity: 0.9773,
-        distance: 8.822
+        human_weights: [0.15, 0.15, 0.15, 0.05, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10]
     },
     {
-        title: "Responsive Webdesign",
+        title: "Responsive Webdesign – Anforderungen, Methoden & technische Möglichkeiten",
         type: "Konstruktive Arbeit",
+        type_description: "Theoretische Erarbeitung, Evaluation, Implementierung",
         criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
         ki_scores: [80, 80, 85, 85, 70, 75, 80, 80, 80, 80, 70],
         human_scores: [50, 66, 25, 55, 55, 0, 55, 55, 50, 50, 50],
         ki_weights: [0.15, 0.10, 0.15, 0.05, 0.05, 0.05, 0.05, 0.10, 0.10, 0.10, 0.10],
-        human_weights: [0.15, 0.15, 0.15, 0.05, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10],
-        similarity: 0.9152,
-        distance: 12.310
+        human_weights: [0.15, 0.15, 0.15, 0.05, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10]
     },
     {
-        title: "Android Architecture",
+        title: "State-of-the-Art der Android-App-Entwicklung: Aktuelle Best Practices für Design Patterns und Architektur",
         type: "Konstruktive Arbeit",
+        type_description: "Theoretische Erarbeitung, Konzeption, Implementierung",
         criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
         ki_scores: [82, 85, 88, 80, 75, 78, 80, 87, 85, 78, 78],
         human_scores: [90, 95, 90, 95, 70, 0, 85, 90, 80, 92, 90],
         ki_weights: [0.15, 0.10, 0.15, 0.05, 0.05, 0.05, 0.05, 0.10, 0.10, 0.10, 0.10],
-        human_weights: [0.15, 0.15, 0.15, 0.05, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10],
-        similarity: 0.9746,
-        distance: 7.364
+        human_weights: [0.15, 0.15, 0.15, 0.05, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10]
     },
     {
-        title: "Apple-Feeling",
+        title: "The \"Apple Feeling\" - Analysis of Apple Software UI/UX Design",
         type: "Konstruktive Arbeit",
+        type_description: "Theoretische Erarbeitung, Konzeption, Implementierung, Evaluation",
         criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
         ki_scores: [88, 85, 88, 90, 87, 78, 85, 88, 85, 82, 83],
         human_scores: [100, 100, 95, 95, 95, 0, 100, 100, 95, 95, 100],
         ki_weights: [0.15, 0.10, 0.15, 0.05, 0.05, 0.05, 0.05, 0.10, 0.10, 0.10, 0.10],
-        human_weights: [0.15, 0.15, 0.15, 0.05, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10],
-        similarity: 0.9777,
-        distance: 8.343
+        human_weights: [0.15, 0.15, 0.15, 0.05, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10]
     },
     {
-        title: "Videoüberwachungs-App",
+        title: "Konzeption und Realisierung einer App zur Nutzung eines Smartphones zur Videodokumentation mit Fokus auf Privacy",
         type: "Konstruktive Arbeit",
+        type_description: "Theoretische Erarbeitung, Konzeption, Implementierung",
         criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
         ki_scores: [80, 75, 85, 85, 75, 70, 85, 80, 78, 65, 68],
         human_scores: [50, 60, 50, 75, 60, 0, 50, 55, 55, 25, 25],
         ki_weights: [0.15, 0.10, 0.15, 0.05, 0.05, 0.05, 0.05, 0.10, 0.10, 0.10, 0.10],
-        human_weights: [0.15, 0.10, 0.15, 0.10, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10],
-        similarity: 0.9352,
-        distance: 11.069
+        human_weights: [0.15, 0.10, 0.15, 0.10, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10]
     },
     {
-        title: "Futterstation Nassfutter",
+        title: "Prototypentwicklung eines zeit- und chipgesteuerten Haustierfutterautomaten für Nassfutter",
         type: "Konstruktive Arbeit",
+        type_description: "Konzeption, Implementierung, Prototyp",
         criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
         ki_scores: [85, 82, 88, 78, 85, 70, 87, 85, 83, 80, 78],
         human_scores: [100, 100, 100, 85, 100, 0, 100, 100, 95, 100, 100],
         ki_weights: [0.15, 0.10, 0.15, 0.05, 0.05, 0.10, 0.05, 0.10, 0.10, 0.10, 0.05],
-        human_weights: [0.15, 0.10, 0.15, 0.10, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10],
-        similarity: 0.9456,
-        distance: 11.295
+        human_weights: [0.15, 0.10, 0.15, 0.10, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10]
     },
     {
-        title: "Futterstation Trockenfutter",
+        title: "Prototypentwicklung eines zeit- und chipgesteuerten Haustierfutterautomaten für Trockenfutter",
         type: "Konstruktive Arbeit",
+        type_description: "Konzeption, Implementierung, Prototyp",
         criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
         ki_scores: [85, 80, 85, 85, 80, 75, 85, 85, 80, 70, 70],
         human_scores: [100, 100, 100, 100, 100, 0, 100, 100, 95, 90, 90],
         ki_weights: [0.15, 0.10, 0.15, 0.05, 0.05, 0.05, 0.05, 0.10, 0.10, 0.10, 0.10],
-        human_weights: [0.15, 0.10, 0.15, 0.10, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10],
-        similarity: 0.9782,
-        distance: 8.678
+        human_weights: [0.15, 0.10, 0.15, 0.10, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10]
     },
     {
-        title: "Graph Visualization",
+        title: "Visualisierung von großen Datasets aus Graph-Datenbanken",
         type: "Konstruktive Arbeit",
+        type_description: "Theoretische Erarbeitung, Implementierung",
         criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
         ki_scores: [83, 86, 88, 85, 82, 75, 84, 87, 86, 80, 82],
         human_scores: [90, 95, 95, 90, 100, 0, 95, 95, 90, 95, 85],
         ki_weights: [0.15, 0.10, 0.15, 0.05, 0.05, 0.05, 0.05, 0.10, 0.10, 0.10, 0.10],
-        human_weights: [0.15, 0.10, 0.15, 0.10, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10],
-        similarity: 0.9800,
-        distance: 6.625
+        human_weights: [0.15, 0.10, 0.15, 0.10, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10]
     },
     {
-        title: "KI-Detektor",
+        title: "Erkennung und Analyse von KI-generierten Texten im Wissenschaftsbereich",
         type: "Konstruktive Arbeit",
+        type_description: "Theoretische Erarbeitung, Implementierung",
         criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
         ki_scores: [88, 85, 90, 85, 82, 75, 90, 88, 92, 85, 84],
         human_scores: [90, 91, 90, 80, 92, 0, 95, 82, 85, 95, 80],
         ki_weights: [0.15, 0.10, 0.15, 0.05, 0.05, 0.05, 0.05, 0.10, 0.10, 0.10, 0.10],
-        human_weights: [0.15, 0.12, 0.15, 0.08, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10],
-        similarity: 0.9844,
-        distance: 5.192
+        human_weights: [0.15, 0.12, 0.15, 0.08, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10]
     },
     {
-        title: "Kotlin Multiplatform",
+        title: "Kotlin Multiplatform – die Cutting Edge Technology der App-Entwicklung?",
         type: "Konstruktive Arbeit",
+        type_description: "Theoretische Erarbeitung, Implementierung, Evaluation",
         criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
         ki_scores: [84, 82, 88, 85, 76, 72, 85, 88, 86, 78, 80],
         human_scores: [90, 95, 74, 100, 100, 0, 100, 66, 66, 90, 85],
         ki_weights: [0.15, 0.10, 0.20, 0.10, 0.05, 0.05, 0.05, 0.10, 0.10, 0.05, 0.05],
-        human_weights: [0.15, 0.10, 0.15, 0.10, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10],
-        similarity: 0.9283,
-        distance: 10.820
+        human_weights: [0.15, 0.10, 0.15, 0.10, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10]
     }
 ];

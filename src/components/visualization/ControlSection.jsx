@@ -1,4 +1,4 @@
-// In ControlSection.jsx
+// components/visualization/ControlSection.jsx
 import React from 'react';
 import './styles/controls.css';
 import { getTranslation } from '../../utils/translationHelpers';
@@ -24,7 +24,7 @@ const ControlSection = ({
             {/* Only show the work selector if not in Work Type Analysis mode */}
             {showWorkSelector && (
                 <select
-                    className="dropdown-selector"
+                    className="dropdown-selector work-selector"
                     value={selectedWorkIndex}
                     onChange={(e) => setSelectedWorkIndex(parseInt(e.target.value))}
                 >
@@ -36,7 +36,7 @@ const ControlSection = ({
                 </select>
             )}
             <select
-                className="dropdown-selector"
+                className="dropdown-selector chart-selector"
                 value={chartType}
                 onChange={(e) => setChartType(e.target.value)}
             >
@@ -47,7 +47,7 @@ const ControlSection = ({
                 ))}
             </select>
             <select
-                className="dropdown-selector"
+                className="dropdown-selector language-selector"
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
             >

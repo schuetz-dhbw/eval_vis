@@ -1,5 +1,55 @@
 import { getTranslation } from './translationHelpers';
 
+// Calculate cosine similarity between two vectors
+export const calculateCosineSimilarity = (vectorA, vectorB) => {
+    if (vectorA.length !== vectorB.length) {
+        console.error('Vectors must be of the same length');
+        return 0;
+    }
+
+    let dotProduct = 0;
+    let normA = 0;
+    let normB = 0;
+
+    for (let i = 0; i < vectorA.length; i++) {
+        dotProduct += vectorA[i] * vectorB[i];
+        normA += vectorA[i] * vectorA[i];
+        normB += vectorB[i] * vectorB[i];
+    }
+
+    if (normA === 0 || normB === 0) {
+        return 0;
+    }
+
+    return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+};
+
+// Calculate Euclidean distance between two vectors
+export const calculateEuclideanDistance = (vectorA, vectorB) => {
+    if (vectorA.length !== vectorB.length) {
+        console.error('Vectors must be of the same length');
+        return 0;
+    }
+
+    let sum = 0;
+    for (let i = 0; i < vectorA.length; i++) {
+        sum += Math.pow(vectorA[i] - vectorB[i], 2);
+    }
+
+    return Math.sqrt(sum);
+};
+
+// Calculate similarity metrics for a work
+export const calculateSimilarityMetrics = (work) => {
+    const similarity = calculateCosineSimilarity(work.ki_scores, work.human_scores);
+    const distance = calculateEuclideanDistance(work.ki_scores, work.human_scores);
+
+    return {
+        similarity,
+        distance
+    };
+};
+
 // Calculate statistics for a work
 export const calculateStatistics = (work) => {
     // Calculate average scores

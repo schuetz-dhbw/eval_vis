@@ -1,0 +1,17 @@
+/* components/visualization/styles/metrics.css */
+.metrics-section {
+    margin-bottom: var(--padding-lg);
+    text-align: center;
+}
+
+.metrics {
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+    display: inline-flex;
+    gap: var(--padding-xl);
+}
+
+.metric-label {
+    font-weight: 600;
+    margin-right: 4px;
+}

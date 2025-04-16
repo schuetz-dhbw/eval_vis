@@ -1,12 +1,21 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import './styles/statistics.css';
 import { getTranslation } from '../../utils/translationHelpers';
 import CorrelationAnalysisComponent from '../charts/CorrelationAnalysisComponent';
-import { calculateStatistics } from '../../utils/dataTransformers';
+import { calculateStatistics, calculateSimilarityMetrics  } from '../../utils/dataTransformers';
 
 const StatisticsSection = ({ work, translations, language }) => {
     const t = (key, section = null) => getTranslation(translations, language, key, section);
-    const stats = calculateStatistics(work);
+
+    // Statistiken mit useMemo berechnen
+    const stats = useMemo(() => {
+        return calculateStatistics(work);
+    }, [work]);
+
+    // Ähnlichkeitsmetriken ebenfalls mit useMemo
+    const metrics = useMemo(() => {
+        return calculateSimilarityMetrics(work);
+    }, [work]);
 
     // Format a number to 2 decimal places
     const formatNum = (num) => num.toFixed(2);
@@ -39,7 +48,7 @@ const StatisticsSection = ({ work, translations, language }) => {
                     <h4 className="stat-title">{t('weightDifference', 'metrics') || "Weight Difference"}</h4>
                     <div className="stat-value">{formatNum(stats.avgWeightDiff * 100)}%</div>
                     <p className="stat-description">
-                        {t('cosine', 'metrics')}: {work.similarity.toFixed(4)}
+                        {t('cosine', 'metrics')}: {metrics.similarity.toFixed(4)}
                     </p>
                 </div>
             </div>

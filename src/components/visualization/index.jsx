@@ -13,6 +13,7 @@ import {
 
 import HeaderSection from './HeaderSection';
 import ControlSection from './ControlSection';
+import MetricsSection from './MetricsSection';
 import ChartSection from './ChartSection';
 import DetailsSection from './DetailsSection';
 import UsageHintsSection from './UsageHintsSection';
@@ -48,7 +49,6 @@ const Visualization = () => {
     return (
         <div className="visualization-container">
             <HeaderSection
-                work={work}
                 translations={translations}
                 language={language}
             />
@@ -64,6 +64,14 @@ const Visualization = () => {
                 translations={translations}
             />
 
+            {chartType !== CHART_TYPES.WORK_TYPE_ANALYSIS && (
+                <MetricsSection
+                    work={work}
+                    translations={translations}
+                    language={language}
+                />
+            )}
+
             {chartType === CHART_TYPES.STATISTICS ? (
                 <StatisticsSection
                     work={work}
@@ -72,7 +80,7 @@ const Visualization = () => {
                 />
             ) : chartType === CHART_TYPES.WORK_TYPE_ANALYSIS ? (
                 <WorkTypeAnalysisSection
-                    works={works}  // Note: we're passing all works, not just the selected one
+                    works={works}
                     translations={translations}
                     language={language}
                 />
