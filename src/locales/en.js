@@ -46,7 +46,8 @@ export const en = {
         variance: "Variance",
         difference: "Difference",
         criteriaVariance: "Criteria Variances",
-        correlation: "Correlation"
+        correlation: "Correlation",
+        grade: "Grade"
     },
     criteria: {
         professionalTreatment: "Prof. Treat.",

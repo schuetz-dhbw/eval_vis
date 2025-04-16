@@ -53,3 +53,32 @@
     background-color: var(--background-total-row);
     font-weight: 600;
 }
+
+.grades-container {
+    display: flex;
+    gap: var(--padding-lg);
+    margin-bottom: var(--padding-lg);
+    flex-wrap: wrap;
+}
+
+.grade-box {
+    background-color: var(--background-even-row);
+    border-radius: var(--border-radius);
+    padding: var(--padding-md);
+    border: 1px solid var(--color-border);
+    min-width: 150px;
+    flex-grow: 1;
+}
+
+.grade-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.grade-value {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--color-text);
+}

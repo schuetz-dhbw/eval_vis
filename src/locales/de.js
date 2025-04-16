@@ -44,7 +44,8 @@ export const de = {
         variance: "Varianz",
         difference: "Differenz",
         criteriaVariance: "Kriterienvarianzen",
-        correlation: "Korrelation"
+        correlation: "Korrelation",
+        grade: "Note"
     },
     criteria: {
         professionalTreatment: "Fachl. Bearbeitung",
