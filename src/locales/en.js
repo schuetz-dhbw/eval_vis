@@ -4,17 +4,26 @@ export const en = {
         scores: "Achievement Levels",
         weights: "Weightings",
         weighted: "Weighted Values",
-        combined: "Combined View"
+        combined: "Combined View",
+        statistics: "Statistical Analysis"
     },
     metrics: {
         cosine: "Cosine Similarity",
-        distance: "Euclidean Distance"
+        distance: "Euclidean Distance",
+        avgDifference: "Average Difference",
+        maxDiff: "Max",
+        minDiff: "Min",
+        standardDeviation: "Standard Deviation",
+        weightDifference: "Weight Difference"
     },
     chartTitles: {
         vectors: "Assessment Vectors",
         combinedTitle: "Scores and Weights",
         radar: "Spider Chart",
-        bar: "Bar Chart"
+        bar: "Bar Chart",
+        varianceTitle: "Criteria Variance Analysis",
+        varianceTable: "Criteria Ranked by Variance",
+        correlationTitle: "Correlation Analysis"
     },
     labels: {
         ki: "AI",
@@ -22,7 +31,12 @@ export const en = {
         kiScore: "AI Score",
         humanScore: "Human Score",
         kiWeight: "AI Weighting",
-        humanWeight: "Human Weighting"
+        humanWeight: "Human Weighting",
+        score: "Score",
+        variance: "Variance",
+        difference: "Difference",
+        criteriaVariance: "Criteria Variances",
+        correlation: "Correlation"
     },
     criteria: {
         professionalTreatment: "Prof. Treat.",
@@ -53,10 +67,12 @@ export const en = {
         weights: "Weightings",
         weighted: "Weighted Values",
         combined: "Combined View",
+        statistics: "Statistical Analysis",
         scoresDesc: "shows the original rating scores (0-100%)",
         weightsDesc: "shows the relative importance of criteria (0-25%)",
         weightedDesc: "shows the product of ratings and weights",
         combinedDesc: "shows ratings as bars and weightings as lines",
+        statisticsDesc: "compares variance and correlation between criteria scores",
         tooltip: "Hover over the charts for detailed information",
         table: "The table below shows all numerical values and the totals"
     },

@@ -1,0 +1,118 @@
+.variance-table {
+    margin-top: var(--padding-md);
+    margin-bottom: var(--padding-lg);
+}
+
+.highlight-row {
+    background-color: rgba(255, 115, 0, 0.1); /* Light orange background */
+}
+
+.subtitle {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    margin-bottom: var(--padding-sm);
+    color: var(--color-text);
+}
+
+.mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--padding-lg);
+}
+
+.mini-table th {
+    padding: var(--padding-sm) var(--padding-md);
+    text-align: left;
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-light);
+    background-color: var(--background-even-row);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.mini-table td {
+    padding: var(--padding-sm) var(--padding-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.correlation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: var(--padding-sm);
+    margin-bottom: var(--padding-lg);
+}
+
+.correlation-item {
+    background-color: var(--color-white);
+    border-radius: var(--border-radius);
+    padding: var(--padding-sm);
+    border: 1px solid var(--color-border);
+    font-size: var(--font-size-xs);
+    text-align: center;
+}
+
+.correlation-value {
+    font-weight: 600;
+    font-size: var(--font-size-base);
+}
+
+.correlation-high {
+    color: var(--color-secondary);
+}
+
+.correlation-medium {
+    color: var(--color-primary);
+}
+
+.correlation-low {
+    color: var(--color-tertiary);
+}
+
+.correlation-names {
+    margin-top: var(--padding-sm);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Custom tooltip styling */
+.custom-tooltip {
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: var(--padding-md);
+    box-shadow: var(--shadow-sm);
+    font-size: var(--font-size-sm);
+}
+
+.tooltip-title {
+    font-weight: 600;
+    margin-bottom: var(--padding-sm);
+    border-bottom: 1px solid var(--color-border-light);
+    padding-bottom: 4px;
+}
+
+.tooltip-item {
+    margin: 3px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.tooltip-label {
+    margin-right: var(--padding-md);
+    color: var(--color-text-light);
+}
+
+.tooltip-value {
+    font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .correlation-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+}

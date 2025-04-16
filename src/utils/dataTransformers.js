@@ -1,5 +1,49 @@
 import { getTranslation } from './translationHelpers';
 
+// Calculate statistics for a work
+export const calculateStatistics = (work) => {
+    // Calculate average scores
+    const kiAverage = work.ki_scores.reduce((sum, score) => sum + score, 0) / work.ki_scores.length;
+    const humanAverage = work.human_scores.reduce((sum, score) => sum + score, 0) / work.human_scores.length;
+
+    // Calculate standard deviations
+    const kiStdDev = Math.sqrt(
+        work.ki_scores.reduce((sum, score) => sum + Math.pow(score - kiAverage, 2), 0) / work.ki_scores.length
+    );
+    const humanStdDev = Math.sqrt(
+        work.human_scores.reduce((sum, score) => sum + Math.pow(score - humanAverage, 2), 0) / work.human_scores.length
+    );
+
+    // Calculate differences in assessments
+    const differences = work.ki_scores.map((score, i) => Math.abs(score - work.human_scores[i]));
+    const avgDifference = differences.reduce((sum, diff) => sum + diff, 0) / differences.length;
+    const maxDifference = Math.max(...differences);
+    const minDifference = Math.min(...differences);
+
+    // Calculate weighted averages
+    const kiWeightedSum = work.ki_scores.reduce((sum, score, i) => sum + score * work.ki_weights[i], 0);
+    const humanWeightedSum = work.human_scores.reduce((sum, score, i) => sum + score * work.human_weights[i], 0);
+
+    // Calculate differences in weights
+    const weightDifferences = work.ki_weights.map((weight, i) =>
+        Math.abs(weight - work.human_weights[i])
+    );
+    const avgWeightDiff = weightDifferences.reduce((sum, diff) => sum + diff, 0) / weightDifferences.length;
+
+    return {
+        kiAverage,
+        humanAverage,
+        kiStdDev,
+        humanStdDev,
+        avgDifference,
+        maxDifference,
+        minDifference,
+        kiWeightedSum,
+        humanWeightedSum,
+        avgWeightDiff
+    };
+};
+
 // Für kürzere Achsenbeschriftungen
 export const getShortLabels = (work, translations, language) => {
     const t = (key, section = null) => getTranslation(translations, language, key, section);

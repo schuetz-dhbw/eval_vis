@@ -1,8 +1,9 @@
 import React from 'react';
 import './styles/usageHints.css';
 import { getTranslation } from '../../utils/translationHelpers';
+import { CHART_TYPES } from '../../data/chartTypes';
 
-const UsageHintsSection = ({ translations, language }) => {
+const UsageHintsSection = ({ translations, language, chartType }) => {
     const t = (key, section = null) => getTranslation(translations, language, key, section);
 
     return (
@@ -13,8 +14,9 @@ const UsageHintsSection = ({ translations, language }) => {
                 <li><span className="term">{t('weights', 'hints')}</span> {t('weightsDesc', 'hints')}</li>
                 <li><span className="term">{t('weighted', 'hints')}</span> {t('weightedDesc', 'hints')}</li>
                 <li><span className="term">{t('combined', 'hints')}</span> {t('combinedDesc', 'hints')}</li>
+                <li><span className="term">{t('statistics', 'hints')}</span> {t('statisticsDesc', 'hints')}</li>
                 <li>{t('tooltip', 'hints')}</li>
-                <li>{t('table', 'hints')}</li>
+                {chartType !== CHART_TYPES.STATISTICS && <li>{t('table', 'hints')}</li>}
             </ul>
         </div>
     );

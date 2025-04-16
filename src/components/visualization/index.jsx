@@ -16,6 +16,7 @@ import ControlSection from './ControlSection';
 import ChartSection from './ChartSection';
 import DetailsSection from './DetailsSection';
 import UsageHintsSection from './UsageHintsSection';
+import StatisticsSection from './StatisticsSection';
 
 const Visualization = () => {
     const [selectedWorkIndex, setSelectedWorkIndex] = useState(0);
@@ -62,14 +63,22 @@ const Visualization = () => {
                 translations={translations}
             />
 
-            <ChartSection
-                scoresData={scoresData}
-                combinedData={combinedData}
-                radarData={radarData}
-                chartType={chartType}
-                translations={translations}
-                language={language}
-            />
+            {chartType === CHART_TYPES.STATISTICS ? (
+                <StatisticsSection
+                    work={work}
+                    translations={translations}
+                    language={language}
+                />
+            ) : (
+                <ChartSection
+                    scoresData={scoresData}
+                    combinedData={combinedData}
+                    radarData={radarData}
+                    chartType={chartType}
+                    translations={translations}
+                    language={language}
+                />
+            )}
 
             <DetailsSection
                 work={work}
@@ -80,6 +89,7 @@ const Visualization = () => {
             <UsageHintsSection
                 translations={translations}
                 language={language}
+                chartType={chartType}
             />
         </div>
     );

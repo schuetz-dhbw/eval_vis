@@ -2,5 +2,6 @@ export const CHART_TYPES = {
     SCORES: 'scores',
     WEIGHTS: 'weights',
     WEIGHTED: 'weighted',
-    COMBINED: 'combined'
+    COMBINED: 'combined',
+    STATISTICS: 'statistics'
 };
