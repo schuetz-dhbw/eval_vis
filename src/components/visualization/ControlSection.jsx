@@ -1,3 +1,4 @@
+// In ControlSection.jsx
 import React from 'react';
 import './styles/controls.css';
 import { getTranslation } from '../../utils/translationHelpers';
@@ -15,19 +16,25 @@ const ControlSection = ({
                         }) => {
     const t = (key, section = null) => getTranslation(translations, language, key, section);
 
+    // Check if we should show the work selector
+    const showWorkSelector = chartType !== CHART_TYPES.WORK_TYPE_ANALYSIS;
+
     return (
         <div className="controls">
-            <select
-                className="dropdown-selector"
-                value={selectedWorkIndex}
-                onChange={(e) => setSelectedWorkIndex(parseInt(e.target.value))}
-            >
-                {works.map((work, index) => (
-                    <option key={index} value={index}>
-                        {work.title}
-                    </option>
-                ))}
-            </select>
+            {/* Only show the work selector if not in Work Type Analysis mode */}
+            {showWorkSelector && (
+                <select
+                    className="dropdown-selector"
+                    value={selectedWorkIndex}
+                    onChange={(e) => setSelectedWorkIndex(parseInt(e.target.value))}
+                >
+                    {works.map((work, index) => (
+                        <option key={index} value={index}>
+                            {work.title}
+                        </option>
+                    ))}
+                </select>
+            )}
             <select
                 className="dropdown-selector"
                 value={chartType}

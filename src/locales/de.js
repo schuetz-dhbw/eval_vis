@@ -5,7 +5,8 @@ export const de = {
         weights: "Gewichtungen",
         weighted: "Gewichtete Werte",
         combined: "Kombinierte Darstellung",
-        statistics: "Statistische Analyse"
+        statistics: "Statistische Analyse",
+        workTypeAnalysis: "Analyse nach Arbeitstyp"
     },
     metrics: {
         cosine: "Kosinus-Ähnlichkeit",
@@ -23,7 +24,12 @@ export const de = {
         bar: "Balkendiagramm",
         varianceTitle: "Varianzanalyse der Kriterien",
         varianceTable: "Kriterien nach Varianz sortiert",
-        correlationTitle: "Korrelationsanalyse"
+        correlationTitle: "Korrelationsanalyse",
+        workTypeAnalysisTitle: "Analyse nach Arbeitstyp",
+        differenceByTypeTitle: "Durchschnittliche Differenz nach Arbeitstyp",
+        criteriaByTypeTitle: "Kriterien-Differenzen nach Arbeitstyp",
+        largestDiffByTypeTitle: "Größte Differenz nach Arbeitstyp",
+        topCriteriaTitle: "Top 5 Kriterien nach Differenz"
     },
     labels: {
         ki: "KI",
@@ -59,6 +65,9 @@ export const de = {
         humanWeight: "Human-Gewichtung",
         kiWeighted: "KI (gewichtet)",
         humanWeighted: "Human (gewichtet)",
+        workType: "Arbeitstyp",
+        avgByType: "Durchschnitt nach Typ",
+        count: "Anzahl",
         total: "Gesamt"
     },
     hints: {
@@ -68,11 +77,13 @@ export const de = {
         weighted: "Gewichtete Werte",
         combined: "Kombinierte Darstellung",
         statistics: "Statistische Analyse",
+        workTypeAnalysis: "Analyse nach Arbeitstyp",
         scoresDesc: "zeigt die ursprünglichen Bewertungspunkte (0-100%)",
         weightsDesc: "zeigt die relative Bedeutung der Kriterien (0-25%)",
         weightedDesc: "zeigt das Produkt aus Bewertung und Gewichtung",
         combinedDesc: "zeigt Bewertungen als Balken und Gewichtungen als Linien",
         statisticsDesc: "vergleicht Varianz und Korrelation zwischen Kriterienbewertungen",
+        workTypeAnalysisDesc: "zeigt Differenzen zwischen KI und Mensch basierend auf der Arbeitstyp",
         tooltip: "Bewegen Sie den Mauszeiger über die Diagramme für detaillierte Informationen",
         table: "Die Tabelle unten zeigt alle numerischen Werte und die Gesamtsummen"
     },

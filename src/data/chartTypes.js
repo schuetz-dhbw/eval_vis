@@ -3,5 +3,6 @@ export const CHART_TYPES = {
     WEIGHTS: 'weights',
     WEIGHTED: 'weighted',
     COMBINED: 'combined',
-    STATISTICS: 'statistics'
+    STATISTICS: 'statistics',
+    WORK_TYPE_ANALYSIS: 'workTypeAnalysis'
 };

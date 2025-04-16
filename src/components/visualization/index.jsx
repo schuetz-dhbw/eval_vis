@@ -17,6 +17,7 @@ import ChartSection from './ChartSection';
 import DetailsSection from './DetailsSection';
 import UsageHintsSection from './UsageHintsSection';
 import StatisticsSection from './StatisticsSection';
+import WorkTypeAnalysisSection from './WorkTypeAnalysisSection';
 
 const Visualization = () => {
     const [selectedWorkIndex, setSelectedWorkIndex] = useState(0);
@@ -66,6 +67,12 @@ const Visualization = () => {
             {chartType === CHART_TYPES.STATISTICS ? (
                 <StatisticsSection
                     work={work}
+                    translations={translations}
+                    language={language}
+                />
+            ) : chartType === CHART_TYPES.WORK_TYPE_ANALYSIS ? (
+                <WorkTypeAnalysisSection
+                    works={works}  // Note: we're passing all works, not just the selected one
                     translations={translations}
                     language={language}
                 />

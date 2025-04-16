@@ -5,7 +5,8 @@ export const en = {
         weights: "Weightings",
         weighted: "Weighted Values",
         combined: "Combined View",
-        statistics: "Statistical Analysis"
+        statistics: "Statistical Analysis",
+        workTypeAnalysis: "Work Type Analysis"
     },
     metrics: {
         cosine: "Cosine Similarity",
@@ -14,7 +15,9 @@ export const en = {
         maxDiff: "Max",
         minDiff: "Min",
         standardDeviation: "Standard Deviation",
-        weightDifference: "Weight Difference"
+        weightDifference: "Weight Difference",
+        count: "Count",
+        avgByType: "Average by Type"
     },
     chartTitles: {
         vectors: "Assessment Vectors",
@@ -23,7 +26,12 @@ export const en = {
         bar: "Bar Chart",
         varianceTitle: "Criteria Variance Analysis",
         varianceTable: "Criteria Ranked by Variance",
-        correlationTitle: "Correlation Analysis"
+        correlationTitle: "Correlation Analysis",
+        workTypeAnalysisTitle: "Work Type Analysis",
+        differenceByTypeTitle: "Average Difference by Work Type",
+        criteriaByTypeTitle: "Criteria Differences by Work Type",
+        largestDiffByTypeTitle: "Largest Difference by Work Type",
+        topCriteriaTitle: "Top 5 Criteria by Difference"
     },
     labels: {
         ki: "AI",
@@ -59,6 +67,9 @@ export const en = {
         humanWeight: "Human Weight",
         kiWeighted: "AI (weighted)",
         humanWeighted: "Human (weighted)",
+        workType: "Work Type",
+        avgByType: "Averagy by Type",
+        count: "Count",
         total: "Total"
     },
     hints: {
@@ -68,11 +79,13 @@ export const en = {
         weighted: "Weighted Values",
         combined: "Combined View",
         statistics: "Statistical Analysis",
+        workTypeAnalysis: "Work Type Analysis",
         scoresDesc: "shows the original rating scores (0-100%)",
         weightsDesc: "shows the relative importance of criteria (0-25%)",
         weightedDesc: "shows the product of ratings and weights",
         combinedDesc: "shows ratings as bars and weightings as lines",
         statisticsDesc: "compares variance and correlation between criteria scores",
+        workTypeAnalysisDesc: "shows differences between AI and human based on work type",
         tooltip: "Hover over the charts for detailed information",
         table: "The table below shows all numerical values and the totals"
     },
