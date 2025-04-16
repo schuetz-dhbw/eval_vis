@@ -158,5 +158,56 @@ export const works = [
         human_scores: [90, 95, 74, 100, 100, 0, 100, 66, 66, 90, 85],
         ki_weights: [0.15, 0.10, 0.20, 0.10, 0.05, 0.05, 0.05, 0.10, 0.10, 0.05, 0.05],
         human_weights: [0.15, 0.10, 0.15, 0.10, 0.05, 0.00, 0.05, 0.10, 0.10, 0.10, 0.10]
+    },
+    {
+        title: "RISC-V: Nutzung des TinyEMU von Fabrice Bellard zur prototypischen Realisierung einer RISC-V-Applikation für ein Praktikum",
+        type: "Konstruktive Arbeit",
+        type_description: "Theoretische Erarbeitung, Konzept, Implementierung, Dokumentation",
+        criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
+        ki_scores: [87, 85, 85, 80, 75, 70, 85, 85, 83, 78, 75],
+        human_scores: [100, 100, 100, 100, 100, 100, 100, 90, 60, 60, 75],
+        ki_weights: [0.15, 0.1, 0.15, 0.05, 0.05, 0.05, 0.05, 0.1, 0.1, 0.1, 0.1],
+        human_weights: [0.15, 0.1, 0.15, 0.05, 0.05, 0.05, 0.05, 0.1, 0.1, 0.1, 0.1]
+    },
+    {
+        title: "Patterns und Best Practices für das Design einer eventbasierten Architektur",
+        type: "Konstruktive Arbeit",
+        type_description: "Theoretische Erarbeitung, Implementierung",
+        criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
+        ki_scores: [86, 85, 88, 84, 80, 75, 85, 87, 88, 86, 84],
+        human_scores: [95, 100, 100, 100, 100, 0, 100, 100, 100, 100, 100],
+        ki_weights: [0.15, 0.1, 0.15, 0.05, 0.05, 0.05, 0.05, 0.1, 0.1, 0.1, 0.1],
+        human_weights: [0.15, 0.1, 0.15, 0.05, 0.1, 0, 0.05, 0.1, 0.1, 0.1, 0.1]
+    },
+    {
+        title: "Energieeffizientes Programmieren",
+        type: "Konstruktive Arbeit",
+        type_description: "Theoretische Erarbeitung, empirische Evaluation",
+        classification: "Konstruktive Arbeit",
+        criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
+        ki_scores: [87, 82, 90, 88, 78, 75, 85, 87, 85, 82, 80],
+        human_scores: [100, 100, 100, 90, 100, 100, 100, 100, 100, 100, 100],
+        ki_weights: [0.15, 0.1, 0.15, 0.05, 0.05, 0.05, 0.05, 0.1, 0.1, 0.1, 0.1],
+        human_weights: [0.15, 0.1, 0.15, 0.05, 0.05, 0.05, 0.05, 0.1, 0.1, 0.1, 0.1]
+    },
+    {
+        title: "Ethik für Informatiker - Entwicklung einer Ethik-Vorlesung für Informatiker",
+        type: "Analytische Arbeit",
+        type_description: "Theoretische Erarbeitung, exemplarische Umsetzung",
+        criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
+        ki_scores: [82, 79, 85, 88, 72, 76, 83, 86, 80, 75, 77],
+        human_scores: [90, 90, 95, 100, 80, 0, 95, 95, 75, 65, 65],
+        ki_weights: [0.15, 0.1, 0.15, 0.05, 0.05, 0.05, 0.05, 0.1, 0.1, 0.1, 0.1],
+        human_weights: [0.15, 0.1, 0.15, 0.05, 0.1, 0, 0.05, 0.1, 0.1, 0.1, 0.1]
+    },
+    {
+        title: "Zukunftsszenarien und gegenwärtige Anwendungsfelder von Smart Contracts",
+        type: "Analytische Arbeit",
+        type_description: "Theoretische Erarbeitung, exemplarische Umsetzung",
+        criteriaLabels: ["Fachliche Bearbeitung", "Nutzung von Fachwissen", "Einsatz von Methoden", "Umsetzbarkeit", "Kreativität", "Wirtschaftliche Bewertung", "Selbständigkeit", "Systematik", "Dokumentation", "Literaturrecherche", "Verwendung Literatur"],
+        ki_scores: [70, 78, 80, 75, 65, 60, 78, 82, 75, 72, 70],
+        human_scores: [80, 80, 85, 0, 70, 0, 100, 90, 95, 100, 80],
+        ki_weights: [0.15, 0.1, 0.15, 0.05, 0.05, 0.05, 0.05, 0.1, 0.1, 0.1, 0.1],
+        human_weights: [0.15, 0.15, 0.15, 0, 0.1, 0, 0.05, 0.1, 0.1, 0.1, 0.1]
     }
 ];
