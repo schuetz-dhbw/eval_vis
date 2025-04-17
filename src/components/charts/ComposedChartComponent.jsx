@@ -6,7 +6,7 @@ import './styles/charts.css';
 import { useTranslation } from '../../hooks/useTranslation';
 
 
-const ComposedChartComponent = ({ data, translations, language }) => {
+const ComposedChartComponent = ({ data, language }) => {
     const t = useTranslation(language);
 
     return (

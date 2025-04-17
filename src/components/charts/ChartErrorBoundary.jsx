@@ -3,7 +3,7 @@ import ErrorBoundary from '../common/ErrorBoundary';
 import { useTranslation } from '../../hooks/useTranslation';
 import './styles/chartErrorBoundary.css';
 
-const ChartErrorBoundary = ({ children, language, chartType }) => {
+const ChartErrorBoundary = ({ children, language }) => {
     const t = useTranslation(language);
 
     return (

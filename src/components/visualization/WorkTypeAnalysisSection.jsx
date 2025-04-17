@@ -21,7 +21,7 @@ const WorkTypeAnalysisSection = () => {
                 <h3 className="section-title">{t('workTypeAnalysisTitle', 'chartTitles') || "Work Type Analysis"}</h3>
                 <div className="analysis-content">
                     <DataErrorBoundary data={rawWorks} language={language}>
-                        <ChartErrorBoundary language={language} chartType="workTypeAnalysis">
+                        <ChartErrorBoundary language={language}>
                             <WorkTypeAnalysisComponent
                                 works={rawWorks}
                                 language={language}

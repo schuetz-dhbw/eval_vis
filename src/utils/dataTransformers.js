@@ -1,4 +1,5 @@
 import { getTranslation } from './translationHelpers';
+import { translations } from '../locales/index';
 
 // Calculate cosine similarity between two vectors
 export const calculateCosineSimilarity = (vectorA, vectorB) => {
@@ -113,7 +114,7 @@ export const getShortLabels = (work, translations, language) => {
 };
 
 // Daten für die Bewertungsdiagramme
-export const getScoresData = (work, translations, language) => {
+export const getScoresData = (work, language) => {
     const t = (key, section = null) => getTranslation(translations, language, key, section);
     const shortLabels = getShortLabels(work, translations, language);
 
@@ -128,7 +129,7 @@ export const getScoresData = (work, translations, language) => {
 };
 
 // Daten für die Gewichtungsdiagramme
-export const getWeightsData = (work, translations, language) => {
+export const getWeightsData = (work, language) => {
     const t = (key, section = null) => getTranslation(translations, language, key, section);
     const shortLabels = getShortLabels(work, translations, language);
 
@@ -143,7 +144,7 @@ export const getWeightsData = (work, translations, language) => {
 };
 
 // Daten für die gewichteten Bewertungsdiagramme
-export const getWeightedData = (work, translations, language) => {
+export const getWeightedData = (work, language) => {
     const t = (key, section = null) => getTranslation(translations, language, key, section);
     const shortLabels = getShortLabels(work, translations, language);
 
@@ -158,7 +159,7 @@ export const getWeightedData = (work, translations, language) => {
 };
 
 // Daten für die kombinierte Darstellung
-export const getCombinedData = (work, translations, language) => {
+export const getCombinedData = (work, language) => {
     const t = (key, section = null) => getTranslation(translations, language, key, section);
     const shortLabels = getShortLabels(work, translations, language);
 
@@ -177,7 +178,7 @@ export const getCombinedData = (work, translations, language) => {
 };
 
 // Daten für das Radar/Spinnendiagramm
-export const getRadarData = (work, translations, language, chartType) => {
+export const getRadarData = (work, language, chartType) => {
     const t = (key, section = null) => getTranslation(translations, language, key, section);
     const shortLabels = getShortLabels(work, translations, language);
 
@@ -241,7 +242,7 @@ export const getRadarDomain = (chartType) => {
 };
 
 // Übersetzungen für die Daten zu den Arbeiten
-export const getTranslatedWorks = (works, translations, language) => {
+export const getTranslatedWorks = (works, language) => {
     const worksTranslations = translations[language]?.works || {};
 
     return works.map(work => {

@@ -5,17 +5,9 @@ import {
 import './styles/charts.css';
 import { getYDomain } from '../../utils/dataTransformers';
 import { useTranslation } from '../../hooks/useTranslation';
-import {CHART_TYPES} from "../../constants/chartTypes";
 
-
-const BarChartComponent = ({ data, chartType, translations, language }) => {
+const BarChartComponent = ({ data, chartType, language }) => {
     const t = useTranslation(language);
-
-    // Bestimme die richtigen dataKeys basierend auf dem Charttyp
-    const kiDataKey = chartType === CHART_TYPES.COMBINED ?
-        `${t('ki', 'labels')}Score` : t('ki', 'labels');
-    const humanDataKey = chartType === CHART_TYPES.COMBINED ?
-        `${t('human', 'labels')}Score` : t('human', 'labels');
 
     const formatValue = (value) => {
         return Number(value).toFixed(1);

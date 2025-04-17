@@ -37,7 +37,7 @@ const calculateVariance = (data) => {
 };
 
 // Benutzerdefinierter Tooltip für den Scatter Plot
-const CustomTooltip = ({ active, payload, label, translations, language }) => {
+const CustomTooltip = ({ active, payload, language }) => {
     const t = useTranslation(language);
 
     if (active && payload && payload.length) {
@@ -96,8 +96,8 @@ const CorrelationAnalysisComponent = ({ work, translations, language }) => {
                     x: i,
                     y: j,
                     z: Math.abs(correlation) * 100,
-                    name1: work.criteriaKeys[i],
-                    name2: work.criteriaKeys[j],
+                    name1: work.criteriaLabels[i],
+                    name2: work.criteriaLabels[j],
                     correlation: correlation.toFixed(2)
                 });
             }
@@ -105,13 +105,6 @@ const CorrelationAnalysisComponent = ({ work, translations, language }) => {
 
         return result;
     }, [work]);
-
-    const getCorrelationColor = (value) => {
-        const absValue = Math.abs(value);
-        if (absValue > 0.7) return '#82ca9d'; // Strong correlation - green
-        if (absValue > 0.3) return '#8884d8'; // Medium correlation - purple
-        return '#ff7300'; // Weak correlation - orange
-    };
 
     return (
         <div>
@@ -201,6 +194,46 @@ const CorrelationAnalysisComponent = ({ work, translations, language }) => {
                     </tbody>
                 </table>
             </div>
+            <div className="correlation-matrix">
+                <h4 className="matrix-title">{t('correlationTitle', 'chartTitles') || "Correlation Analysis"}</h4>
+
+                <div className="correlation-grid">
+                    {correlationData
+                        .sort((a, b) => Math.abs(parseFloat(b.correlation)) - Math.abs(parseFloat(a.correlation)))
+                        .slice(0, 10)
+                        .map((item, index) => {
+                            // Klassen und Anzeige basierend auf Korrelationsstärke
+                            const corrValue = parseFloat(item.correlation);
+                            const absValue = Math.abs(corrValue);
+                            let correlationClass = "weak-correlation";
+
+                            if (absValue > 0.7) {
+                                correlationClass = "strong-correlation";
+                            } else if (absValue > 0.3) {
+                                correlationClass = "medium-correlation";
+                            }
+
+                            return (
+                                <div
+                                    key={index}
+                                    className={`correlation-cell ${correlationClass}`}
+                                    title={`${item.name1} - ${item.name2}: ${item.correlation}`}
+                                >
+                                    <div className="correlation-value">
+                                        {corrValue > 0 ? "+" : ""}{item.correlation}
+                                    </div>
+                                    <div className="correlation-names">
+                                        <div>{item.name1}</div>
+                                        <div>&amp;</div>
+                                        <div>{item.name2}</div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                </div>
+            </div>
+
+
         </div>
     );
 };

@@ -1,12 +1,10 @@
 import React, { useMemo } from 'react';
 import {
-    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-    ScatterChart, Scatter, ZAxis, Cell
-} from 'recharts';
+    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import { useTranslation } from '../../hooks/useTranslation';
 import './styles/workTypeAnalysis.css';
 
-const WorkTypeAnalysisComponent = ({ works, translations, language }) => {
+const WorkTypeAnalysisComponent = ({ works, language }) => {
     const t = useTranslation(language);
 
     // Group works by type

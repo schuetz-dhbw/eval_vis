@@ -65,7 +65,7 @@ const StatisticsSection = () => {
 
                 <div className="statistics-content">
                     <DataErrorBoundary data={currentWork} language={language}>
-                        <ChartErrorBoundary language={language} chartType="statistics">
+                        <ChartErrorBoundary language={language}>
                             <CorrelationAnalysisComponent
                                 work={currentWork}
                                 language={language}

@@ -6,7 +6,7 @@ import './styles/charts.css';
 import { getYDomain } from '../../utils/dataTransformers';
 
 
-const LineChartComponent = ({ data, chartType, translations, language }) => {
+const LineChartComponent = ({ data, chartType }) => {
     return (
         <ResponsiveContainer width="100%" height={250}>
             <LineChart

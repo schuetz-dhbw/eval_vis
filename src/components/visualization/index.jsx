@@ -18,36 +18,35 @@ import DetailsSection from './DetailsSection';
 import UsageHintsSection from './UsageHintsSection';
 import StatisticsSection from './StatisticsSection';
 import WorkTypeAnalysisSection from './WorkTypeAnalysisSection';
-import {translations} from "../../locales";
 
 const Visualization = () => {
     // Context-Werte verwenden
     const {
-        chartType, currentWork, language, rawWorks
+        chartType, currentWork, language
     } = useAppContext();
 
     // Daten für die Diagramme basierend auf dem ausgewählten Typ
     const scoresData = useMemo(() => {
         switch(chartType) {
             case CHART_TYPES.WEIGHTS:
-                return getWeightsData(currentWork,  translations, language);
+                return getWeightsData(currentWork, language);
             case CHART_TYPES.WEIGHTED:
-                return getWeightedData(currentWork,  translations, language);
+                return getWeightedData(currentWork, language);
             case CHART_TYPES.COMBINED:
-                return getCombinedData(currentWork,  translations, language);
+                return getCombinedData(currentWork, language);
             case CHART_TYPES.SCORES:
             default:
-                return getScoresData(currentWork,  translations, language);
+                return getScoresData(currentWork, language);
         }
     }, [currentWork, chartType, language]);
 
     const combinedData = useMemo(() => {
-        return getCombinedData(currentWork,  translations, language);
+        return getCombinedData(currentWork, language);
     }, [currentWork, language]);
 
     const radarData = useMemo(() => {
-        return getRadarData(currentWork,  translations, language);
-    }, [currentWork, language, chartType]);
+        return getRadarData(currentWork, language);
+    },[currentWork, language]);
 
     return (
         <div className="visualization-container">

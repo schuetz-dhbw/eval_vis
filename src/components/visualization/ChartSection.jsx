@@ -23,7 +23,7 @@ const ChartSection = ({ scoresData, combinedData, radarData }) => {
                 </h3>
                 <div className="chart-wrapper">
                     <DataErrorBoundary data={chartType === CHART_TYPES.COMBINED ? combinedData : scoresData} language={language}>
-                        <ChartErrorBoundary language={language} chartType={chartType}>
+                        <ChartErrorBoundary language={language}>
                             {chartType === CHART_TYPES.COMBINED ? (
                                 <ComposedChartComponent
                                     data={combinedData}
@@ -33,7 +33,6 @@ const ChartSection = ({ scoresData, combinedData, radarData }) => {
                                 <LineChartComponent
                                     data={scoresData}
                                     chartType={chartType}
-                                    language={language}
                                 />
                             )}
                         </ChartErrorBoundary>
@@ -53,7 +52,7 @@ const ChartSection = ({ scoresData, combinedData, radarData }) => {
                         data={chartType === CHART_TYPES.COMBINED ? getWeightedData(currentWork, language) : scoresData}
                         language={language}
                     >
-                        <ChartErrorBoundary language={language} chartType={chartType}>
+                        <ChartErrorBoundary language={language}>
                             <BarChartComponent
                                 data={chartType === CHART_TYPES.COMBINED ?
                                     getWeightedData(currentWork, language) : scoresData}
@@ -74,7 +73,7 @@ const ChartSection = ({ scoresData, combinedData, radarData }) => {
                 </h3>
                 <div className="chart-wrapper radar-wrapper">
                     <DataErrorBoundary data={radarData} language={language}>
-                        <ChartErrorBoundary language={language} chartType={chartType}>
+                        <ChartErrorBoundary language={language}>
                             <RadarChartComponent
                                 data={radarData}
                                 chartType={chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType}
