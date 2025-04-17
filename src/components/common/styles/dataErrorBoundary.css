@@ -1,0 +1,39 @@
+.data-error-container,
+.data-error-fallback {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: var(--padding-lg);
+    background-color: rgba(136, 132, 216, 0.05);
+    margin: var(--padding-md) 0;
+    text-align: center;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-button {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: var(--padding-sm) var(--padding-lg);
+    font-size: var(--font-size-base);
+    cursor: pointer;
+    margin-top: var(--padding-md);
+    transition: background-color 0.3s;
+}
+
+.error-button:hover {
+    background-color: #7673c0;
+}
+
+.dark-mode .data-error-container,
+.dark-mode .data-error-fallback {
+    background-color: rgba(187, 134, 252, 0.05);
+}
+
+.dark-mode .error-button:hover {
+    background-color: #9573d1;
+}

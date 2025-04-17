@@ -1,5 +1,12 @@
 export const en = {
     title: "Visualization of Assessment: AI vs. Human",
+    errors: {
+        chartErrorTitle: "Visualization Error",
+        chartErrorMessage: "An error occurred while rendering the chart.",
+        dataErrorTitle: "Data Error",
+        dataErrorMessage: "The data could not be processed.",
+        tryAgain: "Try again"
+    },
     chartTypes: {
         scores: "Achievement Levels",
         weights: "Weightings",

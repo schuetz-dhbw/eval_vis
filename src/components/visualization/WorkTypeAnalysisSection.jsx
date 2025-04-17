@@ -2,20 +2,33 @@ import React from 'react';
 import './styles/workTypeAnalysis.css';
 import { useTranslation } from '../../hooks/useTranslation';
 import WorkTypeAnalysisComponent from '../charts/WorkTypeAnalysisComponent';
+import ChartErrorBoundary from '../charts/ChartErrorBoundary';
+import DataErrorBoundary from '../common/DataErrorBoundary';
+import ErrorBoundary from '../common/ErrorBoundary';
 
 const WorkTypeAnalysisSection = ({ works, language }) => {
     const t = useTranslation(language);
 
     return (
-        <div className="work-type-analysis-section">
-            <h3 className="section-title">{t('workTypeAnalysisTitle', 'chartTitles') || "Work Type Analysis"}</h3>
-            <div className="analysis-content">
-                <WorkTypeAnalysisComponent
-                    works={works}
-                    language={language}
-                />
+        <ErrorBoundary
+            fallbackTitle={t('dataErrorTitle', 'errors')}
+            fallbackMessage={t('dataErrorMessage', 'errors')}
+            showDetails={false}
+        >
+            <div className="work-type-analysis-section">
+                <h3 className="section-title">{t('workTypeAnalysisTitle', 'chartTitles') || "Work Type Analysis"}</h3>
+                <div className="analysis-content">
+                    <DataErrorBoundary data={works} language={language}>
+                        <ChartErrorBoundary language={language} chartType="workTypeAnalysis">
+                            <WorkTypeAnalysisComponent
+                                works={works}
+                                language={language}
+                            />
+                        </ChartErrorBoundary>
+                    </DataErrorBoundary>
+                </div>
             </div>
-        </div>
+        </ErrorBoundary>
     );
 };
 

@@ -1,5 +1,12 @@
 export const de = {
     title: "Visualisierung der Bewertungen: KI vs. Mensch",
+    errors: {
+        chartErrorTitle: "Visualisierungsfehler",
+        chartErrorMessage: "Bei der Darstellung des Diagramms ist ein Fehler aufgetreten.",
+        dataErrorTitle: "Datenfehler",
+        dataErrorMessage: "Die Daten konnten nicht verarbeitet werden.",
+        tryAgain: "Erneut versuchen"
+    },
     chartTypes: {
         scores: "Zielerreichungsgrade",
         weights: "Gewichtungen",

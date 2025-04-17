@@ -6,6 +6,8 @@ import RadarChartComponent from '../charts/RadarChartComponent';
 import BarChartComponent from '../charts/BarChartComponent';
 import { CHART_TYPES } from '../../constants/chartTypes';
 import {getWeightedData} from "../../utils/dataTransformers";
+import ChartErrorBoundary from '../charts/ChartErrorBoundary';
+import DataErrorBoundary from '../common/DataErrorBoundary';
 
 const ChartSection = ({
                           work,
@@ -25,18 +27,22 @@ const ChartSection = ({
                     {chartType === CHART_TYPES.COMBINED ? t('combinedTitle', 'chartTitles') : t('vectors', 'chartTitles')}
                 </h3>
                 <div className="chart-wrapper">
-                    {chartType === CHART_TYPES.COMBINED ? (
-                        <ComposedChartComponent
-                            data={combinedData}
-                            language={language}
-                        />
-                    ) : (
-                        <LineChartComponent
-                            data={scoresData}
-                            chartType={chartType}
-                            language={language}
-                        />
-                    )}
+                    <DataErrorBoundary data={chartType === CHART_TYPES.COMBINED ? combinedData : scoresData} language={language}>
+                        <ChartErrorBoundary language={language} chartType={chartType}>
+                            {chartType === CHART_TYPES.COMBINED ? (
+                                <ComposedChartComponent
+                                    data={combinedData}
+                                    language={language}
+                                />
+                            ) : (
+                                <LineChartComponent
+                                    data={scoresData}
+                                    chartType={chartType}
+                                    language={language}
+                                />
+                            )}
+                        </ChartErrorBoundary>
+                    </DataErrorBoundary>
                 </div>
             </div>
 
@@ -48,12 +54,19 @@ const ChartSection = ({
                         t('bar', 'chartTitles')}
                 </h3>
                 <div className="chart-wrapper">
-                    <BarChartComponent
-                        data={chartType === CHART_TYPES.COMBINED ?
-                            getWeightedData(work, language) : scoresData}
-                        chartType={chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType}
+                    <DataErrorBoundary
+                        data={chartType === CHART_TYPES.COMBINED ? getWeightedData(work, language) : scoresData}
                         language={language}
-                    />
+                    >
+                        <ChartErrorBoundary language={language} chartType={chartType}>
+                            <BarChartComponent
+                                data={chartType === CHART_TYPES.COMBINED ?
+                                    getWeightedData(work, language) : scoresData}
+                                chartType={chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType}
+                                language={language}
+                            />
+                        </ChartErrorBoundary>
+                    </DataErrorBoundary>
                 </div>
             </div>
 
@@ -65,11 +78,15 @@ const ChartSection = ({
                         t('radar', 'chartTitles')}
                 </h3>
                 <div className="chart-wrapper radar-wrapper">
-                    <RadarChartComponent
-                        data={radarData}
-                        chartType={chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType}
-                        language={language}
-                    />
+                    <DataErrorBoundary data={radarData} language={language}>
+                        <ChartErrorBoundary language={language} chartType={chartType}>
+                            <RadarChartComponent
+                                data={radarData}
+                                chartType={chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType}
+                                language={language}
+                            />
+                        </ChartErrorBoundary>
+                    </DataErrorBoundary>
                 </div>
             </div>
         </div>
