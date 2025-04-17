@@ -8,6 +8,17 @@ export const de = {
         statistics: "Statistische Analyse",
         workTypeAnalysis: "Analyse nach Arbeitstyp"
     },
+    metricsDescriptions: {
+        cosineDescription: "Misst die Winkelähnlichkeit zwischen KI- und Human-Bewertungen (1,0 = identisch, 0,0 = völlig unterschiedlich)",
+        distanceDescription: "Euklidische Distanz zwischen KI- und Human-Bewertungen (niedriger = ähnlicher)",
+        gradeDifferenceDescription: "Unterschied zwischen den finalen Noten von KI und Human"
+    },
+    metricsQuality: {
+        excellent: "Hervorragend",
+        good: "Gut",
+        moderate: "Moderat",
+        poor: "Schwach"
+    },
     metrics: {
         cosine: "Kosinus-Ähnlichkeit",
         distance: "Euklidische Distanz",
@@ -15,9 +26,11 @@ export const de = {
         maxDiff: "Max",
         minDiff: "Min",
         standardDeviation: "Standardabweichung",
-        weightDifference: "Gewichtungsdifferenz"
+        weightDifference: "Gewichtungsdifferenz",
+        gradeDifference: "Notendifferenz"
     },
     chartTitles: {
+        metricsTitle: "Ähnlichkeitsmetriken",
         vectors: "Bewertungsvektoren",
         combinedTitle: "Bewertungen und Gewichtungen",
         radar: "Spinnendiagramm",

@@ -8,6 +8,17 @@ export const en = {
         statistics: "Statistical Analysis",
         workTypeAnalysis: "Work Type Analysis"
     },
+    metricsDescriptions: {
+        cosineDescription: "Measures angle similarity between AI and human ratings (1.0 = identical, 0.0 = completely different)",
+        distanceDescription: "Euclidean distance between AI and human ratings (lower = more similar)",
+        gradeDifferenceDescription: "Difference between AI and human final grades"
+    },
+    metricsQuality: {
+        excellent: "Excellent",
+        good: "Good",
+        moderate: "Moderate",
+        poor: "Poor"
+    },
     metrics: {
         cosine: "Cosine Similarity",
         distance: "Euclidean Distance",
@@ -16,10 +27,10 @@ export const en = {
         minDiff: "Min",
         standardDeviation: "Standard Deviation",
         weightDifference: "Weight Difference",
-        count: "Count",
-        avgByType: "Average by Type"
+        gradeDifference: "Grade Difference"
     },
     chartTitles: {
+        metricsTitle: "Similarity Metrics",
         vectors: "Assessment Vectors",
         combinedTitle: "Scores and Weights",
         radar: "Spider Chart",
