@@ -26,15 +26,31 @@ const RadarChartComponent = ({ data, chartType, translations, language }) => {
                     name={t('ki', 'labels')}
                     dataKey={t('ki', 'labels')}
                     stroke="#8884d8"
+                    strokeWidth={2.5}
                     fill="#8884d8"
-                    fillOpacity={0.6}
+                    fillOpacity={0.1}
+                    dot={{
+                        r: 5,
+                        strokeWidth: 1,
+                        stroke: "#8884d8",
+                        fill: "white",
+                        strokeDasharray: "",
+                    }}
                 />
                 <Radar
                     name={t('human', 'labels')}
                     dataKey={t('human', 'labels')}
                     stroke="#82ca9d"
+                    strokeWidth={2.5}
                     fill="#82ca9d"
-                    fillOpacity={0.6}
+                    fillOpacity={0.1}
+                    dot={{
+                        r: 5,
+                        strokeWidth: 1,
+                        stroke: "#82ca9d",
+                        fill: "white",
+                        strokeDasharray: "",
+                    }}
                 />
                 <Legend />
             </RadarChart>

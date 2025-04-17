@@ -19,3 +19,46 @@
     padding: var(--padding-sm) var(--padding-md) !important;
     box-shadow: var(--shadow-sm) !important;
 }
+
+/* Verbesserte Lesbarkeit für Radar Chart */
+.recharts-radar .recharts-polygon {
+    stroke-width: 2px; /* Stärkere Linien für bessere Sichtbarkeit */
+}
+
+/* Bessere Sichtbarkeit des Rasters im Radar Chart */
+.recharts-polar-grid .recharts-polar-grid-concentric-circle {
+    stroke: var(--color-border);
+    stroke-width: 0.5px;
+}
+
+.dark-mode .recharts-polar-grid .recharts-polar-grid-concentric-circle {
+    stroke: var(--color-border-light);
+}
+
+/* Verbesserte Lesbarkeit der Labels im Radar Chart */
+.recharts-polar-angle-axis .recharts-polar-angle-axis-tick text {
+    font-weight: 500;
+    fill: var(--color-text);
+}
+
+.radar-wrapper {
+    padding-top: 1rem;
+}
+
+.recharts-radar {
+    filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.15));
+}
+
+.dark-mode .recharts-radar {
+    filter: drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.15));
+}
+
+/* Bessere Hervorhebung der Achsen im Radar Chart */
+.recharts-polar-angle-axis-line {
+    stroke-width: 1.5px;
+    stroke: var(--color-border);
+}
+
+.dark-mode .recharts-polar-angle-axis-line {
+    stroke: var(--color-border-light);
+}
