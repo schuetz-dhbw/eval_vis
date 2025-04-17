@@ -1,10 +1,9 @@
-// components/visualization/HeaderSection.jsx
 import React from 'react';
 import './styles/header.css';
-import { getTranslation } from '../../utils/translationHelpers';
+import { useTranslation } from '../../hooks/useTranslation';
 
-const HeaderSection = ({ work, translations, language }) => {
-    const t = (key, section = null) => getTranslation(translations, language, key, section);
+const HeaderSection = ({ language }) => {
+    const t = useTranslation(language);
 
     return (
         <div className="header-section">

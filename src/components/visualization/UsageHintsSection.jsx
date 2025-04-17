@@ -1,10 +1,10 @@
 import React from 'react';
 import './styles/usageHints.css';
-import { getTranslation } from '../../utils/translationHelpers';
+import { useTranslation } from '../../hooks/useTranslation';
 import { CHART_TYPES } from '../../data/chartTypes';
 
-const UsageHintsSection = ({ translations, language, chartType }) => {
-    const t = (key, section = null) => getTranslation(translations, language, key, section);
+const UsageHintsSection = ({ language, chartType }) => {
+    const t = useTranslation(language);
 
     return (
         <div className="usage-hints">

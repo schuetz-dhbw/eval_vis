@@ -1,10 +1,10 @@
 import React from 'react';
 import './styles/workTypeAnalysis.css';
-import { getTranslation } from '../../utils/translationHelpers';
+import { useTranslation } from '../../hooks/useTranslation';
 import WorkTypeAnalysisComponent from '../charts/WorkTypeAnalysisComponent';
 
-const WorkTypeAnalysisSection = ({ works, translations, language }) => {
-    const t = (key, section = null) => getTranslation(translations, language, key, section);
+const WorkTypeAnalysisSection = ({ works, language }) => {
+    const t = useTranslation(language);
 
     return (
         <div className="work-type-analysis-section">
@@ -12,7 +12,6 @@ const WorkTypeAnalysisSection = ({ works, translations, language }) => {
             <div className="analysis-content">
                 <WorkTypeAnalysisComponent
                     works={works}
-                    translations={translations}
                     language={language}
                 />
             </div>

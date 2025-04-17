@@ -1,9 +1,9 @@
 import React from 'react';
 import './styles/details.css';
-import { getTranslation } from '../../utils/translationHelpers';
+import { useTranslation } from '../../hooks/useTranslation';
 
-const DetailsSection = ({ work, translations, language }) => {
-    const t = (key, section = null) => getTranslation(translations, language, key, section);
+const DetailsSection = ({ work, language }) => {
+    const t = useTranslation(language);
 
     return (
         <div className="details-container">

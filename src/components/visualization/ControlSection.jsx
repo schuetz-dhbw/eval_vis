@@ -1,7 +1,6 @@
-// components/visualization/ControlSection.jsx
 import React from 'react';
 import './styles/controls.css';
-import { getTranslation } from '../../utils/translationHelpers';
+import { useTranslation } from '../../hooks/useTranslation';
 import { CHART_TYPES } from '../../data/chartTypes';
 
 const ControlSection = ({
@@ -11,10 +10,9 @@ const ControlSection = ({
                             chartType,
                             setChartType,
                             language,
-                            setLanguage,
-                            translations
+                            setLanguage
                         }) => {
-    const t = (key, section = null) => getTranslation(translations, language, key, section);
+    const t = useTranslation(language);
 
     // Check if we should show the work selector
     const showWorkSelector = chartType !== CHART_TYPES.WORK_TYPE_ANALYSIS;

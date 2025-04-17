@@ -1,18 +1,18 @@
 import React, { useMemo } from 'react';
 import './styles/metrics.css';
-import { getTranslation } from '../../utils/translationHelpers';
+import { useTranslation } from '../../hooks/useTranslation';
 import { calculateSimilarityMetrics } from '../../utils/dataTransformers';
 import { CHART_TYPES } from '../../data/chartTypes';
 
-const MetricsSection = ({ work, translations, language, chartType }) => {
-    const t = (key, section = null) => getTranslation(translations, language, key, section);
+const MetricsSection = ({ work, language, chartType }) => {
+    const t = useTranslation(language);
 
     // Metriken berechnen mit useMemo
     const metrics = useMemo(() => {
         return calculateSimilarityMetrics(work);
     }, [work]); // Nur neu berechnen, wenn sich work ändert
 
-//TODO: Bewertung / Einordnung diskutieren
+    //TODO: Bewertung / Einordnung diskutieren
     return (
         <div className="metrics-container">
             <h3 className="chart-title">{t('metricsTitle', 'chartTitles') || "Similarity Metrics"}</h3>

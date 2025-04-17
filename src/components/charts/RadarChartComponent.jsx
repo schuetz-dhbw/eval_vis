@@ -4,11 +4,11 @@ import {
 } from 'recharts';
 import './styles/charts.css';
 import { getRadarDomain } from '../../utils/dataTransformers';
-import { getTranslation } from '../../utils/translationHelpers';
+import { useTranslation } from '../../hooks/useTranslation';
 
 
-const RadarChartComponent = ({ data, chartType, translations, language }) => {
-    const t = (key, section = null) => getTranslation(translations, language, key, section);
+const RadarChartComponent = ({ data, chartType, language }) => {
+    const t = useTranslation(language);
 
     return (
         <ResponsiveContainer width="100%" height={350}>

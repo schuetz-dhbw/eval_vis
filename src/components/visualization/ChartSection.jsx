@@ -1,5 +1,5 @@
 import React from 'react';
-import { getTranslation } from '../../utils/translationHelpers';
+import { useTranslation } from '../../hooks/useTranslation';
 import LineChartComponent from '../charts/LineChartComponent';
 import ComposedChartComponent from '../charts/ComposedChartComponent';
 import RadarChartComponent from '../charts/RadarChartComponent';
@@ -13,10 +13,9 @@ const ChartSection = ({
                           combinedData,
                           radarData,
                           chartType,
-                          translations,
                           language
                       }) => {
-    const t = (key, section = null) => getTranslation(translations, language, key, section);
+    const t = useTranslation(language);
 
     return (
         <div className="charts-grid">
@@ -29,14 +28,12 @@ const ChartSection = ({
                     {chartType === CHART_TYPES.COMBINED ? (
                         <ComposedChartComponent
                             data={combinedData}
-                            translations={translations}
                             language={language}
                         />
                     ) : (
                         <LineChartComponent
                             data={scoresData}
                             chartType={chartType}
-                            translations={translations}
                             language={language}
                         />
                     )}
@@ -53,9 +50,8 @@ const ChartSection = ({
                 <div className="chart-wrapper">
                     <BarChartComponent
                         data={chartType === CHART_TYPES.COMBINED ?
-                            getWeightedData(work, translations, language) : scoresData}
+                            getWeightedData(work, language) : scoresData}
                         chartType={chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType}
-                        translations={translations}
                         language={language}
                     />
                 </div>
@@ -72,7 +68,6 @@ const ChartSection = ({
                     <RadarChartComponent
                         data={radarData}
                         chartType={chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType}
-                        translations={translations}
                         language={language}
                     />
                 </div>

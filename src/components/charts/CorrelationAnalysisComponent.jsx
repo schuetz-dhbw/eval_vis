@@ -3,7 +3,7 @@ import {
     ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip,
     ResponsiveContainer, ZAxis, Cell, Legend
 } from 'recharts';
-import { getTranslation } from '../../utils/translationHelpers';
+import { useTranslation } from '../../hooks/useTranslation';
 import './styles/correlation.css';
 
 const calculateCorrelation = (x, y) => {
@@ -38,7 +38,7 @@ const calculateVariance = (data) => {
 
 // Benutzerdefinierter Tooltip für den Scatter Plot
 const CustomTooltip = ({ active, payload, label, translations, language }) => {
-    const t = (key, section = null) => getTranslation(translations, language, key, section);
+    const t = useTranslation(language);
 
     if (active && payload && payload.length) {
         const data = payload[0].payload;
@@ -69,8 +69,7 @@ const CustomTooltip = ({ active, payload, label, translations, language }) => {
 };
 
 const CorrelationAnalysisComponent = ({ work, translations, language }) => {
-    const t = (key, section = null) => getTranslation(translations, language, key, section);
-
+    const t = useTranslation(language);
     const criteriaData = useMemo(() => {
         const kiVariances = work.criteriaKeys.map((label, index) => ({
             name: label,

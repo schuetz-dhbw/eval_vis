@@ -3,11 +3,11 @@ import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
     ScatterChart, Scatter, ZAxis, Cell
 } from 'recharts';
-import { getTranslation } from '../../utils/translationHelpers';
+import { useTranslation } from '../../hooks/useTranslation';
 import './styles/workTypeAnalysis.css';
 
 const WorkTypeAnalysisComponent = ({ works, translations, language }) => {
-    const t = (key, section = null) => getTranslation(translations, language, key, section);
+    const t = useTranslation(language);
 
     // Group works by type
     const worksByType = useMemo(() => {

@@ -1,11 +1,11 @@
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import './styles/statistics.css';
-import { getTranslation } from '../../utils/translationHelpers';
+import { useTranslation } from '../../hooks/useTranslation';
 import CorrelationAnalysisComponent from '../charts/CorrelationAnalysisComponent';
-import { calculateStatistics, calculateSimilarityMetrics  } from '../../utils/dataTransformers';
+import { calculateStatistics, calculateSimilarityMetrics } from '../../utils/dataTransformers';
 
-const StatisticsSection = ({ work, translations, language }) => {
-    const t = (key, section = null) => getTranslation(translations, language, key, section);
+const StatisticsSection = ({ work, language }) => {
+    const t = useTranslation(language);
 
     // Statistiken mit useMemo berechnen
     const stats = useMemo(() => {
@@ -56,7 +56,6 @@ const StatisticsSection = ({ work, translations, language }) => {
             <div className="statistics-content">
                 <CorrelationAnalysisComponent
                     work={work}
-                    translations={translations}
                     language={language}
                 />
             </div>

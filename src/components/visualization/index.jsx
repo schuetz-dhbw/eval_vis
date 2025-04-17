@@ -53,7 +53,6 @@ const Visualization = () => {
     return (
         <div className="visualization-container">
             <HeaderSection
-                translations={translations}
                 language={language}
             />
 
@@ -65,27 +64,24 @@ const Visualization = () => {
                 setChartType={setChartType}
                 language={language}
                 setLanguage={setLanguage}
-                translations={translations}
             />
 
             {chartType !== CHART_TYPES.WORK_TYPE_ANALYSIS && (
                 <MetricsSection
                     work={work}
-                    translations={translations}
                     language={language}
+                    chartType={chartType}
                 />
             )}
 
             {chartType === CHART_TYPES.STATISTICS ? (
                 <StatisticsSection
                     work={work}
-                    translations={translations}
                     language={language}
                 />
             ) : chartType === CHART_TYPES.WORK_TYPE_ANALYSIS ? (
                 <WorkTypeAnalysisSection
                     works={works}
-                    translations={translations}
                     language={language}
                 />
             ) : (
@@ -95,21 +91,18 @@ const Visualization = () => {
                     combinedData={combinedData}
                     radarData={radarData}
                     chartType={chartType}
-                    translations={translations}
                     language={language}
                 />
             )}
 
             {chartType !== CHART_TYPES.WORK_TYPE_ANALYSIS && (
-            <DetailsSection
-                work={work}
-                translations={translations}
-                language={language}
-            />
+                <DetailsSection
+                    work={work}
+                    language={language}
+                />
             )}
 
             <UsageHintsSection
-                translations={translations}
                 language={language}
                 chartType={chartType}
             />

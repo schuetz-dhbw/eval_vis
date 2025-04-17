@@ -3,11 +3,11 @@ import {
     ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 import './styles/charts.css';
-import { getTranslation } from '../../utils/translationHelpers';
+import { useTranslation } from '../../hooks/useTranslation';
 
 
 const ComposedChartComponent = ({ data, translations, language }) => {
-    const t = (key, section = null) => getTranslation(translations, language, key, section);
+    const t = useTranslation(language);
 
     return (
         <ResponsiveContainer width="100%" height={250}>

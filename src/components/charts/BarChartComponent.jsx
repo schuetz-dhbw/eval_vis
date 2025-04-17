@@ -4,12 +4,12 @@ import {
 } from 'recharts';
 import './styles/charts.css';
 import { getYDomain } from '../../utils/dataTransformers';
-import { getTranslation } from '../../utils/translationHelpers';
+import { useTranslation } from '../../hooks/useTranslation';
 import {CHART_TYPES} from "../../data/chartTypes";
 
 
 const BarChartComponent = ({ data, chartType, translations, language }) => {
-    const t = (key, section = null) => getTranslation(translations, language, key, section);
+    const t = useTranslation(language);
 
     // Bestimme die richtigen dataKeys basierend auf dem Charttyp
     const kiDataKey = chartType === CHART_TYPES.COMBINED ?
