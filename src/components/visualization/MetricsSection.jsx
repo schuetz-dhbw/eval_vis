@@ -46,16 +46,16 @@ const MetricsSection = ({ work, translations, language, chartType }) => {
                     </div>
                 </div>
                 <div className="metric-box">
-                    <div className="metric-value">{work.ki_grade.toFixed(1)} / {work.human_grade.toFixed(1)}</div>
+                    <div className="metric-value">{work.aiGrade.toFixed(1)} / {work.humanGrade.toFixed(1)}</div>
                     <div className="metric-label">{t('gradeDifference', 'metrics') || "Grade Difference"}</div>
                     <div className="metric-description">
                         {t('gradeDifferenceDescription', 'metricsDescriptions') ||
                             "Difference between KI and human final grades"}
                     </div>
                     <div className="metric-quality">
-                        {Math.abs(work.ki_grade - work.human_grade) < 0.4 ? '✓ ' + (t('excellent', 'metricsQuality') || "Excellent") :
-                            Math.abs(work.ki_grade - work.human_grade) < 0.6 ? '✓ ' + (t('good', 'metricsQuality') || "Good") :
-                                Math.abs(work.ki_grade - work.human_grade) < 1.1 ? '⚠ ' + (t('moderate', 'metricsQuality') || "Moderate") :
+                        {Math.abs(work.aiGrade - work.humanGrade) < 0.4 ? '✓ ' + (t('excellent', 'metricsQuality') || "Excellent") :
+                            Math.abs(work.aiGrade - work.humanGrade) < 0.6 ? '✓ ' + (t('good', 'metricsQuality') || "Good") :
+                                Math.abs(work.aiGrade - work.humanGrade) < 1.1 ? '⚠ ' + (t('moderate', 'metricsQuality') || "Moderate") :
                                     '⚠ ' + (t('poor', 'metricsQuality') || "Poor")}
                     </div>
                 </div>

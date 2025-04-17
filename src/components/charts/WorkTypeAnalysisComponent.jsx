@@ -28,14 +28,14 @@ const WorkTypeAnalysisComponent = ({ works, translations, language }) => {
         Object.entries(worksByType).forEach(([type, typeWorks]) => {
             // For each criterion, calculate the average difference
             if (typeWorks.length > 0) {
-                const criteriaCount = typeWorks[0].criteriaLabels.length;
+                const criteriaCount = typeWorks[0].criteriaKeys.length;
 
                 for (let i = 0; i < criteriaCount; i++) {
                     let totalDiff = 0;
                     let validWorkCount = 0;
 
                     typeWorks.forEach(work => {
-                        const diff = Math.abs(work.ki_scores[i] - work.human_scores[i]);
+                        const diff = Math.abs(work.aiScores[i] - work.humanScores[i]);
                         if (!isNaN(diff)) {
                             totalDiff += diff;
                             validWorkCount++;
@@ -45,7 +45,7 @@ const WorkTypeAnalysisComponent = ({ works, translations, language }) => {
                     if (validWorkCount > 0) {
                         result.push({
                             type,
-                            criterion: typeWorks[0].criteriaLabels[i],
+                            criterion: typeWorks[0].criteriaKeys[i],
                             averageDifference: totalDiff / validWorkCount,
                             count: validWorkCount
                         });
@@ -66,8 +66,8 @@ const WorkTypeAnalysisComponent = ({ works, translations, language }) => {
             let diffCount = 0;
 
             typeWorks.forEach(work => {
-                for (let i = 0; i < work.ki_scores.length; i++) {
-                    const diff = Math.abs(work.ki_scores[i] - work.human_scores[i]);
+                for (let i = 0; i < work.aiScores.length; i++) {
+                    const diff = Math.abs(work.aiScores[i] - work.humanScores[i]);
                     if (!isNaN(diff)) {
                         totalDiff += diff;
                         diffCount++;

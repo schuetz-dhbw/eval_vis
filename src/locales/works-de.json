@@ -1,0 +1,68 @@
+{
+  "titles": {
+    "zero_elsberg": "ZERO – Sie wissen, was du tust von Marc Elsberg: Möglichkeiten und Gefahren der digitalen Überwachung",
+    "cms_comparison": "Gegenüberstellung von Content-Management-Systemen: Wordpress, Drupal, Joomla, TYPO3",
+    "jetpack_compose": "App-Entwicklung mit dem Jetpack Compose Framework",
+    "java_vs_kotlin": "Java vs. Kotlin - Wird Kotlin Java ganzheitlich ersetzen?",
+    "pepper_cms": "Aufbau eines CMS zur Erstellung von Android Apps für den humanoiden Roboter Pepper",
+    "pwa_vs_native": "Vergleich von Progressive Web App mit nativen Apps am Beispiel einer Journaling App",
+    "cross_platform": "Vergleich von verschiedenen Technologien für die Entwicklung von mobilen Cross-Plattform-Applikationen",
+    "responsive_webdesign": "Responsive Webdesign – Anforderungen, Methoden & technische Möglichkeiten",
+    "android_best_practices": "State-of-the-Art der Android-App-Entwicklung: Aktuelle Best Practices für Design Patterns und Architektur",
+    "apple_ux_design": "The \"Apple Feeling\" - Analysis of Apple Software UI/UX Design",
+    "privacy_video_app": "Konzeption und Realisierung einer App zur Nutzung eines Smartphones zur Videodokumentation mit Fokus auf Privacy",
+    "pet_feeder_wet": "Prototypentwicklung eines zeit- und chipgesteuerten Haustierfutterautomaten für Nassfutter",
+    "pet_feeder_dry": "Prototypentwicklung eines zeit- und chipgesteuerten Haustierfutterautomaten für Trockenfutter",
+    "graph_visualization": "Visualisierung von großen Datasets aus Graph-Datenbanken",
+    "ai_detector": "Erkennung und Analyse von KI-generierten Texten im Wissenschaftsbereich",
+    "kotlin_multiplatform": "Kotlin Multiplatform – die Cutting Edge Technology der App-Entwicklung?",
+    "risc_v_tinyemu": "RISC-V: Nutzung des TinyEMU von Fabrice Bellard zur prototypischen Realisierung einer RISC-V-Applikation für ein Praktikum",
+    "event_architecture": "Patterns und Best Practices für das Design einer eventbasierten Architektur",
+    "energy_efficient_programming": "Energieeffizientes Programmieren",
+    "ethics_cs": "Ethik für Informatiker - Entwicklung einer Ethik-Vorlesung für Informatiker",
+    "smart_contracts": "Zukunftsszenarien und gegenwärtige Anwendungsfelder von Smart Contracts"
+  },
+  "types": {
+    "analytic": "Analytische Arbeit",
+    "constructive": "Konstruktive Arbeit"
+  },
+  "typeDescriptions": {
+    "theory_disc": "Theoretische Erarbeitung, Diskussion",
+    "theory_eval": "Theoretische Erarbeitung, Evaluation",
+    "theory_impl": "Theoretische Erarbeitung, Implementierung",
+    "theory_impl_eval": "Theoretische Erarbeitung, Implementierung, Evaluation",
+    "concept_impl_doc": "Konzept, Implementierung, Dokumentation, Benutzeranleitung",
+    "concept_impl": "Theoretische Erarbeitung, Konzeption, Implementierung",
+    "theory_concept_impl_eval": "Theoretische Erarbeitung, Konzeption, Implementierung, Evaluation",
+    "theory_concept_impl": "Theoretische Erarbeitung, Konzeption, Implementierung",
+    "concept_impl_proto": "Konzeption, Implementierung, Prototyp",
+    "theory_empeval": "Theoretische Erarbeitung, empirische Evaluation",
+    "theory_example": "Theoretische Erarbeitung, exemplarische Umsetzung"
+  },
+  "criteriaLabels": {
+    "professionalCompetence": "Fachliche Bearbeitung",
+    "useOfExpertise": "Nutzung von Fachwissen",
+    "useMethods": "Einsatz von Methoden",
+    "feasibility": "Umsetzbarkeit",
+    "creativity": "Kreativität",
+    "economic": "Wirtschaftliche Bewertung",
+    "independence": "Selbstständigkeit, Eigeninitiative",
+    "systematic": "Systematik",
+    "documentation": "Dokumentation",
+    "litResearch": "Literaturrecherche",
+    "litUse": "Verwendung der Literatur"
+  },
+  "criteriaShortLabels": {
+    "professionalCompetence": "Fachl. Bearbeitung",
+    "useOfExpertise": "Fachwissen",
+    "useMethods": "Methodeneinsatz",
+    "feasibility": "Umsetzbarkeit",
+    "creativity": "Kreativität",
+    "economic": "Wirtschaftl. Bewertung",
+    "independence": "Selbständigkeit",
+    "systematic": "Systematik",
+    "documentation": "Dokumentation",
+    "litResearch": "Literaturrecherche",
+    "litUse": "Literaturverwendung"
+  }
+}

@@ -72,12 +72,12 @@ const CorrelationAnalysisComponent = ({ work, translations, language }) => {
     const t = (key, section = null) => getTranslation(translations, language, key, section);
 
     const criteriaData = useMemo(() => {
-        const kiVariances = work.criteriaLabels.map((label, index) => ({
+        const kiVariances = work.criteriaKeys.map((label, index) => ({
             name: label,
-            variance: calculateVariance([work.ki_scores[index], work.human_scores[index]]),
-            kiScore: work.ki_scores[index],
-            humanScore: work.human_scores[index],
-            scoreDiff: Math.abs(work.ki_scores[index] - work.human_scores[index])
+            variance: calculateVariance([work.aiScores[index], work.humanScores[index]]),
+            kiScore: work.aiScores[index],
+            humanScore: work.humanScores[index],
+            scoreDiff: Math.abs(work.aiScores[index] - work.humanScores[index])
         }));
 
         return kiVariances.sort((a, b) => b.variance - a.variance);
@@ -86,19 +86,19 @@ const CorrelationAnalysisComponent = ({ work, translations, language }) => {
     const correlationData = useMemo(() => {
         const result = [];
 
-        for (let i = 0; i < work.criteriaLabels.length; i++) {
-            for (let j = i + 1; j < work.criteriaLabels.length; j++) {
+        for (let i = 0; i < work.criteriaKeys.length; i++) {
+            for (let j = i + 1; j < work.criteriaKeys.length; j++) {
                 const correlation = calculateCorrelation(
-                    [work.ki_scores[i], work.human_scores[i]],
-                    [work.ki_scores[j], work.human_scores[j]]
+                    [work.aiScores[i], work.humanScores[i]],
+                    [work.aiScores[j], work.humanScores[j]]
                 );
 
                 result.push({
                     x: i,
                     y: j,
                     z: Math.abs(correlation) * 100,
-                    name1: work.criteriaLabels[i],
-                    name2: work.criteriaLabels[j],
+                    name1: work.criteriaKeys[i],
+                    name2: work.criteriaKeys[j],
                     correlation: correlation.toFixed(2)
                 });
             }

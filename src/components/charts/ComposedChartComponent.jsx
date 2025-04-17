@@ -29,7 +29,7 @@ const ComposedChartComponent = ({ data, translations, language }) => {
                 <Legend />
                 <Bar yAxisId="left" dataKey={`${t('ki', 'labels')}Score`} name={t('kiScore', 'labels')} fill="#8884d8" />
                 <Bar yAxisId="left" dataKey={`${t('human', 'labels')}Score`} name={t('humanScore', 'labels')} fill="#82ca9d" />
-                <Line yAxisId="right" type="monotone" dataKey={`${t('ki', 'labels')}Weight`} name={t('kiWeight', 'labels')} stroke="#ff7300" />
+                <Line yAxisId="right" type="monotone" dataKey={`${t('ki', 'labels')}Weight`} name={t('aiWeight', 'labels')} stroke="#ff7300" />
                 <Line yAxisId="right" type="monotone" dataKey={`${t('human', 'labels')}Weight`} name={t('humanWeight', 'labels')} stroke="#0088fe" />
             </ComposedChart>
         </ResponsiveContainer>

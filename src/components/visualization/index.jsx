@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useMemo, useState} from 'react';
 import './styles/common.css';
 import { works } from '../../data/works';
 import { translations } from '../../locales';
@@ -8,7 +8,8 @@ import {
     getWeightsData,
     getWeightedData,
     getCombinedData,
-    getRadarData
+    getRadarData,
+    getTranslatedWorks
 } from '../../utils/dataTransformers';
 
 import HeaderSection from './HeaderSection';
@@ -24,8 +25,11 @@ const Visualization = () => {
     const [selectedWorkIndex, setSelectedWorkIndex] = useState(0);
     const [chartType, setChartType] = useState(CHART_TYPES.SCORES);
     const [language, setLanguage] = useState('de');
+    const translatedWorks = useMemo(() => {
+        return getTranslatedWorks(works, translations, language);
+    }, [works, translations, language]);
 
-    const work = works[selectedWorkIndex];
+    const work = translatedWorks[selectedWorkIndex];
 
     // Daten für die Diagramme basierend auf dem ausgewählten Typ
     const getCurrentChartData = () => {
@@ -54,7 +58,7 @@ const Visualization = () => {
             />
 
             <ControlSection
-                works={works}
+                works={translatedWorks}
                 selectedWorkIndex={selectedWorkIndex}
                 setSelectedWorkIndex={setSelectedWorkIndex}
                 chartType={chartType}

@@ -29,7 +29,7 @@ const StatisticsSection = ({ work, translations, language }) => {
                     <h4 className="stat-title">{t('avgDifference', 'metrics') || "Average Score Difference"}</h4>
                     <div className="stat-value">{formatNum(stats.avgDifference)}%</div>
                     <p className="stat-description">
-                        {t('maxDiff', 'metrics') || "Max"}: {formatNum(stats.maxDifference)}% |
+                        {t('maxDiff', 'metrics') || "Max"}: {formatNum(stats.maxDifference)}% | { }
                         {t('minDiff', 'metrics') || "Min"}: {formatNum(stats.minDifference)}%
                     </p>
                 </div>

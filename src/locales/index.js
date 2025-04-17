@@ -1,7 +1,20 @@
 import { de } from './de';
 import { en } from './en';
+import worksDE from './works-de.json';
+import worksEN from './works-en.json';
 
-export const translations = {
+const baseTranslations = {
     de,
     en
+};
+
+export const translations = {
+    de: {
+        ...baseTranslations.de,
+        works: worksDE
+    },
+    en: {
+        ...baseTranslations.en,
+        works: worksEN
+    }
 };

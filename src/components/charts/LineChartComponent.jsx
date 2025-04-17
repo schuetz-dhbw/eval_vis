@@ -21,7 +21,9 @@ const LineChartComponent = ({ data, chartType, translations, language }) => {
                     height={70}
                     tick={{ fontSize: 10 }}
                 />
-                <YAxis domain={getYDomain(chartType)} />
+                <YAxis
+                    domain={getYDomain(chartType)}
+                />
                 <Tooltip />
                 <Legend />
                 <Line

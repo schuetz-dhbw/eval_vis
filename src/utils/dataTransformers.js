@@ -41,8 +41,8 @@ export const calculateEuclideanDistance = (vectorA, vectorB) => {
 
 // Calculate similarity metrics for a work
 export const calculateSimilarityMetrics = (work) => {
-    const similarity = calculateCosineSimilarity(work.ki_scores, work.human_scores);
-    const distance = calculateEuclideanDistance(work.ki_scores, work.human_scores);
+    const similarity = calculateCosineSimilarity(work.aiScores, work.humanScores);
+    const distance = calculateEuclideanDistance(work.aiScores, work.humanScores);
 
     return {
         similarity,
@@ -53,30 +53,30 @@ export const calculateSimilarityMetrics = (work) => {
 // Calculate statistics for a work
 export const calculateStatistics = (work) => {
     // Calculate average scores
-    const kiAverage = work.ki_scores.reduce((sum, score) => sum + score, 0) / work.ki_scores.length;
-    const humanAverage = work.human_scores.reduce((sum, score) => sum + score, 0) / work.human_scores.length;
+    const kiAverage = work.aiScores.reduce((sum, score) => sum + score, 0) / work.aiScores.length;
+    const humanAverage = work.humanScores.reduce((sum, score) => sum + score, 0) / work.humanScores.length;
 
     // Calculate standard deviations
     const kiStdDev = Math.sqrt(
-        work.ki_scores.reduce((sum, score) => sum + Math.pow(score - kiAverage, 2), 0) / work.ki_scores.length
+        work.aiScores.reduce((sum, score) => sum + Math.pow(score - kiAverage, 2), 0) / work.aiScores.length
     );
     const humanStdDev = Math.sqrt(
-        work.human_scores.reduce((sum, score) => sum + Math.pow(score - humanAverage, 2), 0) / work.human_scores.length
+        work.humanScores.reduce((sum, score) => sum + Math.pow(score - humanAverage, 2), 0) / work.humanScores.length
     );
 
     // Calculate differences in assessments
-    const differences = work.ki_scores.map((score, i) => Math.abs(score - work.human_scores[i]));
+    const differences = work.aiScores.map((score, i) => Math.abs(score - work.humanScores[i]));
     const avgDifference = differences.reduce((sum, diff) => sum + diff, 0) / differences.length;
     const maxDifference = Math.max(...differences);
     const minDifference = Math.min(...differences);
 
     // Calculate weighted averages
-    const kiWeightedSum = work.ki_scores.reduce((sum, score, i) => sum + score * work.ki_weights[i], 0);
-    const humanWeightedSum = work.human_scores.reduce((sum, score, i) => sum + score * work.human_weights[i], 0);
+    const aiWeightedSum = work.aiScores.reduce((sum, score, i) => sum + score * work.aiWeights[i], 0);
+    const humanWeightedSum = work.humanScores.reduce((sum, score, i) => sum + score * work.humanWeights[i], 0);
 
     // Calculate differences in weights
-    const weightDifferences = work.ki_weights.map((weight, i) =>
-        Math.abs(weight - work.human_weights[i])
+    const weightDifferences = work.aiWeights.map((weight, i) =>
+        Math.abs(weight - work.humanWeights[i])
     );
     const avgWeightDiff = weightDifferences.reduce((sum, diff) => sum + diff, 0) / weightDifferences.length;
 
@@ -88,7 +88,7 @@ export const calculateStatistics = (work) => {
         avgDifference,
         maxDifference,
         minDifference,
-        kiWeightedSum,
+        aiWeightedSum,
         humanWeightedSum,
         avgWeightDiff
     };
@@ -96,21 +96,19 @@ export const calculateStatistics = (work) => {
 
 // Für kürzere Achsenbeschriftungen
 export const getShortLabels = (work, translations, language) => {
-    const t = (key, section = null) => getTranslation(translations, language, key, section);
+    // Wenn criteriaShortLabels bereits an work angehängt wurde, verwende diese direkt
+    if (work.criteriaShortLabels) {
+        return work.criteriaShortLabels;
+    }
 
-    return work.criteriaLabels.map(label => {
-        if (label === "Fachliche Bearbeitung") return t('professionalTreatment', 'criteria');
-        if (label === "Nutzung von Fachwissen") return t('useOfExpertise', 'criteria');
-        if (label === "Einsatz von Methoden") return t('useMethods', 'criteria');
-        if (label === "Umsetzbarkeit") return t('feasibility', 'criteria');
-        if (label === "Kreativität") return t('creativity', 'criteria');
-        if (label === "Wirtschaftliche Bewertung") return t('economic', 'criteria');
-        if (label === "Selbständigkeit") return t('independence', 'criteria');
-        if (label === "Systematik") return t('systematic', 'criteria');
-        if (label === "Dokumentation") return t('documentation', 'criteria');
-        if (label === "Literaturrecherche") return t('litResearch', 'criteria');
-        if (label === "Verwendung Literatur") return t('litUse', 'criteria');
-        return label;
+    // Andernfalls übersetze aus den JSON-Dateien
+    const worksTranslations = translations[language]?.works || {};
+
+    return work.criteriaKeys.map(label => {
+        const shortLabel =
+            worksTranslations.criteriaShortLabels &&
+            worksTranslations.criteriaShortLabels[label];
+        return shortLabel || label;
     });
 };
 
@@ -119,12 +117,12 @@ export const getScoresData = (work, translations, language) => {
     const t = (key, section = null) => getTranslation(translations, language, key, section);
     const shortLabels = getShortLabels(work, translations, language);
 
-    return work.criteriaLabels.map((label, index) => {
+    return work.criteriaKeys.map((label, index) => {
         return {
             name: label,
             shortName: shortLabels[index],
-            [t('ki', 'labels')]: work.ki_scores[index],
-            [t('human', 'labels')]: work.human_scores[index],
+            [t('ki', 'labels')]: work.aiScores[index],
+            [t('human', 'labels')]: work.humanScores[index],
         };
     });
 };
@@ -134,12 +132,12 @@ export const getWeightsData = (work, translations, language) => {
     const t = (key, section = null) => getTranslation(translations, language, key, section);
     const shortLabels = getShortLabels(work, translations, language);
 
-    return work.criteriaLabels.map((label, index) => {
+    return work.criteriaKeys.map((label, index) => {
         return {
             name: label,
             shortName: shortLabels[index],
-            [t('ki', 'labels')]: work.ki_weights[index] * 100, // Skaliert für bessere Sichtbarkeit
-            [t('human', 'labels')]: work.human_weights[index] * 100,
+            [t('ki', 'labels')]: work.aiWeights[index] * 100, // Skaliert für bessere Sichtbarkeit
+            [t('human', 'labels')]: work.humanWeights[index] * 100,
         };
     });
 };
@@ -149,12 +147,12 @@ export const getWeightedData = (work, translations, language) => {
     const t = (key, section = null) => getTranslation(translations, language, key, section);
     const shortLabels = getShortLabels(work, translations, language);
 
-    return work.criteriaLabels.map((label, index) => {
+    return work.criteriaKeys.map((label, index) => {
         return {
             name: label,
             shortName: shortLabels[index],
-            [t('ki', 'labels')]: work.ki_scores[index] * work.ki_weights[index],
-            [t('human', 'labels')]: work.human_scores[index] * work.human_weights[index],
+            [t('ki', 'labels')]: work.aiScores[index] * work.aiWeights[index],
+            [t('human', 'labels')]: work.humanScores[index] * work.humanWeights[index],
         };
     });
 };
@@ -164,16 +162,16 @@ export const getCombinedData = (work, translations, language) => {
     const t = (key, section = null) => getTranslation(translations, language, key, section);
     const shortLabels = getShortLabels(work, translations, language);
 
-    return work.criteriaLabels.map((label, index) => {
+    return work.criteriaKeys.map((label, index) => {
         return {
             name: label,
             shortName: shortLabels[index],
-            [`${t('ki', 'labels')}Score`]: work.ki_scores[index],
-            [`${t('human', 'labels')}Score`]: work.human_scores[index],
-            [`${t('ki', 'labels')}Weight`]: work.ki_weights[index] * 100,
-            [`${t('human', 'labels')}Weight`]: work.human_weights[index] * 100,
-            [`${t('ki', 'labels')}Weighted`]: work.ki_scores[index] * work.ki_weights[index],
-            [`${t('human', 'labels')}Weighted`]: work.human_scores[index] * work.human_weights[index],
+            [`${t('ki', 'labels')}Score`]: work.aiScores[index],
+            [`${t('human', 'labels')}Score`]: work.humanScores[index],
+            [`${t('ki', 'labels')}Weight`]: work.aiWeights[index] * 100,
+            [`${t('human', 'labels')}Weight`]: work.humanWeights[index] * 100,
+            [`${t('ki', 'labels')}Weighted`]: work.aiScores[index] * work.aiWeights[index],
+            [`${t('human', 'labels')}Weighted`]: work.humanScores[index] * work.humanWeights[index],
         };
     });
 };
@@ -184,32 +182,32 @@ export const getRadarData = (work, translations, language, chartType) => {
     const shortLabels = getShortLabels(work, translations, language);
 
     if (chartType === 'weighted') {
-        return work.criteriaLabels.map((label, index) => {
+        return work.criteriaKeys.map((label, index) => {
             return {
                 subject: label,
                 shortSubject: shortLabels[index],
-                [t('ki', 'labels')]: work.ki_scores[index] * work.ki_weights[index],
-                [t('human', 'labels')]: work.human_scores[index] * work.human_weights[index],
+                [t('ki', 'labels')]: work.aiScores[index] * work.aiWeights[index],
+                [t('human', 'labels')]: work.humanScores[index] * work.humanWeights[index],
                 fullMark: 10,
             };
         });
     } else if (chartType === 'weights') {
-        return work.criteriaLabels.map((label, index) => {
+        return work.criteriaKeys.map((label, index) => {
             return {
                 subject: label,
                 shortSubject: shortLabels[index],
-                [t('ki', 'labels')]: work.ki_weights[index] * 100,
-                [t('human', 'labels')]: work.human_weights[index] * 100,
+                [t('ki', 'labels')]: work.aiWeights[index] * 100,
+                [t('human', 'labels')]: work.humanWeights[index] * 100,
                 fullMark: 25,
             };
         });
     } else {
-        return work.criteriaLabels.map((label, index) => {
+        return work.criteriaKeys.map((label, index) => {
             return {
                 subject: label,
                 shortSubject: shortLabels[index],
-                [t('ki', 'labels')]: work.ki_scores[index],
-                [t('human', 'labels')]: work.human_scores[index],
+                [t('ki', 'labels')]: work.aiScores[index],
+                [t('human', 'labels')]: work.humanScores[index],
                 fullMark: 100,
             };
         });
@@ -240,4 +238,35 @@ export const getRadarDomain = (chartType) => {
         default:
             return [0, 100];
     }
+};
+
+// Übersetzungen für die Daten zu den Arbeiten
+export const getTranslatedWorks = (works, translations, language) => {
+    const worksTranslations = translations[language]?.works || {};
+
+    return works.map(work => {
+        // Texte aus den Übersetzungsdateien abrufen
+        const title = worksTranslations.titles?.[work.key] || work.key;
+        const type = worksTranslations.types?.[work.typeKey] || work.typeKey;
+        const typeDesc = worksTranslations.typeDescriptions?.[work.typeDescKey] || work.typeDescKey;
+
+        // Kriterien übersetzen
+        const criteriaLabels = work.criteriaKeys.map(key =>
+            worksTranslations.criteriaLabels?.[key] || key
+        );
+
+        // Kurze Kriterien-Labels
+        const criteriaShortLabels = work.criteriaKeys.map(key =>
+            worksTranslations.criteriaShortLabels?.[key] || key
+        );
+
+        return {
+            ...work,
+            title,
+            type,
+            typeDesc: typeDesc,
+            criteriaLabels,
+            criteriaShortLabels
+        };
+    });
 };

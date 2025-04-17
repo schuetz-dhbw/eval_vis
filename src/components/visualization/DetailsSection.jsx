@@ -12,11 +12,11 @@ const DetailsSection = ({ work, translations, language }) => {
             <div className="grades-container">
                 <div className="grade-box">
                     <span className="grade-label">{t('ki', 'labels')} {t('grade', 'labels') || 'Note'}:</span>
-                    <span className="grade-value">{work.ki_grade.toFixed(1)}</span>
+                    <span className="grade-value">{work.aiGrade.toFixed(1)}</span>
                 </div>
                 <div className="grade-box">
                     <span className="grade-label">{t('human', 'labels')} {t('grade', 'labels') || 'Note'}:</span>
-                    <span className="grade-value">{work.human_grade.toFixed(1)}</span>
+                    <span className="grade-value">{work.humanGrade.toFixed(1)}</span>
                 </div>
             </div>
 
@@ -25,37 +25,37 @@ const DetailsSection = ({ work, translations, language }) => {
                     <thead>
                     <tr>
                         <th>{t('criterion', 'tableHeaders')}</th>
-                        <th>{t('kiGrade', 'tableHeaders')}</th>
-                        <th>{t('kiWeight', 'tableHeaders')}</th>
+                        <th>{t('aiGrade', 'tableHeaders')}</th>
+                        <th>{t('aiWeight', 'tableHeaders')}</th>
                         <th>{t('humanGrade', 'tableHeaders')}</th>
                         <th>{t('humanWeight', 'tableHeaders')}</th>
-                        <th>{t('kiWeighted', 'tableHeaders')}</th>
+                        <th>{t('aiWeighted', 'tableHeaders')}</th>
                         <th>{t('humanWeighted', 'tableHeaders')}</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {work.criteriaLabels.map((label, index) => (
+                    {work.criteriaKeys.map((label, index) => (
                         <tr key={index} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
-                            <td>{label}</td>
-                            <td>{work.ki_scores[index]}%</td>
-                            <td>{work.ki_weights[index]}</td>
-                            <td>{work.human_scores[index]}%</td>
-                            <td>{work.human_weights[index]}</td>
-                            <td>{(work.ki_scores[index] * work.ki_weights[index]).toFixed(2)}</td>
-                            <td>{(work.human_scores[index] * work.human_weights[index]).toFixed(2)}</td>
+                            <td>{work.criteriaLabels[index]}</td>
+                            <td>{work.aiScores[index]}%</td>
+                            <td>{work.aiWeights[index]}</td>
+                            <td>{work.humanScores[index]}%</td>
+                            <td>{work.humanWeights[index]}</td>
+                            <td>{(work.aiScores[index] * work.aiWeights[index]).toFixed(2)}</td>
+                            <td>{(work.humanScores[index] * work.humanWeights[index]).toFixed(2)}</td>
                         </tr>
                     ))}
                     <tr className="totals-row">
                         <td>{t('total', 'tableHeaders')}</td>
                         <td>-</td>
-                        <td>{work.ki_weights.reduce((sum, w) => sum + w, 0).toFixed(2)}</td>
+                        <td>{work.aiWeights.reduce((sum, w) => sum + w, 0).toFixed(2)}</td>
                         <td>-</td>
-                        <td>{work.human_weights.reduce((sum, w) => sum + w, 0).toFixed(2)}</td>
+                        <td>{work.humanWeights.reduce((sum, w) => sum + w, 0).toFixed(2)}</td>
                         <td>
-                            {work.ki_scores.reduce((sum, score, i) => sum + score * work.ki_weights[i], 0).toFixed(2)}
+                            {work.aiScores.reduce((sum, score, i) => sum + score * work.aiWeights[i], 0).toFixed(2)}
                         </td>
                         <td>
-                            {work.human_scores.reduce((sum, score, i) => sum + score * work.human_weights[i], 0).toFixed(2)}
+                            {work.humanScores.reduce((sum, score, i) => sum + score * work.humanWeights[i], 0).toFixed(2)}
                         </td>
                     </tr>
                     </tbody>

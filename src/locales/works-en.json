@@ -1,0 +1,68 @@
+{
+  "titles": {
+    "zero_elsberg": "ZERO – They Know Everything You Do by Marc Elsberg: Possibilities and Dangers of Digital Surveillance",
+    "cms_comparison": "Comparison of Content Management Systems: Wordpress, Drupal, Joomla, TYPO3",
+    "jetpack_compose": "App Development with the Jetpack Compose Framework",
+    "java_vs_kotlin": "Java vs. Kotlin - Will Kotlin Replace Java holistically?",
+    "pepper_cms": "Development of a CMS for Creating Android apps for the humanoid robot Pepper",
+    "pwa_vs_native": "Comparison of Progressive Web Apps with Native Apps Using the Example of a Journaling App",
+    "cross_platform": "Comparison of Different Technologies for Developing Mobile Cross-Platform Applications",
+    "responsive_webdesign": "Responsive Web Design – Requirements, Methods & Technical Possibilities",
+    "android_best_practices": "State-of-the-Art Android App Development: Current Best Practices for Design Patterns and Architecture",
+    "apple_ux_design": "The \"Apple Feeling\" - Analysis of Apple Software UI/UX Design",
+    "privacy_video_app": "Conception and Implementation of an App for Using a Smartphone for Video Documentation with a Focus on Privacy",
+    "pet_feeder_wet": "Prototype Development of a Time and Chip-Controlled Pet Food Dispenser for Wet Food",
+    "pet_feeder_dry": "Prototype Development of a Time and Chip-Controlled Pet Food Dispenser for Dry Food",
+    "graph_visualization": "Visualization of Large Datasets from Graph Databases",
+    "ai_detector": "Recognition and Analysis of AI-Generated Texts in the Scientific Field",
+    "kotlin_multiplatform": "Kotlin Multiplatform – the Cutting Edge Technology of App Development?",
+    "risc_v_tinyemu": "RISC-V: Using Fabrice Bellard's TinyEMU for the Prototypical Implementation of a RISC-V Application for a Practical Course",
+    "event_architecture": "Patterns and Best Practices for Designing an Event-Based Architecture",
+    "energy_efficient_programming": "Energy-Efficient Programming",
+    "ethics_cs": "Ethics for Computer Scientists - Development of an Ethics Lecture for Computer Science Students",
+    "smart_contracts": "Future Scenarios and Current Fields of Application of Smart Contracts"
+  },
+  "types": {
+    "analytic": "Analytical Work",
+    "constructive": "Constructive Work"
+  },
+  "typeDescriptions": {
+    "theory_disc": "Theoretical Development, Discussion",
+    "theory_eval": "Theoretical Development, Evaluation",
+    "theory_impl": "Theoretical Development, Implementation",
+    "theory_impl_eval": "Theoretical Development, Implementation, Evaluation",
+    "concept_impl_doc": "Concept, Implementation, Documentation, User Guide",
+    "concept_impl": "Theoretical Development, Conceptual Design, Implementation",
+    "theory_concept_impl_eval": "Theoretical Development, Conceptual Design, Implementation, Evaluation",
+    "theory_concept_impl": "Theoretical Development, Conceptual Design, Implementation",
+    "concept_impl_proto": "Conceptual Design, Implementation, Prototype",
+    "theory_empeval": "Theoretical Development, Empirical Evaluation",
+    "theory_example": "Theoretical Development, Exemplary Implementation"
+  },
+  "criteriaLabels": {
+    "professionalCompetence": "Professional Competence",
+    "useOfExpertise": "Use of Expertise",
+    "useMethods": "Use of Methods",
+    "feasibility": "Feasibility",
+    "creativity": "Creativity",
+    "economic": "Economic Evaluation",
+    "independence": "Independence, Initiative",
+    "systematic": "Systematic Approach",
+    "documentation": "Documentation",
+    "litResearch": "Literature Research",
+    "litUse": "Use of Literature"
+  },
+  "criteriaShortLabels": {
+    "professionalCompetence": "Prof. Competence",
+    "useOfExpertise": "Use of Expertise",
+    "useMethods": "Use of Methods",
+    "feasibility": "Feasibility",
+    "creativity": "Creativity",
+    "economic": "Economic Eval.",
+    "independence": "Independence",
+    "systematic": "Systematics",
+    "documentation": "Documentation",
+    "litResearch": "Literature Research",
+    "litUse": "Use of Literature"
+  }
+}
