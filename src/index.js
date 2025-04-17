@@ -2,11 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/variables.css';  // Globale Variablen zuerst importieren
 import './styles/global.css';     // Globale Styles danach
-//import './index.css';             // Falls du noch app-spezifische Styles in index.css hast
+import { initDarkMode } from './utils/darkmode';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+initDarkMode();
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <React.StrictMode>
     <App />

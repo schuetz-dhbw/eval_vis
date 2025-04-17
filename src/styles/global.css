@@ -4,12 +4,36 @@ body {
     color: var(--color-text);
     margin: 0;
     padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .app-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: var(--padding-lg);
+}
+
+.chart-container,
+.details-container,
+.usage-hints,
+.statistics-container,
+.work-type-analysis-section,
+.metrics-container,
+.grade-box,
+.metric-box {
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Besser erkennbare Tooltips im Dark Mode */
+.dark-mode .recharts-default-tooltip {
+    background-color: rgba(40, 40, 40, 0.95) !important;
+    border-color: var(--color-border) !important;
+}
+
+.dark-mode .recharts-tooltip-label,
+.dark-mode .recharts-tooltip-item-name,
+.dark-mode .recharts-tooltip-item-value {
+    color: var(--color-text) !important;
 }
 
 /* Responsive Styles */
