@@ -1,9 +1,18 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import './styles/details.css';
 import { useTranslation } from '../../hooks/useTranslation';
 
 const DetailsSection = ({ work, language }) => {
     const t = useTranslation(language);
+
+    const totals = useMemo(() => {
+        return {
+            aiWeightSum: work.aiWeights.reduce((sum, w) => sum + w, 0).toFixed(2),
+            humanWeightSum: work.humanWeights.reduce((sum, w) => sum + w, 0).toFixed(2),
+            aiWeightedScore: work.aiScores.reduce((sum, score, i) => sum + score * work.aiWeights[i], 0).toFixed(2),
+            humanWeightedScore: work.humanScores.reduce((sum, score, i) => sum + score * work.humanWeights[i], 0).toFixed(2)
+        };
+    }, [work]);
 
     return (
         <div className="details-container">
@@ -48,15 +57,11 @@ const DetailsSection = ({ work, language }) => {
                     <tr className="totals-row">
                         <td>{t('total', 'tableHeaders')}</td>
                         <td>-</td>
-                        <td>{work.aiWeights.reduce((sum, w) => sum + w, 0).toFixed(2)}</td>
+                        <td>{totals.aiWeightSum}</td>
                         <td>-</td>
-                        <td>{work.humanWeights.reduce((sum, w) => sum + w, 0).toFixed(2)}</td>
-                        <td>
-                            {work.aiScores.reduce((sum, score, i) => sum + score * work.aiWeights[i], 0).toFixed(2)}
-                        </td>
-                        <td>
-                            {work.humanScores.reduce((sum, score, i) => sum + score * work.humanWeights[i], 0).toFixed(2)}
-                        </td>
+                        <td>{totals.humanWeightSum}</td>
+                        <td>{totals.aiWeightedScore}</td>
+                        <td>{totals.humanWeightedScore}</td>
                     </tr>
                     </tbody>
                 </table>

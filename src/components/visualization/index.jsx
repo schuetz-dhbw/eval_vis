@@ -32,7 +32,7 @@ const Visualization = () => {
     const work = translatedWorks[selectedWorkIndex];
 
     // Daten für die Diagramme basierend auf dem ausgewählten Typ
-    const getCurrentChartData = () => {
+    const scoresData = useMemo(() => {
         switch(chartType) {
             case CHART_TYPES.WEIGHTS:
                 return getWeightsData(work, translations, language);
@@ -44,11 +44,15 @@ const Visualization = () => {
             default:
                 return getScoresData(work, translations, language);
         }
-    };
+    }, [work, chartType, translations, language]);
 
-    const scoresData = getCurrentChartData();
-    const combinedData = getCombinedData(work, translations, language);
-    const radarData = getRadarData(work, translations, language, chartType);
+    const combinedData = useMemo(() => {
+        return getCombinedData(work, translations, language);
+    }, [work, translations, language]);
+
+    const radarData = useMemo(() => {
+        return getRadarData(work, translations, language, chartType);
+    }, [work, translations, language, chartType]);
 
     return (
         <div className="visualization-container">

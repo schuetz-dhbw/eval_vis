@@ -10,22 +10,22 @@ const WorkTypeAnalysisComponent = ({ works, translations, language }) => {
     const t = useTranslation(language);
 
     // Group works by type
-    const worksByType = useMemo(() => {
-        const groupedWorks = {};
-        works.forEach(work => {
-            if (!groupedWorks[work.type]) {
-                groupedWorks[work.type] = [];
-            }
-            groupedWorks[work.type].push(work);
-        });
-        return groupedWorks;
-    }, [works]);
+        const groupedWorks = useMemo(() => {
+            const result = {};
+            works.forEach(work => {
+                if (!result[work.type]) {
+                    result[work.type] = [];
+                }
+                result[work.type].push(work);
+            });
+            return result;
+        }, [works]);
 
     // Calculate average differences by criteria for each type
     const differencesByType = useMemo(() => {
         const result = [];
 
-        Object.entries(worksByType).forEach(([type, typeWorks]) => {
+        Object.entries(groupedWorks).forEach(([type, typeWorks]) => {
             // For each criterion, calculate the average difference
             if (typeWorks.length > 0) {
                 const criteriaCount = typeWorks[0].criteriaKeys.length;
@@ -52,16 +52,16 @@ const WorkTypeAnalysisComponent = ({ works, translations, language }) => {
                     }
                 }
             }
-        });
+        }, [groupedWorks]);
 
         return result;
-    }, [worksByType]);
+    }, [groupedWorks]);
 
     // Calculate overall average score difference by work type
     const overallDifferenceByType = useMemo(() => {
         const result = [];
 
-        Object.entries(worksByType).forEach(([type, typeWorks]) => {
+        Object.entries(groupedWorks).forEach(([type, typeWorks]) => {
             let totalDiff = 0;
             let diffCount = 0;
 
@@ -86,7 +86,7 @@ const WorkTypeAnalysisComponent = ({ works, translations, language }) => {
 
         // Sort by average difference (descending)
         return result.sort((a, b) => b.averageDifference - a.averageDifference);
-    }, [worksByType]);
+    }, [groupedWorks]);
 
     // Find the criteria with the largest average difference for each type
     const largestDifferencesByType = useMemo(() => {
