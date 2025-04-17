@@ -2,16 +2,17 @@ import React, { useMemo } from 'react';
 import './styles/metrics.css';
 import { useTranslation } from '../../hooks/useTranslation';
 import { calculateSimilarityMetrics } from '../../utils/dataTransformers';
-import { CHART_TYPES } from '../../constants/chartTypes';
 import { SIMILARITY_THRESHOLDS, DISTANCE_THRESHOLDS, GRADE_DIFFERENCE_THRESHOLDS } from '../../constants/thresholds';
+import { useAppContext } from '../../AppContext';
 
-const MetricsSection = ({ work, language, chartType }) => {
+const MetricsSection = () => {
+    const { currentWork, language } = useAppContext();
     const t = useTranslation(language);
 
     // Metriken berechnen mit useMemo
     const metrics = useMemo(() => {
-        return calculateSimilarityMetrics(work);
-    }, [work]); // Nur neu berechnen, wenn sich work ändert
+        return calculateSimilarityMetrics(currentWork);
+    }, [currentWork]); // Nur neu berechnen, wenn sich work ändert
 
     return (
         <div className="metrics-container">
@@ -46,16 +47,16 @@ const MetricsSection = ({ work, language, chartType }) => {
                     </div>
                 </div>
                 <div className="metric-box">
-                    <div className="metric-value">{work.aiGrade.toFixed(1)} / {work.humanGrade.toFixed(1)}</div>
+                    <div className="metric-value">{currentWork.aiGrade.toFixed(1)} / {currentWork.humanGrade.toFixed(1)}</div>
                     <div className="metric-label">{t('gradeDifference', 'metrics') || "Grade Difference"}</div>
                     <div className="metric-description">
                         {t('gradeDifferenceDescription', 'metricsDescriptions') ||
                             "Difference between KI and human final grades"}
                     </div>
                     <div className="metric-quality">
-                        {Math.abs(work.aiGrade - work.humanGrade) < GRADE_DIFFERENCE_THRESHOLDS.EXCELLENT ? '✓ ' + (t('excellent', 'metricsQuality') || "Excellent") :
-                            Math.abs(work.aiGrade - work.humanGrade) < GRADE_DIFFERENCE_THRESHOLDS.GOOD ? '✓ ' + (t('good', 'metricsQuality') || "Good") :
-                                Math.abs(work.aiGrade - work.humanGrade) < GRADE_DIFFERENCE_THRESHOLDS.MODERATE ? '⚠ ' + (t('moderate', 'metricsQuality') || "Moderate") :
+                        {Math.abs(currentWork.aiGrade - currentWork.humanGrade) < GRADE_DIFFERENCE_THRESHOLDS.EXCELLENT ? '✓ ' + (t('excellent', 'metricsQuality') || "Excellent") :
+                            Math.abs(currentWork.aiGrade - currentWork.humanGrade) < GRADE_DIFFERENCE_THRESHOLDS.GOOD ? '✓ ' + (t('good', 'metricsQuality') || "Good") :
+                                Math.abs(currentWork.aiGrade - currentWork.humanGrade) < GRADE_DIFFERENCE_THRESHOLDS.MODERATE ? '⚠ ' + (t('moderate', 'metricsQuality') || "Moderate") :
                                     '⚠ ' + (t('poor', 'metricsQuality') || "Poor")}
                     </div>
                 </div>

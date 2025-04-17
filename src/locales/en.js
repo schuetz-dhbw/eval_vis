@@ -15,6 +15,10 @@ export const en = {
         statistics: "Statistical Analysis",
         workTypeAnalysis: "Work Type Analysis"
     },
+    darkMode: {
+        toggleToLight: "Switch to light mode",
+        toggleToDark: "Switch to dark mode"
+    },
     metricsDescriptions: {
         cosineDescription: "Measures angle similarity between AI and human ratings (1.0 = identical, 0.0 = completely different)",
         distanceDescription: "Euclidean distance between AI and human ratings (lower = more similar)",

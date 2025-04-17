@@ -1,17 +1,14 @@
-import React, {useMemo, useState} from 'react';
+import React, {useMemo} from 'react';
 import './styles/common.css';
-import { works } from '../../data/works';
-import { translations } from '../../locales';
 import { CHART_TYPES } from '../../constants/chartTypes';
-import { DEFAULT_LANGUAGE } from '../../constants/languages';
 import {
     getScoresData,
     getWeightsData,
     getWeightedData,
     getCombinedData,
     getRadarData,
-    getTranslatedWorks
 } from '../../utils/dataTransformers';
+import { useAppContext } from '../../AppContext';
 
 import HeaderSection from './HeaderSection';
 import ControlSection from './ControlSection';
@@ -21,96 +18,64 @@ import DetailsSection from './DetailsSection';
 import UsageHintsSection from './UsageHintsSection';
 import StatisticsSection from './StatisticsSection';
 import WorkTypeAnalysisSection from './WorkTypeAnalysisSection';
+import {translations} from "../../locales";
 
 const Visualization = () => {
-    const [selectedWorkIndex, setSelectedWorkIndex] = useState(0);
-    const [chartType, setChartType] = useState(CHART_TYPES.SCORES);
-    const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
-    const translatedWorks = useMemo(() => {
-        return getTranslatedWorks(works, translations, language);
-    }, [works, translations, language]);
-
-    const work = translatedWorks[selectedWorkIndex];
+    // Context-Werte verwenden
+    const {
+        chartType, currentWork, language, rawWorks
+    } = useAppContext();
 
     // Daten für die Diagramme basierend auf dem ausgewählten Typ
     const scoresData = useMemo(() => {
         switch(chartType) {
             case CHART_TYPES.WEIGHTS:
-                return getWeightsData(work, translations, language);
+                return getWeightsData(currentWork,  translations, language);
             case CHART_TYPES.WEIGHTED:
-                return getWeightedData(work, translations, language);
+                return getWeightedData(currentWork,  translations, language);
             case CHART_TYPES.COMBINED:
-                return getCombinedData(work, translations, language);
+                return getCombinedData(currentWork,  translations, language);
             case CHART_TYPES.SCORES:
             default:
-                return getScoresData(work, translations, language);
+                return getScoresData(currentWork,  translations, language);
         }
-    }, [work, chartType, translations, language]);
+    }, [currentWork, chartType, language]);
 
     const combinedData = useMemo(() => {
-        return getCombinedData(work, translations, language);
-    }, [work, translations, language]);
+        return getCombinedData(currentWork,  translations, language);
+    }, [currentWork, language]);
 
     const radarData = useMemo(() => {
-        return getRadarData(work, translations, language, chartType);
-    }, [work, translations, language, chartType]);
+        return getRadarData(currentWork,  translations, language);
+    }, [currentWork, language, chartType]);
 
     return (
         <div className="visualization-container">
-            <HeaderSection
-                language={language}
-            />
+            <HeaderSection />
 
-            <ControlSection
-                works={translatedWorks}
-                selectedWorkIndex={selectedWorkIndex}
-                setSelectedWorkIndex={setSelectedWorkIndex}
-                chartType={chartType}
-                setChartType={setChartType}
-                language={language}
-                setLanguage={setLanguage}
-            />
+            <ControlSection />
 
             {chartType !== CHART_TYPES.WORK_TYPE_ANALYSIS && (
-                <MetricsSection
-                    work={work}
-                    language={language}
-                    chartType={chartType}
-                />
+                <MetricsSection />
             )}
 
             {chartType === CHART_TYPES.STATISTICS ? (
-                <StatisticsSection
-                    work={work}
-                    language={language}
-                />
+                <StatisticsSection />
             ) : chartType === CHART_TYPES.WORK_TYPE_ANALYSIS ? (
-                <WorkTypeAnalysisSection
-                    works={works}
-                    language={language}
-                />
+                <WorkTypeAnalysisSection />
             ) : (
                 <ChartSection
-                    work={work}
                     scoresData={scoresData}
                     combinedData={combinedData}
                     radarData={radarData}
-                    chartType={chartType}
-                    language={language}
                 />
             )}
 
             {chartType !== CHART_TYPES.WORK_TYPE_ANALYSIS && (
-                <DetailsSection
-                    work={work}
-                    language={language}
-                />
+                <DetailsSection />
             )}
 
-            <UsageHintsSection
-                language={language}
-                chartType={chartType}
-            />
+            <UsageHintsSection />
         </div>
     );
 };

@@ -6,19 +6,21 @@ import { calculateStatistics, calculateSimilarityMetrics } from '../../utils/dat
 import ChartErrorBoundary from '../charts/ChartErrorBoundary';
 import DataErrorBoundary from '../common/DataErrorBoundary';
 import ErrorBoundary from '../common/ErrorBoundary';
+import {useAppContext} from "../../AppContext";
 
-const StatisticsSection = ({ work, language }) => {
+const StatisticsSection = () => {
+    const { currentWork, language } = useAppContext();
     const t = useTranslation(language);
 
     // Statistiken mit useMemo berechnen
     const stats = useMemo(() => {
-        return calculateStatistics(work);
-    }, [work]);
+        return calculateStatistics(currentWork);
+    }, [currentWork]);
 
     // Ähnlichkeitsmetriken ebenfalls mit useMemo
     const metrics = useMemo(() => {
-        return calculateSimilarityMetrics(work);
-    }, [work]);
+        return calculateSimilarityMetrics(currentWork);
+    }, [currentWork]);
 
     // Format a number to 2 decimal places
     const formatNum = (num) => num.toFixed(2);
@@ -62,10 +64,10 @@ const StatisticsSection = ({ work, language }) => {
                 </div>
 
                 <div className="statistics-content">
-                    <DataErrorBoundary data={work} language={language}>
+                    <DataErrorBoundary data={currentWork} language={language}>
                         <ChartErrorBoundary language={language} chartType="statistics">
                             <CorrelationAnalysisComponent
-                                work={work}
+                                work={currentWork}
                                 language={language}
                             />
                         </ChartErrorBoundary>

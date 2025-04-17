@@ -2,8 +2,10 @@ import React from 'react';
 import './styles/usageHints.css';
 import { useTranslation } from '../../hooks/useTranslation';
 import { CHART_TYPES } from '../../constants/chartTypes';
+import { useAppContext } from '../../AppContext';
 
-const UsageHintsSection = ({ language, chartType }) => {
+const UsageHintsSection = () => {
+    const { language, chartType } = useAppContext();
     const t = useTranslation(language);
 
     return (

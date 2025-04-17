@@ -1,40 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { toggleDarkMode } from '../../utils/darkmode';
+import React from 'react';
 import './styles/darkModeToggle.css';
+import {useAppContext} from "../../AppContext";
+import {useTranslation} from "../../hooks/useTranslation";
 
 const DarkModeToggle = () => {
-    const [isDark, setIsDark] = useState(false);
+    const { language, isDarkMode, toggleDarkMode } = useAppContext();
+    const t = useTranslation(language);
 
-    useEffect(() => {
-        // Synchronisiere den Toggle-Status mit dem tatsächlichen Modus
-        setIsDark(document.documentElement.classList.contains('dark-mode'));
-
-        // Event-Listener für System-Präferenzänderungen
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-        const handleChange = (e) => {
-            if (localStorage.getItem('darkMode') === null) {
-                setIsDark(e.matches);
-                document.documentElement.classList.toggle('dark-mode', e.matches);
-            }
-        };
-
-        mediaQuery.addEventListener('change', handleChange);
-        return () => mediaQuery.removeEventListener('change', handleChange);
-    }, []);
-
-    const handleToggle = () => {
-        toggleDarkMode();
-        setIsDark(!isDark);
-    };
+    // Tooltips aus den Übersetzungen
+    const tooltipText = isDarkMode
+        ? t('toggleToLight', 'darkMode')
+        : t('toggleToDark', 'darkMode');
 
     return (
         <button
             className="dark-mode-toggle"
-            onClick={handleToggle}
-            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            onClick={toggleDarkMode}
+            aria-label={tooltipText}
+            title={tooltipText}
         >
-            {isDark ? '☀️' : '🌙'}
+            {isDarkMode ? '☀️' : '🌙'}
         </button>
     );
 };

@@ -15,6 +15,10 @@ export const de = {
         statistics: "Statistische Analyse",
         workTypeAnalysis: "Analyse nach Arbeitstyp"
     },
+    darkMode: {
+        toggleToLight: "Zum hellen Modus wechseln",
+        toggleToDark: "Zum dunklen Modus wechseln"
+    },
     metricsDescriptions: {
         cosineDescription: "Misst die Winkelähnlichkeit zwischen KI- und Human-Bewertungen (1,0 = identisch, 0,0 = völlig unterschiedlich)",
         distanceDescription: "Euklidische Distanz zwischen KI- und Human-Bewertungen (niedriger = ähnlicher)",

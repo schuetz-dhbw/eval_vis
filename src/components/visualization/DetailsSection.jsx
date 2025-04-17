@@ -1,31 +1,34 @@
 import React, {useMemo} from 'react';
 import './styles/details.css';
 import { useTranslation } from '../../hooks/useTranslation';
+import {useAppContext} from "../../AppContext";
 
-const DetailsSection = ({ work, language }) => {
+
+const DetailsSection = () => {
+    const { currentWork, language } = useAppContext();
     const t = useTranslation(language);
 
     const totals = useMemo(() => {
         return {
-            aiWeightSum: work.aiWeights.reduce((sum, w) => sum + w, 0).toFixed(2),
-            humanWeightSum: work.humanWeights.reduce((sum, w) => sum + w, 0).toFixed(2),
-            aiWeightedScore: work.aiScores.reduce((sum, score, i) => sum + score * work.aiWeights[i], 0).toFixed(2),
-            humanWeightedScore: work.humanScores.reduce((sum, score, i) => sum + score * work.humanWeights[i], 0).toFixed(2)
+            aiWeightSum: currentWork.aiWeights.reduce((sum, w) => sum + w, 0).toFixed(2),
+            humanWeightSum: currentWork.humanWeights.reduce((sum, w) => sum + w, 0).toFixed(2),
+            aiWeightedScore: currentWork.aiScores.reduce((sum, score, i) => sum + score * currentWork.aiWeights[i], 0).toFixed(2),
+            humanWeightedScore: currentWork.humanScores.reduce((sum, score, i) => sum + score * currentWork.humanWeights[i], 0).toFixed(2)
         };
-    }, [work]);
+    }, [currentWork]);
 
     return (
         <div className="details-container">
-            <h3 className="details-title">{t('details')}: {work.title}</h3>
+            <h3 className="details-title">{t('details')}: {currentWork.title}</h3>
 
             <div className="grades-container">
                 <div className="grade-box">
                     <span className="grade-label">{t('ki', 'labels')} {t('grade', 'labels') || 'Note'}:</span>
-                    <span className="grade-value">{work.aiGrade.toFixed(1)}</span>
+                    <span className="grade-value">{currentWork.aiGrade.toFixed(1)}</span>
                 </div>
                 <div className="grade-box">
                     <span className="grade-label">{t('human', 'labels')} {t('grade', 'labels') || 'Note'}:</span>
-                    <span className="grade-value">{work.humanGrade.toFixed(1)}</span>
+                    <span className="grade-value">{currentWork.humanGrade.toFixed(1)}</span>
                 </div>
             </div>
 
@@ -43,15 +46,15 @@ const DetailsSection = ({ work, language }) => {
                     </tr>
                     </thead>
                     <tbody>
-                    {work.criteriaKeys.map((label, index) => (
+                    {currentWork.criteriaKeys.map((label, index) => (
                         <tr key={index} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
-                            <td>{work.criteriaLabels[index]}</td>
-                            <td>{work.aiScores[index]}%</td>
-                            <td>{work.aiWeights[index]}</td>
-                            <td>{work.humanScores[index]}%</td>
-                            <td>{work.humanWeights[index]}</td>
-                            <td>{(work.aiScores[index] * work.aiWeights[index]).toFixed(2)}</td>
-                            <td>{(work.humanScores[index] * work.humanWeights[index]).toFixed(2)}</td>
+                            <td>{currentWork.criteriaLabels[index]}</td>
+                            <td>{currentWork.aiScores[index]}%</td>
+                            <td>{currentWork.aiWeights[index]}</td>
+                            <td>{currentWork.humanScores[index]}%</td>
+                            <td>{currentWork.humanWeights[index]}</td>
+                            <td>{(currentWork.aiScores[index] * currentWork.aiWeights[index]).toFixed(2)}</td>
+                            <td>{(currentWork.humanScores[index] * currentWork.humanWeights[index]).toFixed(2)}</td>
                         </tr>
                     ))}
                     <tr className="totals-row">

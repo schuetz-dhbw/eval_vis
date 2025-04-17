@@ -1,22 +1,17 @@
 import React from 'react';
+import { CHART_TYPES } from '../../constants/chartTypes';
 import { useTranslation } from '../../hooks/useTranslation';
+import { useAppContext } from '../../AppContext';
 import LineChartComponent from '../charts/LineChartComponent';
 import ComposedChartComponent from '../charts/ComposedChartComponent';
 import RadarChartComponent from '../charts/RadarChartComponent';
 import BarChartComponent from '../charts/BarChartComponent';
-import { CHART_TYPES } from '../../constants/chartTypes';
 import {getWeightedData} from "../../utils/dataTransformers";
 import ChartErrorBoundary from '../charts/ChartErrorBoundary';
 import DataErrorBoundary from '../common/DataErrorBoundary';
 
-const ChartSection = ({
-                          work,
-                          scoresData,
-                          combinedData,
-                          radarData,
-                          chartType,
-                          language
-                      }) => {
+const ChartSection = ({ scoresData, combinedData, radarData }) => {
+    const { chartType, currentWork, language } = useAppContext();
     const t = useTranslation(language);
 
     return (
@@ -55,13 +50,13 @@ const ChartSection = ({
                 </h3>
                 <div className="chart-wrapper">
                     <DataErrorBoundary
-                        data={chartType === CHART_TYPES.COMBINED ? getWeightedData(work, language) : scoresData}
+                        data={chartType === CHART_TYPES.COMBINED ? getWeightedData(currentWork, language) : scoresData}
                         language={language}
                     >
                         <ChartErrorBoundary language={language} chartType={chartType}>
                             <BarChartComponent
                                 data={chartType === CHART_TYPES.COMBINED ?
-                                    getWeightedData(work, language) : scoresData}
+                                    getWeightedData(currentWork, language) : scoresData}
                                 chartType={chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType}
                                 language={language}
                             />

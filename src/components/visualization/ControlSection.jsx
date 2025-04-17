@@ -3,16 +3,19 @@ import './styles/controls.css';
 import { useTranslation } from '../../hooks/useTranslation';
 import { CHART_TYPES } from '../../constants/chartTypes';
 import { LANGUAGES } from '../../constants/languages';
+import { useAppContext } from '../../AppContext';
 
-const ControlSection = ({
-                            works,
-                            selectedWorkIndex,
-                            setSelectedWorkIndex,
-                            chartType,
-                            setChartType,
-                            language,
-                            setLanguage
-                        }) => {
+const ControlSection = () => {
+    const {
+        translatedWorks,
+        selectedWorkIndex,
+        setSelectedWorkIndex,
+        chartType,
+        setChartType,
+        language,
+        setLanguage
+    } = useAppContext();
+
     const t = useTranslation(language);
 
     // Check if we should show the work selector
@@ -27,7 +30,7 @@ const ControlSection = ({
                     value={selectedWorkIndex}
                     onChange={(e) => setSelectedWorkIndex(parseInt(e.target.value))}
                 >
-                    {works.map((work, index) => (
+                    {translatedWorks.map((work, index) => (
                         <option key={index} value={index}>
                             {work.title}
                         </option>

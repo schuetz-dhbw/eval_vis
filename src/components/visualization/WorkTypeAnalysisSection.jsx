@@ -5,8 +5,10 @@ import WorkTypeAnalysisComponent from '../charts/WorkTypeAnalysisComponent';
 import ChartErrorBoundary from '../charts/ChartErrorBoundary';
 import DataErrorBoundary from '../common/DataErrorBoundary';
 import ErrorBoundary from '../common/ErrorBoundary';
+import {useAppContext} from "../../AppContext";
 
-const WorkTypeAnalysisSection = ({ works, language }) => {
+const WorkTypeAnalysisSection = () => {
+    const { rawWorks, language } = useAppContext();
     const t = useTranslation(language);
 
     return (
@@ -18,10 +20,10 @@ const WorkTypeAnalysisSection = ({ works, language }) => {
             <div className="work-type-analysis-section">
                 <h3 className="section-title">{t('workTypeAnalysisTitle', 'chartTitles') || "Work Type Analysis"}</h3>
                 <div className="analysis-content">
-                    <DataErrorBoundary data={works} language={language}>
+                    <DataErrorBoundary data={rawWorks} language={language}>
                         <ChartErrorBoundary language={language} chartType="workTypeAnalysis">
                             <WorkTypeAnalysisComponent
-                                works={works}
+                                works={rawWorks}
                                 language={language}
                             />
                         </ChartErrorBoundary>
