@@ -1,7 +1,8 @@
 import React from 'react';
 import './styles/controls.css';
 import { useTranslation } from '../../hooks/useTranslation';
-import { CHART_TYPES } from '../../data/chartTypes';
+import { CHART_TYPES } from '../../constants/chartTypes';
+import { LANGUAGES } from '../../constants/languages';
 
 const ControlSection = ({
                             works,
@@ -49,8 +50,8 @@ const ControlSection = ({
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
             >
-                <option value="de">Deutsch</option>
-                <option value="en">English</option>
+                <option value={LANGUAGES.DE}>Deutsch</option>
+                <option value={LANGUAGES.EN}>English</option>
             </select>
         </div>
     );

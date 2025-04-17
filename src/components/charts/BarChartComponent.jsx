@@ -5,7 +5,7 @@ import {
 import './styles/charts.css';
 import { getYDomain } from '../../utils/dataTransformers';
 import { useTranslation } from '../../hooks/useTranslation';
-import {CHART_TYPES} from "../../data/chartTypes";
+import {CHART_TYPES} from "../../constants/chartTypes";
 
 
 const BarChartComponent = ({ data, chartType, translations, language }) => {

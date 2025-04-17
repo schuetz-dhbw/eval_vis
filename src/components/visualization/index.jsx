@@ -2,7 +2,8 @@ import React, {useMemo, useState} from 'react';
 import './styles/common.css';
 import { works } from '../../data/works';
 import { translations } from '../../locales';
-import { CHART_TYPES } from '../../data/chartTypes';
+import { CHART_TYPES } from '../../constants/chartTypes';
+import { DEFAULT_LANGUAGE } from '../../constants/languages';
 import {
     getScoresData,
     getWeightsData,
@@ -24,7 +25,7 @@ import WorkTypeAnalysisSection from './WorkTypeAnalysisSection';
 const Visualization = () => {
     const [selectedWorkIndex, setSelectedWorkIndex] = useState(0);
     const [chartType, setChartType] = useState(CHART_TYPES.SCORES);
-    const [language, setLanguage] = useState('de');
+    const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
     const translatedWorks = useMemo(() => {
         return getTranslatedWorks(works, translations, language);
     }, [works, translations, language]);

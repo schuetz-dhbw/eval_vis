@@ -2,7 +2,8 @@ import React, { useMemo } from 'react';
 import './styles/metrics.css';
 import { useTranslation } from '../../hooks/useTranslation';
 import { calculateSimilarityMetrics } from '../../utils/dataTransformers';
-import { CHART_TYPES } from '../../data/chartTypes';
+import { CHART_TYPES } from '../../constants/chartTypes';
+import { SIMILARITY_THRESHOLDS, DISTANCE_THRESHOLDS, GRADE_DIFFERENCE_THRESHOLDS } from '../../constants/thresholds';
 
 const MetricsSection = ({ work, language, chartType }) => {
     const t = useTranslation(language);
@@ -12,7 +13,6 @@ const MetricsSection = ({ work, language, chartType }) => {
         return calculateSimilarityMetrics(work);
     }, [work]); // Nur neu berechnen, wenn sich work ändert
 
-    //TODO: Bewertung / Einordnung diskutieren
     return (
         <div className="metrics-container">
             <h3 className="chart-title">{t('metricsTitle', 'chartTitles') || "Similarity Metrics"}</h3>
@@ -25,9 +25,9 @@ const MetricsSection = ({ work, language, chartType }) => {
                             "Measures angle similarity between KI and human ratings (1.0 = identical, 0.0 = completely different)"}
                     </div>
                     <div className="metric-quality">
-                        {metrics.similarity > 0.9 ? '✓ ' + (t('excellent', 'metricsQuality') || "Excellent") :
-                            metrics.similarity > 0.7 ? '✓ ' + (t('good', 'metricsQuality') || "Good") :
-                                metrics.similarity > 0.5 ? '⚠ ' + (t('moderate', 'metricsQuality') || "Moderate") :
+                        {metrics.similarity > SIMILARITY_THRESHOLDS.EXCELLENT ? '✓ ' + (t('excellent', 'metricsQuality') || "Excellent") :
+                            metrics.similarity > SIMILARITY_THRESHOLDS.GOOD ? '✓ ' + (t('good', 'metricsQuality') || "Good") :
+                                metrics.similarity > SIMILARITY_THRESHOLDS.MODERATE ? '⚠ ' + (t('moderate', 'metricsQuality') || "Moderate") :
                                     '⚠ ' + (t('poor', 'metricsQuality') || "Poor")}
                     </div>
                 </div>
@@ -39,9 +39,9 @@ const MetricsSection = ({ work, language, chartType }) => {
                             "Euclidean distance between KI and human ratings (lower = more similar)"}
                     </div>
                     <div className="metric-quality">
-                        {metrics.distance < 50 ? '✓ ' + (t('excellent', 'metricsQuality') || "Excellent") :
-                            metrics.distance < 100 ? '✓ ' + (t('good', 'metricsQuality') || "Good") :
-                                metrics.distance < 150 ? '⚠ ' + (t('moderate', 'metricsQuality') || "Moderate") :
+                        {metrics.distance < DISTANCE_THRESHOLDS.EXCELLENT ? '✓ ' + (t('excellent', 'metricsQuality') || "Excellent") :
+                            metrics.distance < DISTANCE_THRESHOLDS.GOOD ? '✓ ' + (t('good', 'metricsQuality') || "Good") :
+                                metrics.distance < DISTANCE_THRESHOLDS.MODERATE ? '⚠ ' + (t('moderate', 'metricsQuality') || "Moderate") :
                                     '⚠ ' + (t('poor', 'metricsQuality') || "Poor")}
                     </div>
                 </div>
@@ -53,9 +53,9 @@ const MetricsSection = ({ work, language, chartType }) => {
                             "Difference between KI and human final grades"}
                     </div>
                     <div className="metric-quality">
-                        {Math.abs(work.aiGrade - work.humanGrade) < 0.4 ? '✓ ' + (t('excellent', 'metricsQuality') || "Excellent") :
-                            Math.abs(work.aiGrade - work.humanGrade) < 0.6 ? '✓ ' + (t('good', 'metricsQuality') || "Good") :
-                                Math.abs(work.aiGrade - work.humanGrade) < 1.1 ? '⚠ ' + (t('moderate', 'metricsQuality') || "Moderate") :
+                        {Math.abs(work.aiGrade - work.humanGrade) < GRADE_DIFFERENCE_THRESHOLDS.EXCELLENT ? '✓ ' + (t('excellent', 'metricsQuality') || "Excellent") :
+                            Math.abs(work.aiGrade - work.humanGrade) < GRADE_DIFFERENCE_THRESHOLDS.GOOD ? '✓ ' + (t('good', 'metricsQuality') || "Good") :
+                                Math.abs(work.aiGrade - work.humanGrade) < GRADE_DIFFERENCE_THRESHOLDS.MODERATE ? '⚠ ' + (t('moderate', 'metricsQuality') || "Moderate") :
                                     '⚠ ' + (t('poor', 'metricsQuality') || "Poor")}
                     </div>
                 </div>

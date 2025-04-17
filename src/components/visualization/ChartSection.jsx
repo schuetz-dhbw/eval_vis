@@ -4,7 +4,7 @@ import LineChartComponent from '../charts/LineChartComponent';
 import ComposedChartComponent from '../charts/ComposedChartComponent';
 import RadarChartComponent from '../charts/RadarChartComponent';
 import BarChartComponent from '../charts/BarChartComponent';
-import { CHART_TYPES } from '../../data/chartTypes';
+import { CHART_TYPES } from '../../constants/chartTypes';
 import {getWeightedData} from "../../utils/dataTransformers";
 
 const ChartSection = ({
