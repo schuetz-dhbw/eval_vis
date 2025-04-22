@@ -3,6 +3,7 @@ import {
     ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip,
     ResponsiveContainer, ZAxis, Cell, Legend
 } from 'recharts';
+import { CHART_DIMENSIONS, CHART_MARGINS, getChartColors } from '../../constants/chartConfig';
 import { useTranslation } from '../../hooks/useTranslation';
 import './styles/correlation.css';
 
@@ -70,6 +71,8 @@ const CustomTooltip = ({ active, payload, language }) => {
 
 const CorrelationAnalysisComponent = ({ work, translations, language }) => {
     const t = useTranslation(language);
+    const CHART_COLORS = getChartColors();
+
     const criteriaData = useMemo(() => {
         const kiVariances = work.criteriaKeys.map((label, index) => ({
             name: label,
@@ -110,9 +113,9 @@ const CorrelationAnalysisComponent = ({ work, translations, language }) => {
         <div>
             <h3 className="chart-title">{t('varianceTitle', 'chartTitles') || "Criteria Variance Analysis"}</h3>
             <div className="chart-wrapper">
-                <ResponsiveContainer width="100%" height={300}>
+                <ResponsiveContainer width={CHART_DIMENSIONS.FULL_WIDTH} height={CHART_DIMENSIONS.WORK_TYPE_HEIGHT}>
                     <ScatterChart
-                        margin={{ top: 20, right: 30, bottom: 60, left: 20 }}
+                        margin={CHART_MARGINS.SCATTER_CHART}
                     >
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis
@@ -156,12 +159,12 @@ const CorrelationAnalysisComponent = ({ work, translations, language }) => {
                         <Scatter
                             name={t('criteriaVariance', 'labels') || "Criteria Variance"}
                             data={criteriaData}
-                            fill="#8884d8"
+                            fill={CHART_COLORS.PRIMARY}
                         >
                             {criteriaData.map((entry, index) => (
                                 <Cell
                                     key={`cell-${index}`}
-                                    fill={entry.scoreDiff > 20 ? '#ff7300' : '#82ca9d'}
+                                    fill={entry.scoreDiff > 20 ? CHART_COLORS.TERTIARY : CHART_COLORS.SECONDARY}
                                 />
                             ))}
                         </Scatter>

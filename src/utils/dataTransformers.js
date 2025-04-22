@@ -1,5 +1,6 @@
 import { getTranslation } from './translationHelpers';
 import { translations } from '../locales/index';
+import {METRICS} from "../constants/metrics";
 
 // Calculate cosine similarity between two vectors
 export const calculateCosineSimilarity = (vectorA, vectorB) => {
@@ -137,8 +138,8 @@ export const getWeightsData = (work, language) => {
         return {
             name: label,
             shortName: shortLabels[index],
-            [t('ki', 'labels')]: work.aiWeights[index] * 100, // Skaliert für bessere Sichtbarkeit
-            [t('human', 'labels')]: work.humanWeights[index] * 100,
+            [t('ki', 'labels')]: work.aiWeights[index] * METRICS.WEIGHT_SCALE,
+            [t('human', 'labels')]: work.humanWeights[index] * METRICS.WEIGHT_SCALE
         };
     });
 };
@@ -169,10 +170,10 @@ export const getCombinedData = (work, language) => {
             shortName: shortLabels[index],
             [`${t('ki', 'labels')}Score`]: work.aiScores[index],
             [`${t('human', 'labels')}Score`]: work.humanScores[index],
-            [`${t('ki', 'labels')}Weight`]: work.aiWeights[index] * 100,
-            [`${t('human', 'labels')}Weight`]: work.humanWeights[index] * 100,
+            [`${t('ki', 'labels')}Weight`]: work.aiWeights[index] * METRICS.WEIGHT_SCALE,
+            [`${t('human', 'labels')}Weight`]: work.humanWeights[index] * METRICS.WEIGHT_SCALE,
             [`${t('ki', 'labels')}Weighted`]: work.aiScores[index] * work.aiWeights[index],
-            [`${t('human', 'labels')}Weighted`]: work.humanScores[index] * work.humanWeights[index],
+            [`${t('human', 'labels')}Weighted`]: work.humanScores[index] * work.humanWeights[index]
         };
     });
 };
@@ -189,7 +190,7 @@ export const getRadarData = (work, language, chartType) => {
                 shortSubject: shortLabels[index],
                 [t('ki', 'labels')]: work.aiScores[index] * work.aiWeights[index],
                 [t('human', 'labels')]: work.humanScores[index] * work.humanWeights[index],
-                fullMark: 10,
+                fullMark: METRICS.WEIGHTED_MAX
             };
         });
     } else if (chartType === 'weights') {
@@ -199,7 +200,7 @@ export const getRadarData = (work, language, chartType) => {
                 shortSubject: shortLabels[index],
                 [t('ki', 'labels')]: work.aiWeights[index] * 100,
                 [t('human', 'labels')]: work.humanWeights[index] * 100,
-                fullMark: 25,
+                fullMark: METRICS.WEIGHT_MAX
             };
         });
     } else {
@@ -209,7 +210,7 @@ export const getRadarData = (work, language, chartType) => {
                 shortSubject: shortLabels[index],
                 [t('ki', 'labels')]: work.aiScores[index],
                 [t('human', 'labels')]: work.humanScores[index],
-                fullMark: 100,
+                fullMark: METRICS.FULL_MARK
             };
         });
     }
@@ -219,13 +220,13 @@ export const getRadarData = (work, language, chartType) => {
 export const getYDomain = (chartType) => {
     switch(chartType) {
         case 'weights':
-            return [0, 25];
+            return [0, METRICS.WEIGHT_MAX];
         case 'weighted':
-            return [0, 20];
+            return [0, METRICS.WEIGHTED_MAX];
         case 'combined':
         case 'scores':
         default:
-            return [0, 100];
+            return [0, METRICS.FULL_MARK];
     }
 };
 

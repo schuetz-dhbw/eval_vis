@@ -7,6 +7,7 @@ import ChartErrorBoundary from '../charts/ChartErrorBoundary';
 import DataErrorBoundary from '../common/DataErrorBoundary';
 import ErrorBoundary from '../common/ErrorBoundary';
 import {useAppContext} from "../../AppContext";
+import {METRICS} from "../../constants/metrics";
 
 const StatisticsSection = () => {
     const { currentWork, language } = useAppContext();
@@ -23,7 +24,7 @@ const StatisticsSection = () => {
     }, [currentWork]);
 
     // Format a number to 2 decimal places
-    const formatNum = (num) => num.toFixed(2);
+    const formatNum = (num) => num.toFixed(METRICS.DEFAULT_DECIMAL_PLACES);
 
     return (
         <ErrorBoundary

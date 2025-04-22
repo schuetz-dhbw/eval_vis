@@ -3,16 +3,20 @@ import {
     RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend, ResponsiveContainer
 } from 'recharts';
 import './styles/charts.css';
+import {getChartColors, CHART_DIMENSIONS, RADAR_CONFIG} from '../../constants/chartConfig';
 import { getRadarDomain } from '../../utils/dataTransformers';
 import { useTranslation } from '../../hooks/useTranslation';
 
 
 const RadarChartComponent = ({ data, chartType, language }) => {
     const t = useTranslation(language);
+    const CHART_COLORS = getChartColors();
 
     return (
-        <ResponsiveContainer width="100%" height={350}>
-            <RadarChart outerRadius="75%" data={data}>
+        <ResponsiveContainer width={CHART_DIMENSIONS.FULL_WIDTH} height={CHART_DIMENSIONS.RADAR_HEIGHT}>
+            <RadarChart
+                outerRadius={RADAR_CONFIG.OUTER_RADIUS}
+                data={data}>
                 <PolarGrid />
                 <PolarAngleAxis
                     dataKey="shortSubject"
@@ -25,14 +29,14 @@ const RadarChartComponent = ({ data, chartType, language }) => {
                 <Radar
                     name={t('ki', 'labels')}
                     dataKey={t('ki', 'labels')}
-                    stroke="#8884d8"
-                    strokeWidth={2.5}
-                    fill="#8884d8"
-                    fillOpacity={0.1}
+                    stroke={CHART_COLORS.PRIMARY}
+                    strokeWidth={RADAR_CONFIG.STROKE_WIDTH}
+                    fill={CHART_COLORS.PRIMARY}
+                    fillOpacity={RADAR_CONFIG.FILL_OPACITY}
                     dot={{
-                        r: 5,
-                        strokeWidth: 1,
-                        stroke: "#8884d8",
+                        r: RADAR_CONFIG.DOT_RADIUS,
+                        strokeWidth: RADAR_CONFIG.DOT_STROKE_WIDTH,
+                        stroke: CHART_COLORS.PRIMARY,
                         fill: "white",
                         strokeDasharray: "",
                     }}
@@ -40,14 +44,14 @@ const RadarChartComponent = ({ data, chartType, language }) => {
                 <Radar
                     name={t('human', 'labels')}
                     dataKey={t('human', 'labels')}
-                    stroke="#82ca9d"
-                    strokeWidth={2.5}
-                    fill="#82ca9d"
-                    fillOpacity={0.1}
+                    stroke={CHART_COLORS.SECONDARY}
+                    strokeWidth={RADAR_CONFIG.STROKE_WIDTH}
+                    fill={CHART_COLORS.SECONDARY}
+                    fillOpacity={RADAR_CONFIG.FILL_OPACITY}
                     dot={{
-                        r: 5,
-                        strokeWidth: 1,
-                        stroke: "#82ca9d",
+                        r: RADAR_CONFIG.DOT_RADIUS,
+                        strokeWidth: RADAR_CONFIG.DOT_STROKE_WIDTH,
+                        stroke: CHART_COLORS.SECONDARY,
                         fill: "white",
                         strokeDasharray: "",
                     }}

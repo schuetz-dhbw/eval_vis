@@ -2,35 +2,30 @@ import React from 'react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
+import { CHART_DIMENSIONS, CHART_MARGINS, AXIS_CONFIG, getChartColors } from '../../constants/chartConfig';
 import './styles/charts.css';
 import { getYDomain } from '../../utils/dataTransformers';
 import { useTranslation } from '../../hooks/useTranslation';
+import {METRICS} from "../../constants/metrics";
 
 const BarChartComponent = ({ data, chartType, language }) => {
     const t = useTranslation(language);
+    const CHART_COLORS = getChartColors();
 
     const formatValue = (value) => {
-        return Number(value).toFixed(1);
+        return Number(value).toFixed(METRICS.DEFAULT_DECIMAL_PLACES);
     };
 
     return (
-        <ResponsiveContainer width="100%" height={250}>
+        <ResponsiveContainer width={CHART_DIMENSIONS.FULL_WIDTH} height={CHART_DIMENSIONS.DEFAULT_HEIGHT}>
             <BarChart
                 data={data}
-                margin={{
-                    top: 10,
-                    right: 30,
-                    left: 0,
-                    bottom: 30,
-                }}
+                margin={CHART_MARGINS.BAR_CHART}
             >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis
                     dataKey="shortName"
-                    angle={-45}
-                    textAnchor="end"
-                    height={70}
-                    tick={{ fontSize: 10 }}
+                    {...AXIS_CONFIG.DEFAULT_X}
                 />
                 <YAxis
                     domain={getYDomain(chartType)}
@@ -40,8 +35,12 @@ const BarChartComponent = ({ data, chartType, language }) => {
                     formatter={(value) => formatValue(value)}
                 />
                 <Legend />
-                <Bar dataKey={t('ki', 'labels')} fill="#8884d8" />
-                <Bar dataKey={t('human', 'labels')} fill="#82ca9d" />
+                <Bar
+                    dataKey={t('ki', 'labels')}
+                    fill={CHART_COLORS.PRIMARY} />
+                <Bar
+                    dataKey={t('human', 'labels')}
+                    fill={CHART_COLORS.SECONDARY} />
             </BarChart>
         </ResponsiveContainer>
     );

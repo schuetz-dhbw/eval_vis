@@ -1,11 +1,13 @@
 import React, { useMemo } from 'react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
+import { CHART_MARGINS, AXIS_CONFIG, getChartColors } from '../../constants/chartConfig';
 import { useTranslation } from '../../hooks/useTranslation';
 import './styles/workTypeAnalysis.css';
 
 const WorkTypeAnalysisComponent = ({ works, language }) => {
     const t = useTranslation(language);
+    const CHART_COLORS = getChartColors();
 
     // Group works by type
         const groupedWorks = useMemo(() => {
@@ -168,9 +170,9 @@ const WorkTypeAnalysisComponent = ({ works, language }) => {
 
     // Get colors based on difference value
     const getDifferenceColor = (value) => {
-        if (value > 30) return '#ff7300'; // Large difference - orange
-        if (value > 15) return '#8884d8'; // Medium difference - purple
-        return '#82ca9d'; // Small difference - green
+        if (value > 30) return CHART_COLORS.TERTIARY; // Large difference - orange
+        if (value > 15) return CHART_COLORS.PRIMARY; // Medium difference - purple
+        return CHART_COLORS.SECONDARY; // Small difference - green
     };
 
     return (
@@ -184,15 +186,12 @@ const WorkTypeAnalysisComponent = ({ works, language }) => {
                         <ResponsiveContainer width="100%" height={300}>
                             <BarChart
                                 data={overallDifferenceByType}
-                                margin={{ top: 20, right: 30, left: 20, bottom: 50 }}
+                                margin={CHART_MARGINS.WORK_TYPE_BAR}
                             >
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <XAxis
                                     dataKey="type"
-                                    angle={-45}
-                                    textAnchor="end"
-                                    height={100}
-                                    tick={{ fontSize: 10 }}
+                                    {...AXIS_CONFIG.WORK_TYPE_X}
                                 />
                                 <YAxis
                                     label={{
@@ -206,7 +205,7 @@ const WorkTypeAnalysisComponent = ({ works, language }) => {
                                 <Bar
                                     dataKey="averageDifference"
                                     name={t('avgDifference', 'metrics') || "Average Difference"}
-                                    fill="#8884d8"
+                                    fill={CHART_COLORS.PRIMARY}
                                 >
                                     {overallDifferenceByType.map((entry, index) => (
                                         <Cell
