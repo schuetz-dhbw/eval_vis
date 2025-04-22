@@ -33,6 +33,7 @@ const ChartSection = ({ scoresData, combinedData, radarData }) => {
                                 <LineChartComponent
                                     data={scoresData}
                                     chartType={chartType}
+                                    language={language}
                                 />
                             )}
                         </ChartErrorBoundary>

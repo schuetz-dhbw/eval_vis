@@ -78,38 +78,6 @@
     text-overflow: ellipsis;
 }
 
-/* Custom tooltip styling */
-.custom-tooltip {
-    background-color: rgba(255, 255, 255, 0.95);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
-    padding: var(--padding-md);
-    box-shadow: var(--shadow-sm);
-    font-size: var(--font-size-sm);
-}
-
-.tooltip-title {
-    font-weight: 600;
-    margin-bottom: var(--padding-sm);
-    border-bottom: 1px solid var(--color-border-light);
-    padding-bottom: 4px;
-}
-
-.tooltip-item {
-    margin: 3px 0;
-    display: flex;
-    justify-content: space-between;
-}
-
-.tooltip-label {
-    margin-right: var(--padding-md);
-    color: var(--color-text-light);
-}
-
-.tooltip-value {
-    font-weight: 500;
-}
-
 .correlation-matrix {
     margin-top: var(--padding-lg);
 }

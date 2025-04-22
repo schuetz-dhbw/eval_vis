@@ -5,6 +5,7 @@ import {
 } from 'recharts';
 import { CHART_DIMENSIONS, CHART_MARGINS, getChartColors } from '../../constants/chartConfig';
 import { useTranslation } from '../../hooks/useTranslation';
+import CustomTooltip from './CustomTooltip';
 import './styles/correlation.css';
 
 const calculateCorrelation = (x, y) => {
@@ -37,52 +38,21 @@ const calculateVariance = (data) => {
     return data.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / data.length;
 };
 
-// Benutzerdefinierter Tooltip für den Scatter Plot
-const CustomTooltip = ({ active, payload, language }) => {
-    const t = useTranslation(language);
-
-    if (active && payload && payload.length) {
-        const data = payload[0].payload;
-        return (
-            <div className="custom-tooltip">
-                <p className="tooltip-title">{data.name}</p>
-                <p className="tooltip-item">
-                    <span className="tooltip-label">{t('ki', 'labels')}:</span>
-                    <span className="tooltip-value">{data.kiScore}%</span>
-                </p>
-                <p className="tooltip-item">
-                    <span className="tooltip-label">{t('human', 'labels')}:</span>
-                    <span className="tooltip-value">{data.humanScore}%</span>
-                </p>
-                <p className="tooltip-item">
-                    <span className="tooltip-label">{t('difference', 'labels')}:</span>
-                    <span className="tooltip-value">{data.scoreDiff}%</span>
-                </p>
-                <p className="tooltip-item">
-                    <span className="tooltip-label">{t('variance', 'labels')}:</span>
-                    <span className="tooltip-value">{data.variance.toFixed(2)}</span>
-                </p>
-            </div>
-        );
-    }
-
-    return null;
-};
-
-const CorrelationAnalysisComponent = ({ work, translations, language }) => {
+const CorrelationAnalysisComponent = ({ work, language }) => {
     const t = useTranslation(language);
     const CHART_COLORS = getChartColors();
 
     const criteriaData = useMemo(() => {
-        const kiVariances = work.criteriaKeys.map((label, index) => ({
-            name: label,
+        const aiVariances = work.criteriaKeys.map((label, index) => ({
+            originalKey: label,
+            name: work.criteriaLabels[index],
             variance: calculateVariance([work.aiScores[index], work.humanScores[index]]),
             kiScore: work.aiScores[index],
             humanScore: work.humanScores[index],
             scoreDiff: Math.abs(work.aiScores[index] - work.humanScores[index])
         }));
 
-        return kiVariances.sort((a, b) => b.variance - a.variance);
+        return aiVariances.sort((a, b) => b.variance - a.variance);
     }, [work]);
 
     const correlationData = useMemo(() => {
@@ -108,6 +78,34 @@ const CorrelationAnalysisComponent = ({ work, translations, language }) => {
 
         return result;
     }, [work]);
+
+    const tooltipFormatter = (data) => {
+        // Den richtigen übersetzten Namen aus criteriaLabels holen
+        const criteriaIndex = work.criteriaKeys.findIndex(key => key === data.originalKey);
+        const translatedName = work.criteriaLabels[criteriaIndex] || data.name;
+
+        return (
+            <>
+                <p className="tooltip-title">{translatedName}</p>
+                <p className="tooltip-item ki">
+                    <span className="tooltip-label">{t('ki', 'labels')}:</span>
+                    <span className="tooltip-value">{data.kiScore}%</span>
+                </p>
+                <p className="tooltip-item human">
+                    <span className="tooltip-label">{t('human', 'labels')}:</span>
+                    <span className="tooltip-value">{data.humanScore}%</span>
+                </p>
+                <p className="tooltip-item">
+                    <span className="tooltip-label">{t('difference', 'labels')}:</span>
+                    <span className="tooltip-value">{data.scoreDiff}%</span>
+                </p>
+                <p className="tooltip-item">
+                    <span className="tooltip-label">{t('variance', 'labels')}:</span>
+                    <span className="tooltip-value">{data.variance.toFixed(2)}</span>
+                </p>
+            </>
+        );
+    };
 
     return (
         <div>
@@ -148,10 +146,7 @@ const CorrelationAnalysisComponent = ({ work, translations, language }) => {
                             range={[50, 250]}
                             name={t('variance', 'labels') || "Variance"}
                         />
-                        <Tooltip
-                            content={<CustomTooltip translations={translations} language={language} />}
-                            cursor={{ strokeDasharray: '3 3' }}
-                        />
+                        <Tooltip content={<CustomTooltip formatter={tooltipFormatter} />} />
                         <Legend
                             verticalAlign="top"
                             height={36}

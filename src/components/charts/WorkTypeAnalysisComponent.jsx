@@ -3,29 +3,31 @@ import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import { CHART_MARGINS, AXIS_CONFIG, getChartColors } from '../../constants/chartConfig';
 import { useTranslation } from '../../hooks/useTranslation';
+import CustomTooltip from './CustomTooltip';
 import './styles/workTypeAnalysis.css';
 
 const WorkTypeAnalysisComponent = ({ works, language }) => {
+
     const t = useTranslation(language);
     const CHART_COLORS = getChartColors();
 
     // Group works by type
-        const groupedWorks = useMemo(() => {
-            const result = {};
-            works.forEach(work => {
-                if (!result[work.type]) {
-                    result[work.type] = [];
-                }
-                result[work.type].push(work);
-            });
-            return result;
-        }, [works]);
+    const groupedWorks = useMemo(() => {
+        const result = {};
+        works.forEach(work => {
+            if (!result[work.typeKey]) {
+                result[work.typeKey] = [];
+            }
+            result[work.typeKey].push(work);
+        });
+        return result;
+    }, [works]);
 
     // Calculate average differences by criteria for each type
     const differencesByType = useMemo(() => {
         const result = [];
 
-        Object.entries(groupedWorks).forEach(([type, typeWorks]) => {
+        Object.entries(groupedWorks).forEach(([typeKey, typeWorks]) => {
             // For each criterion, calculate the average difference
             if (typeWorks.length > 0) {
                 const criteriaCount = typeWorks[0].criteriaKeys.length;
@@ -44,7 +46,7 @@ const WorkTypeAnalysisComponent = ({ works, language }) => {
 
                     if (validWorkCount > 0) {
                         result.push({
-                            type,
+                            type: typeKey,  // Speichere hier den typeKey statt der Übersetzung
                             criterion: typeWorks[0].criteriaKeys[i],
                             averageDifference: totalDiff / validWorkCount,
                             count: validWorkCount
@@ -52,16 +54,17 @@ const WorkTypeAnalysisComponent = ({ works, language }) => {
                     }
                 }
             }
-        }, [groupedWorks]);
+        });
 
         return result;
     }, [groupedWorks]);
+
 
     // Calculate overall average score difference by work type
     const overallDifferenceByType = useMemo(() => {
         const result = [];
 
-        Object.entries(groupedWorks).forEach(([type, typeWorks]) => {
+        Object.entries(groupedWorks).forEach(([typeKey, typeWorks]) => {
             let totalDiff = 0;
             let diffCount = 0;
 
@@ -77,7 +80,8 @@ const WorkTypeAnalysisComponent = ({ works, language }) => {
 
             if (diffCount > 0) {
                 result.push({
-                    type,
+                    type: t(typeKey, 'works.types'),
+                    typeKey: typeKey,
                     averageDifference: totalDiff / diffCount,
                     count: typeWorks.length
                 });
@@ -86,7 +90,7 @@ const WorkTypeAnalysisComponent = ({ works, language }) => {
 
         // Sort by average difference (descending)
         return result.sort((a, b) => b.averageDifference - a.averageDifference);
-    }, [groupedWorks]);
+    }, [groupedWorks, t]);
 
     // Find the criteria with the largest average difference for each type
     const largestDifferencesByType = useMemo(() => {
@@ -101,12 +105,12 @@ const WorkTypeAnalysisComponent = ({ works, language }) => {
             }
         });
 
-        return Object.entries(resultByType).map(([type, data]) => ({
-            type,
-            criterion: data.criterion,
+        return Object.entries(resultByType).map(([typeKey, data]) => ({
+            type: t(typeKey, 'works.types'),
+            criterion: t(data.criterion, 'works.criteriaLabels'),
             averageDifference: data.averageDifference
         }));
-    }, [differencesByType]);
+    }, [differencesByType, t]);
 
     // Find the top 5 criteria with the largest differences across all types
     const topCriteriaByDifference = useMemo(() => {
@@ -136,25 +140,20 @@ const WorkTypeAnalysisComponent = ({ works, language }) => {
             .slice(0, 5);
     }, [differencesByType]);
 
-    // Custom tooltip for the bar chart
-    const CustomTooltip = ({ active, payload }) => {
-        if (active && payload && payload.length) {
-            const data = payload[0].payload;
-            return (
-                <div className="custom-tooltip">
-                    <p className="tooltip-title">{data.type}</p>
-                    <p className="tooltip-item">
-                        <span className="tooltip-label">{t('avgDifference', 'metrics') || "Average Difference"}:</span>
-                        <span className="tooltip-value">{data.averageDifference.toFixed(2)}%</span>
-                    </p>
-                    <p className="tooltip-item">
-                        <span className="tooltip-label">{t('count', 'metrics') || "Count"}:</span>
-                        <span className="tooltip-value">{data.count}</span>
-                    </p>
-                </div>
-            );
-        }
-        return null;
+    const tooltipFormatter = (data) => {
+        return (
+            <>
+                <p className="tooltip-title">{data.type}</p>
+                <p className="tooltip-item">
+                    <span className="tooltip-label">{t('avgDifference', 'metrics')}:</span>
+                    <span className="tooltip-value">{data.averageDifference.toFixed(2)}%</span>
+                </p>
+                <p className="tooltip-item">
+                    <span className="tooltip-label">{t('count', 'tableHeaders')}:</span>
+                    <span className="tooltip-value">{data.count}</span>
+                </p>
+            </>
+        );
     };
 
     // Create scatter data for work types vs criteria differences
@@ -177,7 +176,6 @@ const WorkTypeAnalysisComponent = ({ works, language }) => {
 
     return (
         <div className="work-type-analysis">
-            <h3 className="section-title">{t('workTypeAnalysisTitle', 'chartTitles') || "Work Type Analysis"}</h3>
 
             <div className="analysis-content">
                 <div className="chart-container">
@@ -200,7 +198,7 @@ const WorkTypeAnalysisComponent = ({ works, language }) => {
                                         position: 'insideLeft'
                                     }}
                                 />
-                                <Tooltip content={<CustomTooltip />} />
+                                <Tooltip content={<CustomTooltip formatter={tooltipFormatter} />} />
                                 <Legend />
                                 <Bar
                                     dataKey="averageDifference"

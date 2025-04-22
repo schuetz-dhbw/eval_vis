@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend, ResponsiveContainer
+    RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend, ResponsiveContainer, Tooltip
 } from 'recharts';
 import './styles/charts.css';
 import {getChartColors, CHART_DIMENSIONS, RADAR_CONFIG} from '../../constants/chartConfig';
@@ -56,6 +56,7 @@ const RadarChartComponent = ({ data, chartType, language }) => {
                         strokeDasharray: "",
                     }}
                 />
+                <Tooltip />
                 <Legend />
             </RadarChart>
         </ResponsiveContainer>
