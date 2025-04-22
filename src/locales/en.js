@@ -1,5 +1,6 @@
 export const en = {
-    title: "Visualization of Assessment: AI vs. Human",
+    title: "COMPARE",
+    subtitle: "Comparative Assessment Matrix for Performance Analysis and Review Evaluation",
     errors: {
         chartErrorTitle: "Visualization Error",
         chartErrorMessage: "An error occurred while rendering the chart.",

@@ -1,70 +1,188 @@
-# Getting Started with Create React App
+# COMPARE - Comparative Assessment Matrix for Performance Analysis and Review Evaluation
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Ein React-basiertes Visualisierungstool zum Vergleich von Bewertungen wissenschaftlicher Arbeiten durch KI und menschliche Gutachter.
 
-## Available Scripts
+## 🎯 Projektziel
 
-In the project directory, you can run:
+Diese Anwendung ermöglicht die interaktive Visualisierung und Analyse von Bewertungen wissenschaftlicher Arbeiten. Sie vergleicht KI-generierte Bewertungen mit menschlichen Beurteilungen und bietet verschiedene Visualisierungsoptionen, um Unterschiede und Ähnlichkeiten zu identifizieren.
 
-### `npm start`
+## ✨ Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Visualisierungstypen
+- **Zielerreichungsgrade**: Darstellung der ursprünglichen Bewertungsscores (0-100%)
+- **Gewichtungen**: Visualisierung der relativen Gewichtung einzelner Kriterien
+- **Gewichtete Werte**: Anzeige der gewichteten Bewertungspunkte
+- **Kombinierte Darstellung**: Simultane Darstellung von Scores und Gewichtungen
+- **Statistische Analyse**: Varianz- und Korrelationsanalysen zwischen den Bewertungen
+- **Arbeitstyp-Analyse**: Vergleich von Differenzen basierend auf Arbeitstypen (analytisch vs. konstruktiv)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Diagrammtypen
+- Balkendiagramme
+- Liniendiagramme
+- Spinnendiagramme (Radar Charts)
+- Kombinierte Diagramme
+- Heatmaps und Korrelationsmatrizen
 
-### `npm test`
+### Weitere Features
+- Dark/Light Mode Umschaltung
+- Mehrsprachigkeit (Deutsch/Englisch)
+- Responsive Design
+- Erweitertes Error Handling
+- Interaktive Tooltips
+- Detaillierte Metriken und Statistiken
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🚀 Installation
 
-### `npm run build`
+### Voraussetzungen
+- Node.js (>= 14.0.0)
+- npm oder yarn
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Setup
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Repository klonen:
+```bash
+git clone https://github.com/your-username/visualization-app.git
+cd visualization-app
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Abhängigkeiten installieren:
+```bash
+npm install
+```
 
-### `npm run eject`
+Dies installiert automatisch alle notwendigen Abhängigkeiten, einschließlich Recharts für die Visualisierungen.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. Entwicklungsserver starten:
+```bash
+npm start
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Die Anwendung ist dann unter `http://localhost:3000` verfügbar.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 📁 Projektstruktur
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+src/
+├── components/
+│   ├── charts/                 # Chart-Komponenten
+│   │   ├── BarChartComponent.jsx
+│   │   ├── LineChartComponent.jsx
+│   │   ├── RadarChartComponent.jsx
+│   │   └── ...
+│   ├── common/                 # Wiederverwendbare Komponenten
+│   │   ├── DarkModeToggle.jsx
+│   │   ├── ErrorBoundary.jsx
+│   │   └── ...
+│   └── visualization/          # Hauptvisualisierungs-Komponenten
+│       ├── HeaderSection.jsx
+│       ├── ControlSection.jsx
+│       ├── MetricsSection.jsx
+│       └── ...
+├── constants/                  # Konstanten
+│   ├── chartTypes.js
+│   ├── languages.js
+│   └── thresholds.js
+├── data/                       # Datenbasis
+│   └── works.js               # Bewertungsdaten
+├── hooks/                      # Custom React Hooks
+│   └── useTranslation.js
+├── locales/                    # Übersetzungen
+│   ├── de.js
+│   ├── en.js
+│   └── ...
+├── styles/                     # Globale Styles
+│   ├── global.css
+│   └── variables.css
+├── utils/                      # Hilfsfunktionen
+│   ├── dataTransformers.js
+│   ├── darkmode.js
+│   └── translationHelpers.js
+├── App.js                     # Hauptkomponente
+├── AppContext.js              # React Context für globalen State
+└── index.js                   # Einstiegspunkt
+```
 
-## Learn More
+## 🔧 Architektur
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### State Management
+- Verwendet React Context API für globales State Management
+- Context verwaltet:
+    - Ausgewählte Arbeit
+    - Diagrammtyp
+    - Spracheinstellung
+    - Dark Mode
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Datenverarbeitung
+- Umfangreiche Datenverarbeitungsfunktionen in `utils/dataTransformers.js`
+- Berechnung von:
+    - Kosinus-Ähnlichkeit
+    - Euklidischer Distanz
+    - Statistische Metriken
+    - Varianzen und Korrelationen
 
-### Code Splitting
+### Komponenten-Design
+- Modulare, wiederverwendbare Komponenten
+- Trennung von Präsentation und Logik
+- Mehrere Error Boundary Layers
+- Custom Hooks für Übersetzungen
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🛠 Technologie-Stack
 
-### Analyzing the Bundle Size
+- **React** 18.x
+- **Recharts** 2.x für Datenvisualisierung (Balken-, Linien- und Spinnendiagramme)
+- **CSS Custom Properties** für Theming
+- **React Context** für State Management
+- **Error Boundaries** für robustes Error Handling
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 🌐 Internationalisierung
 
-### Making a Progressive Web App
+Die Anwendung unterstützt:
+- Deutsch (Standard)
+- Englisch
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Übersetzungen werden in separaten JSON-Dateien verwaltet und über einen custom Hook bereitgestellt.
 
-### Advanced Configuration
+## 📊 Datenformat
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Die Bewertungsdaten folgen einem strukturierten Format:
 
-### Deployment
+- key: "identifier",
+- typeKey: "analytic" | "constructive",
+- criteriaKeys: [...],
+- aiScores: [...],
+- humanScores: [...],
+- aiWeights: [...],
+- humanWeights: [...],
+- aiGrade: number,
+- humanGrade: number
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 🎨 Styling
 
-### `npm run build` fails to minify
+- CSS Variables für einfaches Theming
+- Dark/Light Mode Unterstützung
+- Responsive Design für alle Gerätegrößen
+- Konsistentes Design-System
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 📈 Performance-Optimierungen
+
+- Verwendung von `useMemo` für rechenintensive Operationen
+- Lazy Loading von Komponenten
+- Optimierte Render-Zyklen durch Context-Splitting
+
+## 🚀 Deployment
+
+### Build für Produktion
+
+```bash
+npm run build
+```
+
+Erzeugt einen optimierten Build im `build` Verzeichnis.
+
+### Deployment-Optionen
+
+Die Anwendung kann auf folgenden Plattformen deployed werden:
+- Vercel
+- Netlify
+- GitHub Pages
+- Eigener Webserver

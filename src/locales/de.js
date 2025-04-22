@@ -1,5 +1,6 @@
 export const de = {
-    title: "Visualisierung der Bewertungen: KI vs. Mensch",
+    title: "COMPARE",
+    subtitle: "Comparative Assessment Matrix for Performance Analysis and Review Evaluation",
     errors: {
         chartErrorTitle: "Visualisierungsfehler",
         chartErrorMessage: "Bei der Darstellung des Diagramms ist ein Fehler aufgetreten.",

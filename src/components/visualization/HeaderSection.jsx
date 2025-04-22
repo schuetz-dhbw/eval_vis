@@ -9,7 +9,8 @@ const HeaderSection = () => {
 
     return (
         <div className="header-section">
-            <h2 className="main-title">{t('title')}</h2>
+            <h1 className="main-title">{t('title')}</h1>
+            <h2 className="sub-title">{t('subtitle')}</h2>
         </div>
     );
 };

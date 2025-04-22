@@ -1,12 +1,20 @@
 .header-section {
     text-align: center;
-    margin-bottom: var(--padding-lg);
+    margin-bottom: var(--padding-xl);
 }
 
 .main-title {
     font-size: var(--font-size-xl);
     font-weight: 700;
     margin-bottom: var(--padding-sm);
+    color: var(--color-text);
+    letter-spacing: var(--letter-spacing);
+}
+
+.sub-title {
+    font-size: var(--font-size-xl);
+    font-weight: 500;
+    margin-bottom: var(--padding-xl);
     color: var(--color-text);
 }
 
