@@ -47,7 +47,7 @@ const CorrelationAnalysisComponent = ({ work, language }) => {
             originalKey: label,
             name: work.criteriaLabels[index],
             variance: calculateVariance([work.aiScores[index], work.humanScores[index]]),
-            kiScore: work.aiScores[index],
+            aiScore: work.aiScores[index],
             humanScore: work.humanScores[index],
             scoreDiff: Math.abs(work.aiScores[index] - work.humanScores[index])
         }));
@@ -87,9 +87,9 @@ const CorrelationAnalysisComponent = ({ work, language }) => {
         return (
             <>
                 <p className="tooltip-title">{translatedName}</p>
-                <p className="tooltip-item ki">
-                    <span className="tooltip-label">{t('ki', 'labels')}:</span>
-                    <span className="tooltip-value">{data.kiScore}%</span>
+                <p className="tooltip-item ai">
+                    <span className="tooltip-label">{t('ai', 'labels')}:</span>
+                    <span className="tooltip-value">{data.aiScore}%</span>
                 </p>
                 <p className="tooltip-item human">
                     <span className="tooltip-label">{t('human', 'labels')}:</span>
@@ -118,11 +118,11 @@ const CorrelationAnalysisComponent = ({ work, language }) => {
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis
                             type="number"
-                            dataKey="kiScore"
-                            name={t('ki', 'labels')}
+                            dataKey="aiScore"
+                            name={t('ai', 'labels')}
                             domain={[0, 100]}
                             label={{
-                                value: t('ki', 'labels') + ' ' + t('score', 'labels'),
+                                value: t('ai', 'labels') + ' ' + t('score', 'labels'),
                                 position: 'bottom',
                                 offset: 10
                             }}
@@ -173,7 +173,7 @@ const CorrelationAnalysisComponent = ({ work, language }) => {
                     <thead>
                     <tr>
                         <th>{t('criterion', 'tableHeaders')}</th>
-                        <th>{t('ki', 'labels')}</th>
+                        <th>{t('ai', 'labels')}</th>
                         <th>{t('human', 'labels')}</th>
                         <th>{t('difference', 'labels') || "Difference"}</th>
                         <th>{t('variance', 'labels') || "Variance"}</th>
@@ -183,9 +183,9 @@ const CorrelationAnalysisComponent = ({ work, language }) => {
                     {criteriaData.slice(0, 5).map((item, index) => (
                         <tr key={index} className={item.scoreDiff > 20 ? "highlight-row" : ""}>
                             <td>{item.name}</td>
-                            <td>{item.kiScore}%</td>
+                            <td>{item.aiScore}%</td>
                             <td>{item.humanScore}%</td>
-                            <td>{Math.abs(item.kiScore - item.humanScore)}%</td>
+                            <td>{Math.abs(item.aiScore - item.humanScore)}%</td>
                             <td>{item.variance.toFixed(2)}</td>
                         </tr>
                     ))}

@@ -23,7 +23,7 @@ const DetailsSection = () => {
 
             <div className="grades-container">
                 <div className="grade-box">
-                    <span className="grade-label">{t('ki', 'labels')} {t('grade', 'labels') || 'Note'}:</span>
+                    <span className="grade-label">{t('ai', 'labels')} {t('grade', 'labels') || 'Note'}:</span>
                     <span className="grade-value">{currentWork.aiGrade.toFixed(1)}</span>
                 </div>
                 <div className="grade-box">

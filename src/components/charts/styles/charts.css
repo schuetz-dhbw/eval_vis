@@ -1,13 +1,56 @@
-.radar-wrapper {
-    height: 350px !important; /* Erhöht für bessere Lesbarkeit */
+/*
+* Gemeinsames Styling für alle Chart-Komponenten
+* Organisiert nach Komponenten und Funktionalität
+*/
+
+/* ====== Allgemeine Chart-Styles ====== */
+.chart-wrapper {
+    width: 100%;
+    height: 250px;
 }
 
-/* X-Achsenbeschriftungen */
+.chart-title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin-bottom: var(--padding-sm);
+    color: var(--color-text);
+}
+
+.no-data-message {
+    text-align: center;
+    padding: var(--padding-lg);
+    color: var(--color-text-light);
+    font-style: italic;
+}
+
+/* ====== Chart-Typ spezifische Styles ====== */
+
+/* Radar/Spider Chart */
+.radar-wrapper {
+    height: 350px !important;
+    padding-top: 1rem;
+}
+
+.recharts-radar {
+    filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.15));
+}
+
+.dark-mode .recharts-radar {
+    filter: drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.15));
+}
+
+.recharts-radar .recharts-polygon {
+    stroke-width: 2px;
+}
+
+/* ====== Recharts Komponenten-Styling ====== */
+
+/* Achsen */
 .recharts-cartesian-axis-tick-value {
     font-size: var(--font-size-xs);
 }
 
-/* Tooltip-Styling verbessern */
+/* Standard-Tooltip Anpassungen */
 .recharts-tooltip-wrapper {
     z-index: 1000;
 }
@@ -20,12 +63,50 @@
     box-shadow: var(--shadow-sm) !important;
 }
 
-/* Verbesserte Lesbarkeit für Radar Chart */
-.recharts-radar .recharts-polygon {
-    stroke-width: 2px; /* Stärkere Linien für bessere Sichtbarkeit */
+/* Benutzerdefinierter Tooltip - StandardTooltip-Größe emulieren */
+.custom-tooltip.standard-tooltip {
+    font-size: var(--font-size-base) !important;
+    padding: var(--padding-sm) var(--padding-md);
 }
 
-/* Bessere Sichtbarkeit des Rasters im Radar Chart */
+.custom-tooltip.standard-tooltip .tooltip-title {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.custom-tooltip.standard-tooltip .tooltip-item {
+    margin: 5px 0;
+}
+
+.custom-tooltip.standard-tooltip .tooltip-label {
+    font-size: var(--font-size-base);
+}
+
+.custom-tooltip.standard-tooltip .tooltip-value {
+    font-size: var(--font-size-base);
+    font-weight: 500;
+}
+
+/* Dark Mode Anpassungen für Tooltips */
+.dark-mode .recharts-default-tooltip {
+    background-color: rgba(40, 40, 40, 0.95) !important;
+    border-color: var(--color-border) !important;
+}
+
+.dark-mode .recharts-tooltip-label,
+.dark-mode .recharts-tooltip-item-name,
+.dark-mode .recharts-tooltip-item-value {
+    color: var(--color-text) !important;
+}
+
+.dark-mode .custom-tooltip.standard-tooltip {
+    background-color: rgba(40, 40, 40, 0.95);
+    border-color: var(--color-border);
+    color: var(--color-text);
+}
+
+/* Radar/Spider Chart spezifische Elemente */
 .recharts-polar-grid .recharts-polar-grid-concentric-circle {
     stroke: var(--color-border);
     stroke-width: 0.5px;
@@ -35,25 +116,11 @@
     stroke: var(--color-border-light);
 }
 
-/* Verbesserte Lesbarkeit der Labels im Radar Chart */
 .recharts-polar-angle-axis .recharts-polar-angle-axis-tick text {
     font-weight: 500;
     fill: var(--color-text);
 }
 
-.radar-wrapper {
-    padding-top: 1rem;
-}
-
-.recharts-radar {
-    filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.15));
-}
-
-.dark-mode .recharts-radar {
-    filter: drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.15));
-}
-
-/* Bessere Hervorhebung der Achsen im Radar Chart */
 .recharts-polar-angle-axis-line {
     stroke-width: 1.5px;
     stroke: var(--color-border);
@@ -61,4 +128,23 @@
 
 .dark-mode .recharts-polar-angle-axis-line {
     stroke: var(--color-border-light);
+}
+
+/* ====== Responsive Anpassungen ====== */
+@media (max-width: 768px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-wrapper {
+        height: 200px;
+    }
+
+    .radar-wrapper {
+        height: 300px !important;
+    }
+
+    .recharts-cartesian-axis-tick-value {
+        font-size: calc(var(--font-size-xs) - 1px);
+    }
 }

@@ -59,9 +59,9 @@ export const de = {
         topCriteriaTitle: "Top 5 Kriterien nach Differenz"
     },
     labels: {
-        ki: "KI",
+        ai: "KI",
         human: "Human",
-        kiScore: "KI Wert",
+        aiScore: "KI Wert",
         humanScore: "Human Wert",
         aiWeight: "KI Gewichtung",
         humanWeight: "Human Gewichtung",

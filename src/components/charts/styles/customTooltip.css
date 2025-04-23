@@ -30,8 +30,8 @@
 }
 
 /* Farbige Labels und Werte für KI und Human */
-.tooltip-item.ki .tooltip-label,
-.tooltip-item.ki .tooltip-value {
+.tooltip-item.ai .tooltip-label,
+.tooltip-item.ai .tooltip-value {
     color: var(--color-primary);
 }
 

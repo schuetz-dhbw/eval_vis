@@ -1,23 +1,23 @@
 import React from 'react';
 import {
-    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from 'recharts';
-import { CHART_DIMENSIONS, CHART_MARGINS, AXIS_CONFIG, getChartColors } from '../../constants/chartConfig';
-import './styles/charts.css';
-import { getYDomain } from '../../utils/dataTransformers';
-import { useTranslation } from '../../hooks/useTranslation';
-import {METRICS} from "../../constants/metrics";
+import {CHART_MARGINS, AXIS_CONFIG, CHART_DIMENSIONS} from '../../constants/chartConfig';
+import BaseChartComponent from './BaseChartComponent';
+import useChart from '../../hooks/useChart';
 
 const BarChartComponent = ({ data, chartType, language }) => {
-    const t = useTranslation(language);
-    const CHART_COLORS = getChartColors();
-
-    const formatValue = (value) => {
-        return Number(value).toFixed(METRICS.DEFAULT_DECIMAL_PLACES);
-    };
+    const {
+        t,
+        CHART_COLORS,
+        formatValue,
+        yDomain,
+        tooltipConfig,
+        defaultLegendProps
+    } = useChart({ data, chartType, language });
 
     return (
-        <ResponsiveContainer width={CHART_DIMENSIONS.FULL_WIDTH} height={CHART_DIMENSIONS.DEFAULT_HEIGHT}>
+        <BaseChartComponent height={CHART_DIMENSIONS.DEFAULT_HEIGHT} width={CHART_DIMENSIONS.FULL_WIDTH} language={language}>
             <BarChart
                 data={data}
                 margin={CHART_MARGINS.BAR_CHART}
@@ -28,21 +28,19 @@ const BarChartComponent = ({ data, chartType, language }) => {
                     {...AXIS_CONFIG.DEFAULT_X}
                 />
                 <YAxis
-                    domain={getYDomain(chartType)}
+                    domain={yDomain}
                     tickFormatter={formatValue}
                 />
-                <Tooltip
-                    formatter={(value) => formatValue(value)}
-                />
-                <Legend />
+                <Tooltip formatter={tooltipConfig.formatter} />
+                <Legend {...defaultLegendProps} />
                 <Bar
-                    dataKey={t('ki', 'labels')}
+                    dataKey={t('ai', 'labels')}
                     fill={CHART_COLORS.PRIMARY} />
                 <Bar
                     dataKey={t('human', 'labels')}
                     fill={CHART_COLORS.SECONDARY} />
             </BarChart>
-        </ResponsiveContainer>
+        </BaseChartComponent>
     );
 };
 

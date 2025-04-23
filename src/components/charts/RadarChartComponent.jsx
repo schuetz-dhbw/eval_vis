@@ -1,21 +1,26 @@
 import React from 'react';
 import {
-    RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend, ResponsiveContainer, Tooltip
+    RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend, Tooltip
 } from 'recharts';
 import './styles/charts.css';
-import {getChartColors, CHART_DIMENSIONS, RADAR_CONFIG} from '../../constants/chartConfig';
+import {CHART_DIMENSIONS, CHART_MARGINS, RADAR_CONFIG} from '../../constants/chartConfig';
 import { getRadarDomain } from '../../utils/dataTransformers';
-import { useTranslation } from '../../hooks/useTranslation';
+import useChart from "../../hooks/useChart";
+import BaseChartComponent from "./BaseChartComponent";
 
 
 const RadarChartComponent = ({ data, chartType, language }) => {
-    const t = useTranslation(language);
-    const CHART_COLORS = getChartColors();
+    const {
+        t,
+        CHART_COLORS,
+        tooltipConfig
+    } = useChart({ data, chartType, language });
 
     return (
-        <ResponsiveContainer width={CHART_DIMENSIONS.FULL_WIDTH} height={CHART_DIMENSIONS.RADAR_HEIGHT}>
+        <BaseChartComponent height={CHART_DIMENSIONS.RADAR_HEIGHT} width={CHART_DIMENSIONS.FULL_WIDTH} language={language}>
             <RadarChart
                 outerRadius={RADAR_CONFIG.OUTER_RADIUS}
+                margin={CHART_MARGINS.RADAR_CHART}
                 data={data}>
                 <PolarGrid />
                 <PolarAngleAxis
@@ -27,8 +32,8 @@ const RadarChartComponent = ({ data, chartType, language }) => {
                     domain={getRadarDomain(chartType)}
                 />
                 <Radar
-                    name={t('ki', 'labels')}
-                    dataKey={t('ki', 'labels')}
+                    name={t('ai', 'labels')}
+                    dataKey={t('ai', 'labels')}
                     stroke={CHART_COLORS.PRIMARY}
                     strokeWidth={RADAR_CONFIG.STROKE_WIDTH}
                     fill={CHART_COLORS.PRIMARY}
@@ -56,10 +61,10 @@ const RadarChartComponent = ({ data, chartType, language }) => {
                         strokeDasharray: "",
                     }}
                 />
-                <Tooltip />
+                <Tooltip formatter={tooltipConfig.formatter} />
                 <Legend />
             </RadarChart>
-        </ResponsiveContainer>
+        </BaseChartComponent>
     );
 };
 

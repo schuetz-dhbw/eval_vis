@@ -1,18 +1,23 @@
 import React from 'react';
 import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from 'recharts';
-import {CHART_MARGINS, AXIS_CONFIG, getChartColors, CHART_DIMENSIONS} from '../../constants/chartConfig';
+import {CHART_MARGINS, AXIS_CONFIG, CHART_DIMENSIONS} from '../../constants/chartConfig';
 import './styles/charts.css';
 import { getYDomain } from '../../utils/dataTransformers';
+import useChart from "../../hooks/useChart";
+import BaseChartComponent from "./BaseChartComponent";
 
 
-const LineChartComponent = ({ data, chartType }) => {
+const LineChartComponent = ({ data, chartType, language }) => {
+    const {
+        CHART_COLORS,
+        defaultLegendProps
+    } = useChart({ data, chartType, language });
 
-    const CHART_COLORS = getChartColors();
 
     return (
-        <ResponsiveContainer width={CHART_DIMENSIONS.FULL_WIDTH} height={CHART_DIMENSIONS.DEFAULT_HEIGHT}>
+        <BaseChartComponent height={CHART_DIMENSIONS.DEFAULT_HEIGHT} width={CHART_DIMENSIONS.FULL_WIDTH} language={language}>
             <LineChart
                 data={data}
                 margin={CHART_MARGINS.DEFAULT}
@@ -26,7 +31,7 @@ const LineChartComponent = ({ data, chartType }) => {
                     domain={getYDomain(chartType)}
                 />
                 <Tooltip />
-                <Legend />
+                <Legend {...defaultLegendProps} />
                 <Line
                     type="monotone"
                     dataKey={Object.keys(data[0])[2]} // KI/AI
@@ -40,7 +45,7 @@ const LineChartComponent = ({ data, chartType }) => {
                     activeDot={{ r: 8 }}
                 />
             </LineChart>
-        </ResponsiveContainer>
+        </BaseChartComponent>
     );
 };
 

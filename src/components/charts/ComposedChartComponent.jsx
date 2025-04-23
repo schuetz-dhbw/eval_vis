@@ -1,18 +1,22 @@
 import React from 'react';
 import {
-    ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+    ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from 'recharts';
-import {CHART_MARGINS, AXIS_CONFIG, CHART_DIMENSIONS, getChartColors} from '../../constants/chartConfig';
+import {CHART_MARGINS, AXIS_CONFIG, CHART_DIMENSIONS} from '../../constants/chartConfig';
 import './styles/charts.css';
-import { useTranslation } from '../../hooks/useTranslation';
+import useChart from "../../hooks/useChart";
+import BaseChartComponent from "./BaseChartComponent";
 
 
-const ComposedChartComponent = ({ data, language }) => {
-    const t = useTranslation(language);
-    const CHART_COLORS = getChartColors();
+const ComposedChartComponent = ({ data, chartType, language }) => {
+    const {
+        t,
+        CHART_COLORS,
+        defaultLegendProps
+    } = useChart({ data, chartType, language });
 
     return (
-        <ResponsiveContainer width={CHART_DIMENSIONS.FULL_WIDTH} height={CHART_DIMENSIONS.DEFAULT_HEIGHT}>
+        <BaseChartComponent height={CHART_DIMENSIONS.DEFAULT_HEIGHT} width={CHART_DIMENSIONS.FULL_WIDTH} language={language}>
             <ComposedChart
                 data={data}
                 margin={CHART_MARGINS.COMPOSED_CHART}
@@ -25,13 +29,13 @@ const ComposedChartComponent = ({ data, language }) => {
                 <YAxis yAxisId="left" domain={[0, 100]} />
                 <YAxis yAxisId="right" orientation="right" domain={[0, 25]} />
                 <Tooltip />
-                <Legend />
-                <Bar yAxisId="left" dataKey={`${t('ki', 'labels')}Score`} name={t('kiScore', 'labels')} fill={CHART_COLORS.PRIMARY} />
+                <Legend {...defaultLegendProps}  />
+                <Bar yAxisId="left" dataKey={`${t('ai', 'labels')}Score`} name={t('aiScore', 'labels')} fill={CHART_COLORS.PRIMARY} />
                 <Bar yAxisId="left" dataKey={`${t('human', 'labels')}Score`} name={t('humanScore', 'labels')} fill={CHART_COLORS.SECONDARY} />
-                <Line yAxisId="right" type="monotone" dataKey={`${t('ki', 'labels')}Weight`} name={t('aiWeight', 'labels')} stroke={CHART_COLORS.TERTIARY} />
+                <Line yAxisId="right" type="monotone" dataKey={`${t('ai', 'labels')}Weight`} name={t('aiWeight', 'labels')} stroke={CHART_COLORS.TERTIARY} />
                 <Line yAxisId="right" type="monotone" dataKey={`${t('human', 'labels')}Weight`} name={t('humanWeight', 'labels')} stroke={CHART_COLORS.QUATERNARY} />
             </ComposedChart>
-        </ResponsiveContainer>
+        </BaseChartComponent>
     );
 };
 

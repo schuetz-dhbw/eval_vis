@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { CHART_TYPES } from '../../constants/chartTypes';
 import { useTranslation } from '../../hooks/useTranslation';
 import { useAppContext } from '../../AppContext';
@@ -6,13 +6,50 @@ import LineChartComponent from '../charts/LineChartComponent';
 import ComposedChartComponent from '../charts/ComposedChartComponent';
 import RadarChartComponent from '../charts/RadarChartComponent';
 import BarChartComponent from '../charts/BarChartComponent';
-import {getWeightedData} from "../../utils/dataTransformers";
-import ChartErrorBoundary from '../charts/ChartErrorBoundary';
+import {
+    getWeightedData,
+    getScoresData,
+    getCombinedData,
+    getRadarData
+} from "../../utils/dataTransformers";
 import DataErrorBoundary from '../common/DataErrorBoundary';
+import '../visualization/styles/common.css';
 
-const ChartSection = ({ scoresData, combinedData, radarData }) => {
+/**
+ * ChartSection - Container für alle Chart-Komponenten
+ *
+ * @returns {ReactElement} Container mit allen Charts
+ */
+const ChartSection = () => {
     const { chartType, currentWork, language } = useAppContext();
     const t = useTranslation(language);
+
+    // Zentralisiertes Memoizing der Chart-Daten
+    const chartData = useMemo(() => {
+        if (!currentWork) return { scoresData: [], combinedData: [], radarData: [] };
+
+        const scoresData = getScoresData(currentWork, language);
+        const combinedData = getCombinedData(currentWork, language);
+        const weightedData = getWeightedData(currentWork, language);
+
+        const radarData = getRadarData(
+            currentWork,
+            language,
+            chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType
+        );
+
+        return {
+            scoresData,
+            combinedData,
+            weightedData,
+            radarData
+        };
+    }, [currentWork, language, chartType]);
+
+    // Fallback, wenn keine Daten verfügbar
+    if (!currentWork) {
+        return <div className="no-data-message">{t('noDataAvailable', 'errors')}</div>;
+    }
 
     return (
         <div className="charts-grid">
@@ -22,21 +59,23 @@ const ChartSection = ({ scoresData, combinedData, radarData }) => {
                     {chartType === CHART_TYPES.COMBINED ? t('combinedTitle', 'chartTitles') : t('vectors', 'chartTitles')}
                 </h3>
                 <div className="chart-wrapper">
-                    <DataErrorBoundary data={chartType === CHART_TYPES.COMBINED ? combinedData : scoresData} language={language}>
-                        <ChartErrorBoundary language={language}>
-                            {chartType === CHART_TYPES.COMBINED ? (
-                                <ComposedChartComponent
-                                    data={combinedData}
-                                    language={language}
-                                />
-                            ) : (
-                                <LineChartComponent
-                                    data={scoresData}
-                                    chartType={chartType}
-                                    language={language}
-                                />
-                            )}
-                        </ChartErrorBoundary>
+                    <DataErrorBoundary
+                        data={chartType === CHART_TYPES.COMBINED ? chartData.combinedData : chartData.scoresData}
+                        language={language}
+                    >
+                        {chartType === CHART_TYPES.COMBINED ? (
+                            <ComposedChartComponent
+                                data={chartData.combinedData}
+                                chartType={chartType}
+                                language={language}
+                            />
+                        ) : (
+                            <LineChartComponent
+                                data={chartData.scoresData}
+                                chartType={chartType}
+                                language={language}
+                            />
+                        )}
                     </DataErrorBoundary>
                 </div>
             </div>
@@ -50,17 +89,14 @@ const ChartSection = ({ scoresData, combinedData, radarData }) => {
                 </h3>
                 <div className="chart-wrapper">
                     <DataErrorBoundary
-                        data={chartType === CHART_TYPES.COMBINED ? getWeightedData(currentWork, language) : scoresData}
+                        data={chartType === CHART_TYPES.COMBINED ? chartData.weightedData : chartData.scoresData}
                         language={language}
                     >
-                        <ChartErrorBoundary language={language}>
-                            <BarChartComponent
-                                data={chartType === CHART_TYPES.COMBINED ?
-                                    getWeightedData(currentWork, language) : scoresData}
-                                chartType={chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType}
-                                language={language}
-                            />
-                        </ChartErrorBoundary>
+                        <BarChartComponent
+                            data={chartType === CHART_TYPES.COMBINED ? chartData.weightedData : chartData.scoresData}
+                            chartType={chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType}
+                            language={language}
+                        />
                     </DataErrorBoundary>
                 </div>
             </div>
@@ -73,14 +109,12 @@ const ChartSection = ({ scoresData, combinedData, radarData }) => {
                         t('radar', 'chartTitles')}
                 </h3>
                 <div className="chart-wrapper radar-wrapper">
-                    <DataErrorBoundary data={radarData} language={language}>
-                        <ChartErrorBoundary language={language}>
-                            <RadarChartComponent
-                                data={radarData}
-                                chartType={chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType}
-                                language={language}
-                            />
-                        </ChartErrorBoundary>
+                    <DataErrorBoundary data={chartData.radarData} language={language}>
+                        <RadarChartComponent
+                            data={chartData.radarData}
+                            chartType={chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType}
+                            language={language}
+                        />
                     </DataErrorBoundary>
                 </div>
             </div>

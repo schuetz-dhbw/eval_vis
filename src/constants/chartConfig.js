@@ -11,6 +11,7 @@ export const CHART_MARGINS = {
     DEFAULT: { top: 5, right: 30, left: 0, bottom: 30 },
     BAR_CHART: { top: 10, right: 30, left: 0, bottom: 30 },
     COMPOSED_CHART: { top: 5, right: 30, left: 0, bottom: 30 },
+    RADAR_CHART: { top: 0, right: 0, left: 0, bottom: 0 },
     WORK_TYPE_BAR: { top: 20, right: 30, left: 20, bottom: 50 },
     SCATTER_CHART: { top: 20, right: 30, bottom: 60, left: 20 }
 };

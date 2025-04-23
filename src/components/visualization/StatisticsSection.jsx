@@ -48,7 +48,7 @@ const StatisticsSection = () => {
                     <div className="stat-box">
                         <h4 className="stat-title">{t('standardDeviation', 'metrics') || "Standard Deviation"}</h4>
                         <div className="stat-value">
-                            {t('ki', 'labels')}: {formatNum(stats.kiStdDev)}
+                            {t('ai', 'labels')}: {formatNum(stats.aiStdDev)}
                         </div>
                         <p className="stat-description">
                             {t('human', 'labels')}: {formatNum(stats.humanStdDev)}

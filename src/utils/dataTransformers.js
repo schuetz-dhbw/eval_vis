@@ -59,7 +59,7 @@ export const calculateStatistics = (work) => {
     const humanAverage = work.humanScores.reduce((sum, score) => sum + score, 0) / work.humanScores.length;
 
     // Calculate standard deviations
-    const kiStdDev = Math.sqrt(
+    const aiStdDev = Math.sqrt(
         work.aiScores.reduce((sum, score) => sum + Math.pow(score - kiAverage, 2), 0) / work.aiScores.length
     );
     const humanStdDev = Math.sqrt(
@@ -85,7 +85,7 @@ export const calculateStatistics = (work) => {
     return {
         kiAverage,
         humanAverage,
-        kiStdDev,
+        aiStdDev,
         humanStdDev,
         avgDifference,
         maxDifference,
@@ -123,7 +123,7 @@ export const getScoresData = (work, language) => {
         return {
             name: label,
             shortName: shortLabels[index],
-            [t('ki', 'labels')]: work.aiScores[index],
+            [t('ai', 'labels')]: work.aiScores[index],
             [t('human', 'labels')]: work.humanScores[index],
         };
     });
@@ -138,7 +138,7 @@ export const getWeightsData = (work, language) => {
         return {
             name: label,
             shortName: shortLabels[index],
-            [t('ki', 'labels')]: work.aiWeights[index] * METRICS.WEIGHT_SCALE,
+            [t('ai', 'labels')]: work.aiWeights[index] * METRICS.WEIGHT_SCALE,
             [t('human', 'labels')]: work.humanWeights[index] * METRICS.WEIGHT_SCALE
         };
     });
@@ -153,7 +153,7 @@ export const getWeightedData = (work, language) => {
         return {
             name: label,
             shortName: shortLabels[index],
-            [t('ki', 'labels')]: work.aiScores[index] * work.aiWeights[index],
+            [t('ai', 'labels')]: work.aiScores[index] * work.aiWeights[index],
             [t('human', 'labels')]: work.humanScores[index] * work.humanWeights[index],
         };
     });
@@ -168,11 +168,11 @@ export const getCombinedData = (work, language) => {
         return {
             name: label,
             shortName: shortLabels[index],
-            [`${t('ki', 'labels')}Score`]: work.aiScores[index],
+            [`${t('ai', 'labels')}Score`]: work.aiScores[index],
             [`${t('human', 'labels')}Score`]: work.humanScores[index],
-            [`${t('ki', 'labels')}Weight`]: work.aiWeights[index] * METRICS.WEIGHT_SCALE,
+            [`${t('ai', 'labels')}Weight`]: work.aiWeights[index] * METRICS.WEIGHT_SCALE,
             [`${t('human', 'labels')}Weight`]: work.humanWeights[index] * METRICS.WEIGHT_SCALE,
-            [`${t('ki', 'labels')}Weighted`]: work.aiScores[index] * work.aiWeights[index],
+            [`${t('ai', 'labels')}Weighted`]: work.aiScores[index] * work.aiWeights[index],
             [`${t('human', 'labels')}Weighted`]: work.humanScores[index] * work.humanWeights[index]
         };
     });
@@ -188,7 +188,7 @@ export const getRadarData = (work, language, chartType) => {
             return {
                 subject: label,
                 shortSubject: shortLabels[index],
-                [t('ki', 'labels')]: work.aiScores[index] * work.aiWeights[index],
+                [t('ai', 'labels')]: work.aiScores[index] * work.aiWeights[index],
                 [t('human', 'labels')]: work.humanScores[index] * work.humanWeights[index],
                 fullMark: METRICS.WEIGHTED_MAX
             };
@@ -198,7 +198,7 @@ export const getRadarData = (work, language, chartType) => {
             return {
                 subject: label,
                 shortSubject: shortLabels[index],
-                [t('ki', 'labels')]: work.aiWeights[index] * 100,
+                [t('ai', 'labels')]: work.aiWeights[index] * 100,
                 [t('human', 'labels')]: work.humanWeights[index] * 100,
                 fullMark: METRICS.WEIGHT_MAX
             };
@@ -208,7 +208,7 @@ export const getRadarData = (work, language, chartType) => {
             return {
                 subject: label,
                 shortSubject: shortLabels[index],
-                [t('ki', 'labels')]: work.aiScores[index],
+                [t('ai', 'labels')]: work.aiScores[index],
                 [t('human', 'labels')]: work.humanScores[index],
                 fullMark: METRICS.FULL_MARK
             };
