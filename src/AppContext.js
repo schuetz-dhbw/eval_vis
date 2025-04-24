@@ -15,7 +15,7 @@ export const AppProvider = ({ children }) => {
     const [chartType, setChartType] = useState(CHART_TYPES.SCORES);
     const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
     const [isDarkMode, setIsDarkMode] = useState(
-        document.documentElement.classList.contains('dark-mode')
+        document.documentElement.getAttribute('data-theme') === 'dark'
     );
     useEffect(() => {
         setCurrentLanguage(language);
