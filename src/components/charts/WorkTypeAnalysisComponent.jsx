@@ -115,31 +115,19 @@ const WorkTypeAnalysisComponent = ({ works }) => {
 
     // Find the top 5 criteria with the largest differences across all types
     const topCriteriaByDifference = useMemo(() => {
-        const criteriaMap = {};
-
-        differencesByType.forEach(item => {
-            if (!criteriaMap[item.criterion]) {
-                criteriaMap[item.criterion] = {
-                    criterion: item.criterion,
-                    totalDifference: 0,
-                    count: 0
-                };
-            }
-
-            criteriaMap[item.criterion].totalDifference += item.averageDifference;
-            criteriaMap[item.criterion].count++;
-        });
-
-        const result = Object.values(criteriaMap).map(item => ({
-            ...item,
-            averageDifference: item.totalDifference / item.count
+        // Erstelle ein Array mit den Kriterien und den durchschnittlichen Abweichungen
+        const topCriteria = differencesByType.map(item => ({
+            criterion: t(item.criterion, 'works.criteriaLabels'), // Übersetze den Criterion-Key in ein Label
+            type: t(item.type, 'works.types'), // Übersetze den Typ-Key in einen lesbaren Namen (falls benötigt)
+            averageDifference: item.averageDifference,
         }));
 
-        // Sort by average difference (descending) and take top 5
-        return result
+        // Sortiere die Kriterien nach durchschnittlicher Abweichung (absteigend)
+        return topCriteria
             .sort((a, b) => b.averageDifference - a.averageDifference)
             .slice(0, 5);
-    }, [differencesByType]);
+    }, [differencesByType, t]);
+
 
     const tooltipFormatter = useMemo(() => {
         return (data) => {
@@ -170,9 +158,9 @@ const WorkTypeAnalysisComponent = ({ works }) => {
 
     return (
         <div className="work-type-analysis">
-            <div className="analysis-content">
-                <div className="chart-container">
-                    <h4 className="chart-subtitle">{t('differenceByTypeTitle', 'chartTitles') || "Average Difference by Work Type"}</h4>
+            <div className="flex-column">
+                <div className="component-container">
+                    <h4 className="section-title">{t('differenceByTypeTitle', 'chartTitles') || "Average Difference by Work Type"}</h4>
                     <div className="chart-wrapper">
                         <ResponsiveContainer width="100%" height={300}>
                             <BarChart
@@ -204,10 +192,10 @@ const WorkTypeAnalysisComponent = ({ works }) => {
                     </div>
                 </div>
 
-                <div className="matrix-container">
-                    <h4 className="chart-subtitle">{t('criteriaByTypeTitle', 'chartTitles') || "Criteria Differences by Work Type"}</h4>
-                    <div className="heatmap-wrapper">
-                        <div className="heatmap-legend">
+                <div className="component-container">
+                    <h4 className="section-title">{t('criteriaByTypeTitle', 'chartTitles') || "Criteria Differences by Work Type"}</h4>
+                    <div className="flex-column">
+                        <div className="flex-row">
                             <div className="legend-item">
                                 <span className="legend-color" style={{ backgroundColor: CHART_COLORS.SECONDARY }}></span>
                                 <span className="legend-text">&lt; 15%</span>
@@ -221,7 +209,6 @@ const WorkTypeAnalysisComponent = ({ works }) => {
                                 <span className="legend-text">&gt; 30%</span>
                             </div>
                         </div>
-
                         <div className="heatmap-grid">
                             {differencesByType.map((item, index) => (
                                 <div
@@ -240,10 +227,12 @@ const WorkTypeAnalysisComponent = ({ works }) => {
                     </div>
                 </div>
 
-                <div className="tables-container">
-                    <div className="table-section">
-                        <h4 className="chart-subtitle">{t('largestDiffByTypeTitle', 'chartTitles') || "Largest Difference by Work Type"}</h4>
-                        <table className="analysis-table">
+                <div className="component-container">
+                    <h4 className="subtitle">{t('tableTitle', 'chartTitles')}</h4>
+                    <div className="split-layout">
+                        <div className="flex-column">
+                            <h4 className="subtitle">{t('largestDiffByTypeTitle', 'chartTitles')}</h4>
+                            <table className="data-table">
                             <thead>
                             <tr>
                                 <th>{t('workType', 'tableHeaders') || "Work Type"}</th>
@@ -261,11 +250,10 @@ const WorkTypeAnalysisComponent = ({ works }) => {
                             ))}
                             </tbody>
                         </table>
-                    </div>
-
-                    <div className="table-section">
-                        <h4 className="chart-subtitle">{t('topCriteriaTitle', 'chartTitles') || "Top 5 Criteria by Difference"}</h4>
-                        <table className="analysis-table">
+                        </div>
+                        <div className="flex-column">
+                            <h4 className="subtitle">{t('topCriteriaTitle', 'chartTitles')}</h4>
+                            <table className="data-table">
                             <thead>
                             <tr>
                                 <th>{t('criterion', 'tableHeaders')}</th>
@@ -274,13 +262,14 @@ const WorkTypeAnalysisComponent = ({ works }) => {
                             </thead>
                             <tbody>
                             {topCriteriaByDifference.map((item, index) => (
-                                <tr key={index} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
+                                <tr key={index}>
                                     <td>{item.criterion}</td>
-                                    <td>{item.averageDifference.toFixed(2)}%</td>
+                                    <td>{item.averageDifference.toFixed(2)}</td>
                                 </tr>
                             ))}
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -111,7 +111,7 @@ const CorrelationAnalysisComponent = ({ work }) => {
 
     return (
         <div>
-            <h3 className="chart-title">{t('varianceTitle', 'chartTitles') || "Criteria Variance Analysis"}</h3>
+            <h3 className="section-title">{t('varianceTitle', 'chartTitles') || "Criteria Variance Analysis"}</h3>
             <div className="chart-wrapper">
                 <ResponsiveContainer width={CHART_DIMENSIONS.FULL_WIDTH} height={CHART_DIMENSIONS.WORK_TYPE_HEIGHT}>
                     <ScatterChart
@@ -171,7 +171,7 @@ const CorrelationAnalysisComponent = ({ work }) => {
 
             <div className="variance-table">
                 <h4 className="subtitle">{t('varianceTable', 'chartTitles') || "Criteria Ranked by Variance"}</h4>
-                <table className="mini-table">
+                <table className="data-table">
                     <thead>
                     <tr>
                         <th>{t('criterion', 'tableHeaders')}</th>
@@ -197,7 +197,7 @@ const CorrelationAnalysisComponent = ({ work }) => {
             <div className="correlation-matrix">
                 <h4 className="matrix-title">{t('correlationTitle', 'chartTitles') || "Correlation Analysis"}</h4>
 
-                <div className="correlation-grid">
+                <div className="component-grid grid-template-columns-5">
                     {correlationData
                         .sort((a, b) => Math.abs(parseFloat(b.correlation)) - Math.abs(parseFloat(a.correlation)))
                         .slice(0, 10)
@@ -222,7 +222,7 @@ const CorrelationAnalysisComponent = ({ work }) => {
                                     <div className="correlation-value">
                                         {corrValue > 0 ? "+" : ""}{item.correlation}
                                     </div>
-                                    <div className="correlation-names">
+                                    <div className="flex-column flex-center">
                                         <div>{item.name1}</div>
                                         <div>&amp;</div>
                                         <div>{item.name2}</div>

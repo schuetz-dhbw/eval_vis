@@ -51,10 +51,10 @@ const ChartSection = () => {
     }
 
     return (
-        <div className="charts-grid">
+        <div className="component-grid">
             {/* Linien- oder kombiniertes Diagramm */}
-            <div className="chart-container full-width">
-                <h3 className="chart-title">
+            <div className="component-container  full-width">
+                <h3 className="section-title">
                     {chartType === CHART_TYPES.COMBINED ? t('combinedTitle', 'chartTitles') : t('vectors', 'chartTitles')}
                 </h3>
                 <div className="chart-wrapper">
@@ -77,8 +77,8 @@ const ChartSection = () => {
             </div>
 
             {/* Balkendiagramm */}
-            <div className="chart-container full-width">
-                <h3 className="chart-title">
+            <div className="component-container  full-width">
+                <h3 className="section-title">
                     {chartType === CHART_TYPES.COMBINED ?
                         t('barWeighted', 'chartTitles') :
                         t('bar', 'chartTitles')}
@@ -96,8 +96,8 @@ const ChartSection = () => {
             </div>
 
             {/* Spinnendiagramm */}
-            <div className="chart-container full-width">
-                <h3 className="chart-title">
+            <div className="component-container  full-width">
+                <h3 className="section-title">
                     {chartType === CHART_TYPES.COMBINED ?
                         `${t('radar', 'chartTitles')} (${t('weighted', 'chartTypes')})` :
                         t('radar', 'chartTitles')}

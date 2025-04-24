@@ -18,17 +18,17 @@ const DetailsSection = () => {
     }, [currentWork]);
 
     return (
-        <div className="details-container">
-            <h3 className="details-title">{t('details')}: {currentWork.title}</h3>
+        <div className="component-container">
+            <h3 className="section-title">{t('details')}: {currentWork.title}</h3>
 
-            <div className="grades-container">
-                <div className="grade-box">
-                    <span className="grade-label">{t('ai', 'labels')} {t('grade', 'labels') || 'Note'}:</span>
-                    <span className="grade-value">{currentWork.aiGrade.toFixed(1)}</span>
+            <div className="component-grid grid-2-cols">
+                <div className="info-box">
+                    <span className="data-label">{t('ai', 'labels')} {t('grade', 'labels') || 'Note'}:</span>
+                    <span className="data-value">{currentWork.aiGrade.toFixed(1)}</span>
                 </div>
-                <div className="grade-box">
-                    <span className="grade-label">{t('human', 'labels')} {t('grade', 'labels') || 'Note'}:</span>
-                    <span className="grade-value">{currentWork.humanGrade.toFixed(1)}</span>
+                <div className="info-box">
+                    <span className="data-label">{t('human', 'labels')} {t('grade', 'labels') || 'Note'}:</span>
+                    <span className="data-value">{currentWork.humanGrade.toFixed(1)}</span>
                 </div>
             </div>
 

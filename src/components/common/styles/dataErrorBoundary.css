@@ -13,22 +13,6 @@
     align-items: center;
 }
 
-.error-button {
-    background-color: var(--color-primary);
-    color: white;
-    border: none;
-    border-radius: var(--border-radius);
-    padding: var(--padding-sm) var(--padding-lg);
-    font-size: var(--font-size-base);
-    cursor: pointer;
-    margin-top: var(--padding-md);
-    transition: background-color 0.3s;
-}
-
-.error-button:hover {
-    background-color: #7673c0;
-}
-
 .dark-mode .data-error-container,
 .dark-mode .data-error-fallback {
     background-color: rgba(187, 134, 252, 0.05);

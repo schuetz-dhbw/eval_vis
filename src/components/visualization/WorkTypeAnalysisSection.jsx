@@ -1,5 +1,4 @@
 import React from 'react';
-import './styles/workTypeAnalysis.css';
 import { useTranslation } from '../../hooks/useTranslation';
 import WorkTypeAnalysisComponent from '../charts/WorkTypeAnalysisComponent';
 import ChartErrorBoundary from '../charts/ChartErrorBoundary';
@@ -17,9 +16,9 @@ const WorkTypeAnalysisSection = () => {
             fallbackMessage={t('dataErrorMessage', 'errors')}
             showDetails={false}
         >
-            <div className="work-type-analysis-section">
+            <div className="component-container ">
                 <h3 className="section-title">{t('workTypeAnalysisTitle', 'chartTitles') || "Work Type Analysis"}</h3>
-                <div className="analysis-content">
+                <div className="flex-column">
                     <DataErrorBoundary data={rawWorks} >
                         <ChartErrorBoundary >
                             <WorkTypeAnalysisComponent

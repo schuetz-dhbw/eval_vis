@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import './styles/statistics.css';
 import { useTranslation } from '../../hooks/useTranslation';
 import CorrelationAnalysisComponent from '../charts/CorrelationAnalysisComponent';
 import { calculateStatistics, calculateSimilarityMetrics } from '../../utils/dataTransformers';
@@ -32,39 +31,39 @@ const StatisticsSection = () => {
             fallbackMessage={t('dataErrorMessage', 'errors')}
             showDetails={false}
         >
-            <div className="statistics-container">
+            <div className="component-container">
                 <h3 className="section-title">{t('statistics', 'chartTypes')}</h3>
 
-                <div className="stats-row">
-                    <div className="stat-box">
-                        <h4 className="stat-title">{t('avgDifference', 'metrics') || "Average Score Difference"}</h4>
-                        <div className="stat-value">{formatNum(stats.avgDifference)}%</div>
-                        <p className="stat-description">
+                <div className="component-grid grid-3-cols">
+                    <div className="info-box">
+                        <h4 className="data-label">{t('avgDifference', 'metrics') || "Average Score Difference"}</h4>
+                        <div className="data-value">{formatNum(stats.avgDifference)}%</div>
+                        <p className="item-description">
                             {t('maxDiff', 'metrics') || "Max"}: {formatNum(stats.maxDifference)}% | { }
                             {t('minDiff', 'metrics') || "Min"}: {formatNum(stats.minDifference)}%
                         </p>
                     </div>
 
-                    <div className="stat-box">
-                        <h4 className="stat-title">{t('standardDeviation', 'metrics') || "Standard Deviation"}</h4>
-                        <div className="stat-value">
+                    <div className="info-box">
+                        <h4 className="data-label">{t('standardDeviation', 'metrics') || "Standard Deviation"}</h4>
+                        <div className="data-value">
                             {t('ai', 'labels')}: {formatNum(stats.aiStdDev)}
                         </div>
-                        <p className="stat-description">
+                        <p className="item-description">
                             {t('human', 'labels')}: {formatNum(stats.humanStdDev)}
                         </p>
                     </div>
 
-                    <div className="stat-box">
-                        <h4 className="stat-title">{t('weightDifference', 'metrics') || "Weight Difference"}</h4>
-                        <div className="stat-value">{formatNum(stats.avgWeightDiff * 100)}%</div>
-                        <p className="stat-description">
+                    <div className="info-box">
+                        <h4 className="data-label">{t('weightDifference', 'metrics') || "Weight Difference"}</h4>
+                        <div className="data-value">{formatNum(stats.avgWeightDiff * 100)}%</div>
+                        <p className="item-description">
                             {t('cosine', 'metrics')}: {metrics.similarity.toFixed(4)}
                         </p>
                     </div>
                 </div>
 
-                <div className="statistics-content">
+                <div className="flex-column">
                     <DataErrorBoundary data={currentWork}>
                         <ChartErrorBoundary>
                             <CorrelationAnalysisComponent
