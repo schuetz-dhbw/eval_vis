@@ -15,24 +15,32 @@ const useChart = ({ chartType }) => {
     const t = useTranslation();
     const CHART_COLORS = getChartColors();
 
-    const formatValue = (value) => {
-        return Number(value).toFixed(METRICS.DEFAULT_DECIMAL_PLACES);
-    };
+    const formatValue = useMemo(() => {
+        return (value) => {
+            return Number(value).toFixed(METRICS.DEFAULT_DECIMAL_PLACES);
+        };
+    }, []);
 
     const yDomain = useMemo(() => {
         return getYDomain(chartType);
     }, [chartType]);
 
-    const tooltipFormatter = (value) => formatValue(value);
+    const tooltipFormatter = useMemo(() => {
+        return (value) => formatValue(value);
+    }, [formatValue]);
 
-    const tooltipConfig = {
-        formatter: tooltipFormatter
-    };
+    const tooltipConfig = useMemo(() => {
+        return {
+            formatter: tooltipFormatter
+        };
+    }, [tooltipFormatter]);
 
-    const defaultLegendProps = {
-        verticalAlign: "top",
-        height: 36
-    };
+    const defaultLegendProps = useMemo(() => {
+        return {
+            verticalAlign: "top",
+            height: 36
+        };
+    }, []);
 
     return {
         t,

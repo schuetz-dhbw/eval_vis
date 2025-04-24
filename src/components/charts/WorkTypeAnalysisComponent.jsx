@@ -141,28 +141,32 @@ const WorkTypeAnalysisComponent = ({ works }) => {
             .slice(0, 5);
     }, [differencesByType]);
 
-    const tooltipFormatter = (data) => {
-        return (
-            <>
-                <p className="tooltip-title">{data.type}</p>
-                <p className="tooltip-item">
-                    <span className="tooltip-label">{t('avgDifference', 'metrics')}:</span>
-                    <span className="tooltip-value">{data.averageDifference.toFixed(2)}%</span>
-                </p>
-                <p className="tooltip-item">
-                    <span className="tooltip-label">{t('count', 'tableHeaders')}:</span>
-                    <span className="tooltip-value">{data.count}</span>
-                </p>
-            </>
-        );
-    };
+    const tooltipFormatter = useMemo(() => {
+        return (data) => {
+            return (
+                <>
+                    <p className="tooltip-title">{data.type}</p>
+                    <p className="tooltip-item">
+                        <span className="tooltip-label">{t('avgDifference', 'metrics')}:</span>
+                        <span className="tooltip-value">{data.averageDifference.toFixed(2)}%</span>
+                    </p>
+                    <p className="tooltip-item">
+                        <span className="tooltip-label">{t('count', 'tableHeaders')}:</span>
+                        <span className="tooltip-value">{data.count}</span>
+                    </p>
+                </>
+            );
+        };
+    }, [t]);
 
     // Get colors based on difference value
-    const getDifferenceColor = (value) => {
-        if (value > 30) return CHART_COLORS.TERTIARY; // Large difference - orange
-        if (value > 15) return CHART_COLORS.PRIMARY; // Medium difference - purple
-        return CHART_COLORS.SECONDARY; // Small difference - green
-    };
+    const getDifferenceColor = useMemo(() => {
+        return (value) => {
+            if (value > 30) return CHART_COLORS.TERTIARY; // Large difference - orange
+            if (value > 15) return CHART_COLORS.PRIMARY; // Medium difference - purple
+            return CHART_COLORS.SECONDARY; // Small difference - green
+        };
+    }, [CHART_COLORS.PRIMARY, CHART_COLORS.SECONDARY, CHART_COLORS.TERTIARY]);
 
     return (
         <div className="work-type-analysis">

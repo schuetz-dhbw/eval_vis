@@ -79,33 +79,35 @@ const CorrelationAnalysisComponent = ({ work }) => {
         return result;
     }, [work]);
 
-    const tooltipFormatter = (data) => {
-        // Den richtigen übersetzten Namen aus criteriaLabels holen
-        const criteriaIndex = work.criteriaKeys.findIndex(key => key === data.originalKey);
-        const translatedName = work.criteriaLabels[criteriaIndex] || data.name;
+    const tooltipFormatter = useMemo(() => {
+        return (data) => {
+            // Den richtigen übersetzten Namen aus criteriaLabels holen
+            const criteriaIndex = work.criteriaKeys.findIndex(key => key === data.originalKey);
+            const translatedName = work.criteriaLabels[criteriaIndex] || data.name;
 
-        return (
-            <>
-                <p className="tooltip-title">{translatedName}</p>
-                <p className="tooltip-item ai">
-                    <span className="tooltip-label">{t('ai', 'labels')}:</span>
-                    <span className="tooltip-value">{data.aiScore}%</span>
-                </p>
-                <p className="tooltip-item human">
-                    <span className="tooltip-label">{t('human', 'labels')}:</span>
-                    <span className="tooltip-value">{data.humanScore}%</span>
-                </p>
-                <p className="tooltip-item">
-                    <span className="tooltip-label">{t('difference', 'labels')}:</span>
-                    <span className="tooltip-value">{data.scoreDiff}%</span>
-                </p>
-                <p className="tooltip-item">
-                    <span className="tooltip-label">{t('variance', 'labels')}:</span>
-                    <span className="tooltip-value">{data.variance.toFixed(2)}</span>
-                </p>
-            </>
-        );
-    };
+            return (
+                <>
+                    <p className="tooltip-title">{translatedName}</p>
+                    <p className="tooltip-item ai">
+                        <span className="tooltip-label">{t('ai', 'labels')}:</span>
+                        <span className="tooltip-value">{data.aiScore}%</span>
+                    </p>
+                    <p className="tooltip-item human">
+                        <span className="tooltip-label">{t('human', 'labels')}:</span>
+                        <span className="tooltip-value">{data.humanScore}%</span>
+                    </p>
+                    <p className="tooltip-item">
+                        <span className="tooltip-label">{t('difference', 'labels')}:</span>
+                        <span className="tooltip-value">{data.scoreDiff}%</span>
+                    </p>
+                    <p className="tooltip-item">
+                        <span className="tooltip-label">{t('variance', 'labels')}:</span>
+                        <span className="tooltip-value">{data.variance.toFixed(2)}</span>
+                    </p>
+                </>
+            );
+        };
+    }, [t, work.criteriaKeys, work.criteriaLabels]);
 
     return (
         <div>
