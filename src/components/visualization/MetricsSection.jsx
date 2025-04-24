@@ -6,8 +6,8 @@ import { SIMILARITY_THRESHOLDS, DISTANCE_THRESHOLDS, GRADE_DIFFERENCE_THRESHOLDS
 import { useAppContext } from '../../AppContext';
 
 const MetricsSection = () => {
-    const { currentWork, language } = useAppContext();
-    const t = useTranslation(language);
+    const { currentWork } = useAppContext();
+    const t = useTranslation();
 
     // Metriken berechnen mit useMemo
     const metrics = useMemo(() => {

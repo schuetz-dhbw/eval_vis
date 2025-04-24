@@ -8,15 +8,15 @@ import useChart from "../../hooks/useChart";
 import BaseChartComponent from "./BaseChartComponent";
 
 
-const ComposedChartComponent = ({ data, chartType, language }) => {
+const ComposedChartComponent = ({ data, chartType }) => {
     const {
         t,
         CHART_COLORS,
         defaultLegendProps
-    } = useChart({ data, chartType, language });
+    } = useChart({ data, chartType });
 
     return (
-        <BaseChartComponent height={CHART_DIMENSIONS.DEFAULT_HEIGHT} width={CHART_DIMENSIONS.FULL_WIDTH} language={language}>
+        <BaseChartComponent height={CHART_DIMENSIONS.DEFAULT_HEIGHT} width={CHART_DIMENSIONS.FULL_WIDTH}>
             <ComposedChart
                 data={data}
                 margin={CHART_MARGINS.COMPOSED_CHART}

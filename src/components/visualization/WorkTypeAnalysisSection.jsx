@@ -8,8 +8,8 @@ import ErrorBoundary from '../common/ErrorBoundary';
 import {useAppContext} from "../../AppContext";
 
 const WorkTypeAnalysisSection = () => {
-    const { rawWorks, language } = useAppContext();
-    const t = useTranslation(language);
+    const { rawWorks } = useAppContext();
+    const t = useTranslation();
 
     return (
         <ErrorBoundary
@@ -20,11 +20,10 @@ const WorkTypeAnalysisSection = () => {
             <div className="work-type-analysis-section">
                 <h3 className="section-title">{t('workTypeAnalysisTitle', 'chartTitles') || "Work Type Analysis"}</h3>
                 <div className="analysis-content">
-                    <DataErrorBoundary data={rawWorks} language={language}>
-                        <ChartErrorBoundary language={language}>
+                    <DataErrorBoundary data={rawWorks} >
+                        <ChartErrorBoundary >
                             <WorkTypeAnalysisComponent
                                 works={rawWorks}
-                                language={language}
                             />
                         </ChartErrorBoundary>
                     </DataErrorBoundary>

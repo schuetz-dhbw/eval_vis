@@ -6,9 +6,9 @@ import { useTranslation } from '../../hooks/useTranslation';
 import CustomTooltip from './CustomTooltip';
 import './styles/workTypeAnalysis.css';
 
-const WorkTypeAnalysisComponent = ({ works, language }) => {
+const WorkTypeAnalysisComponent = ({ works }) => {
 
-    const t = useTranslation(language);
+    const t = useTranslation();
     const CHART_COLORS = getChartColors();
 
     // Group works by type

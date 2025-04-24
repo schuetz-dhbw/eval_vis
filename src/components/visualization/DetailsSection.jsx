@@ -5,8 +5,8 @@ import {useAppContext} from "../../AppContext";
 
 
 const DetailsSection = () => {
-    const { currentWork, language } = useAppContext();
-    const t = useTranslation(language);
+    const { currentWork } = useAppContext();
+    const t = useTranslation();
 
     const totals = useMemo(() => {
         return {

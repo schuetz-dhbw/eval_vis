@@ -3,8 +3,8 @@ import ErrorBoundary from './ErrorBoundary';
 import { useTranslation } from '../../hooks/useTranslation';
 import './styles/dataErrorBoundary.css';
 
-const DataErrorFallback = ({ error, resetErrorBoundary, language }) => {
-    const t = useTranslation(language);
+const DataErrorFallback = ({ error, resetErrorBoundary }) => {
+    const t = useTranslation(); // Keine language-Übergabe mehr
 
     return (
         <div className="data-error-fallback">
@@ -17,9 +17,10 @@ const DataErrorFallback = ({ error, resetErrorBoundary, language }) => {
     );
 };
 
-const DataErrorBoundary = ({ children, data, language }) => {
+const DataErrorBoundary = ({ children, data }) => {
+    // language-Parameter entfernt
     const [hasError, setHasError] = useState(false);
-    const t = useTranslation(language);
+    const t = useTranslation(); // Keine language-Übergabe mehr
 
     // Reset error state when data changes
     useEffect(() => {

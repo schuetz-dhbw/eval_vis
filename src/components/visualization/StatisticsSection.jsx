@@ -10,8 +10,8 @@ import {useAppContext} from "../../AppContext";
 import {METRICS} from "../../constants/metrics";
 
 const StatisticsSection = () => {
-    const { currentWork, language } = useAppContext();
-    const t = useTranslation(language);
+    const { currentWork } = useAppContext();
+    const t = useTranslation();
 
     // Statistiken mit useMemo berechnen
     const stats = useMemo(() => {
@@ -65,11 +65,10 @@ const StatisticsSection = () => {
                 </div>
 
                 <div className="statistics-content">
-                    <DataErrorBoundary data={currentWork} language={language}>
-                        <ChartErrorBoundary language={language}>
+                    <DataErrorBoundary data={currentWork}>
+                        <ChartErrorBoundary>
                             <CorrelationAnalysisComponent
                                 work={currentWork}
-                                language={language}
                             />
                         </ChartErrorBoundary>
                     </DataErrorBoundary>

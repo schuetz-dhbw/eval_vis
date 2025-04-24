@@ -16,7 +16,7 @@ const ControlSection = () => {
         setLanguage
     } = useAppContext();
 
-    const t = useTranslation(language);
+    const t = useTranslation();
 
     // Check if we should show the work selector
     const showWorkSelector = chartType !== CHART_TYPES.WORK_TYPE_ANALYSIS;

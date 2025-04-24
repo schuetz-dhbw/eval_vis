@@ -38,8 +38,8 @@ const calculateVariance = (data) => {
     return data.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / data.length;
 };
 
-const CorrelationAnalysisComponent = ({ work, language }) => {
-    const t = useTranslation(language);
+const CorrelationAnalysisComponent = ({ work }) => {
+    const t = useTranslation();
     const CHART_COLORS = getChartColors();
 
     const criteriaData = useMemo(() => {

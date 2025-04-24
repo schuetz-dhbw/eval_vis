@@ -5,8 +5,8 @@ import { CHART_TYPES } from '../../constants/chartTypes';
 import { useAppContext } from '../../AppContext';
 
 const UsageHintsSection = () => {
-    const { language, chartType } = useAppContext();
-    const t = useTranslation(language);
+    const { chartType } = useAppContext();
+    const t = useTranslation();
 
     return (
         <div className="usage-hints">

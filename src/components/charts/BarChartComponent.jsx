@@ -6,7 +6,7 @@ import {CHART_MARGINS, AXIS_CONFIG, CHART_DIMENSIONS} from '../../constants/char
 import BaseChartComponent from './BaseChartComponent';
 import useChart from '../../hooks/useChart';
 
-const BarChartComponent = ({ data, chartType, language }) => {
+const BarChartComponent = ({ data, chartType }) => {
     const {
         t,
         CHART_COLORS,
@@ -14,10 +14,10 @@ const BarChartComponent = ({ data, chartType, language }) => {
         yDomain,
         tooltipConfig,
         defaultLegendProps
-    } = useChart({ data, chartType, language });
+    } = useChart({ data, chartType });
 
     return (
-        <BaseChartComponent height={CHART_DIMENSIONS.DEFAULT_HEIGHT} width={CHART_DIMENSIONS.FULL_WIDTH} language={language}>
+        <BaseChartComponent height={CHART_DIMENSIONS.DEFAULT_HEIGHT} width={CHART_DIMENSIONS.FULL_WIDTH}>
             <BarChart
                 data={data}
                 margin={CHART_MARGINS.BAR_CHART}

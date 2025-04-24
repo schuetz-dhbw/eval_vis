@@ -21,20 +21,19 @@ import '../visualization/styles/common.css';
  * @returns {ReactElement} Container mit allen Charts
  */
 const ChartSection = () => {
-    const { chartType, currentWork, language } = useAppContext();
-    const t = useTranslation(language);
+    const { chartType, currentWork } = useAppContext();
+    const t = useTranslation();
 
     // Zentralisiertes Memoizing der Chart-Daten
     const chartData = useMemo(() => {
         if (!currentWork) return { scoresData: [], combinedData: [], radarData: [] };
 
-        const scoresData = getScoresData(currentWork, language);
-        const combinedData = getCombinedData(currentWork, language);
-        const weightedData = getWeightedData(currentWork, language);
+        const scoresData = getScoresData(currentWork);
+        const combinedData = getCombinedData(currentWork);
+        const weightedData = getWeightedData(currentWork);
 
         const radarData = getRadarData(
             currentWork,
-            language,
             chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType
         );
 
@@ -44,7 +43,7 @@ const ChartSection = () => {
             weightedData,
             radarData
         };
-    }, [currentWork, language, chartType]);
+    }, [currentWork, chartType]);
 
     // Fallback, wenn keine Daten verfügbar
     if (!currentWork) {
@@ -61,19 +60,16 @@ const ChartSection = () => {
                 <div className="chart-wrapper">
                     <DataErrorBoundary
                         data={chartType === CHART_TYPES.COMBINED ? chartData.combinedData : chartData.scoresData}
-                        language={language}
                     >
                         {chartType === CHART_TYPES.COMBINED ? (
                             <ComposedChartComponent
                                 data={chartData.combinedData}
                                 chartType={chartType}
-                                language={language}
                             />
                         ) : (
                             <LineChartComponent
                                 data={chartData.scoresData}
                                 chartType={chartType}
-                                language={language}
                             />
                         )}
                     </DataErrorBoundary>
@@ -90,12 +86,10 @@ const ChartSection = () => {
                 <div className="chart-wrapper">
                     <DataErrorBoundary
                         data={chartType === CHART_TYPES.COMBINED ? chartData.weightedData : chartData.scoresData}
-                        language={language}
                     >
                         <BarChartComponent
                             data={chartType === CHART_TYPES.COMBINED ? chartData.weightedData : chartData.scoresData}
                             chartType={chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType}
-                            language={language}
                         />
                     </DataErrorBoundary>
                 </div>
@@ -109,11 +103,10 @@ const ChartSection = () => {
                         t('radar', 'chartTitles')}
                 </h3>
                 <div className="chart-wrapper radar-wrapper">
-                    <DataErrorBoundary data={chartData.radarData} language={language}>
+                    <DataErrorBoundary data={chartData.radarData} >
                         <RadarChartComponent
                             data={chartData.radarData}
                             chartType={chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType}
-                            language={language}
                         />
                     </DataErrorBoundary>
                 </div>

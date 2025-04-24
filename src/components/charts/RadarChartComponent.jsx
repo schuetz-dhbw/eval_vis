@@ -9,15 +9,15 @@ import useChart from "../../hooks/useChart";
 import BaseChartComponent from "./BaseChartComponent";
 
 
-const RadarChartComponent = ({ data, chartType, language }) => {
+const RadarChartComponent = ({ data, chartType }) => {
     const {
         t,
         CHART_COLORS,
         tooltipConfig
-    } = useChart({ data, chartType, language });
+    } = useChart({ data, chartType });
 
     return (
-        <BaseChartComponent height={CHART_DIMENSIONS.RADAR_HEIGHT} width={CHART_DIMENSIONS.FULL_WIDTH} language={language}>
+        <BaseChartComponent height={CHART_DIMENSIONS.RADAR_HEIGHT} width={CHART_DIMENSIONS.FULL_WIDTH} >
             <RadarChart
                 outerRadius={RADAR_CONFIG.OUTER_RADIUS}
                 margin={CHART_MARGINS.RADAR_CHART}

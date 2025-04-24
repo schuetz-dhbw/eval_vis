@@ -4,8 +4,8 @@ import {useAppContext} from "../../AppContext";
 import {useTranslation} from "../../hooks/useTranslation";
 
 const DarkModeToggle = () => {
-    const { language, isDarkMode, toggleDarkMode } = useAppContext();
-    const t = useTranslation(language);
+    const { isDarkMode, toggleDarkMode } = useAppContext();
+    const t = useTranslation();
 
     // Tooltips aus den Übersetzungen
     const tooltipText = isDarkMode

@@ -9,15 +9,15 @@ import useChart from "../../hooks/useChart";
 import BaseChartComponent from "./BaseChartComponent";
 
 
-const LineChartComponent = ({ data, chartType, language }) => {
+const LineChartComponent = ({ data, chartType }) => {
     const {
         CHART_COLORS,
         defaultLegendProps
-    } = useChart({ data, chartType, language });
+    } = useChart({ data, chartType });
 
 
     return (
-        <BaseChartComponent height={CHART_DIMENSIONS.DEFAULT_HEIGHT} width={CHART_DIMENSIONS.FULL_WIDTH} language={language}>
+        <BaseChartComponent height={CHART_DIMENSIONS.DEFAULT_HEIGHT} width={CHART_DIMENSIONS.FULL_WIDTH}>
             <LineChart
                 data={data}
                 margin={CHART_MARGINS.DEFAULT}

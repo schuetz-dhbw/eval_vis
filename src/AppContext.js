@@ -1,9 +1,10 @@
-import React, { createContext, useState, useContext, useMemo } from 'react';
+import React, {createContext, useState, useContext, useMemo, useEffect} from 'react';
 import { CHART_TYPES } from './constants/chartTypes';
 import { DEFAULT_LANGUAGE } from './constants/languages';
 import { works } from './data/works';
 import { translations } from './locales';
 import { getTranslatedWorks } from './utils/dataTransformers';
+import { setCurrentLanguage } from './services/languageService';
 
 // Context erstellen
 const AppContext = createContext();
@@ -16,6 +17,9 @@ export const AppProvider = ({ children }) => {
     const [isDarkMode, setIsDarkMode] = useState(
         document.documentElement.classList.contains('dark-mode')
     );
+    useEffect(() => {
+        setCurrentLanguage(language);
+    }, [language]);
 
     const translatedWorks = useMemo(() => {
         return getTranslatedWorks(works, translations, language);
