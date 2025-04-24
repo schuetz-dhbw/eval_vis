@@ -1,10 +1,10 @@
 .custom-tooltip {
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: var(--color-white);
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
     padding: var(--padding-md);
     box-shadow: var(--shadow-sm);
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-base);
 }
 
 .tooltip-title {

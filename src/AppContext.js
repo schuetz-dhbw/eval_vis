@@ -26,8 +26,8 @@ export const AppProvider = ({ children }) => {
     const toggleDarkMode = () => {
         const newDarkMode = !isDarkMode;
         setIsDarkMode(newDarkMode);
-        document.documentElement.classList.toggle('dark-mode', newDarkMode);
-        localStorage.setItem('darkMode', newDarkMode ? 'enabled' : 'disabled');
+        document.documentElement.setAttribute('data-theme', newDarkMode ? 'dark' : 'light');
+        localStorage.setItem('theme', newDarkMode ? 'dark' : 'light');
     };
 
     const contextValue = {

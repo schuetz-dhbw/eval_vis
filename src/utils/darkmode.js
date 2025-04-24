@@ -1,20 +1,23 @@
+// In src/utils/darkmode.js
 export const toggleDarkMode = () => {
-    document.documentElement.classList.toggle('dark-mode');
+    const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDarkMode ? 'light' : 'dark');
 
     // Speichere die Präferenz im localStorage
-    const isDarkMode = document.documentElement.classList.contains('dark-mode');
-    localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+    localStorage.setItem('theme', isDarkMode ? 'light' : 'dark');
 };
 
 export const initDarkMode = () => {
     // Prüfe auf gespeicherte User-Präferenz
-    const savedDarkMode = localStorage.getItem('darkMode');
+    const savedTheme = localStorage.getItem('theme');
 
     // Prüfe auf Systempräferenz falls keine Nutzerpräferenz gespeichert ist
     const prefersDarkMode = window.matchMedia &&
         window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    if (savedDarkMode === 'enabled' || (savedDarkMode === null && prefersDarkMode)) {
-        document.documentElement.classList.add('dark-mode');
+    if (savedTheme === 'dark' || (savedTheme === null && prefersDarkMode)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+        document.documentElement.setAttribute('data-theme', 'light');
     }
 };

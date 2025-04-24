@@ -89,45 +89,19 @@
 }
 
 /* Dark Mode Anpassungen für Tooltips */
-.dark-mode .recharts-default-tooltip {
-    background-color: rgba(40, 40, 40, 0.95) !important;
+[data-theme='dark'] .recharts-default-tooltip {
+    background-color: var(--color-white) !important;
     border-color: var(--color-border) !important;
 }
 
-.dark-mode .recharts-tooltip-label,
-.dark-mode .recharts-tooltip-item-name,
-.dark-mode .recharts-tooltip-item-value {
+[data-theme='dark'] .recharts-tooltip-label {
     color: var(--color-text) !important;
 }
 
-.dark-mode .custom-tooltip.standard-tooltip {
-    background-color: rgba(40, 40, 40, 0.95);
+[data-theme='dark'] .custom-tooltip.standard-tooltip {
+    background-color: var(--color-white);
     border-color: var(--color-border);
     color: var(--color-text);
-}
-
-/* Radar/Spider Chart spezifische Elemente */
-.recharts-polar-grid .recharts-polar-grid-concentric-circle {
-    stroke: var(--color-border);
-    stroke-width: 0.5px;
-}
-
-.dark-mode .recharts-polar-grid .recharts-polar-grid-concentric-circle {
-    stroke: var(--color-border-light);
-}
-
-.recharts-polar-angle-axis .recharts-polar-angle-axis-tick text {
-    font-weight: 500;
-    fill: var(--color-text);
-}
-
-.recharts-polar-angle-axis-line {
-    stroke-width: 1.5px;
-    stroke: var(--color-border);
-}
-
-.dark-mode .recharts-polar-angle-axis-line {
-    stroke: var(--color-border-light);
 }
 
 /* ====== Responsive Anpassungen ====== */
