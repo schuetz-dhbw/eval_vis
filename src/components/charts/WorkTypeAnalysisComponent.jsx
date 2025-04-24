@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import {
-    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
+    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell
+} from 'recharts';
 import { CHART_MARGINS, AXIS_CONFIG, getChartColors } from '../../constants/chartConfig';
 import { useTranslation } from '../../hooks/useTranslation';
 import CustomTooltip from './CustomTooltip';
@@ -156,17 +157,6 @@ const WorkTypeAnalysisComponent = ({ works }) => {
         );
     };
 
-    // Create scatter data for work types vs criteria differences
-    const scatterData = useMemo(() => {
-        return differencesByType.map((item, index) => ({
-            x: item.type,
-            y: item.criterion,
-            z: item.averageDifference,
-            count: item.count,
-            id: index
-        }));
-    }, [differencesByType]);
-
     // Get colors based on difference value
     const getDifferenceColor = (value) => {
         if (value > 30) return CHART_COLORS.TERTIARY; // Large difference - orange
@@ -222,15 +212,15 @@ const WorkTypeAnalysisComponent = ({ works }) => {
                     <div className="heatmap-wrapper">
                         <div className="heatmap-legend">
                             <div className="legend-item">
-                                <span className="legend-color" style={{ backgroundColor: '#82ca9d' }}></span>
+                                <span className="legend-color" style={{ backgroundColor: CHART_COLORS.SECONDARY }}></span>
                                 <span className="legend-text">&lt; 15%</span>
                             </div>
                             <div className="legend-item">
-                                <span className="legend-color" style={{ backgroundColor: '#8884d8' }}></span>
+                                <span className="legend-color" style={{ backgroundColor: CHART_COLORS.PRIMARY }}></span>
                                 <span className="legend-text">15-30%</span>
                             </div>
                             <div className="legend-item">
-                                <span className="legend-color" style={{ backgroundColor: '#ff7300' }}></span>
+                                <span className="legend-color" style={{ backgroundColor: CHART_COLORS.TERTIARY }}></span>
                                 <span className="legend-text">&gt; 30%</span>
                             </div>
                         </div>

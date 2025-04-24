@@ -12,7 +12,7 @@ const prepareTranslations = (work) => {
         return worksTranslations.criteriaShortLabels?.[key] || key;
     });
 
-    return { t, shortLabels, language };
+    return { t, shortLabels };
 };
 
 // Calculate cosine similarity between two vectors
