@@ -3,7 +3,7 @@ import { translations } from '../locales/index';
 import {METRICS} from "../constants/metrics";
 import { getCurrentLanguage } from '../services/languageService';
 
-// Gemeinsame Hilfsfunktion für alle Transformations-Funktionen
+// Common helper function for all transformation functions
 const prepareTranslations = (work) => {
     const language = getCurrentLanguage();
     const t = (key, section = null) => getTranslation(translations, language, key, section);
@@ -68,12 +68,12 @@ export const calculateSimilarityMetrics = (work) => {
 // Calculate statistics for a work
 export const calculateStatistics = (work) => {
     // Calculate average scores
-    const kiAverage = work.aiScores.reduce((sum, score) => sum + score, 0) / work.aiScores.length;
+    const aiAverage = work.aiScores.reduce((sum, score) => sum + score, 0) / work.aiScores.length;
     const humanAverage = work.humanScores.reduce((sum, score) => sum + score, 0) / work.humanScores.length;
 
     // Calculate standard deviations
     const aiStdDev = Math.sqrt(
-        work.aiScores.reduce((sum, score) => sum + Math.pow(score - kiAverage, 2), 0) / work.aiScores.length
+        work.aiScores.reduce((sum, score) => sum + Math.pow(score - aiAverage, 2), 0) / work.aiScores.length
     );
     const humanStdDev = Math.sqrt(
         work.humanScores.reduce((sum, score) => sum + Math.pow(score - humanAverage, 2), 0) / work.humanScores.length
@@ -96,7 +96,7 @@ export const calculateStatistics = (work) => {
     const avgWeightDiff = weightDifferences.reduce((sum, diff) => sum + diff, 0) / weightDifferences.length;
 
     return {
-        kiAverage,
+        aiAverage,
         humanAverage,
         aiStdDev,
         humanStdDev,
@@ -109,7 +109,7 @@ export const calculateStatistics = (work) => {
     };
 };
 
-// Daten für die Bewertungsdiagramme
+// Data for scores diagram
 export const getScoresData = (work) => {
     const { t, shortLabels } = prepareTranslations(work);
 
@@ -123,7 +123,7 @@ export const getScoresData = (work) => {
     });
 };
 
-// Daten für die Gewichtungsdiagramme
+// Data for weightings diagram
 export const getWeightsData = (work) => {
     const { t, shortLabels } = prepareTranslations(work);
 
@@ -135,7 +135,7 @@ export const getWeightsData = (work) => {
     }));
 };
 
-// Daten für die gewichteten Bewertungsdiagramme
+// Data for weighted points diagram
 export const getWeightedData = (work) => {
     const { t, shortLabels } = prepareTranslations(work);
 
@@ -147,7 +147,7 @@ export const getWeightedData = (work) => {
     }));
 };
 
-// Daten für die kombinierte Darstellung
+// Data for combined diagram
 export const getCombinedData = (work) => {
     const { t, shortLabels } = prepareTranslations(work);
 
@@ -163,7 +163,7 @@ export const getCombinedData = (work) => {
     }));
 };
 
-// Daten für das Radar/Spinnendiagramm
+// Data for radar diagram
 export const getRadarData = (work, chartType) => {
     const { t, shortLabels } = prepareTranslations(work);
 
@@ -195,7 +195,7 @@ export const getRadarData = (work, chartType) => {
 };
 
 
-// Y-Achsen-Domain basierend auf dem Charttyp
+// Y-axis domain based on chart type
 export const getYDomain = (chartType) => {
     switch(chartType) {
         case 'weights':
@@ -209,7 +209,7 @@ export const getYDomain = (chartType) => {
     }
 };
 
-// Radar-Domain basierend auf dem Charttyp
+// Radar domain based on chart type
 export const getRadarDomain = (chartType) => {
     switch(chartType) {
         case 'weights':
@@ -221,7 +221,7 @@ export const getRadarDomain = (chartType) => {
     }
 };
 
-// Übersetzungen für die Daten zu den Arbeiten
+// Translations für the work
 export const getTranslatedWorks = (works) => {
     const language = getCurrentLanguage();
     const worksTranslations = translations[language]?.works || {};

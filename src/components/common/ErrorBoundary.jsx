@@ -11,7 +11,7 @@ class ErrorBoundary extends Component {
         };
     }
 
-    static getDerivedStateFromError(error) {
+    static getDerivedStateFromError() {
         // Update state so the next render will show the fallback UI
         return { hasError: true };
     }
@@ -32,11 +32,11 @@ class ErrorBoundary extends Component {
             // Fallback UI when error occurs
             return (
                 <div className="error-container">
-                    <h3 className="error-title">{this.props.fallbackTitle || "Ein Fehler ist aufgetreten"}</h3>
-                    <p className="error-message">{this.props.fallbackMessage || "Beim Rendern dieser Komponente ist ein Fehler aufgetreten."}</p>
+                    <h3 className="error-title">{this.props.fallbackTitle || "An error occurred."}</h3>
+                    <p className="error-message">{this.props.fallbackMessage || "An error occurred while rendering this component."}</p>
                     {this.props.showDetails && this.state.error && (
                         <details className="error-details">
-                            <summary>Technische Details</summary>
+                            <summary>Technical Details</summary>
                             <p>{this.state.error.toString()}</p>
                             <pre>{this.state.errorInfo?.componentStack}</pre>
                         </details>

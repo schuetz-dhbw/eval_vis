@@ -1,6 +1,6 @@
 export const getTranslation = (translations, language, key, section = null) => {
     if (section) {
-        // Unterstütze geschachtelte Pfade mit Punktnotation
+        // Support nested paths with dot notation
         const path = section.split('.');
         let current = translations[language];
 

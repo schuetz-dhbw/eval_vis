@@ -34,7 +34,7 @@ const LineChartComponent = ({ data, chartType }) => {
                 <Legend {...defaultLegendProps} />
                 <Line
                     type="monotone"
-                    dataKey={Object.keys(data[0])[2]} // KI/AI
+                    dataKey={Object.keys(data[0])[2]} // AI
                     stroke={CHART_COLORS.PRIMARY}
                     activeDot={{ r: 8 }}
                 />
