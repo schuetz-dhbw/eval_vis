@@ -20,7 +20,7 @@ const BarChartComponent = ({ data, chartType }) => {
         <BaseChartComponent height={CHART_DIMENSIONS.DEFAULT_HEIGHT} width={CHART_DIMENSIONS.FULL_WIDTH}>
             <BarChart
                 data={data}
-                margin={CHART_MARGINS.BAR_CHART}
+                margin={CHART_MARGINS.DEFAULT}
             >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis

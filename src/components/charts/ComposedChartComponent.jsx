@@ -19,7 +19,7 @@ const ComposedChartComponent = ({ data, chartType }) => {
         <BaseChartComponent height={CHART_DIMENSIONS.DEFAULT_HEIGHT} width={CHART_DIMENSIONS.FULL_WIDTH}>
             <ComposedChart
                 data={data}
-                margin={CHART_MARGINS.COMPOSED_CHART}
+                margin={CHART_MARGINS.DEFAULT}
             >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis

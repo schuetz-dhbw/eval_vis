@@ -20,7 +20,7 @@ const RadarChartComponent = ({ data, chartType }) => {
         <BaseChartComponent height={CHART_DIMENSIONS.RADAR_HEIGHT} width={CHART_DIMENSIONS.FULL_WIDTH} >
             <RadarChart
                 outerRadius={RADAR_CONFIG.OUTER_RADIUS}
-                margin={CHART_MARGINS.RADAR_CHART}
+                margin={CHART_MARGINS.NO_MARGIN}
                 data={data}>
                 <PolarGrid />
                 <PolarAngleAxis

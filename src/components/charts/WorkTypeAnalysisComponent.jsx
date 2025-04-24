@@ -166,7 +166,6 @@ const WorkTypeAnalysisComponent = ({ works }) => {
 
     return (
         <div className="work-type-analysis">
-
             <div className="analysis-content">
                 <div className="chart-container">
                     <h4 className="chart-subtitle">{t('differenceByTypeTitle', 'chartTitles') || "Average Difference by Work Type"}</h4>
@@ -179,15 +178,9 @@ const WorkTypeAnalysisComponent = ({ works }) => {
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <XAxis
                                     dataKey="type"
-                                    {...AXIS_CONFIG.WORK_TYPE_X}
+                                    {...AXIS_CONFIG.DEFAULT_X}
                                 />
-                                <YAxis
-                                    label={{
-                                        value: t('avgDifference', 'metrics') || "Average Difference (%)",
-                                        angle: -90,
-                                        position: 'insideLeft'
-                                    }}
-                                />
+                                <YAxis />
                                 <Tooltip content={<CustomTooltip formatter={tooltipFormatter} />} />
                                 <Legend />
                                 <Bar

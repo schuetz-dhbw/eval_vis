@@ -8,12 +8,9 @@ export const CHART_DIMENSIONS = {
 };
 
 export const CHART_MARGINS = {
-    DEFAULT: { top: 5, right: 30, left: 0, bottom: 30 },
-    BAR_CHART: { top: 10, right: 30, left: 0, bottom: 30 },
-    COMPOSED_CHART: { top: 5, right: 30, left: 0, bottom: 30 },
-    RADAR_CHART: { top: 0, right: 0, left: 0, bottom: 0 },
-    WORK_TYPE_BAR: { top: 20, right: 30, left: 20, bottom: 50 },
-    SCATTER_CHART: { top: 20, right: 30, bottom: 60, left: 20 }
+    DEFAULT: { top: 5, right: 10, left: 0, bottom: 20 },
+    NO_MARGIN: { top: 0, right: 0, left: 0, bottom: 0 }, // Radar
+    WORK_TYPE_BAR: { top: 15, right: 10, left: 0, bottom: 10 }
 };
 
 export const AXIS_CONFIG = {
@@ -21,12 +18,6 @@ export const AXIS_CONFIG = {
         angle: -45,
         textAnchor: 'end',
         height: 70,
-        tick: { fontSize: 10 }
-    },
-    WORK_TYPE_X: {
-        angle: -45,
-        textAnchor: 'end',
-        height: 100,
         tick: { fontSize: 10 }
     }
 };

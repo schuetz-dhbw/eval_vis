@@ -12,7 +12,7 @@
 .chart-title {
     font-size: var(--font-size-lg);
     font-weight: 600;
-    margin-bottom: var(--padding-sm);
+    margin-bottom: var(--padding-lg);
     color: var(--color-text);
 }
 

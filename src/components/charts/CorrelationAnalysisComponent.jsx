@@ -113,7 +113,7 @@ const CorrelationAnalysisComponent = ({ work }) => {
             <div className="chart-wrapper">
                 <ResponsiveContainer width={CHART_DIMENSIONS.FULL_WIDTH} height={CHART_DIMENSIONS.WORK_TYPE_HEIGHT}>
                     <ScatterChart
-                        margin={CHART_MARGINS.SCATTER_CHART}
+                        margin={CHART_MARGINS.DEFAULT}
                     >
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis
@@ -124,7 +124,7 @@ const CorrelationAnalysisComponent = ({ work }) => {
                             label={{
                                 value: t('ai', 'labels') + ' ' + t('score', 'labels'),
                                 position: 'bottom',
-                                offset: 10
+                                offset: 0
                             }}
                         />
                         <YAxis
@@ -136,7 +136,7 @@ const CorrelationAnalysisComponent = ({ work }) => {
                                 value: t('human', 'labels') + ' ' + t('score', 'labels'),
                                 angle: -90,
                                 position: 'insideLeft',
-                                offset: -5,
+                                offset: 10,
                                 style: { textAnchor: 'middle' }
                             }}
                         />
