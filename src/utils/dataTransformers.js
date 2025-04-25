@@ -1,7 +1,36 @@
 import { getTranslation } from './translationHelpers';
 import { translations } from '../locales/index';
-import {METRICS} from "../constants/metrics";
+import { METRICS } from "../constants/metrics";
 import { getCurrentLanguage } from '../services/languageService';
+import {
+    dotProduct,
+    vectorNorm,
+    calculateMean,
+    calculateStdDev,
+    calculateAbsDifferences
+} from './dataUtils';
+
+// Cache für Berechnungen
+const calculationCache = {
+    cosineSimilarity: new Map(),
+    euclideanDistance: new Map(),
+    similarityMetrics: new Map(),
+    statistics: new Map(),
+    scoresData: new Map(),
+    weightsData: new Map(),
+    weightedData: new Map(),
+    combinedData: new Map(),
+    radarData: new Map()
+};
+
+// Hilfsfunktion zum Generieren von Cache-Keys
+const generateCacheKey = (work, chartType = null, language = null) => {
+    const langKey = language || getCurrentLanguage();
+    if (chartType) {
+        return `${work.key}_${chartType}_${langKey}`;
+    }
+    return `${work.key}_${langKey}`;
+};
 
 // Common helper function for all transformation functions
 const prepareTranslations = (work) => {
@@ -17,71 +46,101 @@ const prepareTranslations = (work) => {
 
 // Calculate cosine similarity between two vectors
 export const calculateCosineSimilarity = (vectorA, vectorB) => {
+    // Generiere einen eindeutigen Cache-Key für die Vektoren
+    const cacheKey = JSON.stringify({ a: vectorA, b: vectorB });
+
+    // Prüfe, ob das Ergebnis bereits im Cache ist
+    if (calculationCache.cosineSimilarity.has(cacheKey)) {
+        return calculationCache.cosineSimilarity.get(cacheKey);
+    }
+
     if (vectorA.length !== vectorB.length) {
         console.error('Vectors must be of the same length');
         return 0;
     }
 
-    let dotProduct = 0;
-    let normA = 0;
-    let normB = 0;
-
-    for (let i = 0; i < vectorA.length; i++) {
-        dotProduct += vectorA[i] * vectorB[i];
-        normA += vectorA[i] * vectorA[i];
-        normB += vectorB[i] * vectorB[i];
-    }
+    const product = dotProduct(vectorA, vectorB);
+    const normA = vectorNorm(vectorA);
+    const normB = vectorNorm(vectorB);
 
     if (normA === 0 || normB === 0) {
         return 0;
     }
 
-    return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+    const result = product / (normA * normB);
+
+    // Speichere das Ergebnis im Cache
+    calculationCache.cosineSimilarity.set(cacheKey, result);
+
+    return result;
 };
 
 // Calculate Euclidean distance between two vectors
 export const calculateEuclideanDistance = (vectorA, vectorB) => {
+    // Generiere einen eindeutigen Cache-Key für die Vektoren
+    const cacheKey = JSON.stringify({ a: vectorA, b: vectorB });
+
+    // Prüfe, ob das Ergebnis bereits im Cache ist
+    if (calculationCache.euclideanDistance.has(cacheKey)) {
+        return calculationCache.euclideanDistance.get(cacheKey);
+    }
+
     if (vectorA.length !== vectorB.length) {
         console.error('Vectors must be of the same length');
         return 0;
     }
 
-    let sum = 0;
-    for (let i = 0; i < vectorA.length; i++) {
-        sum += Math.pow(vectorA[i] - vectorB[i], 2);
-    }
+    const squaredDifferences = vectorA.map((value, index) =>
+        Math.pow(value - vectorB[index], 2)
+    );
 
-    return Math.sqrt(sum);
+    const result = Math.sqrt(squaredDifferences.reduce((sum, value) => sum + value, 0));
+
+    // Speichere das Ergebnis im Cache
+    calculationCache.euclideanDistance.set(cacheKey, result);
+
+    return result;
 };
 
 // Calculate similarity metrics for a work
 export const calculateSimilarityMetrics = (work) => {
+    const cacheKey = generateCacheKey(work);
+
+    if (calculationCache.similarityMetrics.has(cacheKey)) {
+        return calculationCache.similarityMetrics.get(cacheKey);
+    }
+
     const similarity = calculateCosineSimilarity(work.aiScores, work.humanScores);
     const distance = calculateEuclideanDistance(work.aiScores, work.humanScores);
 
-    return {
+    const result = {
         similarity,
         distance
     };
+
+    calculationCache.similarityMetrics.set(cacheKey, result);
+    return result;
 };
 
 // Calculate statistics for a work
 export const calculateStatistics = (work) => {
+    const cacheKey = generateCacheKey(work);
+
+    if (calculationCache.statistics.has(cacheKey)) {
+        return calculationCache.statistics.get(cacheKey);
+    }
+
     // Calculate average scores
-    const aiAverage = work.aiScores.reduce((sum, score) => sum + score, 0) / work.aiScores.length;
-    const humanAverage = work.humanScores.reduce((sum, score) => sum + score, 0) / work.humanScores.length;
+    const aiAverage = calculateMean(work.aiScores);
+    const humanAverage = calculateMean(work.humanScores);
 
     // Calculate standard deviations
-    const aiStdDev = Math.sqrt(
-        work.aiScores.reduce((sum, score) => sum + Math.pow(score - aiAverage, 2), 0) / work.aiScores.length
-    );
-    const humanStdDev = Math.sqrt(
-        work.humanScores.reduce((sum, score) => sum + Math.pow(score - humanAverage, 2), 0) / work.humanScores.length
-    );
+    const aiStdDev = calculateStdDev(work.aiScores);
+    const humanStdDev = calculateStdDev(work.humanScores);
 
     // Calculate differences in assessments
-    const differences = work.aiScores.map((score, i) => Math.abs(score - work.humanScores[i]));
-    const avgDifference = differences.reduce((sum, diff) => sum + diff, 0) / differences.length;
+    const differences = calculateAbsDifferences(work.aiScores, work.humanScores);
+    const avgDifference = calculateMean(differences);
     const maxDifference = Math.max(...differences);
     const minDifference = Math.min(...differences);
 
@@ -90,12 +149,13 @@ export const calculateStatistics = (work) => {
     const humanWeightedSum = work.humanScores.reduce((sum, score, i) => sum + score * work.humanWeights[i], 0);
 
     // Calculate differences in weights
-    const weightDifferences = work.aiWeights.map((weight, i) =>
-        Math.abs(weight - work.humanWeights[i])
+    const weightDifferences = calculateAbsDifferences(
+        work.aiWeights.map(w => w * METRICS.WEIGHT_SCALE),
+        work.humanWeights.map(w => w * METRICS.WEIGHT_SCALE)
     );
-    const avgWeightDiff = weightDifferences.reduce((sum, diff) => sum + diff, 0) / weightDifferences.length;
+    const avgWeightDiff = calculateMean(weightDifferences) / METRICS.WEIGHT_SCALE;
 
-    return {
+    const result = {
         aiAverage,
         humanAverage,
         aiStdDev,
@@ -107,13 +167,22 @@ export const calculateStatistics = (work) => {
         humanWeightedSum,
         avgWeightDiff
     };
+
+    calculationCache.statistics.set(cacheKey, result);
+    return result;
 };
 
 // Data for scores diagram
 export const getScoresData = (work) => {
+    const cacheKey = generateCacheKey(work, 'scores');
+
+    if (calculationCache.scoresData.has(cacheKey)) {
+        return calculationCache.scoresData.get(cacheKey);
+    }
+
     const { t, shortLabels } = prepareTranslations(work);
 
-    return work.criteriaKeys.map((label, index) => {
+    const result = work.criteriaKeys.map((label, index) => {
         return {
             name: label,
             shortName: shortLabels[index],
@@ -121,37 +190,64 @@ export const getScoresData = (work) => {
             [t('human', 'labels')]: work.humanScores[index],
         };
     });
+
+    calculationCache.scoresData.set(cacheKey, result);
+    return result;
 };
 
 // Data for weightings diagram
 export const getWeightsData = (work) => {
+    const cacheKey = generateCacheKey(work, 'weights');
+
+    if (calculationCache.weightsData.has(cacheKey)) {
+        return calculationCache.weightsData.get(cacheKey);
+    }
+
     const { t, shortLabels } = prepareTranslations(work);
 
-    return work.criteriaKeys.map((label, index) => ({
+    const result = work.criteriaKeys.map((label, index) => ({
         name: label,
         shortName: shortLabels[index],
         [t('ai', 'labels')]: work.aiWeights[index] * METRICS.WEIGHT_SCALE,
         [t('human', 'labels')]: work.humanWeights[index] * METRICS.WEIGHT_SCALE
     }));
+
+    calculationCache.weightsData.set(cacheKey, result);
+    return result;
 };
 
 // Data for weighted points diagram
 export const getWeightedData = (work) => {
+    const cacheKey = generateCacheKey(work, 'weighted');
+
+    if (calculationCache.weightedData.has(cacheKey)) {
+        return calculationCache.weightedData.get(cacheKey);
+    }
+
     const { t, shortLabels } = prepareTranslations(work);
 
-    return work.criteriaKeys.map((label, index) => ({
+    const result = work.criteriaKeys.map((label, index) => ({
         name: label,
         shortName: shortLabels[index],
         [t('ai', 'labels')]: work.aiScores[index] * work.aiWeights[index],
         [t('human', 'labels')]: work.humanScores[index] * work.humanWeights[index],
     }));
+
+    calculationCache.weightedData.set(cacheKey, result);
+    return result;
 };
 
 // Data for combined diagram
 export const getCombinedData = (work) => {
+    const cacheKey = generateCacheKey(work, 'combined');
+
+    if (calculationCache.combinedData.has(cacheKey)) {
+        return calculationCache.combinedData.get(cacheKey);
+    }
+
     const { t, shortLabels } = prepareTranslations(work);
 
-    return work.criteriaKeys.map((label, index) => ({
+    const result = work.criteriaKeys.map((label, index) => ({
         name: label,
         shortName: shortLabels[index],
         [`${t('ai', 'labels')}Score`]: work.aiScores[index],
@@ -161,14 +257,24 @@ export const getCombinedData = (work) => {
         [`${t('ai', 'labels')}Weighted`]: work.aiScores[index] * work.aiWeights[index],
         [`${t('human', 'labels')}Weighted`]: work.humanScores[index] * work.humanWeights[index]
     }));
+
+    calculationCache.combinedData.set(cacheKey, result);
+    return result;
 };
 
 // Data for radar diagram
 export const getRadarData = (work, chartType) => {
+    const cacheKey = generateCacheKey(work, `radar_${chartType}`);
+
+    if (calculationCache.radarData.has(cacheKey)) {
+        return calculationCache.radarData.get(cacheKey);
+    }
+
     const { t, shortLabels } = prepareTranslations(work);
+    let result;
 
     if (chartType === 'weighted') {
-        return work.criteriaKeys.map((label, index) => ({
+        result = work.criteriaKeys.map((label, index) => ({
             subject: label,
             shortSubject: shortLabels[index],
             [t('ai', 'labels')]: work.aiScores[index] * work.aiWeights[index],
@@ -176,7 +282,7 @@ export const getRadarData = (work, chartType) => {
             fullMark: METRICS.WEIGHTED_MAX
         }));
     } else if (chartType === 'weights') {
-        return work.criteriaKeys.map((label, index) => ({
+        result = work.criteriaKeys.map((label, index) => ({
             subject: label,
             shortSubject: shortLabels[index],
             [t('ai', 'labels')]: work.aiWeights[index] * 100,
@@ -184,7 +290,7 @@ export const getRadarData = (work, chartType) => {
             fullMark: METRICS.WEIGHT_MAX
         }));
     } else {
-        return work.criteriaKeys.map((label, index) => ({
+        result = work.criteriaKeys.map((label, index) => ({
             subject: label,
             shortSubject: shortLabels[index],
             [t('ai', 'labels')]: work.aiScores[index],
@@ -192,8 +298,10 @@ export const getRadarData = (work, chartType) => {
             fullMark: METRICS.FULL_MARK
         }));
     }
-};
 
+    calculationCache.radarData.set(cacheKey, result);
+    return result;
+};
 
 // Y-axis domain based on chart type
 export const getYDomain = (chartType) => {
