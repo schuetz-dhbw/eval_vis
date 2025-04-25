@@ -42,12 +42,47 @@
     --font-size-lg: 16px;
     --font-size-xl: 20px;
 
+    /* ===== SPACING SYSTEM ===== */
+    /* Basis-Einheit für konsistente Abstände */
+    --space-unit: 4px;
+
+    /* Abgeleitete Spacing-Werte */
+    --space-xs: calc(1 * var(--space-unit));    /* 4px */
+    --space-sm: calc(2 * var(--space-unit));    /* 8px */
+    --space-md: calc(3 * var(--space-unit));    /* 12px */
+    --space-lg: calc(4 * var(--space-unit));    /* 16px */
+    --space-xl: calc(6 * var(--space-unit));    /* 24px */
+    --space-2xl: calc(8 * var(--space-unit));   /* 32px */
+    --space-3xl: calc(12 * var(--space-unit));  /* 48px */
+
+    /* Insets (Padding) */
+    --inset-xs: var(--space-xs);
+    --inset-sm: var(--space-sm);
+    --inset-md: var(--space-md);
+    --inset-lg: var(--space-lg);
+    --inset-xl: var(--space-xl);
+
+    /* Abstände (Margin) */
+    --stack-xs: var(--space-xs);    /* Vertikaler Abstand */
+    --stack-sm: var(--space-sm);
+    --stack-md: var(--space-md);
+    --stack-lg: var(--space-lg);
+    --stack-xl: var(--space-xl);
+
+    --inline-xs: var(--space-xs);   /* Horizontaler Abstand */
+    --inline-sm: var(--space-sm);
+    --inline-md: var(--space-md);
+    --inline-lg: var(--space-lg);
+    --inline-xl: var(--space-xl);
+
+    /* Für Abwärtskompatibilität behalten */
+    --padding-sm: var(--inset-sm);
+    --padding-md: var(--inset-md);
+    --padding-lg: var(--inset-lg);
+    --padding-xl: var(--inset-xl);
+
     /* ===== LAYOUT ===== */
     --border-radius: 6px;
-    --padding-sm: 8px;
-    --padding-md: 12px;
-    --padding-lg: 16px;
-    --padding-xl: 24px;
 
     /* ===== EFFEKTE ===== */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);

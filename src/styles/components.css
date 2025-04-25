@@ -322,20 +322,20 @@
     overflow-x: auto;
 }
 
-/* Gemeinsame Container-Stile */
+/* Gemeinsame Container-Stile mit neuem Spacing-System */
 .component-container {
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
-    padding: var(--padding-lg);
+    padding: var(--inset-lg);
     background-color: var(--color-white);
-    margin-top: var(--padding-lg);
+    margin-top: var(--stack-lg);
 }
 
 /* Gemeinsame Titelstile */
 .section-title {
     font-size: var(--font-size-lg);
     font-weight: 600;
-    margin-bottom: var(--padding-lg);
+    margin-bottom: var(--stack-lg);
     color: var(--color-text);
 }
 
@@ -343,7 +343,7 @@
 .subtitle {
     font-size: var(--font-size-base);
     font-weight: 600;
-    margin-bottom: var(--padding-md);
+    margin-bottom: var(--stack-md);
     color: var(--color-text);
 }
 
@@ -355,7 +355,7 @@
 }
 
 .data-table th {
-    padding: var(--padding-md) var(--padding-lg);
+    padding: var(--inset-md) var(--inset-lg);
     text-align: left;
     font-size: var(--font-size-sm);
     font-weight: 500;
@@ -367,7 +367,7 @@
 }
 
 .data-table td {
-    padding: var(--padding-md) var(--padding-lg);
+    padding: var(--inset-md) var(--inset-lg);
     border-bottom: 1px solid var(--color-border);
 }
 
@@ -401,7 +401,7 @@
 .info-box {
     background-color: var(--background-even-row);
     border-radius: var(--border-radius);
-    padding: var(--padding-md);
+    padding: var(--inset-md);
     border: 1px solid var(--color-border);
     display: flex;
     flex-direction: column;
@@ -439,8 +439,21 @@
 /* Flexibles Grid-Layout */
 .component-grid {
     display: grid;
-    gap: var(--padding-md);
-    margin-bottom: var(--padding-lg);
+    gap: var(--space-md);
+    margin-bottom: var(--stack-lg);
+}
+
+/* Flexible Layoutcontainer */
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-md);
 }
 
 /* Standardmäßig 3 Spalten, responsives Verhalten in media-queries.css */
@@ -450,19 +463,6 @@
 
 .grid-2-cols {
     grid-template-columns: repeat(2, 1fr);
-}
-
-/* Flexible Layoutcontainer */
-.flex-column {
-    display: flex;
-    flex-direction: column;
-    gap: var(--padding-md);
-}
-
-.flex-row {
-    display: flex;
-    flex-direction: row;
-    gap: var(--padding-md);
 }
 
 /* Häufig genutzte Varianten */
@@ -483,7 +483,7 @@
 .split-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--padding-lg);
+    gap: var(--space-lg);
 }
 
 /* Chart-spezifische Klassen */
@@ -544,7 +544,7 @@
 }
 
 .tooltip-label {
-    margin-right: var(--padding-md);
+    margin-right: var(--inline-md);
     color: var(--color-text-light) !important;
 }
 
