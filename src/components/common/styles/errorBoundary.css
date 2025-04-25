@@ -45,11 +45,11 @@
     font-family: monospace;
 }
 
-.dark-mode .error-container {
+[data-theme='dark'] .error-container {
     background-color: rgba(255, 115, 0, 0.1);
 }
 
-.dark-mode .error-details pre {
+[data-theme='dark'] .error-details pre {
     background-color: var(--color-white);
     color: var(--color-text-light);
 }

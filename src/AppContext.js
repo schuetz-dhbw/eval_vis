@@ -5,6 +5,7 @@ import { works } from './data/works';
 import { translations } from './locales';
 import { getTranslatedWorks } from './utils/dataTransformers';
 import { setCurrentLanguage } from './services/languageService';
+import { toggleDarkMode as toggleDarkModeUtil } from './utils/darkmode';
 
 // Context erstellen
 const AppContext = createContext();
@@ -14,9 +15,10 @@ export const AppProvider = ({ children }) => {
     const [selectedWorkIndex, setSelectedWorkIndex] = useState(0);
     const [chartType, setChartType] = useState(CHART_TYPES.SCORES);
     const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
-    const [isDarkMode, setIsDarkMode] = useState(
-        document.documentElement.getAttribute('data-theme') === 'dark'
-    );
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        // Initialisierung mit dem Wert aus initDarkMode
+        return document.documentElement.getAttribute('data-theme') === 'dark';
+    });
     useEffect(() => {
         setCurrentLanguage(language);
     }, [language]);
@@ -28,10 +30,8 @@ export const AppProvider = ({ children }) => {
     const currentWork = translatedWorks[selectedWorkIndex];
 
     const toggleDarkMode = () => {
-        const newDarkMode = !isDarkMode;
+        const newDarkMode = toggleDarkModeUtil(); // Nutzt die Hilfsfunktion
         setIsDarkMode(newDarkMode);
-        document.documentElement.setAttribute('data-theme', newDarkMode ? 'dark' : 'light');
-        localStorage.setItem('theme', newDarkMode ? 'dark' : 'light');
     };
 
     const contextValue = {

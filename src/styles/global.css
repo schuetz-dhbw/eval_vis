@@ -205,14 +205,14 @@ body {
 }
 
 /* Besser erkennbare Tooltips im Dark Mode */
-.dark-mode .recharts-default-tooltip {
+[data-theme='dark'] .recharts-default-tooltip {
     background-color: rgba(40, 40, 40, 0.95) !important;
     border-color: var(--color-border) !important;
 }
 
-.dark-mode .recharts-tooltip-label,
-.dark-mode .recharts-tooltip-item-name,
-.dark-mode .recharts-tooltip-item-value {
+[data-theme='dark'] .recharts-tooltip-label,
+[data-theme='dark'] .recharts-tooltip-item-name,
+[data-theme='dark'] .recharts-tooltip-item-value {
     color: var(--color-text) !important;
 }
 

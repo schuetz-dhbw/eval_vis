@@ -13,11 +13,11 @@
     align-items: center;
 }
 
-.dark-mode .data-error-container,
-.dark-mode .data-error-fallback {
+[data-theme='dark'] .data-error-container,
+[data-theme='dark'] .data-error-fallback {
     background-color: rgba(187, 134, 252, 0.05);
 }
 
-.dark-mode .error-button:hover {
+[data-theme='dark'] .error-button:hover {
     background-color: #9573d1;
 }
