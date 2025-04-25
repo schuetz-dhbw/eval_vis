@@ -1,5 +1,4 @@
 import React from 'react';
-import './styles/controls.css';
 import { useTranslation } from '../../hooks/useTranslation';
 import { CHART_TYPES } from '../../constants/chartTypes';
 import { LANGUAGES } from '../../constants/languages';

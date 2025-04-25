@@ -1,5 +1,4 @@
 import React from 'react';
-import './styles/header.css';
 import { useTranslation } from '../../hooks/useTranslation';
 
 const HeaderSection = () => {

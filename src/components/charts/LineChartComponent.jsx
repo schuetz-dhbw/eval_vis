@@ -3,7 +3,6 @@ import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from 'recharts';
 import {CHART_MARGINS, AXIS_CONFIG, CHART_DIMENSIONS} from '../../constants/chartConfig';
-import './styles/charts.css';
 import { getYDomain } from '../../utils/dataTransformers';
 import useChart from "../../hooks/useChart";
 import BaseChartComponent from "./BaseChartComponent";

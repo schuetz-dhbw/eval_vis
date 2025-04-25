@@ -1,6 +1,5 @@
 import ErrorBoundary from './ErrorBoundary';
 import { useTranslation } from '../../hooks/useTranslation';
-import './styles/dataErrorBoundary.css';
 
 const DataErrorBoundary = ({ children, data }) => {
     const t = useTranslation();

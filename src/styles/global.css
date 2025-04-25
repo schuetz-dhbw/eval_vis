@@ -1,10 +1,17 @@
+/*
+ * Globale Styles
+ * Grundlegende und allgemeine Styles für die gesamte Anwendung
+ */
+
 body {
     font-family: var(--font-family), sans-serif;
     background-color: var(--color-background);
     color: var(--color-text);
     margin: 0;
     padding: 0;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Spezifische Eigenschaften für bessere Performance */
+    transition: background-color var(--transition-speed) var(--transition-timing),
+    color var(--transition-speed) var(--transition-timing);
 }
 
 .app-container {
@@ -13,6 +20,20 @@ body {
     padding: var(--padding-lg);
 }
 
+.visualization-container {
+    font-family: var(--font-family), sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--padding-lg);
+    color: var(--color-text);
+}
+
+/* Full-width Utility */
+.full-width {
+    grid-column: span 1;
+}
+
+/* Container, die den Dark Mode gut respektieren sollen */
 .chart-container,
 .details-container,
 .usage-hints,
@@ -24,163 +45,12 @@ body {
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Gemeinsame Container-Stile */
-.component-container {
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
+/* Bessere Sichtbarkeit von Fehlermeldungen */
+.no-data-message {
+    text-align: center;
     padding: var(--padding-lg);
-    background-color: var(--color-white);
-    margin-top: var(--padding-lg);
-}
-
-/* Gemeinsame Titelstile */
-.section-title {
-    font-size: var(--font-size-lg);
-    font-weight: 600;
-    margin-bottom: var(--padding-lg);
-    color: var(--color-text);
-}
-
-/* Für Unterüberschriften */
-.subtitle {
-    font-size: var(--font-size-base);
-    font-weight: 600;
-    margin-bottom: var(--padding-md);
-    color: var(--color-text);
-}
-
-/* Konsistente Tabellenstile */
-.data-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: var(--font-size-base);
-}
-
-.data-table th {
-    padding: var(--padding-md) var(--padding-lg);
-    text-align: left;
-    font-size: var(--font-size-sm);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
     color: var(--color-text-light);
-    background-color: var(--background-even-row);
-    border-bottom: 1px solid var(--color-border);
-}
-
-.data-table td {
-    padding: var(--padding-md) var(--padding-lg);
-    border-bottom: 1px solid var(--color-border);
-}
-
-.even-row {
-    background-color: var(--background-even-row);
-}
-
-.odd-row {
-    background-color: var(--background-odd-row);
-}
-
-/* Konsistente Chart-Stile */
-.chart-wrapper {
-    height: 250px;
-    width: 100%;
-}
-
-.chart-title {
-    font-size: var(--font-size-lg);
-    font-weight: 600;
-    margin-bottom: var(--padding-sm);
-    color: var(--color-text);
-}
-
-/* Gemeinsame Info-Box Stile */
-.info-box {
-    background-color: var(--background-even-row);
-    border-radius: var(--border-radius);
-    padding: var(--padding-md);
-    border: 1px solid var(--color-border);
-    display: flex;
-    flex-direction: column;
-}
-
-/* Daten-Label und Wert Stile */
-.data-label {
-    font-weight: 600;
-    margin-bottom: var(--padding-sm);
-    font-size: var(--font-size-base);
-}
-
-.data-value {
-    font-size: var(--font-size-xl);
-    font-weight: 700;
-    color: var(--color-primary);
-    margin-bottom: var(--padding-sm);
-}
-
-/* Beschreibungstexte */
-.item-description {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-light);
-    margin-bottom: var(--padding-sm);
-}
-
-/* Qualitäts-Indikator für Metriken */
-.quality-indicator {
-    font-size: var(--font-size-sm);
-    font-weight: 500;
-    padding-top: var(--padding-sm);
-    border-top: 1px dashed var(--color-border-light);
-}
-
-/* Flexibles Grid-Layout */
-.component-grid {
-    display: grid;
-    gap: var(--padding-md);
-    margin-bottom: var(--padding-lg);
-}
-
-/* Standardmäßig 3 Spalten, responsives Verhalten unten */
-.grid-3-cols {
-    grid-template-columns: repeat(3, 1fr);
-}
-
-.grid-2-cols {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-/* Flexible Layoutcontainer */
-.flex-column {
-    display: flex;
-    flex-direction: column;
-    gap: var(--padding-md);
-}
-
-.flex-row {
-    display: flex;
-    flex-direction: row;
-    gap: var(--padding-md);
-}
-
-/* Häufig genutzte Varianten */
-.flex-center {
-    align-items: center;
-    justify-content: center;
-}
-
-.flex-between {
-    justify-content: space-between;
-}
-
-.flex-wrap {
-    flex-wrap: wrap;
-}
-
-/* Zweispalten-Layout für gleichbreite Elemente */
-.split-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--padding-lg);
+    font-style: italic;
 }
 
 /* Standard-Buttons */
@@ -204,7 +74,7 @@ body {
     background-color: #9573d1;
 }
 
-/* Besser erkennbare Tooltips im Dark Mode */
+/* Dark Mode Anpassungen für Standard-Elemente von Recharts */
 [data-theme='dark'] .recharts-default-tooltip {
     background-color: rgba(40, 40, 40, 0.95) !important;
     border-color: var(--color-border) !important;
@@ -214,39 +84,4 @@ body {
 [data-theme='dark'] .recharts-tooltip-item-name,
 [data-theme='dark'] .recharts-tooltip-item-value {
     color: var(--color-text) !important;
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
-    .component-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .chart-wrapper {
-        height: 200px;
-    }
-
-    .radar-wrapper {
-        height: 300px !important;
-    }
-
-    .split-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .recharts-cartesian-axis-tick-value {
-        font-size: calc(var(--font-size-xs) - 1px);
-    }
-
-    .charts-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .full-width {
-        grid-column: span 1;
-    }
-
-    .recharts-cartesian-axis-tick-value {
-        font-size: var(--font-size-xs);
-    }
 }

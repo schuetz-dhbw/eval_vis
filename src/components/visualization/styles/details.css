@@ -1,8 +1,0 @@
-.table-container {
-    overflow-x: auto;
-}
-
-.totals-row {
-    background-color: var(--background-total-row);
-    font-weight: 600;
-}

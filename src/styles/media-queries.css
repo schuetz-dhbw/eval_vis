@@ -1,0 +1,46 @@
+/*
+ * Zentralisierte Media Queries
+ * Alle responsiven Anpassungen in einer Datei
+ */
+
+@media (max-width: 768px) {
+    /* Grid-Layouts werden einspaltiger */
+    .component-grid,
+    .grid-3-cols,
+    .grid-2-cols,
+    .split-layout {
+        grid-template-columns: 1fr;
+    }
+
+    /* Chart-Höhe anpassen */
+    .chart-wrapper {
+        height: 200px;
+    }
+
+    .radar-wrapper {
+        height: 300px !important;
+    }
+
+    /* Kleinere Schriftgrößen für die Achsenbeschriftungen */
+    .recharts-cartesian-axis-tick-value {
+        font-size: calc(var(--font-size-xs) - 1px);
+    }
+
+    /* Volle Breite für alle Spaltenelemente */
+    .full-width {
+        grid-column: span 1;
+    }
+
+    /* Kontrollelemente anpassen */
+    .work-selector {
+        max-width: 100%;
+        margin-bottom: var(--padding-sm);
+    }
+
+    /* Anpassungen für Tabellen */
+    .data-table th,
+    .data-table td {
+        padding: var(--padding-sm) var(--padding-md);
+        font-size: var(--font-size-sm);
+    }
+}

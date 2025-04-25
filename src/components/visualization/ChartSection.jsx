@@ -13,7 +13,6 @@ import {
     getRadarData
 } from "../../utils/dataTransformers";
 import DataErrorBoundary from '../common/DataErrorBoundary';
-import '../visualization/styles/common.css';
 
 /**
  * ChartSection - Container für alle Chart-Komponenten

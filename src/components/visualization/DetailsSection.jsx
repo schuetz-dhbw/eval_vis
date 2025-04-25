@@ -1,5 +1,4 @@
 import React, {useMemo} from 'react';
-import './styles/details.css';
 import { useTranslation } from '../../hooks/useTranslation';
 import {useAppContext} from "../../AppContext";
 

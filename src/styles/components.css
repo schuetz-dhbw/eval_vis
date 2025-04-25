@@ -1,0 +1,581 @@
+/*
+ * Wiederverwendbare Komponenten-Styles
+ * Konsolidierte Styles aus allen komponentenspezifischen CSS-Dateien
+ */
+
+/* ===== HEADER STYLES ===== */
+.header-section {
+    text-align: center;
+    margin-bottom: var(--padding-xl);
+}
+
+.main-title {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    margin-bottom: var(--padding-sm);
+    color: var(--color-text);
+    letter-spacing: var(--letter-spacing);
+}
+
+.sub-title {
+    font-size: var(--font-size-xl);
+    font-weight: 500;
+    margin-bottom: var(--padding-xl);
+    color: var(--color-text);
+}
+
+/* ===== CONTROLS STYLES ===== */
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--padding-sm);
+    margin-bottom: var(--padding-lg);
+}
+
+.dropdown-selector {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--border-radius);
+    padding: var(--padding-sm) var(--padding-md);
+    font-size: var(--font-size-base);
+    line-height: 20px;
+    color: var(--color-text);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    padding-right: 36px;
+    cursor: pointer;
+}
+
+.work-selector {
+    flex-grow: 1;
+    max-width: calc(100% - 36px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chart-selector, .language-selector {
+    flex-shrink: 0;
+}
+
+.dropdown-selector:focus {
+    outline: none;
+    border-color: var(--color-border-focus);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+/* ===== DARK MODE TOGGLE ===== */
+.dark-mode-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Nur die benötigte Eigenschaft animieren */
+    transition: background-color var(--transition-speed) var(--transition-timing);
+    z-index: 100;
+}
+
+.dark-mode-toggle:hover {
+    background-color: var(--background-even-row);
+}
+
+.dark-mode-toggle:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-border-focus);
+}
+
+/* ===== USAGE HINTS ===== */
+.usage-hints {
+    margin-top: var(--padding-lg);
+    font-size: var(--font-size-base);
+    color: var(--color-text-light);
+    background-color: var(--background-even-row);
+    padding: var(--padding-lg);
+    border-radius: var(--border-radius);
+}
+
+.hints-title {
+    font-weight: 600;
+    margin-bottom: var(--padding-sm);
+    font-size: var(--font-size-base);
+}
+
+.hints-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    line-height: 1.5;
+}
+
+.hints-list li {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.term {
+    font-weight: 500;
+}
+
+/* ===== ERROR HANDLING ===== */
+.error-container {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: var(--padding-lg);
+    background-color: rgba(255, 115, 0, 0.05);
+    margin: var(--padding-md) 0;
+    text-align: center;
+}
+
+.error-title {
+    color: var(--color-tertiary);
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--padding-sm);
+}
+
+.error-message {
+    color: var(--color-text);
+    margin-bottom: var(--padding-md);
+    font-size: var(--font-size-base);
+}
+
+.error-details {
+    text-align: left;
+    margin-top: var(--padding-md);
+    padding: var(--padding-md);
+    background-color: var(--background-even-row);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+}
+
+.data-error-container,
+.data-error-fallback {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: var(--padding-lg);
+    background-color: rgba(136, 132, 216, 0.05);
+    margin: var(--padding-md) 0;
+    text-align: center;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.chart-error-boundary {
+    width: 100%;
+    height: 100%;
+}
+
+/* ===== WORK TYPE ANALYSIS ===== */
+.work-type-analysis {
+    margin-top: var(--padding-sm);
+    background-color: var(--color-white);
+}
+
+.analysis-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-md);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--font-size-sm);
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.heatmap-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 2px;
+}
+
+.heatmap-cell {
+    padding: var(--padding-sm);
+    color: white;
+    text-align: center;
+    font-weight: 500;
+    font-size: var(--font-size-sm);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    cursor: default;
+}
+
+.heatmap-cell:hover {
+    transform: scale(1.05);
+    z-index: 1;
+    will-change: transform;
+}
+
+/* ===== CORRELATION ANALYSIS ===== */
+.variance-table {
+    margin-top: var(--padding-md);
+    margin-bottom: var(--padding-lg);
+}
+
+.highlight-row {
+    background-color: rgba(255, 115, 0, 0.1);
+}
+
+.grid-template-columns-5 {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, minmax(80px, auto));
+}
+
+.correlation-item {
+    background-color: var(--color-white);
+    border-radius: var(--border-radius);
+    padding: var(--padding-sm);
+    border: 1px solid var(--color-border);
+    font-size: var(--font-size-xs);
+    text-align: center;
+}
+
+.correlation-value {
+    font-weight: 600;
+    font-size: var(--font-size-base);
+}
+
+.correlation-high {
+    color: var(--color-secondary);
+}
+
+.correlation-medium {
+    color: var(--color-primary);
+}
+
+.correlation-low {
+    color: var(--color-tertiary);
+}
+
+.correlation-matrix {
+    margin-top: var(--padding-lg);
+}
+
+.matrix-title {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    margin-bottom: var(--padding-sm);
+    color: var(--color-text);
+}
+
+.correlation-cell {
+    padding: var(--padding-md);
+    min-height: 100px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-weight: 500;
+    font-size: var(--font-size-sm);
+    color: white;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.correlation-cell:hover {
+    transform: scale(1.05);
+    z-index: 1;
+    box-shadow: var(--shadow-hover);
+    /* Will-change für Performanceoptimierung bei Transform-Effekten */
+    will-change: transform;
+}
+
+.strong-correlation {
+    background-color: var(--color-secondary);
+}
+
+.medium-correlation {
+    background-color: var(--color-primary);
+}
+
+.weak-correlation {
+    background-color: var(--color-tertiary);
+}
+
+/* ===== TABLE CONTAINER ===== */
+.table-container {
+    overflow-x: auto;
+}
+
+/* Gemeinsame Container-Stile */
+.component-container {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: var(--padding-lg);
+    background-color: var(--color-white);
+    margin-top: var(--padding-lg);
+}
+
+/* Gemeinsame Titelstile */
+.section-title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin-bottom: var(--padding-lg);
+    color: var(--color-text);
+}
+
+/* Für Unterüberschriften */
+.subtitle {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    margin-bottom: var(--padding-md);
+    color: var(--color-text);
+}
+
+/* Konsistente Tabellenstile */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-base);
+}
+
+.data-table th {
+    padding: var(--padding-md) var(--padding-lg);
+    text-align: left;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-light);
+    background-color: var(--background-even-row);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.data-table td {
+    padding: var(--padding-md) var(--padding-lg);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.even-row {
+    background-color: var(--background-even-row);
+}
+
+.odd-row {
+    background-color: var(--background-odd-row);
+}
+
+.totals-row {
+    background-color: var(--background-total-row);
+    font-weight: 600;
+}
+
+/* Konsistente Chart-Stile */
+.chart-wrapper {
+    height: 250px;
+    width: 100%;
+}
+
+.chart-title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin-bottom: var(--padding-sm);
+    color: var(--color-text);
+}
+
+/* Gemeinsame Info-Box Stile */
+.info-box {
+    background-color: var(--background-even-row);
+    border-radius: var(--border-radius);
+    padding: var(--padding-md);
+    border: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Daten-Label und Wert Stile */
+.data-label {
+    font-weight: 600;
+    margin-bottom: var(--padding-sm);
+    font-size: var(--font-size-base);
+}
+
+.data-value {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: var(--padding-sm);
+}
+
+/* Beschreibungstexte */
+.item-description {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    margin-bottom: var(--padding-sm);
+}
+
+/* Qualitäts-Indikator für Metriken */
+.quality-indicator {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    padding-top: var(--padding-sm);
+    border-top: 1px dashed var(--color-border-light);
+}
+
+/* Flexibles Grid-Layout */
+.component-grid {
+    display: grid;
+    gap: var(--padding-md);
+    margin-bottom: var(--padding-lg);
+}
+
+/* Standardmäßig 3 Spalten, responsives Verhalten in media-queries.css */
+.grid-3-cols {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-2-cols {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* Flexible Layoutcontainer */
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-md);
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    gap: var(--padding-md);
+}
+
+/* Häufig genutzte Varianten */
+.flex-center {
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-between {
+    justify-content: space-between;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+/* Zweispalten-Layout für gleichbreite Elemente */
+.split-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--padding-lg);
+}
+
+/* Chart-spezifische Klassen */
+.radar-wrapper {
+    height: 350px !important;
+    padding-top: 1rem;
+}
+
+.recharts-radar {
+    filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.15));
+}
+
+[data-theme='dark'] .recharts-radar {
+    filter: drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.15));
+}
+
+.recharts-radar .recharts-polygon {
+    stroke-width: 2px;
+}
+
+/* Recharts Anpassungen */
+.recharts-cartesian-axis-tick-value {
+    font-size: var(--font-size-xs);
+}
+
+.recharts-tooltip-wrapper {
+    z-index: 1000;
+}
+
+.recharts-default-tooltip {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--border-radius) !important;
+    padding: var(--padding-sm) var(--padding-md) !important;
+    box-shadow: var(--shadow-sm) !important;
+}
+
+/* Benutzerdefinierter Tooltip */
+.custom-tooltip {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--border-radius) !important;
+    padding: var(--padding-sm) var(--padding-md) !important;
+    box-shadow: var(--shadow-sm) !important;
+}
+
+.tooltip-title {
+    font-weight: 600;
+    margin-bottom: var(--padding-sm);
+    margin-top: 0;
+    color: var(--color-text) !important;
+}
+
+.tooltip-item {
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.tooltip-label {
+    margin-right: var(--padding-md);
+    color: var(--color-text-light) !important;
+}
+
+.tooltip-value {
+    font-weight: 500;
+    color: var(--color-text-light) !important;
+}
+
+/* Dark mode support für Tooltips */
+[data-theme='dark'] .custom-tooltip {
+    background-color: rgba(40, 40, 40, 0.95) !important;
+    color: var(--color-text);
+    border-color: var(--color-border);
+}
+
+[data-theme='dark'] .tooltip-title,
+[data-theme='dark'] .tooltip-value {
+    color: var(--color-text);
+}
+
+[data-theme='dark'] .tooltip-label {
+    color: var(--color-text-light);
+}
+
+/* Die farbigen Labels können wir behalten, sie ergänzen die Info */
+.tooltip-item.ai .tooltip-label,
+.tooltip-item.ai .tooltip-value {
+    color: var(--color-primary);
+}
+
+.tooltip-item.human .tooltip-label,
+.tooltip-item.human .tooltip-value {
+    color: var(--color-secondary);
+}

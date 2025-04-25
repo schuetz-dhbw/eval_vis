@@ -1,5 +1,4 @@
 import React from 'react';
-import './styles/darkModeToggle.css';
 import {useAppContext} from "../../AppContext";
 import {useTranslation} from "../../hooks/useTranslation";
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import './styles/customTooltip.css';
 
 const CustomTooltip = ({ active, payload, formatter }) => {
     if (!active || !payload || !payload.length) {

@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/variables.css';  // Globale Variablen zuerst importieren
 import './styles/global.css';     // Globale Styles danach
+import './styles/components.css'; // Komponentenspezifische Styles
+import './styles/dark-theme.css';  // Dark Mode spezifische Styles
+import './styles/media-queries.css'; // Media Queries zum Schluss
 import { initDarkMode } from './utils/darkmode';
 import App from './App';
 import reportWebVitals from './reportWebVitals';

@@ -1,0 +1,87 @@
+/*
+ * DarkTheme-spezifische Styles
+ */
+
+[data-theme='dark'] {
+    /* Verbesserte Lesbarkeit für Chart-Komponenten */
+    .recharts-cartesian-axis-tick-value {
+        fill: var(--color-text);
+    }
+
+    .recharts-text {
+        fill: var(--color-text);
+    }
+
+    .recharts-legend-item-text {
+        color: var(--color-text) !important;
+    }
+
+    /* Besserer Kontrast für Tooltip-Inhalte */
+    .recharts-default-tooltip {
+        background-color: rgba(40, 40, 40, 0.95) !important;
+        border-color: var(--color-border) !important;
+    }
+
+    .recharts-tooltip-label,
+    .recharts-tooltip-item-name,
+    .recharts-tooltip-item-value {
+        color: var(--color-text) !important;
+    }
+
+    .custom-tooltip {
+        background-color: rgba(40, 40, 40, 0.95) !important;
+    }
+
+    .tooltip-title,
+    .tooltip-value {
+        color: var(--color-text) !important;
+    }
+
+    .tooltip-label {
+        color: var(--color-text-light) !important;
+    }
+
+    /* Angepasste visuelle Effekte */
+    .recharts-radar {
+        filter: drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.15));
+    }
+
+    /* Anpassungen für Fehler-Container */
+    .error-container {
+        background-color: var(--error-bg);
+    }
+
+    .data-error-container,
+    .data-error-fallback {
+        background-color: var(--data-error-bg);
+    }
+
+    /* Anpassungen für Pre-Elemente */
+    .error-details pre {
+        background-color: var(--color-white);
+        color: var(--color-text-light);
+    }
+
+    /* Button-Hover-Anpassungen */
+    .action-button:hover {
+        background-color: var(--button-hover-bg);
+    }
+
+    /* Verbesserte Heatmap-Lesbarkeit */
+    .heatmap-cell {
+        /* Besserer Kontrast für Text in Dark Mode */
+        text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Verbessere die Lesbarkeit von Tabellen */
+    .data-table th {
+        background-color: var(--background-even-row);
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    /* Bessere Sichtbarkeit der Steuerelemente */
+    .dropdown-selector {
+        /* Angepasstes Dropdown-Pfeil-Icon mit hellerer Farbe */
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23a0a0a0' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    }
+}

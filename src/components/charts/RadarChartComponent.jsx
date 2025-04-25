@@ -2,7 +2,6 @@ import React from 'react';
 import {
     RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend, Tooltip
 } from 'recharts';
-import './styles/charts.css';
 import {CHART_DIMENSIONS, CHART_MARGINS, RADAR_CONFIG} from '../../constants/chartConfig';
 import { getRadarDomain } from '../../utils/dataTransformers';
 import useChart from "../../hooks/useChart";

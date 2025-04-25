@@ -1,5 +1,4 @@
 import React, {useMemo} from 'react';
-import './styles/common.css';
 import { CHART_TYPES } from '../../constants/chartTypes';
 import {
     getScoresData,

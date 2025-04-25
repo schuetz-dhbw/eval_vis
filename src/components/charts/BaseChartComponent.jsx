@@ -2,7 +2,6 @@ import React from 'react';
 import { ResponsiveContainer } from 'recharts';
 import { CHART_DIMENSIONS } from '../../constants/chartConfig';
 import ChartErrorBoundary from './ChartErrorBoundary';
-import './styles/charts.css';
 
 /**
  * BaseChartComponent - Eine Basiskomponente für alle Chart-Typen
