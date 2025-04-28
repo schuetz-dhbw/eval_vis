@@ -1,11 +1,9 @@
-import React, {memo} from 'react';
-import {
-    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend
-} from 'recharts';
+import React, { memo } from 'react';
+import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import BaseChartComponent from './BaseChartComponent';
 import useChart from '../../hooks/useChart';
 import CustomTooltip from "./CustomTooltip";
-import {DATA_KEYS} from "../../constants/chartConstants";
+import { renderBars } from '../../utils/chartUtils';
 
 const BarChartComponent = memo(({ data, chartType, title }) => {
     const {
@@ -15,11 +13,14 @@ const BarChartComponent = memo(({ data, chartType, title }) => {
         axisConfig,
         tooltipConfig,
         defaultLegendProps
-    } = useChart({ data, chartType });
+    } = useChart({ chartType });
 
     return (
         <BaseChartComponent title={title}>
-            <BarChart {...commonChartConfig}>
+            <BarChart
+                data={data}
+                margin={commonChartConfig.margin}
+            >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis {...axisConfig.xAxis} />
                 <YAxis {...axisConfig.yAxis} />
@@ -30,14 +31,7 @@ const BarChartComponent = memo(({ data, chartType, title }) => {
                     />}
                 />
                 <Legend {...defaultLegendProps} />
-                <Bar
-                    dataKey={DATA_KEYS.AI}
-                    name={t('ai', 'labels')}
-                    fill={CHART_COLORS.PRIMARY} />
-                <Bar
-                    dataKey={DATA_KEYS.HUMAN}
-                    name={t('human', 'labels')}
-                    fill={CHART_COLORS.SECONDARY} />
+                {renderBars(t, CHART_COLORS)}
             </BarChart>
         </BaseChartComponent>
     );

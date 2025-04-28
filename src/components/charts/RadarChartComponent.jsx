@@ -1,34 +1,27 @@
 import React, { memo } from 'react';
-import {
-    RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend, Tooltip
-} from 'recharts';
+import { RadarChart, Radar } from 'recharts';
 import BaseChartComponent from './BaseChartComponent';
 import useChart from '../../hooks/useChart';
 import { CHART_DIMENSIONS } from '../../constants/chartConfig';
-import CustomTooltip from "./CustomTooltip";
-import {DATA_KEYS} from "../../constants/chartConstants";
+import { renderRadarBase } from '../../utils/chartUtils';
+import { DATA_KEYS } from "../../constants/chartConstants";
 
-const RadarChartComponent = memo (({ data, chartType, title }) => {
+const RadarChartComponent = memo(({ data, chartType, title }) => {
     const {
         t,
         CHART_COLORS,
         tooltipConfig,
         radarConfig
-    } = useChart({ data, chartType, isRadar: true });
+    } = useChart({ chartType, isRadar: true });
 
     return (
         <BaseChartComponent height={CHART_DIMENSIONS.RADAR_HEIGHT} title={title}>
             <RadarChart
                 data={data}
                 outerRadius={radarConfig.outerRadius}
-                margin={radarConfig.margin}>
-                <PolarGrid />
-                <PolarAngleAxis
-                    {...radarConfig.polarAngleAxis}
-                />
-                <PolarRadiusAxis
-                    {...radarConfig.polarRadiusAxis}
-                />
+                margin={radarConfig.margin}
+            >
+                {renderRadarBase(radarConfig, tooltipConfig)}
                 <Radar
                     name={t('ai', 'labels')}
                     dataKey={DATA_KEYS.AI}
@@ -53,13 +46,6 @@ const RadarChartComponent = memo (({ data, chartType, title }) => {
                         stroke: CHART_COLORS.SECONDARY
                     }}
                 />
-                <Tooltip
-                    content={<CustomTooltip
-                        formatter={tooltipConfig.formatter}
-                        labelFormatter={tooltipConfig.labelFormatter}
-                    />}
-                />
-                <Legend />
             </RadarChart>
         </BaseChartComponent>
     );

@@ -9,12 +9,11 @@ import {DATA_KEYS} from "../constants/chartConstants";
  * useChart - Ein Hook für wiederverwendbare Chart-Funktionalität
  *
  * @param {Object} options - Die Konfigurationsoptionen
- * @param {Array} options.data - Die Chart-Daten
  * @param {string} options.chartType - Der Chart-Typ (scores, weights, combined usw.)
  * @param {boolean} options.isRadar - Ob es sich um ein Radar-Chart handelt (Optional)
  * @returns {Object} - Chart-bezogene Hilfsfunktionen und Daten
  */
-const useChart = ({ data = [], chartType, isRadar = false }) => {
+const useChart = ({ chartType, isRadar = false }) => {
     const t = useTranslation();
     const CHART_COLORS = getChartColors();
 
@@ -49,10 +48,9 @@ const useChart = ({ data = [], chartType, isRadar = false }) => {
     // Gemeinsame Konfiguration für Barchart, Linechart usw.
     const commonChartConfig = useMemo(() => {
         return {
-            margin: CHART_MARGINS.DEFAULT,
-            data
+            margin: CHART_MARGINS.DEFAULT
         };
-    }, [data]);
+    }, []);
 
     // Achsen-Konfiguration
     const axisConfig = useMemo(() => {

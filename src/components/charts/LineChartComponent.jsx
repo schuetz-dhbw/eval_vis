@@ -1,13 +1,11 @@
 import React, { memo } from 'react';
-import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend
-} from 'recharts';
+import { LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import BaseChartComponent from './BaseChartComponent';
 import useChart from '../../hooks/useChart';
 import CustomTooltip from "./CustomTooltip";
-import {DATA_KEYS} from "../../constants/chartConstants";
+import { renderLines } from '../../utils/chartUtils';
 
-const LineChartComponent = memo (({ data, chartType, title }) => {
+const LineChartComponent = memo(({ data, chartType, title }) => {
     const {
         t,
         CHART_COLORS,
@@ -15,11 +13,14 @@ const LineChartComponent = memo (({ data, chartType, title }) => {
         axisConfig,
         tooltipConfig,
         defaultLegendProps
-    } = useChart({ data, chartType });
+    } = useChart({ chartType });
 
     return (
         <BaseChartComponent title={title}>
-            <LineChart {...commonChartConfig}>
+            <LineChart
+                data={data}
+                margin={commonChartConfig.margin}
+            >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis {...axisConfig.xAxis} />
                 <YAxis {...axisConfig.yAxis} />
@@ -30,20 +31,7 @@ const LineChartComponent = memo (({ data, chartType, title }) => {
                     />}
                 />
                 <Legend {...defaultLegendProps} />
-                <Line
-                    type="monotone"
-                    dataKey={DATA_KEYS.AI}
-                    name={t('ai', 'labels')}
-                    stroke={CHART_COLORS.PRIMARY}
-                    activeDot={{ r: 8 }}
-                />
-                <Line
-                    type="monotone"
-                    dataKey={DATA_KEYS.HUMAN}
-                    name={t('human', 'labels')}
-                    stroke={CHART_COLORS.SECONDARY}
-                    activeDot={{ r: 8 }}
-                />
+                {renderLines(t, CHART_COLORS)}
             </LineChart>
         </BaseChartComponent>
     );
