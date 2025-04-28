@@ -4,6 +4,9 @@
 
 import {CACHE_KEYS, CHART_TYPE_KEYS} from '../../constants/chartConstants';
 
+// Maximale Cache-Größe
+const MAX_CACHE_SIZE = 100;
+
 // Allgemeine Cache-Key-Generierung für verschiedene Funktionen
 export const generateCacheKey = (work, chartType = null, language = null) => {
     const langKey = language || '';
@@ -24,13 +27,32 @@ export const createCalculationCache = () => ({
     radarData: new Map()
 });
 
+// Hilfsfunktion zur Implementierung einer einfachen LRU-Cache-Strategie
+export const limitCacheSize = (cacheMap, maxSize = MAX_CACHE_SIZE) => {
+    if (cacheMap.size > maxSize) {
+        // Einfache LRU-Implementation: Entferne den ältesten Eintrag
+        const oldestKey = cacheMap.keys().next().value;
+        cacheMap.delete(oldestKey);
+    }
+};
+
 // Cache-Hilfsfunktionen
 export const getFromCacheOrCompute = (cacheMap, cacheKey, computeFunction) => {
+    // Wenn im Cache vorhanden, ergebnis zurückgeben und als "zuletzt verwendet" markieren
     if (cacheMap.has(cacheKey)) {
-        return cacheMap.get(cacheKey);
+        const value = cacheMap.get(cacheKey);
+        // Aktualisiere LRU-Status, indem der Eintrag entfernt und neu eingefügt wird
+        cacheMap.delete(cacheKey);
+        cacheMap.set(cacheKey, value);
+        return value;
     }
 
+    // Sonst berechnen, cachen und zurückgeben
     const result = computeFunction();
+
+    // Cache-Größe limitieren bevor neuer Wert eingefügt wird
+    limitCacheSize(cacheMap);
+
     cacheMap.set(cacheKey, result);
     return result;
 };

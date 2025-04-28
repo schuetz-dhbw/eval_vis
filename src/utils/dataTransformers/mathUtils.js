@@ -10,6 +10,17 @@ const calculationCache = {
     euclideanDistance: new Map(),
 };
 
+// Maximale Cache-Größe
+const MAX_MATH_CACHE_SIZE = 200;
+
+// Hilfsfunktion zum Verwalten der Cache-Größe
+const checkCacheSize = (cacheMap) => {
+    if (cacheMap.size > MAX_MATH_CACHE_SIZE) {
+        const oldestKey = cacheMap.keys().next().value;
+        cacheMap.delete(oldestKey);
+    }
+};
+
 // Calculate cosine similarity between two vectors
 export const calculateCosineSimilarity = (vectorA, vectorB) => {
     // Generiere einen eindeutigen Cache-Key für die Vektoren
@@ -35,6 +46,7 @@ export const calculateCosineSimilarity = (vectorA, vectorB) => {
 
     const result = product / (normA * normB);
 
+    checkCacheSize(calculationCache.cosineSimilarity);
     // Speichere das Ergebnis im Cache
     calculationCache.cosineSimilarity.set(cacheKey, result);
 
@@ -61,6 +73,8 @@ export const calculateEuclideanDistance = (vectorA, vectorB) => {
     );
 
     const result = Math.sqrt(squaredDifferences.reduce((sum, value) => sum + value, 0));
+
+    checkCacheSize(calculationCache.euclideanDistance);
 
     // Speichere das Ergebnis im Cache
     calculationCache.euclideanDistance.set(cacheKey, result);

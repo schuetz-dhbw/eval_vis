@@ -5,13 +5,16 @@
 import { calculateMean, calculateStdDev, calculateAbsDifferences } from '../dataUtils';
 import { METRICS } from '../../constants/metrics';
 import { calculateCosineSimilarity, calculateEuclideanDistance } from './mathUtils';
-import { generateCacheKey } from './cacheUtils';
+import { generateCacheKey, limitCacheSize } from './cacheUtils';
 
 // Cache für Berechnungen
 const calculationCache = {
     similarityMetrics: new Map(),
     statistics: new Map(),
 };
+
+// Maximale Cache-Größe
+const MAX_STATS_CACHE_SIZE = 50;
 
 // Calculate similarity metrics for a work
 export const calculateSimilarityMetrics = (work) => {
@@ -29,6 +32,7 @@ export const calculateSimilarityMetrics = (work) => {
         distance
     };
 
+    limitCacheSize(calculationCache.similarityMetrics, MAX_STATS_CACHE_SIZE);
     calculationCache.similarityMetrics.set(cacheKey, result);
     return result;
 };
@@ -79,6 +83,7 @@ export const calculateStatistics = (work) => {
         avgWeightDiff
     };
 
+    limitCacheSize(calculationCache.statistics, MAX_STATS_CACHE_SIZE);
     calculationCache.statistics.set(cacheKey, result);
     return result;
 };
