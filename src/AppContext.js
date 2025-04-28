@@ -1,4 +1,4 @@
-import React, {createContext, useState, useContext, useMemo, useEffect} from 'react';
+import React, {createContext, useState, useContext, useMemo, useEffect, useCallback} from 'react';
 import { CHART_TYPES } from './constants/chartTypes';
 import { DEFAULT_LANGUAGE } from './constants/languages';
 import { works } from './data/works';
@@ -30,25 +30,50 @@ export const AppProvider = ({ children }) => {
 
     const currentWork = translatedWorks[selectedWorkIndex];
 
-    const toggleDarkMode = () => {
-        const newDarkMode = toggleDarkModeUtil(); // Nutzt die Hilfsfunktion
+    // Callbacks mit useCallback memoizieren
+    const toggleDarkMode = useCallback(() => {
+        const newDarkMode = toggleDarkModeUtil();
         setIsDarkMode(newDarkMode);
-    };
+    }, []);
 
-    const contextValue = {
-        selectedWorkIndex, setSelectedWorkIndex,
-        chartType, setChartType,
+    const setLanguageCallback = useCallback((newLang) => {
+        setLanguage(newLang);
+    }, []);
+
+    const setChartTypeCallback = useCallback((newType) => {
+        setChartType(newType);
+    }, []);
+
+    const setSelectedWorkIndexCallback = useCallback((newIndex) => {
+        setSelectedWorkIndex(newIndex);
+    }, []);
+
+    const contextValue = useMemo(() => ({
+        selectedWorkIndex,
+        setSelectedWorkIndex: setSelectedWorkIndexCallback,
+        chartType,
+        setChartType: setChartTypeCallback,
         language,
-        setLanguage: (newLang) => {
-            setLanguage(newLang);
-        },
-        translatedWorks, currentWork,
+        setLanguage: setLanguageCallback,
+        translatedWorks,
+        currentWork,
         works: translatedWorks,
         rawWorks: works,
         translations,
         isDarkMode,
         toggleDarkMode
-    };
+    }), [
+        selectedWorkIndex,
+        chartType,
+        language,
+        translatedWorks,
+        currentWork,
+        isDarkMode,
+        setSelectedWorkIndexCallback,
+        setChartTypeCallback,
+        setLanguageCallback,
+        toggleDarkMode
+    ]);
 
     return (
         <AppContext.Provider value={contextValue}>
