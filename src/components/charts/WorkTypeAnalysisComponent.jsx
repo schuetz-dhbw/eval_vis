@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Cell
 } from 'recharts';
@@ -8,7 +8,7 @@ import CustomTooltip from './CustomTooltip';
 import BaseChartComponent from './BaseChartComponent';
 import './styles/workTypeAnalysis.css';
 
-const WorkTypeAnalysisComponent = ({ works }) => {
+const WorkTypeAnalysisComponent = memo (({ works }) => {
 
     const t = useTranslation();
     const CHART_COLORS = getChartColors();
@@ -278,6 +278,6 @@ const WorkTypeAnalysisComponent = ({ works }) => {
             </div>
         </div>
     );
-};
+});
 
 export default WorkTypeAnalysisComponent;

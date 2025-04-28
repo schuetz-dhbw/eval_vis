@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { useTranslation } from '../../hooks/useTranslation';
 import { calculateSimilarityMetrics } from '../../utils/dataTransformers';
 import { SIMILARITY_THRESHOLDS, DISTANCE_THRESHOLDS, GRADE_DIFFERENCE_THRESHOLDS } from '../../constants/thresholds';
 import { useAppContext } from '../../AppContext';
 
-const MetricsSection = () => {
+const MetricsSection = memo(() => {
     const { currentWork } = useAppContext();
     const t = useTranslation();
 
@@ -62,6 +62,6 @@ const MetricsSection = () => {
             </div>
         </div>
     );
-};
+});
 
 export default MetricsSection;

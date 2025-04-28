@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
     RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend, Tooltip
 } from 'recharts';
@@ -8,7 +8,7 @@ import { CHART_DIMENSIONS } from '../../constants/chartConfig';
 import CustomTooltip from "./CustomTooltip";
 import {DATA_KEYS} from "../../constants/chartConstants";
 
-const RadarChartComponent = ({ data, chartType, title }) => {
+const RadarChartComponent = memo (({ data, chartType, title }) => {
     const {
         t,
         CHART_COLORS,
@@ -63,6 +63,6 @@ const RadarChartComponent = ({ data, chartType, title }) => {
             </RadarChart>
         </BaseChartComponent>
     );
-};
+});
 
 export default RadarChartComponent;

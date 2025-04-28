@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
     ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from 'recharts';
@@ -7,7 +7,7 @@ import useChart from '../../hooks/useChart';
 import CustomTooltip from "./CustomTooltip";
 import {DATA_KEYS} from "../../constants/chartConstants";
 
-const ComposedChartComponent = ({ data, chartType, title }) => {
+const ComposedChartComponent = memo(({ data, chartType, title }) => {
     const {
         t,
         CHART_COLORS,
@@ -37,6 +37,6 @@ const ComposedChartComponent = ({ data, chartType, title }) => {
                 <Line yAxisId="right" type="monotone" dataKey={DATA_KEYS.HUMAN_WEIGHT} name={t('humanWeight', 'labels')} stroke={CHART_COLORS.QUATERNARY} />            </ComposedChart>
         </BaseChartComponent>
     );
-};
+});
 
 export default ComposedChartComponent;

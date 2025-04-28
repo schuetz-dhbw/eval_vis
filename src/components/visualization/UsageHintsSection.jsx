@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useTranslation } from '../../hooks/useTranslation';
 import { CHART_TYPES } from '../../constants/chartTypes';
 import { useAppContext } from '../../AppContext';
 
-const UsageHintsSection = () => {
+const UsageHintsSection = memo(() => {
     const { chartType } = useAppContext();
     const t = useTranslation();
 
@@ -21,6 +21,6 @@ const UsageHintsSection = () => {
             </ul>
         </div>
     );
-};
+});
 
 export default UsageHintsSection;

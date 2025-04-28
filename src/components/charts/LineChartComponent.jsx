@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from 'recharts';
@@ -7,7 +7,7 @@ import useChart from '../../hooks/useChart';
 import CustomTooltip from "./CustomTooltip";
 import {DATA_KEYS} from "../../constants/chartConstants";
 
-const LineChartComponent = ({ data, chartType, title }) => {
+const LineChartComponent = memo (({ data, chartType, title }) => {
     const {
         t,
         CHART_COLORS,
@@ -47,6 +47,6 @@ const LineChartComponent = ({ data, chartType, title }) => {
             </LineChart>
         </BaseChartComponent>
     );
-};
+});
 
 export default LineChartComponent;

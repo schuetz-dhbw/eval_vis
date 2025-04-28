@@ -1,9 +1,9 @@
-import React, {useMemo} from 'react';
+import React, {memo, useMemo} from 'react';
 import { useTranslation } from '../../hooks/useTranslation';
 import {useAppContext} from "../../AppContext";
 
 
-const DetailsSection = () => {
+const DetailsSection = memo(() => {
     const { currentWork } = useAppContext();
     const t = useTranslation();
 
@@ -70,6 +70,6 @@ const DetailsSection = () => {
             </div>
         </div>
     );
-};
+});
 
 export default DetailsSection;

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { CHART_TYPES } from '../../constants/chartTypes';
 import { useTranslation } from '../../hooks/useTranslation';
 import { useAppContext } from '../../AppContext';
@@ -8,6 +8,7 @@ import RadarChartComponent from '../charts/RadarChartComponent';
 import BarChartComponent from '../charts/BarChartComponent';
 import {
     getWeightedData,
+    getWeightsData,
     getScoresData,
     getCombinedData,
     getRadarData
@@ -19,7 +20,7 @@ import DataErrorBoundary from '../common/DataErrorBoundary';
  *
  * @returns {JSX.Element} Container mit allen Charts
  */
-const ChartSection = () => {
+const ChartSection = memo(() => {
     const { chartType, currentWork, language } = useAppContext();
     const t = useTranslation();
 
@@ -28,6 +29,7 @@ const ChartSection = () => {
         if (!currentWork) return { scoresData: [], combinedData: [], radarData: [] };
 
         const scoresData = getScoresData(currentWork, language);
+        const weightsData = getWeightsData(currentWork, language);
         const combinedData = getCombinedData(currentWork, language);
         const weightedData = getWeightedData(currentWork, language);
 
@@ -39,6 +41,7 @@ const ChartSection = () => {
 
         return {
             scoresData,
+            weightsData,
             combinedData,
             weightedData,
             radarData
@@ -68,7 +71,11 @@ const ChartSection = () => {
                             />
                         ) : (
                             <LineChartComponent
-                                data={chartData.scoresData}
+                                data={
+                                    chartType === CHART_TYPES.WEIGHTS ? chartData.weightsData :
+                                        chartType === CHART_TYPES.WEIGHTED ? chartData.weightedData :
+                                            chartData.scoresData
+                                }
                                 chartType={chartType}
                             />
                         )}
@@ -88,7 +95,12 @@ const ChartSection = () => {
                         data={chartType === CHART_TYPES.COMBINED ? chartData.weightedData : chartData.scoresData}
                     >
                         <BarChartComponent
-                            data={chartType === CHART_TYPES.COMBINED ? chartData.weightedData : chartData.scoresData}
+                            data={
+                                chartType === CHART_TYPES.COMBINED ? chartData.weightedData :
+                                    chartType === CHART_TYPES.WEIGHTS ? chartData.weightsData :
+                                        chartType === CHART_TYPES.WEIGHTED ? chartData.weightedData :
+                                            chartData.scoresData
+                            }
                             chartType={chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType}
                         />
                     </DataErrorBoundary>
@@ -113,6 +125,6 @@ const ChartSection = () => {
             </div>
         </div>
     );
-};
+});
 
 export default ChartSection;

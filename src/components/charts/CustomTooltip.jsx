@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {DATA_KEYS} from "../../constants/chartConstants";
 
 /**
@@ -10,7 +10,7 @@ import {DATA_KEYS} from "../../constants/chartConstants";
  * @param {Function} props.formatter - Optionale Formattierungsfunktion für Tooltip-Inhalte
  * @returns {JSX.Element|null} - Tooltip-Komponente oder null wenn inaktiv
  */
-const CustomTooltip = ({
+const CustomTooltip = memo (({
                            active,
                            payload,
                            formatter,
@@ -75,6 +75,6 @@ const CustomTooltip = ({
             </div>
         </div>
     );
-};
+});
 
 export default CustomTooltip;

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 import {
     ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ZAxis, Cell, Legend
 } from 'recharts';
@@ -39,7 +39,7 @@ const calculateVariance = (data) => {
     return data.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / data.length;
 };
 
-const CorrelationAnalysisComponent = ({ work }) => {
+const CorrelationAnalysisComponent = memo (({ work }) => {
     const t = useTranslation();
     const CHART_COLORS = getChartColors();
 
@@ -222,6 +222,6 @@ const CorrelationAnalysisComponent = ({ work }) => {
 
         </div>
     );
-};
+});
 
 export default CorrelationAnalysisComponent;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from 'recharts';
@@ -7,7 +7,7 @@ import useChart from '../../hooks/useChart';
 import CustomTooltip from "./CustomTooltip";
 import {DATA_KEYS} from "../../constants/chartConstants";
 
-const BarChartComponent = ({ data, chartType, title }) => {
+const BarChartComponent = memo(({ data, chartType, title }) => {
     const {
         t,
         CHART_COLORS,
@@ -41,6 +41,6 @@ const BarChartComponent = ({ data, chartType, title }) => {
             </BarChart>
         </BaseChartComponent>
     );
-};
+});
 
 export default BarChartComponent;
