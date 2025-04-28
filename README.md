@@ -94,7 +94,11 @@ src/
 │   ├── global.css
 │   └── variables.css
 ├── utils/                      # Hilfsfunktionen
-│   ├── dataTransformers.js
+│   └── dataTransformers/       # Hilfsunktionen zur Datentransformation
+│       ├── cacheUtils.js
+│       ├── chartDataUtils.js
+│       ├── mathUtils.js
+│       ├── ...
 │   ├── darkmode.js
 │   └── translationHelpers.js
 ├── App.js                     # Hauptkomponente
@@ -113,7 +117,7 @@ src/
     - Dark Mode
 
 ### Datenverarbeitung
-- Umfangreiche Datenverarbeitungsfunktionen in `utils/dataTransformers.js`
+- Umfangreiche Datenverarbeitungsfunktionen in `utils/dataTransformers/`
 - Berechnung von:
     - Kosinus-Ähnlichkeit
     - Euklidischer Distanz

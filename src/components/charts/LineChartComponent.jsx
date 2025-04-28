@@ -5,6 +5,7 @@ import {
 import BaseChartComponent from './BaseChartComponent';
 import useChart from '../../hooks/useChart';
 import CustomTooltip from "./CustomTooltip";
+import {DATA_KEYS} from "../../constants/chartConstants";
 
 const LineChartComponent = ({ data, chartType, title }) => {
     const {
@@ -31,14 +32,14 @@ const LineChartComponent = ({ data, chartType, title }) => {
                 <Legend {...defaultLegendProps} />
                 <Line
                     type="monotone"
-                    dataKey="ai"
+                    dataKey={DATA_KEYS.AI}
                     name={t('ai', 'labels')}
                     stroke={CHART_COLORS.PRIMARY}
                     activeDot={{ r: 8 }}
                 />
                 <Line
                     type="monotone"
-                    dataKey="human"
+                    dataKey={DATA_KEYS.HUMAN}
                     name={t('human', 'labels')}
                     stroke={CHART_COLORS.SECONDARY}
                     activeDot={{ r: 8 }}

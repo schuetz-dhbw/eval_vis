@@ -7,6 +7,7 @@ import { useTranslation } from '../../hooks/useTranslation';
 import CustomTooltip from './CustomTooltip';
 import './styles/correlation.css';
 import BaseChartComponent from './BaseChartComponent';
+import {DATA_KEYS} from "../../constants/chartConstants";
 
 const calculateCorrelation = (x, y) => {
     const n = x.length;
@@ -85,8 +86,8 @@ const CorrelationAnalysisComponent = ({ work }) => {
             return {
                 title: data.name,
                 items: [
-                    { name: t('ai', 'labels'), value: data.aiScore + "%", className: "ai" },
-                    { name: t('human', 'labels'), value: data.humanScore + "%", className: "human" },
+                    { name: t('ai', 'labels'), value: data[DATA_KEYS.AI_SCORE] + "%", className: "ai" },
+                    { name: t('human', 'labels'), value: data[DATA_KEYS.HUMAN_SCORE] + "%", className: "human" },
                     { name: t('difference', 'labels'), value: data.scoreDiff + "%", className: "" },
                     { name: t('variance', 'labels'), value: data.variance.toFixed(2), className: "" }
                 ]
@@ -105,7 +106,7 @@ const CorrelationAnalysisComponent = ({ work }) => {
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis
                             type="number"
-                            dataKey="aiScore"
+                            dataKey={DATA_KEYS.AI_SCORE}
                             name={t('ai', 'labels')}
                             domain={[0, 100]}
                             label={{
@@ -116,7 +117,7 @@ const CorrelationAnalysisComponent = ({ work }) => {
                         />
                         <YAxis
                             type="number"
-                            dataKey="humanScore"
+                            dataKey={DATA_KEYS.HUMAN_SCORE}
                             name={t('human', 'labels')}
                             domain={[0, 100]}
                             label={{

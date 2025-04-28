@@ -1,6 +1,6 @@
 /**
  * Grundlegende Hilfsfunktionen für Datenoperationen
- * Diese Funktionen werden von dataTransformers.js verwendet
+ * Diese Funktionen werden von dataTransformers/... verwendet
  */
 
 /**

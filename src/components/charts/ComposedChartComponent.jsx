@@ -5,6 +5,7 @@ import {
 import BaseChartComponent from './BaseChartComponent';
 import useChart from '../../hooks/useChart';
 import CustomTooltip from "./CustomTooltip";
+import {DATA_KEYS} from "../../constants/chartConstants";
 
 const ComposedChartComponent = ({ data, chartType, title }) => {
     const {
@@ -30,10 +31,10 @@ const ComposedChartComponent = ({ data, chartType, title }) => {
                     />}
                 />
                 <Legend {...defaultLegendProps} />
-                <Bar yAxisId="left" dataKey="aiScore" name={t('aiScore', 'labels')} fill={CHART_COLORS.PRIMARY} />
-                <Bar yAxisId="left" dataKey="humanScore" name={t('humanScore', 'labels')} fill={CHART_COLORS.SECONDARY} />
-                <Line yAxisId="right" type="monotone" dataKey="aiWeight" name={t('aiWeight', 'labels')} stroke={CHART_COLORS.TERTIARY} />
-                <Line yAxisId="right" type="monotone" dataKey="humanWeight" name={t('humanWeight', 'labels')} stroke={CHART_COLORS.QUATERNARY} />            </ComposedChart>
+                <Bar yAxisId="left" dataKey={DATA_KEYS.AI_SCORE} name={t('aiScore', 'labels')} fill={CHART_COLORS.PRIMARY} />
+                <Bar yAxisId="left" dataKey={DATA_KEYS.HUMAN_SCORE} name={t('humanScore', 'labels')} fill={CHART_COLORS.SECONDARY} />
+                <Line yAxisId="right" type="monotone" dataKey={DATA_KEYS.AI_WEIGHT} name={t('aiWeight', 'labels')} stroke={CHART_COLORS.TERTIARY} />
+                <Line yAxisId="right" type="monotone" dataKey={DATA_KEYS.HUMAN_WEIGHT} name={t('humanWeight', 'labels')} stroke={CHART_COLORS.QUATERNARY} />            </ComposedChart>
         </BaseChartComponent>
     );
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import {DATA_KEYS} from "../../constants/chartConstants";
 
 /**
  * Wiederverwendbarer CustomTooltip für alle Chart-Typen
@@ -58,9 +59,9 @@ const CustomTooltip = ({
                     let className = entry.dataKey;
 
                     // Spezialregeln für Combined-Ansicht
-                    if (entry.dataKey === 'aiScore' || entry.dataKey === 'aiWeight' || entry.dataKey === 'aiWeighted') {
+                    if (entry.dataKey === DATA_KEYS.AI_SCORE || entry.dataKey === DATA_KEYS.AI_WEIGHT || entry.dataKey === DATA_KEYS.AI_WEIGHTED) {
                         className = 'ai';
-                    } else if (entry.dataKey === 'humanScore' || entry.dataKey === 'humanWeight' || entry.dataKey === 'humanWeighted') {
+                    } else if (entry.dataKey === DATA_KEYS.HUMAN_SCORE || entry.dataKey === DATA_KEYS.HUMAN_WEIGHT || entry.dataKey === DATA_KEYS.HUMAN_WEIGHTED) {
                         className = 'human';
                     }
 

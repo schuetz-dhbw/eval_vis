@@ -6,6 +6,7 @@ import BaseChartComponent from './BaseChartComponent';
 import useChart from '../../hooks/useChart';
 import { CHART_DIMENSIONS } from '../../constants/chartConfig';
 import CustomTooltip from "./CustomTooltip";
+import {DATA_KEYS} from "../../constants/chartConstants";
 
 const RadarChartComponent = ({ data, chartType, title }) => {
     const {
@@ -30,7 +31,7 @@ const RadarChartComponent = ({ data, chartType, title }) => {
                 />
                 <Radar
                     name={t('ai', 'labels')}
-                    dataKey="ai"
+                    dataKey={DATA_KEYS.AI}
                     stroke={CHART_COLORS.PRIMARY}
                     strokeWidth={radarConfig.radar.strokeWidth}
                     fill={CHART_COLORS.PRIMARY}
@@ -42,7 +43,7 @@ const RadarChartComponent = ({ data, chartType, title }) => {
                 />
                 <Radar
                     name={t('human', 'labels')}
-                    dataKey="human"
+                    dataKey={DATA_KEYS.HUMAN}
                     stroke={CHART_COLORS.SECONDARY}
                     strokeWidth={radarConfig.radar.strokeWidth}
                     fill={CHART_COLORS.SECONDARY}

@@ -5,6 +5,7 @@ import {
 import BaseChartComponent from './BaseChartComponent';
 import useChart from '../../hooks/useChart';
 import CustomTooltip from "./CustomTooltip";
+import {DATA_KEYS} from "../../constants/chartConstants";
 
 const BarChartComponent = ({ data, chartType, title }) => {
     const {
@@ -30,11 +31,11 @@ const BarChartComponent = ({ data, chartType, title }) => {
                 />
                 <Legend {...defaultLegendProps} />
                 <Bar
-                    dataKey="ai"
+                    dataKey={DATA_KEYS.AI}
                     name={t('ai', 'labels')}
                     fill={CHART_COLORS.PRIMARY} />
                 <Bar
-                    dataKey="human"
+                    dataKey={DATA_KEYS.HUMAN}
                     name={t('human', 'labels')}
                     fill={CHART_COLORS.SECONDARY} />
             </BarChart>

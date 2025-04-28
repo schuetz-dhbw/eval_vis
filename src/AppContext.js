@@ -1,10 +1,11 @@
-import React, {createContext, useState, useContext, useMemo } from 'react';
+import React, {createContext, useState, useContext, useMemo, useEffect} from 'react';
 import { CHART_TYPES } from './constants/chartTypes';
 import { DEFAULT_LANGUAGE } from './constants/languages';
 import { works } from './data/works';
 import { translations } from './locales';
 import { getTranslatedWorks } from './utils/dataTransformers';
 import { toggleDarkMode as toggleDarkModeUtil } from './utils/darkmode';
+import { setCurrentLanguage } from './services/languageService';
 
 // Context erstellen
 const AppContext = createContext();
@@ -13,11 +14,15 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
     const [selectedWorkIndex, setSelectedWorkIndex] = useState(0);
     const [chartType, setChartType] = useState(CHART_TYPES.SCORES);
-    const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
     const [isDarkMode, setIsDarkMode] = useState(() => {
         // Initialisierung mit dem Wert aus initDarkMode
         return document.documentElement.getAttribute('data-theme') === 'dark';
     });
+    const [language, setLanguage] = useState(DEFAULT_LANGUAGE);
+
+    useEffect(() => {
+        setCurrentLanguage(language);
+    }, [language]);
 
     const translatedWorks = useMemo(() => {
         return getTranslatedWorks(works, translations, language);
@@ -33,7 +38,10 @@ export const AppProvider = ({ children }) => {
     const contextValue = {
         selectedWorkIndex, setSelectedWorkIndex,
         chartType, setChartType,
-        language, setLanguage,
+        language,
+        setLanguage: (newLang) => {
+            setLanguage(newLang);
+        },
         translatedWorks, currentWork,
         works: translatedWorks,
         rawWorks: works,

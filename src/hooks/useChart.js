@@ -3,6 +3,7 @@ import { useTranslation } from './useTranslation';
 import { getYDomain, getRadarDomain } from '../utils/dataTransformers';
 import { getChartColors, CHART_MARGINS, AXIS_CONFIG, RADAR_CONFIG } from '../constants/chartConfig';
 import { METRICS } from '../constants/metrics';
+import {DATA_KEYS} from "../constants/chartConstants";
 
 /**
  * useChart - Ein Hook für wiederverwendbare Chart-Funktionalität
@@ -32,7 +33,8 @@ const useChart = ({ data = [], chartType, isRadar = false }) => {
         return {
             formatter: formatValue,
             labelFormatter: (data) => {
-                return data.shortName || data.name || '';
+                return data[DATA_KEYS.SHORT_NAME] || data[DATA_KEYS.NAME] ||
+                    data[DATA_KEYS.SHORT_SUBJECT] || data[DATA_KEYS.SUBJECT] || '';
             }
         };
     }, [formatValue]);
@@ -56,7 +58,7 @@ const useChart = ({ data = [], chartType, isRadar = false }) => {
     const axisConfig = useMemo(() => {
         return {
             xAxis: {
-                dataKey: "shortName",
+                dataKey: DATA_KEYS.SHORT_NAME,
                 ...AXIS_CONFIG.DEFAULT_X
             },
             yAxis: {
@@ -72,7 +74,7 @@ const useChart = ({ data = [], chartType, isRadar = false }) => {
             outerRadius: RADAR_CONFIG.OUTER_RADIUS,
             margin: CHART_MARGINS.NO_MARGIN,
             polarAngleAxis: {
-                dataKey: "shortSubject",
+                dataKey: DATA_KEYS.SHORT_SUBJECT,
                 tick: { fontSize: 10 }
             },
             polarRadiusAxis: {
