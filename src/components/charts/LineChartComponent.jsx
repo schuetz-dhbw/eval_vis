@@ -2,44 +2,44 @@ import React from 'react';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from 'recharts';
-import {CHART_MARGINS, AXIS_CONFIG, CHART_DIMENSIONS} from '../../constants/chartConfig';
-import { getYDomain } from '../../utils/dataTransformers';
-import useChart from "../../hooks/useChart";
-import BaseChartComponent from "./BaseChartComponent";
+import BaseChartComponent from './BaseChartComponent';
+import useChart from '../../hooks/useChart';
+import CustomTooltip from "./CustomTooltip";
 
-
-const LineChartComponent = ({ data, chartType }) => {
+const LineChartComponent = ({ data, chartType, title }) => {
     const {
+        t,
         CHART_COLORS,
+        commonChartConfig,
+        axisConfig,
+        tooltipConfig,
         defaultLegendProps
     } = useChart({ data, chartType });
 
-
     return (
-        <BaseChartComponent height={CHART_DIMENSIONS.DEFAULT_HEIGHT} width={CHART_DIMENSIONS.FULL_WIDTH}>
-            <LineChart
-                data={data}
-                margin={CHART_MARGINS.DEFAULT}
-            >
+        <BaseChartComponent title={title}>
+            <LineChart {...commonChartConfig}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis
-                    dataKey="shortName"
-                    {...AXIS_CONFIG.DEFAULT_X}
+                <XAxis {...axisConfig.xAxis} />
+                <YAxis {...axisConfig.yAxis} />
+                <Tooltip
+                    content={<CustomTooltip
+                        formatter={tooltipConfig.formatter}
+                        labelFormatter={tooltipConfig.labelFormatter}
+                    />}
                 />
-                <YAxis
-                    domain={getYDomain(chartType)}
-                />
-                <Tooltip />
                 <Legend {...defaultLegendProps} />
                 <Line
                     type="monotone"
-                    dataKey={Object.keys(data[0])[2]} // AI
+                    dataKey="ai"
+                    name={t('ai', 'labels')}
                     stroke={CHART_COLORS.PRIMARY}
                     activeDot={{ r: 8 }}
                 />
                 <Line
                     type="monotone"
-                    dataKey={Object.keys(data[0])[3]} // Human
+                    dataKey="human"
+                    name={t('human', 'labels')}
                     stroke={CHART_COLORS.SECONDARY}
                     activeDot={{ r: 8 }}
                 />

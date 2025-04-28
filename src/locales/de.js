@@ -76,7 +76,7 @@ export const de = {
         criterion: "Kriterium",
         aiGrade: "KI-Bewertung",
         aiWeight: "KI-Gewichtung",
-        humanGrade: "-Bewertung",
+        humanGrade: "Human-Bewertung",
         humanWeight: "Human-Gewichtung",
         aiWeighted: "KI (gewichtet)",
         humanWeighted: "Human (gewichtet)",

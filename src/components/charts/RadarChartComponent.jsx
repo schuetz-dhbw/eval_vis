@@ -2,65 +2,62 @@ import React from 'react';
 import {
     RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend, Tooltip
 } from 'recharts';
-import {CHART_DIMENSIONS, CHART_MARGINS, RADAR_CONFIG} from '../../constants/chartConfig';
-import { getRadarDomain } from '../../utils/dataTransformers';
-import useChart from "../../hooks/useChart";
-import BaseChartComponent from "./BaseChartComponent";
+import BaseChartComponent from './BaseChartComponent';
+import useChart from '../../hooks/useChart';
+import { CHART_DIMENSIONS } from '../../constants/chartConfig';
+import CustomTooltip from "./CustomTooltip";
 
-
-const RadarChartComponent = ({ data, chartType }) => {
+const RadarChartComponent = ({ data, chartType, title }) => {
     const {
         t,
         CHART_COLORS,
-        tooltipConfig
-    } = useChart({ data, chartType });
+        tooltipConfig,
+        radarConfig
+    } = useChart({ data, chartType, isRadar: true });
 
     return (
-        <BaseChartComponent height={CHART_DIMENSIONS.RADAR_HEIGHT} width={CHART_DIMENSIONS.FULL_WIDTH} >
+        <BaseChartComponent height={CHART_DIMENSIONS.RADAR_HEIGHT} title={title}>
             <RadarChart
-                outerRadius={RADAR_CONFIG.OUTER_RADIUS}
-                margin={CHART_MARGINS.NO_MARGIN}
-                data={data}>
+                data={data}
+                outerRadius={radarConfig.outerRadius}
+                margin={radarConfig.margin}>
                 <PolarGrid />
                 <PolarAngleAxis
-                    dataKey="shortSubject"
-                    tick={{ fontSize: 10 }}
+                    {...radarConfig.polarAngleAxis}
                 />
                 <PolarRadiusAxis
-                    angle={90}
-                    domain={getRadarDomain(chartType)}
+                    {...radarConfig.polarRadiusAxis}
                 />
                 <Radar
                     name={t('ai', 'labels')}
-                    dataKey={t('ai', 'labels')}
+                    dataKey="ai"
                     stroke={CHART_COLORS.PRIMARY}
-                    strokeWidth={RADAR_CONFIG.STROKE_WIDTH}
+                    strokeWidth={radarConfig.radar.strokeWidth}
                     fill={CHART_COLORS.PRIMARY}
-                    fillOpacity={RADAR_CONFIG.FILL_OPACITY}
+                    fillOpacity={radarConfig.radar.fillOpacity}
                     dot={{
-                        r: RADAR_CONFIG.DOT_RADIUS,
-                        strokeWidth: RADAR_CONFIG.DOT_STROKE_WIDTH,
-                        stroke: CHART_COLORS.PRIMARY,
-                        fill: "white",
-                        strokeDasharray: "",
+                        ...radarConfig.radar.dot,
+                        stroke: CHART_COLORS.PRIMARY
                     }}
                 />
                 <Radar
                     name={t('human', 'labels')}
-                    dataKey={t('human', 'labels')}
+                    dataKey="human"
                     stroke={CHART_COLORS.SECONDARY}
-                    strokeWidth={RADAR_CONFIG.STROKE_WIDTH}
+                    strokeWidth={radarConfig.radar.strokeWidth}
                     fill={CHART_COLORS.SECONDARY}
-                    fillOpacity={RADAR_CONFIG.FILL_OPACITY}
+                    fillOpacity={radarConfig.radar.fillOpacity}
                     dot={{
-                        r: RADAR_CONFIG.DOT_RADIUS,
-                        strokeWidth: RADAR_CONFIG.DOT_STROKE_WIDTH,
-                        stroke: CHART_COLORS.SECONDARY,
-                        fill: "white",
-                        strokeDasharray: "",
+                        ...radarConfig.radar.dot,
+                        stroke: CHART_COLORS.SECONDARY
                     }}
                 />
-                <Tooltip formatter={tooltipConfig.formatter} />
+                <Tooltip
+                    content={<CustomTooltip
+                        formatter={tooltipConfig.formatter}
+                        labelFormatter={tooltipConfig.labelFormatter}
+                    />}
+                />
                 <Legend />
             </RadarChart>
         </BaseChartComponent>

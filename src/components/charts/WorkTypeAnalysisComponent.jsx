@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react';
 import {
-    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell
+    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Cell
 } from 'recharts';
 import { CHART_MARGINS, AXIS_CONFIG, getChartColors } from '../../constants/chartConfig';
 import { useTranslation } from '../../hooks/useTranslation';
 import CustomTooltip from './CustomTooltip';
+import BaseChartComponent from './BaseChartComponent';
 import './styles/workTypeAnalysis.css';
 
 const WorkTypeAnalysisComponent = ({ works }) => {
@@ -131,19 +132,21 @@ const WorkTypeAnalysisComponent = ({ works }) => {
 
     const tooltipFormatter = useMemo(() => {
         return (data) => {
-            return (
-                <>
-                    <p className="tooltip-title">{data.type}</p>
-                    <p className="tooltip-item">
-                        <span className="tooltip-label">{t('avgDifference', 'metrics')}:</span>
-                        <span className="tooltip-value">{data.averageDifference.toFixed(2)}%</span>
-                    </p>
-                    <p className="tooltip-item">
-                        <span className="tooltip-label">{t('count', 'tableHeaders')}:</span>
-                        <span className="tooltip-value">{data.count}</span>
-                    </p>
-                </>
-            );
+            return {
+                title: data.type,
+                items: [
+                    {
+                        name: t('avgDifference', 'metrics'),
+                        value: data.averageDifference.toFixed(2) + "%",
+                        className: ""
+                    },
+                    {
+                        name: t('count', 'tableHeaders'),
+                        value: data.count,
+                        className: ""
+                    }
+                ]
+            };
         };
     }, [t]);
 
@@ -162,7 +165,7 @@ const WorkTypeAnalysisComponent = ({ works }) => {
                 <div className="component-container">
                     <h4 className="section-title">{t('differenceByTypeTitle', 'chartTitles') || "Average Difference by Work Type"}</h4>
                     <div className="chart-wrapper">
-                        <ResponsiveContainer width="100%" height={300}>
+                        <BaseChartComponent height={300}>
                             <BarChart
                                 data={overallDifferenceByType}
                                 margin={CHART_MARGINS.WORK_TYPE_BAR}
@@ -188,7 +191,7 @@ const WorkTypeAnalysisComponent = ({ works }) => {
                                     ))}
                                 </Bar>
                             </BarChart>
-                        </ResponsiveContainer>
+                        </BaseChartComponent>
                     </div>
                 </div>
 

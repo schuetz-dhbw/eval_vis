@@ -9,19 +9,21 @@ import ChartErrorBoundary from './ChartErrorBoundary';
  * @param {ReactNode} children - Der eigentliche Chart-Inhalt
  * @param {number} height - Höhe des Charts
  * @param {string} width - Breite des Charts
- * @param {Object} className - Optionale CSS-Klasse für den Container
+ * @param {string} className - Optionale CSS-Klasse für den Container
+ * @param {string} title - Optionaler Titel für den Chart
  * @returns {JSX.Element} ResponsiveContainer mit Error Handling
  */
 const BaseChartComponent = ({
                                 children,
                                 height = CHART_DIMENSIONS.DEFAULT_HEIGHT,
                                 width = CHART_DIMENSIONS.FULL_WIDTH,
-                                className = ''
+                                className = '',
+                                title = null
                             }) => {
-    // language Parameter entfernt
 
     return (
         <ChartErrorBoundary>
+            {title && <h4 className="chart-title">{title}</h4>}
             <div className={`chart-wrapper ${className}`}>
                 <ResponsiveContainer width={width} height={height}>
                     {children}

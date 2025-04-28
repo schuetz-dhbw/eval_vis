@@ -2,42 +2,40 @@ import React from 'react';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from 'recharts';
-import {CHART_MARGINS, AXIS_CONFIG, CHART_DIMENSIONS} from '../../constants/chartConfig';
 import BaseChartComponent from './BaseChartComponent';
 import useChart from '../../hooks/useChart';
+import CustomTooltip from "./CustomTooltip";
 
-const BarChartComponent = ({ data, chartType }) => {
+const BarChartComponent = ({ data, chartType, title }) => {
     const {
         t,
         CHART_COLORS,
-        formatValue,
-        yDomain,
+        commonChartConfig,
+        axisConfig,
         tooltipConfig,
         defaultLegendProps
     } = useChart({ data, chartType });
 
     return (
-        <BaseChartComponent height={CHART_DIMENSIONS.DEFAULT_HEIGHT} width={CHART_DIMENSIONS.FULL_WIDTH}>
-            <BarChart
-                data={data}
-                margin={CHART_MARGINS.DEFAULT}
-            >
+        <BaseChartComponent title={title}>
+            <BarChart {...commonChartConfig}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis
-                    dataKey="shortName"
-                    {...AXIS_CONFIG.DEFAULT_X}
+                <XAxis {...axisConfig.xAxis} />
+                <YAxis {...axisConfig.yAxis} />
+                <Tooltip
+                    content={<CustomTooltip
+                        formatter={tooltipConfig.formatter}
+                        labelFormatter={tooltipConfig.labelFormatter}
+                    />}
                 />
-                <YAxis
-                    domain={yDomain}
-                    tickFormatter={formatValue}
-                />
-                <Tooltip formatter={tooltipConfig.formatter} />
                 <Legend {...defaultLegendProps} />
                 <Bar
-                    dataKey={t('ai', 'labels')}
+                    dataKey="ai"
+                    name={t('ai', 'labels')}
                     fill={CHART_COLORS.PRIMARY} />
                 <Bar
-                    dataKey={t('human', 'labels')}
+                    dataKey="human"
+                    name={t('human', 'labels')}
                     fill={CHART_COLORS.SECONDARY} />
             </BarChart>
         </BaseChartComponent>

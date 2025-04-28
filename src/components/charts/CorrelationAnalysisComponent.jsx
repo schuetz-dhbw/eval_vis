@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
 import {
-    ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip,
-    ResponsiveContainer, ZAxis, Cell, Legend
+    ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ZAxis, Cell, Legend
 } from 'recharts';
 import { CHART_DIMENSIONS, CHART_MARGINS, getChartColors } from '../../constants/chartConfig';
 import { useTranslation } from '../../hooks/useTranslation';
 import CustomTooltip from './CustomTooltip';
 import './styles/correlation.css';
+import BaseChartComponent from './BaseChartComponent';
 
 const calculateCorrelation = (x, y) => {
     const n = x.length;
@@ -81,39 +81,24 @@ const CorrelationAnalysisComponent = ({ work }) => {
 
     const tooltipFormatter = useMemo(() => {
         return (data) => {
-            // Den richtigen übersetzten Namen aus criteriaLabels holen
-            const criteriaIndex = work.criteriaKeys.findIndex(key => key === data.originalKey);
-            const translatedName = work.criteriaLabels[criteriaIndex] || data.name;
-
-            return (
-                <>
-                    <p className="tooltip-title">{translatedName}</p>
-                    <p className="tooltip-item ai">
-                        <span className="tooltip-label">{t('ai', 'labels')}:</span>
-                        <span className="tooltip-value">{data.aiScore}%</span>
-                    </p>
-                    <p className="tooltip-item human">
-                        <span className="tooltip-label">{t('human', 'labels')}:</span>
-                        <span className="tooltip-value">{data.humanScore}%</span>
-                    </p>
-                    <p className="tooltip-item">
-                        <span className="tooltip-label">{t('difference', 'labels')}:</span>
-                        <span className="tooltip-value">{data.scoreDiff}%</span>
-                    </p>
-                    <p className="tooltip-item">
-                        <span className="tooltip-label">{t('variance', 'labels')}:</span>
-                        <span className="tooltip-value">{data.variance.toFixed(2)}</span>
-                    </p>
-                </>
-            );
+            // Hier darf kein JSX zurückgegeben werden, sondern nur String-Werte
+            return {
+                title: data.name,
+                items: [
+                    { name: t('ai', 'labels'), value: data.aiScore + "%", className: "ai" },
+                    { name: t('human', 'labels'), value: data.humanScore + "%", className: "human" },
+                    { name: t('difference', 'labels'), value: data.scoreDiff + "%", className: "" },
+                    { name: t('variance', 'labels'), value: data.variance.toFixed(2), className: "" }
+                ]
+            };
         };
-    }, [t, work.criteriaKeys, work.criteriaLabels]);
+    }, [t]);
 
     return (
         <div>
             <h3 className="section-title">{t('varianceTitle', 'chartTitles') || "Criteria Variance Analysis"}</h3>
             <div className="chart-wrapper">
-                <ResponsiveContainer width={CHART_DIMENSIONS.FULL_WIDTH} height={CHART_DIMENSIONS.WORK_TYPE_HEIGHT}>
+                <BaseChartComponent height={CHART_DIMENSIONS.WORK_TYPE_HEIGHT}>
                     <ScatterChart
                         margin={CHART_MARGINS.DEFAULT}
                     >
@@ -166,7 +151,7 @@ const CorrelationAnalysisComponent = ({ work }) => {
                             ))}
                         </Scatter>
                     </ScatterChart>
-                </ResponsiveContainer>
+                </BaseChartComponent>
             </div>
 
             <div className="variance-table">

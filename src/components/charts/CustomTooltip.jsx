@@ -1,15 +1,77 @@
 import React from 'react';
 
-const CustomTooltip = ({ active, payload, formatter }) => {
+/**
+ * Wiederverwendbarer CustomTooltip für alle Chart-Typen
+ *
+ * @param {Object} props
+ * @param {boolean} props.active - Ob der Tooltip aktiv ist
+ * @param {Array} props.payload - Die Tooltip-Daten
+ * @param {Function} props.formatter - Optionale Formattierungsfunktion für Tooltip-Inhalte
+ * @returns {JSX.Element|null} - Tooltip-Komponente oder null wenn inaktiv
+ */
+const CustomTooltip = ({
+                           active,
+                           payload,
+                           formatter,
+                           labelFormatter
+                       }) => {
     if (!active || !payload || !payload.length) {
         return null;
     }
 
     const data = payload[0].payload;
+    const defaultFormatter = (value) => {
+        return value !== undefined && value !== null
+            ? Number(value).toFixed(2)
+            : '-';
+    };
+
+    // Standard-Formatierung der Tooltip-Werte, falls kein eigener Formatter übergeben wurde
+    const formatValue = (val) => formatter ? formatter(val) : defaultFormatter(val);
+
+    // Titel aus dem ersten Datenpunkt oder dem labelFormatter
+    const title = labelFormatter ? labelFormatter(data) : (data.name || data.shortName || '');
+
+    if (formatter && typeof formatter === 'function') {
+        const formattedData = formatter(data);
+        if (formattedData && typeof formattedData === 'object' && formattedData.items) {
+            return (
+                <div className="custom-tooltip">
+                    {formattedData.title && <p className="tooltip-title">{formattedData.title}</p>}
+                    {formattedData.items.map((item, idx) => (
+                        <p key={idx} className={`tooltip-item ${item.className || ''}`}>
+                            <span className="tooltip-label">{item.name}: </span>
+                            <span className="tooltip-value">{item.value}</span>
+                        </p>
+                    ))}
+                </div>
+            );
+        }
+    }
 
     return (
         <div className="custom-tooltip">
-            {formatter(data)}
+            {title && <p className="tooltip-title">{title}</p>}
+            <div>
+                {payload.map((entry, index) => {
+                    // Bestimme die richtige CSS-Klasse
+                    let className = entry.dataKey;
+
+                    // Spezialregeln für Combined-Ansicht
+                    if (entry.dataKey === 'aiScore' || entry.dataKey === 'aiWeight' || entry.dataKey === 'aiWeighted') {
+                        className = 'ai';
+                    } else if (entry.dataKey === 'humanScore' || entry.dataKey === 'humanWeight' || entry.dataKey === 'humanWeighted') {
+                        className = 'human';
+                    }
+
+                    return (
+                        <p key={`item-${index}`} className={`tooltip-item ${className}`}>
+                            <span className="tooltip-label">{entry.name}:</span>
+                            <span className="tooltip-value">{formatValue(entry.value)}</span>
+                        </p>
+                    );
+                })}
+            </div>
         </div>
     );
 };

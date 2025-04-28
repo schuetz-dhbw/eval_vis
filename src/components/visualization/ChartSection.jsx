@@ -17,23 +17,24 @@ import DataErrorBoundary from '../common/DataErrorBoundary';
 /**
  * ChartSection - Container für alle Chart-Komponenten
  *
- * @returns {ReactElement} Container mit allen Charts
+ * @returns {JSX.Element} Container mit allen Charts
  */
 const ChartSection = () => {
-    const { chartType, currentWork } = useAppContext();
+    const { chartType, currentWork, language } = useAppContext();
     const t = useTranslation();
 
     // Zentralisiertes Memoizing der Chart-Daten
     const chartData = useMemo(() => {
         if (!currentWork) return { scoresData: [], combinedData: [], radarData: [] };
 
-        const scoresData = getScoresData(currentWork);
-        const combinedData = getCombinedData(currentWork);
-        const weightedData = getWeightedData(currentWork);
+        const scoresData = getScoresData(currentWork, language);
+        const combinedData = getCombinedData(currentWork, language);
+        const weightedData = getWeightedData(currentWork, language);
 
         const radarData = getRadarData(
             currentWork,
-            chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType
+            chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType,
+            language
         );
 
         return {
@@ -42,7 +43,7 @@ const ChartSection = () => {
             weightedData,
             radarData
         };
-    }, [currentWork, chartType]);
+    }, [currentWork, language, chartType]);
 
     // Fallback, wenn keine Daten verfügbar
     if (!currentWork) {

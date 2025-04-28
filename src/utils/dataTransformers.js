@@ -1,4 +1,3 @@
-import { getTranslation } from './translationHelpers';
 import { translations } from '../locales/index';
 import { METRICS } from "../constants/metrics";
 import { getCurrentLanguage } from '../services/languageService';
@@ -30,18 +29,6 @@ const generateCacheKey = (work, chartType = null, language = null) => {
         return `${work.key}_${chartType}_${langKey}`;
     }
     return `${work.key}_${langKey}`;
-};
-
-// Common helper function for all transformation functions
-const prepareTranslations = (work) => {
-    const language = getCurrentLanguage();
-    const t = (key, section = null) => getTranslation(translations, language, key, section);
-    const shortLabels = work.criteriaKeys.map(key => {
-        const worksTranslations = translations[language]?.works || {};
-        return worksTranslations.criteriaShortLabels?.[key] || key;
-    });
-
-    return { t, shortLabels };
 };
 
 // Calculate cosine similarity between two vectors
@@ -173,21 +160,25 @@ export const calculateStatistics = (work) => {
 };
 
 // Data for scores diagram
-export const getScoresData = (work) => {
-    const cacheKey = generateCacheKey(work, 'scores');
+export const getScoresData = (work, language) => {
+    const cacheKey = generateCacheKey(work, 'scores', language);
 
     if (calculationCache.scoresData.has(cacheKey)) {
         return calculationCache.scoresData.get(cacheKey);
     }
 
-    const { t, shortLabels } = prepareTranslations(work);
+    // Die Übersetzungsfunktion mit der übergebenen Sprache aufrufen
+    const shortLabels = work.criteriaKeys.map(key => {
+        const worksTranslations = translations[language]?.works || {};
+        return worksTranslations.criteriaShortLabels?.[key] || key;
+    });
 
     const result = work.criteriaKeys.map((label, index) => {
         return {
             name: label,
             shortName: shortLabels[index],
-            [t('ai', 'labels')]: work.aiScores[index],
-            [t('human', 'labels')]: work.humanScores[index],
+            ai: work.aiScores[index],     // Konstanter Key "ai"
+            human: work.humanScores[index] // Konstanter Key "human"
         };
     });
 
@@ -196,20 +187,24 @@ export const getScoresData = (work) => {
 };
 
 // Data for weightings diagram
-export const getWeightsData = (work) => {
-    const cacheKey = generateCacheKey(work, 'weights');
+export const getWeightsData = (work, language) => {
+    const cacheKey = generateCacheKey(work, 'weights', language);
 
     if (calculationCache.weightsData.has(cacheKey)) {
         return calculationCache.weightsData.get(cacheKey);
     }
 
-    const { t, shortLabels } = prepareTranslations(work);
+    // Die Übersetzungsfunktion mit der übergebenen Sprache aufrufen
+    const shortLabels = work.criteriaKeys.map(key => {
+        const worksTranslations = translations[language]?.works || {};
+        return worksTranslations.criteriaShortLabels?.[key] || key;
+    });
 
     const result = work.criteriaKeys.map((label, index) => ({
         name: label,
         shortName: shortLabels[index],
-        [t('ai', 'labels')]: work.aiWeights[index] * METRICS.WEIGHT_SCALE,
-        [t('human', 'labels')]: work.humanWeights[index] * METRICS.WEIGHT_SCALE
+        ai: work.aiScores[index] * METRICS.WEIGHT_SCALE,     // Konstanter Key "ai"
+        human: work.humanScores[index] * METRICS.WEIGHT_SCALE // Konstanter Key "human"
     }));
 
     calculationCache.weightsData.set(cacheKey, result);
@@ -217,20 +212,24 @@ export const getWeightsData = (work) => {
 };
 
 // Data for weighted points diagram
-export const getWeightedData = (work) => {
-    const cacheKey = generateCacheKey(work, 'weighted');
+export const getWeightedData = (work, language) => {
+    const cacheKey = generateCacheKey(work, 'weighted', language);
 
     if (calculationCache.weightedData.has(cacheKey)) {
         return calculationCache.weightedData.get(cacheKey);
     }
 
-    const { t, shortLabels } = prepareTranslations(work);
+    // Die Übersetzungsfunktion mit der übergebenen Sprache aufrufen
+    const shortLabels = work.criteriaKeys.map(key => {
+        const worksTranslations = translations[language]?.works || {};
+        return worksTranslations.criteriaShortLabels?.[key] || key;
+    });
 
     const result = work.criteriaKeys.map((label, index) => ({
         name: label,
         shortName: shortLabels[index],
-        [t('ai', 'labels')]: work.aiScores[index] * work.aiWeights[index],
-        [t('human', 'labels')]: work.humanScores[index] * work.humanWeights[index],
+        ai: work.aiScores[index] * work.aiWeights[index],     // Konstanter Key "ai"
+        human: work.humanScores[index] * work.humanWeights[index] // Konstanter Key "human"
     }));
 
     calculationCache.weightedData.set(cacheKey, result);
@@ -238,24 +237,28 @@ export const getWeightedData = (work) => {
 };
 
 // Data for combined diagram
-export const getCombinedData = (work) => {
+export const getCombinedData = (work, language) => {
     const cacheKey = generateCacheKey(work, 'combined');
 
     if (calculationCache.combinedData.has(cacheKey)) {
         return calculationCache.combinedData.get(cacheKey);
     }
 
-    const { t, shortLabels } = prepareTranslations(work);
+    // Die Übersetzungsfunktion mit der übergebenen Sprache aufrufen
+    const shortLabels = work.criteriaKeys.map(key => {
+        const worksTranslations = translations[language]?.works || {};
+        return worksTranslations.criteriaShortLabels?.[key] || key;
+    });
 
     const result = work.criteriaKeys.map((label, index) => ({
         name: label,
         shortName: shortLabels[index],
-        [`${t('ai', 'labels')}Score`]: work.aiScores[index],
-        [`${t('human', 'labels')}Score`]: work.humanScores[index],
-        [`${t('ai', 'labels')}Weight`]: work.aiWeights[index] * METRICS.WEIGHT_SCALE,
-        [`${t('human', 'labels')}Weight`]: work.humanWeights[index] * METRICS.WEIGHT_SCALE,
-        [`${t('ai', 'labels')}Weighted`]: work.aiScores[index] * work.aiWeights[index],
-        [`${t('human', 'labels')}Weighted`]: work.humanScores[index] * work.humanWeights[index]
+        aiScore: work.aiScores[index],
+        humanScore: work.humanScores[index],
+        aiWeight: work.aiWeights[index] * METRICS.WEIGHT_SCALE,
+        humanWeight: work.humanWeights[index] * METRICS.WEIGHT_SCALE,
+        aiWeighted: work.aiScores[index] * work.aiWeights[index],
+        humanWeighted: work.humanScores[index] * work.humanWeights[index]
     }));
 
     calculationCache.combinedData.set(cacheKey, result);
@@ -263,38 +266,43 @@ export const getCombinedData = (work) => {
 };
 
 // Data for radar diagram
-export const getRadarData = (work, chartType) => {
-    const cacheKey = generateCacheKey(work, `radar_${chartType}`);
+export const getRadarData = (work, chartType, language) => {
+    const cacheKey = generateCacheKey(work, `radar_${chartType}`, language);
 
     if (calculationCache.radarData.has(cacheKey)) {
         return calculationCache.radarData.get(cacheKey);
     }
 
-    const { t, shortLabels } = prepareTranslations(work);
+    // Die Übersetzungsfunktion mit der übergebenen Sprache aufrufen
+    const shortLabels = work.criteriaKeys.map(key => {
+        const worksTranslations = translations[language]?.works || {};
+        return worksTranslations.criteriaShortLabels?.[key] || key;
+    });
+
     let result;
 
     if (chartType === 'weighted') {
         result = work.criteriaKeys.map((label, index) => ({
             subject: label,
             shortSubject: shortLabels[index],
-            [t('ai', 'labels')]: work.aiScores[index] * work.aiWeights[index],
-            [t('human', 'labels')]: work.humanScores[index] * work.humanWeights[index],
+            ai: work.aiScores[index] * work.aiWeights[index],
+            human: work.humanScores[index] * work.humanWeights[index],
             fullMark: METRICS.WEIGHTED_MAX
         }));
     } else if (chartType === 'weights') {
         result = work.criteriaKeys.map((label, index) => ({
             subject: label,
             shortSubject: shortLabels[index],
-            [t('ai', 'labels')]: work.aiWeights[index] * 100,
-            [t('human', 'labels')]: work.humanWeights[index] * 100,
+            ai: work.aiWeights[index] * 100,
+            human: work.humanWeights[index] * 100,
             fullMark: METRICS.WEIGHT_MAX
         }));
     } else {
         result = work.criteriaKeys.map((label, index) => ({
             subject: label,
             shortSubject: shortLabels[index],
-            [t('ai', 'labels')]: work.aiScores[index],
-            [t('human', 'labels')]: work.humanScores[index],
+            ai: work.aiScores[index],
+            human: work.humanScores[index],
             fullMark: METRICS.FULL_MARK
         }));
     }
@@ -330,8 +338,7 @@ export const getRadarDomain = (chartType) => {
 };
 
 // Translations für the work
-export const getTranslatedWorks = (works) => {
-    const language = getCurrentLanguage();
+export const getTranslatedWorks = (works, translations, language) => {
     const worksTranslations = translations[language]?.works || {};
 
     return works.map(work => {
