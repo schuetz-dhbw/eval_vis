@@ -2,94 +2,42 @@ import React, { memo, useMemo } from 'react';
 import {
     ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ZAxis, Cell, Legend
 } from 'recharts';
-import { CHART_DIMENSIONS, CHART_MARGINS, getChartColors } from '../../constants/chartConfig';
-import { useTranslation } from '../../hooks/useTranslation';
+import { CHART_DIMENSIONS, CHART_MARGINS } from '../../constants/chartConfig';
 import CustomTooltip from './CustomTooltip';
-import './styles/correlation.css';
 import BaseChartComponent from './BaseChartComponent';
-import {DATA_KEYS} from "../../constants/chartConstants";
+import { DATA_KEYS } from "../../constants/chartConstants";
+import {
+    calculateCriteriaDeviationData,
+    calculateCriteriaCorrelationData
+} from '../../utils/statistics/correlationAnalysisUtils';
+import useChart from "../../hooks/useChart";
 
-const calculateCorrelation = (x, y) => {
-    const n = x.length;
-    if (n === 0) return 0;
+const CriteriaAnalysisComponent = memo(({ work, chartType }) => {
+    const {
+        t,
+        CHART_COLORS,
+        defaultLegendProps
+    } = useChart({ chartType });
 
-    // Calculate means
-    const xMean = x.reduce((sum, val) => sum + val, 0) / n;
-    const yMean = y.reduce((sum, val) => sum + val, 0) / n;
-
-    // Calculate correlation coefficient
-    let numerator = 0;
-    let xDenominator = 0;
-    let yDenominator = 0;
-
-    for (let i = 0; i < n; i++) {
-        const xDiff = x[i] - xMean;
-        const yDiff = y[i] - yMean;
-        numerator += xDiff * yDiff;
-        xDenominator += xDiff * xDiff;
-        yDenominator += yDiff * yDiff;
-    }
-
-    if (xDenominator === 0 || yDenominator === 0) return 0;
-    return numerator / Math.sqrt(xDenominator * yDenominator);
-};
-
-const calculateVariance = (data) => {
-    const mean = data.reduce((sum, val) => sum + val, 0) / data.length;
-    return data.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / data.length;
-};
-
-const CorrelationAnalysisComponent = memo (({ work }) => {
-    const t = useTranslation();
-    const CHART_COLORS = getChartColors();
-
+    // Verwende die ausgelagerten Berechnungsfunktionen
     const criteriaData = useMemo(() => {
-        const aiVariances = work.criteriaKeys.map((label, index) => ({
-            originalKey: label,
-            name: work.criteriaLabels[index],
-            variance: calculateVariance([work.aiScores[index], work.humanScores[index]]),
-            aiScore: work.aiScores[index],
-            humanScore: work.humanScores[index],
-            scoreDiff: Math.abs(work.aiScores[index] - work.humanScores[index])
-        }));
-
-        return aiVariances.sort((a, b) => b.variance - a.variance);
+        return calculateCriteriaDeviationData(work);
     }, [work]);
 
     const correlationData = useMemo(() => {
-        const result = [];
-
-        for (let i = 0; i < work.criteriaKeys.length; i++) {
-            for (let j = i + 1; j < work.criteriaKeys.length; j++) {
-                const correlation = calculateCorrelation(
-                    [work.aiScores[i], work.humanScores[i]],
-                    [work.aiScores[j], work.humanScores[j]]
-                );
-
-                result.push({
-                    x: i,
-                    y: j,
-                    z: Math.abs(correlation) * 100,
-                    name1: work.criteriaLabels[i],
-                    name2: work.criteriaLabels[j],
-                    correlation: correlation.toFixed(2)
-                });
-            }
-        }
-
-        return result;
+        return calculateCriteriaCorrelationData(work);
     }, [work]);
 
+    // Tooltip-Formatter mit der neuen Metrik
     const tooltipFormatter = useMemo(() => {
         return (data) => {
-            // Hier darf kein JSX zurückgegeben werden, sondern nur String-Werte
             return {
                 title: data.name,
                 items: [
                     { name: t('ai', 'labels'), value: data[DATA_KEYS.AI_SCORE] + "%", className: "ai" },
                     { name: t('human', 'labels'), value: data[DATA_KEYS.HUMAN_SCORE] + "%", className: "human" },
                     { name: t('difference', 'labels'), value: data.scoreDiff + "%", className: "" },
-                    { name: t('variance', 'labels'), value: data.variance.toFixed(2), className: "" }
+                    { name: t('deviation', 'labels'), value: data.deviation.toFixed(2), className: "" }
                 ]
             };
         };
@@ -97,7 +45,7 @@ const CorrelationAnalysisComponent = memo (({ work }) => {
 
     return (
         <div>
-            <h3 className="section-title">{t('varianceTitle', 'chartTitles') || "Criteria Variance Analysis"}</h3>
+            <h3 className="section-title">{t('deviationTitle', 'chartTitles') || "Criteria Deviation Analysis"}</h3>
             <div className="chart-wrapper">
                 <BaseChartComponent height={CHART_DIMENSIONS.WORK_TYPE_HEIGHT}>
                     <ScatterChart
@@ -130,17 +78,14 @@ const CorrelationAnalysisComponent = memo (({ work }) => {
                         />
                         <ZAxis
                             type="number"
-                            dataKey="variance"
+                            dataKey="deviation"
                             range={[50, 250]}
-                            name={t('variance', 'labels') || "Variance"}
+                            name={t('deviation', 'labels') || "Deviation"}
                         />
                         <Tooltip content={<CustomTooltip formatter={tooltipFormatter} />} />
-                        <Legend
-                            verticalAlign="top"
-                            height={36}
-                        />
+                        <Legend {...defaultLegendProps} />
                         <Scatter
-                            name={t('criteriaVariance', 'labels') || "Criteria Variance"}
+                            name={t('criteriaDeviations', 'labels') || "Criteria Deviations"}
                             data={criteriaData}
                             fill={CHART_COLORS.PRIMARY}
                         >
@@ -155,8 +100,8 @@ const CorrelationAnalysisComponent = memo (({ work }) => {
                 </BaseChartComponent>
             </div>
 
-            <div className="variance-table">
-                <h4 className="subtitle">{t('varianceTable', 'chartTitles') || "Criteria Ranked by Variance"}</h4>
+            <div className="table-container">
+                <h3 className="section-title">{t('deviationTable', 'chartTitles') || "Criteria Ranked by Deviation"}</h3>
                 <table className="data-table">
                     <thead>
                     <tr>
@@ -164,26 +109,26 @@ const CorrelationAnalysisComponent = memo (({ work }) => {
                         <th>{t('ai', 'labels')}</th>
                         <th>{t('human', 'labels')}</th>
                         <th>{t('difference', 'labels') || "Difference"}</th>
-                        <th>{t('variance', 'labels') || "Variance"}</th>
+                        <th>{t('deviation', 'labels') || "Deviation"}</th>
                     </tr>
                     </thead>
                     <tbody>
                     {criteriaData.slice(0, 5).map((item, index) => (
-                        <tr key={index} className={item.scoreDiff > 20 ? "highlight-row" : ""}>
+                        <tr key={index} className={index % 2 === 0 ? "even-row" : "odd-row"}>
                             <td>{item.name}</td>
                             <td>{item.aiScore}%</td>
                             <td>{item.humanScore}%</td>
-                            <td>{Math.abs(item.aiScore - item.humanScore)}%</td>
-                            <td>{item.variance.toFixed(2)}</td>
+                            <td>{item.scoreDiff}%</td>
+                            <td>{item.deviation.toFixed(2)}</td>
                         </tr>
                     ))}
                     </tbody>
                 </table>
             </div>
             <div className="correlation-matrix">
-                <h4 className="matrix-title">{t('correlationTitle', 'chartTitles') || "Correlation Analysis"}</h4>
+                <h4 className="section-title">{t('correlationTitle', 'chartTitles')}</h4>
 
-                <div className="component-grid grid-template-columns-5">
+                <div className="analysis-grid big-cells">
                     {correlationData
                         .sort((a, b) => Math.abs(parseFloat(b.correlation)) - Math.abs(parseFloat(a.correlation)))
                         .slice(0, 10)
@@ -191,21 +136,21 @@ const CorrelationAnalysisComponent = memo (({ work }) => {
                             // Klassen und Anzeige basierend auf Korrelationsstärke
                             const corrValue = parseFloat(item.correlation);
                             const absValue = Math.abs(corrValue);
-                            let correlationClass = "weak-correlation";
+                            let intensityClass = "low-intensity";
 
                             if (absValue > 0.7) {
-                                correlationClass = "strong-correlation";
+                                intensityClass = "high-intensity";
                             } else if (absValue > 0.3) {
-                                correlationClass = "medium-correlation";
+                                intensityClass = "medium-intensity";
                             }
 
                             return (
                                 <div
                                     key={index}
-                                    className={`correlation-cell ${correlationClass}`}
+                                    className={`color-cell ${intensityClass}`}
                                     title={`${item.name1} - ${item.name2}: ${item.correlation}`}
                                 >
-                                    <div className="correlation-value">
+                                    <div className="cell-value">
                                         {corrValue > 0 ? "+" : ""}{item.correlation}
                                     </div>
                                     <div className="flex-column flex-center">
@@ -218,10 +163,9 @@ const CorrelationAnalysisComponent = memo (({ work }) => {
                         })}
                 </div>
             </div>
-
-
         </div>
     );
 });
 
-export default CorrelationAnalysisComponent;
+// Umbenennung des Exports
+export default CriteriaAnalysisComponent;

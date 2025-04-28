@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from '../../hooks/useTranslation';
-import CorrelationAnalysisComponent from '../charts/CorrelationAnalysisComponent';
+import CriteriaAnalysisComponent from '../charts/CriteriaAnalysisComponent';
 import { calculateStatistics, calculateSimilarityMetrics } from '../../utils/dataTransformers';
 import ChartErrorBoundary from '../charts/ChartErrorBoundary';
 import DataErrorBoundary from '../common/DataErrorBoundary';
@@ -66,7 +66,7 @@ const StatisticsSection = () => {
                 <div className="flex-column">
                     <DataErrorBoundary data={currentWork}>
                         <ChartErrorBoundary>
-                            <CorrelationAnalysisComponent
+                            <CriteriaAnalysisComponent
                                 work={currentWork}
                             />
                         </ChartErrorBoundary>

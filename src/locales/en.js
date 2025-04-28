@@ -39,7 +39,8 @@ export const en = {
         minDiff: "Min",
         standardDeviation: "Standard Deviation",
         weightDifference: "Weight Difference",
-        gradeDifference: "Grade Difference"
+        gradeDifference: "Grade Difference",
+        deviation: "Deviation Analysis"
     },
     chartTitles: {
         metricsTitle: "Similarity Metrics",
@@ -49,14 +50,15 @@ export const en = {
         bar: "Bar Chart",
         radarWeighted: "Spider Chart (Weighted Values)",
         barWeighted: "Bar Chart (Weighted Values)",
-        varianceTitle: "Criteria Variance Analysis",
-        varianceTable: "Criteria Ranked by Variance",
+        deviationTitle: "Criteria Difference Analysis",
+        deviationTable: "Criteria Ranked by Difference",
         correlationTitle: "Correlation Analysis",
         workTypeAnalysisTitle: "Work Type Analysis",
         differenceByTypeTitle: "Average Difference by Work Type",
         criteriaByTypeTitle: "Criteria Differences by Work Type",
         largestDiffByTypeTitle: "Largest Difference by Work Type",
-        topCriteriaTitle: "Top 5 Criteria by Difference"
+        topCriteriaTitle: "Top 5 Criteria by Difference",
+        workTypeTableTitle: "Detailed Analysis Tables"
     },
     labels: {
         ai: "AI",
@@ -66,9 +68,9 @@ export const en = {
         aiWeight: "AI Weighting",
         humanWeight: "Human Weighting",
         score: "Score",
-        variance: "Variance",
         difference: "Difference",
-        criteriaVariance: "Criteria Variances",
+        deviation: "Deviation",
+        criteriaDeviations: "Criteria Deviations",
         correlation: "Correlation",
         grade: "Grade"
     },
@@ -95,10 +97,11 @@ export const en = {
         scoresDesc: "shows the original achievment levels (0-100%)",
         weightsDesc: "shows the relative weighting of the criteria (0-25%)",
         combinedDesc: "shows the combined values as well as the weighted scores of the evaluation",
-        statisticsDesc: "compares variance and correlation between criteria ratings",
+        statisticsDesc: "compares deviation and correlation between criteria ratings",
         workTypeAnalysisDesc: "shows differences between AI and human based on work type (analytical vs. constructive work)",
         tooltip: "Hover over the charts for detailed information",
-        table: "The table shows the evaluation details for the selected work"
+        table: "The table shows the evaluation details for the selected work",
+        criteriaHeatmapDescription: "This heatmap shows the percentage difference between AI and human ratings for each criterion across different work types. Darker colors indicate larger differences."
     },
     language: "Language",
     details: "Assessment Details"

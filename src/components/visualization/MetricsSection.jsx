@@ -19,7 +19,7 @@ const MetricsSection = memo(() => {
             <div className="component-grid grid-3-cols">
                 <div className="info-box">
                     <div className="data-value">{metrics.similarity.toFixed(3)}</div>
-                    <div className="metric-label">{t('cosine', 'metrics')}</div>
+                    <div className="data-label">{t('cosine', 'metrics')}</div>
                     <div className="item-description">
                         {t('cosineDescription', 'metricsDescriptions') ||
                             "Measures angle similarity between KI and human ratings (1.0 = identical, 0.0 = completely different)"}

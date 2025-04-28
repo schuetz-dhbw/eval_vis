@@ -1,135 +1,48 @@
 import React, { memo, useMemo } from 'react';
 import {
-    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Cell
-} from 'recharts';
-import { CHART_MARGINS, AXIS_CONFIG, getChartColors } from '../../constants/chartConfig';
-import { useTranslation } from '../../hooks/useTranslation';
-import CustomTooltip from './CustomTooltip';
-import BaseChartComponent from './BaseChartComponent';
-import './styles/workTypeAnalysis.css';
+    groupWorksByType,
+    calculateDifferencesByType,
+    calculateOverallDifferenceByType,
+    findLargestDifferencesByType,
+    findTopCriteriaByDifference
+} from '../../utils/statistics/workTypeAnalysisUtils';
+import TypeDifferenceChartComponent from './workTypeAnalysis/TypeDifferenceChartComponent';
+import CriteriaHeatmapComponent from './workTypeAnalysis/CriteriaHeatmapComponent';
+import AnalysisTablesComponent from './workTypeAnalysis/AnalysisTablesComponent';
+import useChart from "../../hooks/useChart";
 
-const WorkTypeAnalysisComponent = memo (({ works }) => {
+const WorkTypeAnalysisComponent = memo(({ works, chartType }) => {
+    const {
+        t,
+        CHART_COLORS,
+    } = useChart({ chartType });
 
-    const t = useTranslation();
-    const CHART_COLORS = getChartColors();
-
-    // Group works by type
+    // Gruppiere Arbeiten nach Typ
     const groupedWorks = useMemo(() => {
-        const result = {};
-        works.forEach(work => {
-            if (!result[work.typeKey]) {
-                result[work.typeKey] = [];
-            }
-            result[work.typeKey].push(work);
-        });
-        return result;
+        return groupWorksByType(works);
     }, [works]);
 
-    // Calculate average differences by criteria for each type
+    // Berechne Unterschiede nach Kriterien für jeden Typ
     const differencesByType = useMemo(() => {
-        const result = [];
-
-        Object.entries(groupedWorks).forEach(([typeKey, typeWorks]) => {
-            // For each criterion, calculate the average difference
-            if (typeWorks.length > 0) {
-                const criteriaCount = typeWorks[0].criteriaKeys.length;
-
-                for (let i = 0; i < criteriaCount; i++) {
-                    let totalDiff = 0;
-                    let validWorkCount = 0;
-
-                    typeWorks.forEach(work => {
-                        const diff = Math.abs(work.aiScores[i] - work.humanScores[i]);
-                        if (!isNaN(diff)) {
-                            totalDiff += diff;
-                            validWorkCount++;
-                        }
-                    });
-
-                    if (validWorkCount > 0) {
-                        result.push({
-                            type: typeKey,  // Speichere hier den typeKey statt der Übersetzung
-                            criterion: typeWorks[0].criteriaKeys[i],
-                            averageDifference: totalDiff / validWorkCount,
-                            count: validWorkCount
-                        });
-                    }
-                }
-            }
-        });
-
-        return result;
+        return calculateDifferencesByType(groupedWorks);
     }, [groupedWorks]);
 
-
-    // Calculate overall average score difference by work type
+    // Berechne Gesamtunterschied nach Arbeitstyp
     const overallDifferenceByType = useMemo(() => {
-        const result = [];
-
-        Object.entries(groupedWorks).forEach(([typeKey, typeWorks]) => {
-            let totalDiff = 0;
-            let diffCount = 0;
-
-            typeWorks.forEach(work => {
-                for (let i = 0; i < work.aiScores.length; i++) {
-                    const diff = Math.abs(work.aiScores[i] - work.humanScores[i]);
-                    if (!isNaN(diff)) {
-                        totalDiff += diff;
-                        diffCount++;
-                    }
-                }
-            });
-
-            if (diffCount > 0) {
-                result.push({
-                    type: t(typeKey, 'works.types'),
-                    typeKey: typeKey,
-                    averageDifference: totalDiff / diffCount,
-                    count: typeWorks.length
-                });
-            }
-        });
-
-        // Sort by average difference (descending)
-        return result.sort((a, b) => b.averageDifference - a.averageDifference);
+        return calculateOverallDifferenceByType(groupedWorks, t);
     }, [groupedWorks, t]);
 
-    // Find the criteria with the largest average difference for each type
+    // Finde Kriterien mit größtem Unterschied für jeden Typ
     const largestDifferencesByType = useMemo(() => {
-        const resultByType = {};
-
-        differencesByType.forEach(item => {
-            if (!resultByType[item.type] || item.averageDifference > resultByType[item.type].averageDifference) {
-                resultByType[item.type] = {
-                    criterion: item.criterion,
-                    averageDifference: item.averageDifference
-                };
-            }
-        });
-
-        return Object.entries(resultByType).map(([typeKey, data]) => ({
-            type: t(typeKey, 'works.types'),
-            criterion: t(data.criterion, 'works.criteriaLabels'),
-            averageDifference: data.averageDifference
-        }));
+        return findLargestDifferencesByType(differencesByType, t);
     }, [differencesByType, t]);
 
-    // Find the top 5 criteria with the largest differences across all types
+    // Finde Top-5-Kriterien mit größtem Unterschied
     const topCriteriaByDifference = useMemo(() => {
-        // Erstelle ein Array mit den Kriterien und den durchschnittlichen Abweichungen
-        const topCriteria = differencesByType.map(item => ({
-            criterion: t(item.criterion, 'works.criteriaLabels'), // Übersetze den Criterion-Key in ein Label
-            type: t(item.type, 'works.types'), // Übersetze den Typ-Key in einen lesbaren Namen (falls benötigt)
-            averageDifference: item.averageDifference,
-        }));
-
-        // Sortiere die Kriterien nach durchschnittlicher Abweichung (absteigend)
-        return topCriteria
-            .sort((a, b) => b.averageDifference - a.averageDifference)
-            .slice(0, 5);
+        return findTopCriteriaByDifference(differencesByType, t);
     }, [differencesByType, t]);
 
-
+    // Tooltip-Formatter für Charts
     const tooltipFormatter = useMemo(() => {
         return (data) => {
             return {
@@ -150,12 +63,12 @@ const WorkTypeAnalysisComponent = memo (({ works }) => {
         };
     }, [t]);
 
-    // Get colors based on difference value
+    // Bestimme Farbe basierend auf Unterschiedswert
     const getDifferenceColor = useMemo(() => {
         return (value) => {
-            if (value > 30) return CHART_COLORS.TERTIARY; // Large difference - orange
-            if (value > 15) return CHART_COLORS.PRIMARY; // Medium difference - purple
-            return CHART_COLORS.SECONDARY; // Small difference - green
+            if (value > 30) return CHART_COLORS.TERTIARY; // Großer Unterschied - orange
+            if (value > 15) return CHART_COLORS.PRIMARY;  // Mittlerer Unterschied - lila
+            return CHART_COLORS.SECONDARY;                // Kleiner Unterschied - grün
         };
     }, [CHART_COLORS.PRIMARY, CHART_COLORS.SECONDARY, CHART_COLORS.TERTIARY]);
 
@@ -163,117 +76,28 @@ const WorkTypeAnalysisComponent = memo (({ works }) => {
         <div className="work-type-analysis">
             <div className="flex-column">
                 <div className="component-container">
-                    <h4 className="section-title">{t('differenceByTypeTitle', 'chartTitles') || "Average Difference by Work Type"}</h4>
-                    <div className="chart-wrapper">
-                        <BaseChartComponent height={300}>
-                            <BarChart
-                                data={overallDifferenceByType}
-                                margin={CHART_MARGINS.WORK_TYPE_BAR}
-                            >
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis
-                                    dataKey="type"
-                                    {...AXIS_CONFIG.DEFAULT_X}
-                                />
-                                <YAxis />
-                                <Tooltip content={<CustomTooltip formatter={tooltipFormatter} />} />
-                                <Legend />
-                                <Bar
-                                    dataKey="averageDifference"
-                                    name={t('avgDifference', 'metrics') || "Average Difference"}
-                                    fill={CHART_COLORS.PRIMARY}
-                                >
-                                    {overallDifferenceByType.map((entry, index) => (
-                                        <Cell
-                                            key={`cell-${index}`}
-                                            fill={getDifferenceColor(entry.averageDifference)}
-                                        />
-                                    ))}
-                                </Bar>
-                            </BarChart>
-                        </BaseChartComponent>
-                    </div>
+                    <h4 className="section-title">{t('differenceByTypeTitle', 'chartTitles')}</h4>
+                    <TypeDifferenceChartComponent
+                        data={overallDifferenceByType}
+                        getDifferenceColor={getDifferenceColor}
+                        tooltipFormatter={tooltipFormatter}
+                    />
                 </div>
 
                 <div className="component-container">
-                    <h4 className="section-title">{t('criteriaByTypeTitle', 'chartTitles') || "Criteria Differences by Work Type"}</h4>
-                    <div className="flex-column">
-                        <div className="flex-row">
-                            <div className="legend-item">
-                                <span className="legend-color" style={{ backgroundColor: CHART_COLORS.SECONDARY }}></span>
-                                <span className="legend-text">&lt; 15%</span>
-                            </div>
-                            <div className="legend-item">
-                                <span className="legend-color" style={{ backgroundColor: CHART_COLORS.PRIMARY }}></span>
-                                <span className="legend-text">15-30%</span>
-                            </div>
-                            <div className="legend-item">
-                                <span className="legend-color" style={{ backgroundColor: CHART_COLORS.TERTIARY }}></span>
-                                <span className="legend-text">&gt; 30%</span>
-                            </div>
-                        </div>
-                        <div className="heatmap-grid">
-                            {differencesByType.map((item, index) => (
-                                <div
-                                    key={index}
-                                    className="heatmap-cell"
-                                    style={{
-                                        backgroundColor: getDifferenceColor(item.averageDifference),
-                                        opacity: 0.7 + (item.averageDifference / 100 * 0.3) // Adjust opacity based on value
-                                    }}
-                                    title={`${item.type} - ${item.criterion}: ${item.averageDifference.toFixed(1)}%`}
-                                >
-                                    {item.averageDifference.toFixed(0)}%
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                    <h4 className="section-title">{t('criteriaByTypeTitle', 'chartTitles')}</h4>
+                    <CriteriaHeatmapComponent
+                        data={differencesByType}
+                        getDifferenceColor={getDifferenceColor}
+                    />
                 </div>
 
                 <div className="component-container">
-                    <h4 className="subtitle">{t('tableTitle', 'chartTitles')}</h4>
-                    <div className="split-layout">
-                        <div className="flex-column">
-                            <h4 className="subtitle">{t('largestDiffByTypeTitle', 'chartTitles')}</h4>
-                            <table className="data-table">
-                            <thead>
-                            <tr>
-                                <th>{t('workType', 'tableHeaders') || "Work Type"}</th>
-                                <th>{t('criterion', 'tableHeaders')}</th>
-                                <th>{t('avgDifference', 'metrics') || "Avg. Difference"}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {largestDifferencesByType.map((item, index) => (
-                                <tr key={index} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
-                                    <td>{item.type}</td>
-                                    <td>{item.criterion}</td>
-                                    <td>{item.averageDifference.toFixed(2)}%</td>
-                                </tr>
-                            ))}
-                            </tbody>
-                        </table>
-                        </div>
-                        <div className="flex-column">
-                            <h4 className="subtitle">{t('topCriteriaTitle', 'chartTitles')}</h4>
-                            <table className="data-table">
-                            <thead>
-                            <tr>
-                                <th>{t('criterion', 'tableHeaders')}</th>
-                                <th>{t('avgDifference', 'metrics') || "Avg. Difference"}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {topCriteriaByDifference.map((item, index) => (
-                                <tr key={index}>
-                                    <td>{item.criterion}</td>
-                                    <td>{item.averageDifference.toFixed(2)}</td>
-                                </tr>
-                            ))}
-                            </tbody>
-                        </table>
-                        </div>
-                    </div>
+                    <h4 className="section-title">{t('workTypeTableTitle', 'chartTitles')}</h4>
+                    <AnalysisTablesComponent
+                        largestDifferencesByType={largestDifferencesByType}
+                        topCriteriaByDifference={topCriteriaByDifference}
+                    />
                 </div>
             </div>
         </div>

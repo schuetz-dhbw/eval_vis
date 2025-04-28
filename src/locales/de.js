@@ -39,7 +39,8 @@ export const de = {
         minDiff: "Min",
         standardDeviation: "Standardabweichung",
         weightDifference: "Gewichtungsdifferenz",
-        gradeDifference: "Notendifferenz"
+        gradeDifference: "Notendifferenz",
+        deviation: "Abweichungsanalyse"
     },
     chartTitles: {
         metricsTitle: "Ähnlichkeitsmetriken",
@@ -49,14 +50,15 @@ export const de = {
         bar: "Balkendiagramm",
         radarWeighted: "Spinnendiagramm (Gewichtete Werte)",
         barWeighted: "Balkendiagramm (Gewichtete Werte)",
-        varianceTitle: "Varianzanalyse der Kriterien",
-        varianceTable: "Kriterien nach Varianz sortiert",
+        deviationTitle: "Abweichungsanalyse der Kriterien",
+        deviationTable: "Kriterien nach Abweichung sortiert",
         correlationTitle: "Korrelationsanalyse",
         workTypeAnalysisTitle: "Analyse nach Arbeitstyp",
         differenceByTypeTitle: "Durchschnittliche Differenz nach Arbeitstyp",
         criteriaByTypeTitle: "Kriterien-Differenzen nach Arbeitstyp",
         largestDiffByTypeTitle: "Größte Differenz nach Arbeitstyp",
-        topCriteriaTitle: "Top 5 Kriterien nach Differenz"
+        topCriteriaTitle: "Top 5 Kriterien nach Differenz",
+        workTypeTableTitle: "Detaillierte Analysetabellen"
     },
     labels: {
         ai: "KI",
@@ -66,9 +68,9 @@ export const de = {
         aiWeight: "KI Gewichtung",
         humanWeight: "Human Gewichtung",
         score: "Wert",
-        variance: "Varianz",
+        deviation: "Abweichung",
         difference: "Differenz",
-        criteriaVariance: "Kriterienvarianzen",
+        criteriaDeviations: "Kriterienabweichungen",
         correlation: "Korrelation",
         grade: "Note"
     },
@@ -95,10 +97,11 @@ export const de = {
         scoresDesc: "zeigt die ursprünglichen Zielerreichungsgrade (0-100%)",
         weightsDesc: "zeigt die relative Gewichtung der Kriterien (0-25%)",
         combinedDesc: "zeigt die kombinierten Werte sowie die gewichtete Punkte der Bewertung",
-        statisticsDesc: "vergleicht Varianz und Korrelation zwischen Kriterienbewertungen",
+        statisticsDesc: "vergleicht Abweichung und Korrelation zwischen Kriterienbewertungen",
         workTypeAnalysisDesc: "zeigt Differenzen zwischen KI und Mensch basierend auf dem Arbeitstyp (analytische vs. konstruktive Arbeit)",
         tooltip: "Bewegen Sie den Mauszeiger über die Diagramme für detaillierte Informationen",
-        table: "Die Tabelle zeigt die Bewertungsdetails zur ausgewählten Arbeit"
+        table: "Die Tabelle zeigt die Bewertungsdetails zur ausgewählten Arbeit",
+        criteriaHeatmapDescription: "Diese Heatmap zeigt die prozentuale Differenz zwischen KI- und menschlichen Bewertungen für jedes Kriterium über verschiedene Arbeitstypen hinweg. Dunklere Farben zeigen größere Unterschiede an."
     },
     language: "Sprache",
     details: "Bewertungsdetails"

@@ -231,10 +231,6 @@
 }
 
 /* ===== CORRELATION ANALYSIS ===== */
-.variance-table {
-    margin-top: var(--padding-md);
-    margin-bottom: var(--padding-lg);
-}
 
 .highlight-row {
     background-color: rgba(255, 115, 0, 0.1);
@@ -271,8 +267,9 @@
     color: var(--color-tertiary);
 }
 
+/* Korrelationsmatrix-Container */
 .correlation-matrix {
-    margin-top: var(--padding-lg);
+    margin-top: var(--space-lg);
 }
 
 .matrix-title {
@@ -320,6 +317,7 @@
 /* ===== TABLE CONTAINER ===== */
 .table-container {
     overflow-x: auto;
+    margin-top: var(--space-lg);
 }
 
 /* Gemeinsame Container-Stile mit neuem Spacing-System */
@@ -592,4 +590,88 @@
 .tooltip-item.human .tooltip-label,
 .tooltip-item.human .tooltip-value {
     color: var(--color-secondary);
+}
+
+/* Farbkodierte Zellen für Heatmaps und Korrelationsmatrizen */
+.color-cell {
+    padding: var(--inset-md);
+    min-height: 60px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-weight: 500;
+    font-size: var(--font-size-sm);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.color-cell:hover {
+    transform: scale(1.05);
+    z-index: 1;
+    box-shadow: var(--shadow-hover);
+    will-change: transform;
+}
+
+/* Farbkodierungen für Korrelation und Heatmaps */
+.high-intensity {
+    background-color: var(--color-secondary);
+}
+
+.medium-intensity {
+    background-color: var(--color-primary);
+}
+
+.low-intensity {
+    background-color: var(--color-tertiary);
+}
+
+/* Wertanzeige innerhalb von farbigen Zellen */
+.cell-value {
+    font-weight: 600;
+    font-size: var(--font-size-base);
+    margin-bottom: var(--space-xs);
+}
+
+/* Grid für Heatmap und Korrelationsmatrix */
+.analysis-grid {
+    display: grid;
+    gap: var(--space-xs);
+}
+
+/* Standardgröße für die Zellen */
+.small-cells {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+}
+
+/* Mittelgroße Zellen */
+.medium-cells {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+/* Große Zellen */
+.big-cells {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* Legende-Elemente */
+.legend-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--font-size-sm);
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
 }
