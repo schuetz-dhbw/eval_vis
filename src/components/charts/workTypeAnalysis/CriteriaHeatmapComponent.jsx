@@ -1,11 +1,15 @@
 import React, { memo, useMemo } from 'react';
-import { getChartColors } from '../../../constants/chartConfig';
-import { useTranslation } from '../../../hooks/useTranslation';
 import { getDifferenceColor } from '../../../utils/chartUtils';
+import useChart from "../../../hooks/useChart";
+import {CHART_TYPES} from "../../../constants/chartTypes";
 
 const CriteriaHeatmapComponent = memo(({ data }) => {
-    const t = useTranslation();
-    const CHART_COLORS = getChartColors();
+    const {
+        t,
+        chartColors
+    } = useChart({
+        chartType: CHART_TYPES.WORK_TYPE_ANALYSIS
+    });
 
     // Gruppieren der Daten nach Typ für bessere Struktur
     const groupedData = useMemo(() => {
@@ -27,15 +31,15 @@ const CriteriaHeatmapComponent = memo(({ data }) => {
 
             <div className="legend-container">
                 <div className="legend-item">
-                    <span className="legend-color" style={{ backgroundColor: CHART_COLORS.SECONDARY }}></span>
+                    <span className="legend-color" style={{ backgroundColor: chartColors.SECONDARY }}></span>
                     <span className="legend-text">&lt; 15%</span>
                 </div>
                 <div className="legend-item">
-                    <span className="legend-color" style={{ backgroundColor: CHART_COLORS.PRIMARY }}></span>
+                    <span className="legend-color" style={{ backgroundColor: chartColors.PRIMARY }}></span>
                     <span className="legend-text">15-30%</span>
                 </div>
                 <div className="legend-item">
-                    <span className="legend-color" style={{ backgroundColor: CHART_COLORS.TERTIARY }}></span>
+                    <span className="legend-color" style={{ backgroundColor: chartColors.TERTIARY }}></span>
                     <span className="legend-text">&gt; 30%</span>
                 </div>
             </div>
@@ -52,7 +56,7 @@ const CriteriaHeatmapComponent = memo(({ data }) => {
                                     key={index}
                                     className={`analysis-cell`}
                                     style={{
-                                        backgroundColor: getDifferenceColor(item.averageDifference, CHART_COLORS),
+                                        backgroundColor: getDifferenceColor(item.averageDifference, chartColors),
                                         opacity: 0.7 + (item.averageDifference / 100 * 0.3)
                                     }}
                                     title={`${t(type, 'works.types')} - ${criterionLabel}: ${item.averageDifference.toFixed(1)}%`}

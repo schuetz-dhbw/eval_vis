@@ -1,23 +1,25 @@
 import React, { memo, useMemo } from 'react';
 import { ScatterChart, Scatter, ZAxis, Cell } from 'recharts';
-import {CHART_DIMENSIONS, SCATTER_CONFIG} from '../../constants/chartConfig';
 import BaseChartComponent from './BaseChartComponent';
 import { DATA_KEYS } from "../../constants/chartConstants";
 import {
     calculateCriteriaDeviationData,
     calculateCriteriaCorrelationData
-} from '../../utils/statistics/correlationAnalysisUtils';
+} from '../../utils/statistics/criteriaAnalysisUtils';
 import useChart from "../../hooks/useChart";
 import {CHART_TYPES} from "../../constants/chartTypes";
-import {renderScatterChartBase} from "../../utils/chartUtils";
+import {renderScatterChartBase, getIntensityClass } from "../../utils/chartUtils";
 
 const CriteriaAnalysisComponent = memo(({ work }) => {
     const {
         t,
-        CHART_COLORS,
+        chartDimensions,
+        chartColors,
         commonChartConfig,
-        defaultLegendProps
-    } = useChart({ chartType: CHART_TYPES.STATISTICS });
+        tooltipConfig,
+        defaultLegendProps,
+        scatterConfig  // Hier aus dem Hook holen
+    } = useChart({ chartType: CHART_TYPES.STATISTICS, isScatter: true });
 
     // Verwende die ausgelagerten Berechnungsfunktionen
     const criteriaData = useMemo(() => {
@@ -29,6 +31,7 @@ const CriteriaAnalysisComponent = memo(({ work }) => {
     }, [work]);
 
     // Tooltip-Formatter mit der neuen Metrik
+    /*
     const tooltipFormatter = useMemo(() => {
         return (data) => {
             return {
@@ -42,43 +45,47 @@ const CriteriaAnalysisComponent = memo(({ work }) => {
             };
         };
     }, [t]);
+     */
 
     return (
-        <div>
-            <h3 className="section-title">{t('deviationTitle', 'chartTitles')}</h3>
-            <div className="chart-wrapper">
-                <BaseChartComponent height={CHART_DIMENSIONS.CORRELATION_HEIGHT}>
+        <div className="flex-column">
+            <div className="component-container">
+                <h3 className="section-title">{t('deviationTitle', 'chartTitles')}</h3>
+                <div className="chart-wrapper">
+                    <BaseChartComponent height={chartDimensions.height}>
                     <ScatterChart margin={commonChartConfig.margin}>
                         {renderScatterChartBase(t,
                             { xDataKey: DATA_KEYS.AI_SCORE, yDataKey: DATA_KEYS.HUMAN_SCORE },
-                            { formatter: tooltipFormatter },
+                            tooltipConfig,
                             defaultLegendProps
                         )}
                         <ZAxis
                             type="number"
                             dataKey="deviation"
-                            range={SCATTER_CONFIG.Z_RANGE}
+                            range={scatterConfig.zRange}
                             name={t('deviation', 'labels')}
                         />
                         <Scatter
                             name={t('criteriaDeviations', 'labels')}
                             data={criteriaData}
-                            fill={CHART_COLORS.PRIMARY}
+                            fill={chartColors.PRIMARY}
                         >
                             {criteriaData.map((entry, index) => (
                                 <Cell
                                     key={`cell-${index}`}
-                                    fill={entry.scoreDiff > 20 ? CHART_COLORS.TERTIARY : CHART_COLORS.SECONDARY}
+                                    fill={entry.scoreDiff > 20 ? chartColors.TERTIARY : chartColors.SECONDARY}
                                 />
                             ))}
                         </Scatter>
                     </ScatterChart>
                 </BaseChartComponent>
             </div>
+            </div>
 
-            <div className="table-container">
+            <div className="component-container">
                 <h3 className="section-title">{t('deviationTable', 'chartTitles')}</h3>
-                <table className="data-table">
+                <div className="table-container">
+                    <table className="data-table">
                     <thead>
                     <tr>
                         <th>{t('criterion', 'tableHeaders')}</th>
@@ -101,9 +108,9 @@ const CriteriaAnalysisComponent = memo(({ work }) => {
                     </tbody>
                 </table>
             </div>
-            <div className="correlation-matrix">
-                <h4 className="section-title">{t('correlationTitle', 'chartTitles')}</h4>
-
+            </div>
+            <div className="component-container">
+                <h3 className="section-title">{t('correlationTitle', 'chartTitles')}</h3>
                 <div className="analysis-grid big-cells">
                     {correlationData
                         .sort((a, b) => Math.abs(parseFloat(b.correlation)) - Math.abs(parseFloat(a.correlation)))
@@ -111,14 +118,7 @@ const CriteriaAnalysisComponent = memo(({ work }) => {
                         .map((item, index) => {
                             // Klassen und Anzeige basierend auf Korrelationsstärke
                             const corrValue = parseFloat(item.correlation);
-                            const absValue = Math.abs(corrValue);
-                            let intensityClass = "low-intensity";
-
-                            if (absValue > 0.7) {
-                                intensityClass = "high-intensity";
-                            } else if (absValue > 0.3) {
-                                intensityClass = "medium-intensity";
-                            }
+                            const intensityClass = getIntensityClass(corrValue, { high: 0.7, medium: 0.3 });
 
                             return (
                                 <div

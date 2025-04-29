@@ -8,7 +8,8 @@ import { renderLines } from '../../utils/chartUtils';
 const LineChartComponent = memo(({ data, chartType, title }) => {
     const {
         t,
-        CHART_COLORS,
+        chartDimensions,
+        chartColors,
         commonChartConfig,
         axisConfig,
         tooltipConfig,
@@ -16,7 +17,7 @@ const LineChartComponent = memo(({ data, chartType, title }) => {
     } = useChart({ chartType });
 
     return (
-        <BaseChartComponent title={title}>
+        <BaseChartComponent title={title} height={chartDimensions.height}>
             <LineChart
                 data={data}
                 margin={commonChartConfig.margin}
@@ -31,7 +32,7 @@ const LineChartComponent = memo(({ data, chartType, title }) => {
                     />}
                 />
                 <Legend {...defaultLegendProps} />
-                {renderLines(t, CHART_COLORS)}
+                {renderLines(t, chartColors)}
             </LineChart>
         </BaseChartComponent>
     );

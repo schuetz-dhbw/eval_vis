@@ -122,3 +122,11 @@ export const getDifferenceColor = (value, CHART_COLORS) => {
     if (value > 15) return CHART_COLORS.PRIMARY;   // Mittlerer Unterschied
     return CHART_COLORS.SECONDARY;                 // Kleiner Unterschied
 };
+
+// Hilfsfunktion für einheitliche Cell-Styling in Heatmaps und Korrelationsmatrizen
+export const getIntensityClass = (value, thresholds = { high: 0.7, medium: 0.3 }) => {
+    const absValue = Math.abs(parseFloat(value));
+    if (absValue > thresholds.high) return 'high-intensity';
+    if (absValue > thresholds.medium) return 'medium-intensity';
+    return 'low-intensity';
+};

@@ -8,7 +8,8 @@ import { DATA_KEYS } from "../../constants/chartConstants";
 const ComposedChartComponent = memo(({ data, chartType, title }) => {
     const {
         t,
-        CHART_COLORS,
+        chartDimensions,
+        chartColors,
         commonChartConfig,
         axisConfig,
         tooltipConfig,
@@ -16,17 +17,17 @@ const ComposedChartComponent = memo(({ data, chartType, title }) => {
     } = useChart({ chartType });
 
     return (
-        <BaseChartComponent title={title}>
+        <BaseChartComponent title={title} height={chartDimensions.height}>
             <ComposedChart
                 data={data}
                 margin={commonChartConfig.margin}
             >
                 {renderCartesianBase(axisConfig, tooltipConfig, defaultLegendProps)}
                 <YAxis yAxisId="right" orientation="right" domain={[0, 25]} />
-                <Bar yAxisId="left" dataKey={DATA_KEYS.AI_SCORE} name={t('aiScore', 'labels')} fill={CHART_COLORS.PRIMARY} />
-                <Bar yAxisId="left" dataKey={DATA_KEYS.HUMAN_SCORE} name={t('humanScore', 'labels')} fill={CHART_COLORS.SECONDARY} />
-                <Line yAxisId="right" type="monotone" dataKey={DATA_KEYS.AI_WEIGHT} name={t('aiWeight', 'labels')} stroke={CHART_COLORS.TERTIARY} />
-                <Line yAxisId="right" type="monotone" dataKey={DATA_KEYS.HUMAN_WEIGHT} name={t('humanWeight', 'labels')} stroke={CHART_COLORS.QUATERNARY} />
+                <Bar yAxisId="left" dataKey={DATA_KEYS.AI_SCORE} name={t('aiScore', 'labels')} fill={chartColors.PRIMARY} />
+                <Bar yAxisId="left" dataKey={DATA_KEYS.HUMAN_SCORE} name={t('humanScore', 'labels')} fill={chartColors.SECONDARY} />
+                <Line yAxisId="right" type="monotone" dataKey={DATA_KEYS.AI_WEIGHT} name={t('aiWeight', 'labels')} stroke={chartColors.TERTIARY} />
+                <Line yAxisId="right" type="monotone" dataKey={DATA_KEYS.HUMAN_WEIGHT} name={t('humanWeight', 'labels')} stroke={chartColors.QUATERNARY} />
             </ComposedChart>
         </BaseChartComponent>
     );

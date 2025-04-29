@@ -8,7 +8,8 @@ import { renderBars } from '../../utils/chartUtils';
 const BarChartComponent = memo(({ data, chartType, title }) => {
     const {
         t,
-        CHART_COLORS,
+        chartDimensions,
+        chartColors,
         commonChartConfig,
         axisConfig,
         tooltipConfig,
@@ -16,7 +17,7 @@ const BarChartComponent = memo(({ data, chartType, title }) => {
     } = useChart({ chartType });
 
     return (
-        <BaseChartComponent title={title}>
+        <BaseChartComponent title={title} height={chartDimensions.height}>
             <BarChart
                 data={data}
                 margin={commonChartConfig.margin}
@@ -31,7 +32,7 @@ const BarChartComponent = memo(({ data, chartType, title }) => {
                     />}
                 />
                 <Legend {...defaultLegendProps} />
-                {renderBars(t, CHART_COLORS)}
+                {renderBars(t, chartColors)}
             </BarChart>
         </BaseChartComponent>
     );

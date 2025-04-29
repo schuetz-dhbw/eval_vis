@@ -210,7 +210,7 @@
 /* ===== TABELLEN ===== */
 .table-container {
     overflow-x: auto;
-    margin-top: var(--space-lg);
+    margin-top: var(--space-xl);
 }
 
 .data-table {
@@ -255,7 +255,6 @@
 
 /* ===== CHART COMPONENTS ===== */
 .chart-wrapper {
-    height: 250px;
     width: 100%;
     position: relative;
 }

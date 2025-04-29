@@ -58,16 +58,18 @@ export const calculateCriteriaDeviationData = (work) => {
     return work.criteriaKeys.map((label, index) => {
         const aiScore = work.aiScores[index];
         const humanScore = work.humanScores[index];
+        const absoluteDiff = Math.abs(aiScore - humanScore);
+
         return {
             originalKey: label,
             name: work.criteriaLabels[index],
-            // Verwende die neue, intuitivere Metrik für die Abweichung
-            deviation: calculateScoreDifference(aiScore, humanScore),
+            scoreDiff: absoluteDiff,
+            deviation: Math.pow(absoluteDiff, 2), // quadratische Abweichung
+
             aiScore: aiScore,
-            humanScore: humanScore,
-            scoreDiff: calculateScoreDifference(aiScore, humanScore)
+            humanScore: humanScore
         };
-    }).sort((a, b) => b.deviation - a.deviation);
+    }).sort((a, b) => b.scoreDiff - a.scoreDiff); // Sortierung nach der wichtigeren Metrik
 };
 
 /**

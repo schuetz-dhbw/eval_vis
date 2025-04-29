@@ -2,20 +2,20 @@ import React, { memo } from 'react';
 import { RadarChart, Radar } from 'recharts';
 import BaseChartComponent from './BaseChartComponent';
 import useChart from '../../hooks/useChart';
-import { CHART_DIMENSIONS } from '../../constants/chartConfig';
 import { renderRadarBase } from '../../utils/chartUtils';
 import { DATA_KEYS } from "../../constants/chartConstants";
 
 const RadarChartComponent = memo(({ data, chartType, title }) => {
     const {
         t,
-        CHART_COLORS,
+        chartDimensions,
+        chartColors,
         tooltipConfig,
         radarConfig
     } = useChart({ chartType, isRadar: true });
 
     return (
-        <BaseChartComponent height={CHART_DIMENSIONS.RADAR_HEIGHT} title={title}>
+        <BaseChartComponent title={title} height={chartDimensions.height}>
             <RadarChart
                 data={data}
                 outerRadius={radarConfig.outerRadius}
@@ -25,25 +25,25 @@ const RadarChartComponent = memo(({ data, chartType, title }) => {
                 <Radar
                     name={t('ai', 'labels')}
                     dataKey={DATA_KEYS.AI}
-                    stroke={CHART_COLORS.PRIMARY}
+                    stroke={chartColors.PRIMARY}
                     strokeWidth={radarConfig.radar.strokeWidth}
-                    fill={CHART_COLORS.PRIMARY}
+                    fill={chartColors.PRIMARY}
                     fillOpacity={radarConfig.radar.fillOpacity}
                     dot={{
                         ...radarConfig.radar.dot,
-                        stroke: CHART_COLORS.PRIMARY
+                        stroke: chartColors.PRIMARY
                     }}
                 />
                 <Radar
                     name={t('human', 'labels')}
                     dataKey={DATA_KEYS.HUMAN}
-                    stroke={CHART_COLORS.SECONDARY}
+                    stroke={chartColors.SECONDARY}
                     strokeWidth={radarConfig.radar.strokeWidth}
-                    fill={CHART_COLORS.SECONDARY}
+                    fill={chartColors.SECONDARY}
                     fillOpacity={radarConfig.radar.fillOpacity}
                     dot={{
                         ...radarConfig.radar.dot,
-                        stroke: CHART_COLORS.SECONDARY
+                        stroke: chartColors.SECONDARY
                     }}
                 />
             </RadarChart>

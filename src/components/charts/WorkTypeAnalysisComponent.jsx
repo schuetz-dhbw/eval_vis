@@ -11,12 +11,12 @@ import TypeDifferenceChartComponent from './workTypeAnalysis/TypeDifferenceChart
 import CriteriaHeatmapComponent from './workTypeAnalysis/CriteriaHeatmapComponent';
 import AnalysisTablesComponent from './workTypeAnalysis/AnalysisTablesComponent';
 import useChart from "../../hooks/useChart";
-import { CHART_DIMENSIONS } from '../../constants/chartConfig';
+import {CHART_TYPES} from "../../constants/chartTypes";
 
 const WorkTypeAnalysisComponent = memo(({ works }) => {
-    const {
-        t,
-    } = useChart({ chartType: 'workTypeAnalysis' });
+    const { t } = useChart({
+        chartType: CHART_TYPES.WORK_TYPE_ANALYSIS
+    });
 
     // Gruppiere Arbeiten nach Typ
     const groupedWorks = useMemo(() => {
@@ -51,7 +51,7 @@ const WorkTypeAnalysisComponent = memo(({ works }) => {
                     <h4 className="section-title">{t('differenceByTypeTitle', 'chartTitles')}</h4>
                     <TypeDifferenceChartComponent
                         data={overallDifferenceByType}
-                        height={CHART_DIMENSIONS.WORK_TYPE_HEIGHT}
+                        chartType={CHART_TYPES.WORK_TYPE_ANALYSIS}
                     />
                 </div>
 

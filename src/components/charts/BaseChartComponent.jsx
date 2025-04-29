@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import { ResponsiveContainer } from 'recharts';
-import { CHART_DIMENSIONS } from '../../constants/chartConfig';
 import ChartErrorBoundary from './ChartErrorBoundary';
 
 /**
@@ -14,13 +13,12 @@ import ChartErrorBoundary from './ChartErrorBoundary';
  * @returns {JSX.Element} ResponsiveContainer mit Error Handling
  */
 const BaseChartComponent = memo(({
-                                children,
-                                height = CHART_DIMENSIONS.DEFAULT_HEIGHT,
-                                width = CHART_DIMENSIONS.FULL_WIDTH,
-                                className = '',
-                                title = null
-                            }) => {
-
+                                     children,
+                                     height,
+                                     width = '100%',
+                                     className = '',
+                                     title = null
+                                 }) => {
     return (
         <ChartErrorBoundary>
             {title && <h4 className="chart-title">{title}</h4>}

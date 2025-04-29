@@ -1,7 +1,14 @@
 import { useMemo } from 'react';
 import { useTranslation } from './useTranslation';
 import { getYDomain, getRadarDomain } from '../utils/dataTransformers';
-import { getChartColors, CHART_MARGINS, AXIS_CONFIG, RADAR_CONFIG } from '../constants/chartConfig';
+import {
+    getChartColors,
+    CHART_MARGINS,
+    AXIS_CONFIG,
+    RADAR_CONFIG,
+    SCATTER_CONFIG,
+    CHART_DIMENSIONS
+} from '../constants/chartConfig';
 import { METRICS } from '../constants/metrics';
 import {DATA_KEYS} from "../constants/chartConstants";
 import {CHART_TYPES} from "../constants/chartTypes";
@@ -14,9 +21,17 @@ import {CHART_TYPES} from "../constants/chartTypes";
  * @param {boolean} options.isRadar - Ob es sich um ein Radar-Chart handelt (Optional)
  * @returns {Object} - Chart-bezogene Hilfsfunktionen und Daten
  */
-const useChart = ({ chartType, isRadar = false }) => {
+const useChart = ({ chartType, isRadar = false, isScatter = false, isWorkTypeAnalysis = false }) => {
     const t = useTranslation();
-    const CHART_COLORS = getChartColors();
+    const chartColors = getChartColors();
+
+    // Einheitliche Chart-Dimensionen basierend auf dem Typ
+    const chartDimensions = useMemo(() => {
+        if (isRadar) return { height: CHART_DIMENSIONS.RADAR_HEIGHT };
+        if (isScatter) return { height: CHART_DIMENSIONS.CORRELATION_HEIGHT };
+        if (isWorkTypeAnalysis) return { height: CHART_DIMENSIONS.WORK_TYPE_HEIGHT };
+        return { height: CHART_DIMENSIONS.DEFAULT_HEIGHT };
+    }, [isRadar, isScatter, isWorkTypeAnalysis]);
 
     const formatValue = useMemo(() => {
         return (value) => {
@@ -25,9 +40,12 @@ const useChart = ({ chartType, isRadar = false }) => {
         };
     }, []);
 
+    // Erweiterte yDomain-Logik
     const yDomain = useMemo(() => {
-        return isRadar ? getRadarDomain(chartType) : getYDomain(chartType);
-    }, [chartType, isRadar]);
+        if (isRadar) return getRadarDomain(chartType);
+        if (isScatter) return [0, 100];
+        return getYDomain(chartType);
+    }, [chartType, isRadar, isScatter]);
 
     const tooltipConfig = useMemo(() => {
         if (chartType === CHART_TYPES.WORK_TYPE_ANALYSIS) {
@@ -102,16 +120,27 @@ const useChart = ({ chartType, isRadar = false }) => {
         };
     }, [yDomain]);
 
+    const scatterConfig = useMemo(() => {
+        return {
+            zRange: SCATTER_CONFIG.Z_RANGE,
+            dot: {
+                r: SCATTER_CONFIG.DOT_RADIUS
+            }
+        };
+    }, []);
+
     return {
         t,
-        CHART_COLORS,
+        chartDimensions,
+        chartColors: chartColors,
         formatValue,
         yDomain,
         tooltipConfig,
         defaultLegendProps,
         commonChartConfig,
         axisConfig,
-        radarConfig
+        radarConfig,
+        scatterConfig
     };
 };
 

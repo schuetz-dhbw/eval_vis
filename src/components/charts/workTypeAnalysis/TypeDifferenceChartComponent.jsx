@@ -8,19 +8,20 @@ import {CHART_TYPES} from "../../../constants/chartTypes";
 
 const TypeDifferenceChartComponent = memo(({
                                                data,
-                                               height
+                                               chartType = CHART_TYPES.WORK_TYPE_ANALYSIS
                                            }) => {
     const {
         t,
-        CHART_COLORS,
+        chartColors,
         commonChartConfig,
         axisConfig,
         tooltipConfig,
-        defaultLegendProps
-    } = useChart({ chartType: CHART_TYPES.WORK_TYPE_ANALYSIS });
+        defaultLegendProps,
+        chartDimensions
+    } = useChart({ chartType });
 
     return (
-        <BaseChartComponent height={height}>
+        <BaseChartComponent height={chartDimensions.height}>
             <BarChart data={data} margin={commonChartConfig.margin}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="type" {...axisConfig.xAxis} />
@@ -33,12 +34,12 @@ const TypeDifferenceChartComponent = memo(({
                 <Bar
                     dataKey="averageDifference"
                     name={t('avgDifference', 'metrics')}
-                    fill={CHART_COLORS.PRIMARY}
+                    fill={chartColors.PRIMARY}
                 >
                     {data.map((entry, index) => (
                         <Cell
                             key={`cell-${index}`}
-                            fill={getDifferenceColor(entry.averageDifference, CHART_COLORS)}
+                            fill={getDifferenceColor(entry.averageDifference, chartColors)}
                         />
                     ))}
                 </Bar>
