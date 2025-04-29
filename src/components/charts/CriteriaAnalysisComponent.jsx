@@ -1,9 +1,6 @@
 import React, { memo, useMemo } from 'react';
-import {
-    ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ZAxis, Cell, Legend
-} from 'recharts';
-import { CHART_DIMENSIONS, CHART_MARGINS } from '../../constants/chartConfig';
-import CustomTooltip from './CustomTooltip';
+import { ScatterChart, Scatter, ZAxis, Cell } from 'recharts';
+import {CHART_DIMENSIONS, SCATTER_CONFIG} from '../../constants/chartConfig';
 import BaseChartComponent from './BaseChartComponent';
 import { DATA_KEYS } from "../../constants/chartConstants";
 import {
@@ -11,13 +8,16 @@ import {
     calculateCriteriaCorrelationData
 } from '../../utils/statistics/correlationAnalysisUtils';
 import useChart from "../../hooks/useChart";
+import {CHART_TYPES} from "../../constants/chartTypes";
+import {renderScatterChartBase} from "../../utils/chartUtils";
 
-const CriteriaAnalysisComponent = memo(({ work, chartType }) => {
+const CriteriaAnalysisComponent = memo(({ work }) => {
     const {
         t,
         CHART_COLORS,
+        commonChartConfig,
         defaultLegendProps
-    } = useChart({ chartType });
+    } = useChart({ chartType: CHART_TYPES.STATISTICS });
 
     // Verwende die ausgelagerten Berechnungsfunktionen
     const criteriaData = useMemo(() => {
@@ -45,47 +45,23 @@ const CriteriaAnalysisComponent = memo(({ work, chartType }) => {
 
     return (
         <div>
-            <h3 className="section-title">{t('deviationTitle', 'chartTitles') || "Criteria Deviation Analysis"}</h3>
+            <h3 className="section-title">{t('deviationTitle', 'chartTitles')}</h3>
             <div className="chart-wrapper">
-                <BaseChartComponent height={CHART_DIMENSIONS.WORK_TYPE_HEIGHT}>
-                    <ScatterChart
-                        margin={CHART_MARGINS.DEFAULT}
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis
-                            type="number"
-                            dataKey={DATA_KEYS.AI_SCORE}
-                            name={t('ai', 'labels')}
-                            domain={[0, 100]}
-                            label={{
-                                value: t('ai', 'labels') + ' ' + t('score', 'labels'),
-                                position: 'bottom',
-                                offset: 0
-                            }}
-                        />
-                        <YAxis
-                            type="number"
-                            dataKey={DATA_KEYS.HUMAN_SCORE}
-                            name={t('human', 'labels')}
-                            domain={[0, 100]}
-                            label={{
-                                value: t('human', 'labels') + ' ' + t('score', 'labels'),
-                                angle: -90,
-                                position: 'insideLeft',
-                                offset: 10,
-                                style: { textAnchor: 'middle' }
-                            }}
-                        />
+                <BaseChartComponent height={CHART_DIMENSIONS.CORRELATION_HEIGHT}>
+                    <ScatterChart margin={commonChartConfig.margin}>
+                        {renderScatterChartBase(t,
+                            { xDataKey: DATA_KEYS.AI_SCORE, yDataKey: DATA_KEYS.HUMAN_SCORE },
+                            { formatter: tooltipFormatter },
+                            defaultLegendProps
+                        )}
                         <ZAxis
                             type="number"
                             dataKey="deviation"
-                            range={[50, 250]}
-                            name={t('deviation', 'labels') || "Deviation"}
+                            range={SCATTER_CONFIG.Z_RANGE}
+                            name={t('deviation', 'labels')}
                         />
-                        <Tooltip content={<CustomTooltip formatter={tooltipFormatter} />} />
-                        <Legend {...defaultLegendProps} />
                         <Scatter
-                            name={t('criteriaDeviations', 'labels') || "Criteria Deviations"}
+                            name={t('criteriaDeviations', 'labels')}
                             data={criteriaData}
                             fill={CHART_COLORS.PRIMARY}
                         >
@@ -101,7 +77,7 @@ const CriteriaAnalysisComponent = memo(({ work, chartType }) => {
             </div>
 
             <div className="table-container">
-                <h3 className="section-title">{t('deviationTable', 'chartTitles') || "Criteria Ranked by Deviation"}</h3>
+                <h3 className="section-title">{t('deviationTable', 'chartTitles')}</h3>
                 <table className="data-table">
                     <thead>
                     <tr>

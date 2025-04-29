@@ -76,3 +76,49 @@ export const renderRadarBase = (radarConfig, tooltipConfig) => {
         <Legend key="legend" />
     ];
 };
+
+export const renderScatterChartBase = (t, dataKeys, tooltipConfig, defaultLegendProps) => {
+    return [
+        <CartesianGrid key="grid" strokeDasharray="3 3" />,
+        <XAxis
+            key="xAxis"
+            type="number"
+            dataKey={dataKeys.xDataKey}
+            name={t('ai', 'labels')}
+            domain={[0, 100]}
+            label={{
+                value: t('ai', 'labels') + ' ' + t('score', 'labels'),
+                position: 'bottom',
+                offset: 0
+            }}
+        />,
+        <YAxis
+            key="yAxis"
+            type="number"
+            dataKey={dataKeys.yDataKey}
+            name={t('human', 'labels')}
+            domain={[0, 100]}
+            label={{
+                value: t('human', 'labels') + ' ' + t('score', 'labels'),
+                angle: -90,
+                position: 'insideLeft',
+                offset: 10,
+                style: { textAnchor: 'middle' }
+            }}
+        />,
+        <Tooltip
+            key="tooltip"
+            content={<CustomTooltip
+                formatter={tooltipConfig.formatter}
+                labelFormatter={tooltipConfig.labelFormatter}
+            />}
+        />,
+        <Legend key="legend" {...defaultLegendProps} />
+    ];
+};
+
+export const getDifferenceColor = (value, CHART_COLORS) => {
+    if (value > 30) return CHART_COLORS.TERTIARY;  // Großer Unterschied
+    if (value > 15) return CHART_COLORS.PRIMARY;   // Mittlerer Unterschied
+    return CHART_COLORS.SECONDARY;                 // Kleiner Unterschied
+};

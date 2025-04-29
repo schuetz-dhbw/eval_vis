@@ -6,16 +6,17 @@ import {
     findLargestDifferencesByType,
     findTopCriteriaByDifference
 } from '../../utils/statistics/workTypeAnalysisUtils';
+import { getDifferenceColor } from '../../utils/chartUtils';
 import TypeDifferenceChartComponent from './workTypeAnalysis/TypeDifferenceChartComponent';
 import CriteriaHeatmapComponent from './workTypeAnalysis/CriteriaHeatmapComponent';
 import AnalysisTablesComponent from './workTypeAnalysis/AnalysisTablesComponent';
 import useChart from "../../hooks/useChart";
+import { CHART_DIMENSIONS } from '../../constants/chartConfig';
 
-const WorkTypeAnalysisComponent = memo(({ works, chartType }) => {
+const WorkTypeAnalysisComponent = memo(({ works }) => {
     const {
         t,
-        CHART_COLORS,
-    } = useChart({ chartType });
+    } = useChart({ chartType: 'workTypeAnalysis' });
 
     // Gruppiere Arbeiten nach Typ
     const groupedWorks = useMemo(() => {
@@ -42,35 +43,6 @@ const WorkTypeAnalysisComponent = memo(({ works, chartType }) => {
         return findTopCriteriaByDifference(differencesByType, t);
     }, [differencesByType, t]);
 
-    // Tooltip-Formatter für Charts
-    const tooltipFormatter = useMemo(() => {
-        return (data) => {
-            return {
-                title: data.type,
-                items: [
-                    {
-                        name: t('avgDifference', 'metrics'),
-                        value: data.averageDifference.toFixed(2) + "%",
-                        className: ""
-                    },
-                    {
-                        name: t('count', 'tableHeaders'),
-                        value: data.count,
-                        className: ""
-                    }
-                ]
-            };
-        };
-    }, [t]);
-
-    // Bestimme Farbe basierend auf Unterschiedswert
-    const getDifferenceColor = useMemo(() => {
-        return (value) => {
-            if (value > 30) return CHART_COLORS.TERTIARY; // Großer Unterschied - orange
-            if (value > 15) return CHART_COLORS.PRIMARY;  // Mittlerer Unterschied - lila
-            return CHART_COLORS.SECONDARY;                // Kleiner Unterschied - grün
-        };
-    }, [CHART_COLORS.PRIMARY, CHART_COLORS.SECONDARY, CHART_COLORS.TERTIARY]);
 
     return (
         <div className="work-type-analysis">
@@ -79,8 +51,7 @@ const WorkTypeAnalysisComponent = memo(({ works, chartType }) => {
                     <h4 className="section-title">{t('differenceByTypeTitle', 'chartTitles')}</h4>
                     <TypeDifferenceChartComponent
                         data={overallDifferenceByType}
-                        getDifferenceColor={getDifferenceColor}
-                        tooltipFormatter={tooltipFormatter}
+                        height={CHART_DIMENSIONS.WORK_TYPE_HEIGHT}
                     />
                 </div>
 

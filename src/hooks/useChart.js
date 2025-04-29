@@ -4,6 +4,7 @@ import { getYDomain, getRadarDomain } from '../utils/dataTransformers';
 import { getChartColors, CHART_MARGINS, AXIS_CONFIG, RADAR_CONFIG } from '../constants/chartConfig';
 import { METRICS } from '../constants/metrics';
 import {DATA_KEYS} from "../constants/chartConstants";
+import {CHART_TYPES} from "../constants/chartTypes";
 
 /**
  * useChart - Ein Hook für wiederverwendbare Chart-Funktionalität
@@ -29,14 +30,24 @@ const useChart = ({ chartType, isRadar = false }) => {
     }, [chartType, isRadar]);
 
     const tooltipConfig = useMemo(() => {
-        return {
-            formatter: formatValue,
-            labelFormatter: (data) => {
-                return data[DATA_KEYS.SHORT_NAME] || data[DATA_KEYS.NAME] ||
-                    data[DATA_KEYS.SHORT_SUBJECT] || data[DATA_KEYS.SUBJECT] || '';
-            }
-        };
-    }, [formatValue]);
+        if (chartType === CHART_TYPES.WORK_TYPE_ANALYSIS) {
+            return {
+                formatter: formatValue,
+                labelFormatter: (data) => {
+                    return `${data.type} (${t('count', 'tableHeaders')}: ${data.count})`;
+                }
+            };
+        }
+        else {
+            return {
+                formatter: formatValue,
+                labelFormatter: (data) => {
+                    return data[DATA_KEYS.SHORT_NAME] || data[DATA_KEYS.NAME] ||
+                        data[DATA_KEYS.SHORT_SUBJECT] || data[DATA_KEYS.SUBJECT] || '';
+                }
+            };
+        }
+    }, [chartType, formatValue, t]);
 
     const defaultLegendProps = useMemo(() => {
         return {
