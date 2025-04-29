@@ -8,6 +8,15 @@ export const CHART_TYPE_KEYS = {
     WORK_TYPE_ANALYSIS: 'workTypeAnalysis'
 };
 
+// Enum für Chart-Modi (Visualisierungstypen)
+export const CHART_MODE = {
+    STANDARD: 'standard',
+    RADAR: 'radar',
+    SCATTER: 'scatter',
+    WORK_TYPE: 'workType',
+    COMBINED: 'combined'
+};
+
 // Daten-Keys für die Charts
 export const DATA_KEYS = {
     AI: 'ai',

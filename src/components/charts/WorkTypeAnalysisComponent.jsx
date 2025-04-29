@@ -6,16 +6,17 @@ import {
     findLargestDifferencesByType,
     findTopCriteriaByDifference
 } from '../../utils/statistics/workTypeAnalysisUtils';
-import { getDifferenceColor } from '../../utils/chartUtils';
 import TypeDifferenceChartComponent from './workTypeAnalysis/TypeDifferenceChartComponent';
 import CriteriaHeatmapComponent from './workTypeAnalysis/CriteriaHeatmapComponent';
 import AnalysisTablesComponent from './workTypeAnalysis/AnalysisTablesComponent';
 import useChart from "../../hooks/useChart";
 import {CHART_TYPES} from "../../constants/chartTypes";
+import {CHART_MODE} from "../../constants/chartConstants";
 
-const WorkTypeAnalysisComponent = memo(({ works }) => {
+const WorkTypeAnalysisComponent = memo(({ works, chartType = CHART_TYPES.WORK_TYPE_ANALYSIS }) => {
     const { t } = useChart({
-        chartType: CHART_TYPES.WORK_TYPE_ANALYSIS
+        chartType,
+        mode: CHART_MODE.WORK_TYPE
     });
 
     // Gruppiere Arbeiten nach Typ
@@ -43,7 +44,6 @@ const WorkTypeAnalysisComponent = memo(({ works }) => {
         return findTopCriteriaByDifference(differencesByType, t);
     }, [differencesByType, t]);
 
-
     return (
         <div className="work-type-analysis">
             <div className="flex-column">
@@ -51,7 +51,7 @@ const WorkTypeAnalysisComponent = memo(({ works }) => {
                     <h4 className="section-title">{t('differenceByTypeTitle', 'chartTitles')}</h4>
                     <TypeDifferenceChartComponent
                         data={overallDifferenceByType}
-                        chartType={CHART_TYPES.WORK_TYPE_ANALYSIS}
+                        chartType={chartType}
                     />
                 </div>
 
@@ -59,7 +59,7 @@ const WorkTypeAnalysisComponent = memo(({ works }) => {
                     <h4 className="section-title">{t('criteriaByTypeTitle', 'chartTitles')}</h4>
                     <CriteriaHeatmapComponent
                         data={differencesByType}
-                        getDifferenceColor={getDifferenceColor}
+                        chartType={chartType}
                     />
                 </div>
 
@@ -68,6 +68,7 @@ const WorkTypeAnalysisComponent = memo(({ works }) => {
                     <AnalysisTablesComponent
                         largestDifferencesByType={largestDifferencesByType}
                         topCriteriaByDifference={topCriteriaByDifference}
+                        chartType={chartType}
                     />
                 </div>
             </div>

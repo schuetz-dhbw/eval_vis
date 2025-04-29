@@ -5,6 +5,7 @@ import ChartErrorBoundary from '../charts/ChartErrorBoundary';
 import DataErrorBoundary from '../common/DataErrorBoundary';
 import ErrorBoundary from '../common/ErrorBoundary';
 import {useAppContext} from "../../AppContext";
+import {CHART_TYPES} from "../../constants/chartTypes";
 
 const WorkTypeAnalysisSection = () => {
     const { rawWorks } = useAppContext();
@@ -17,12 +18,13 @@ const WorkTypeAnalysisSection = () => {
             showDetails={false}
         >
             <div className="component-container ">
-                <h3 className="section-title">{t('workTypeAnalysisTitle', 'chartTitles') || "Work Type Analysis"}</h3>
+                <h3 className="section-title">{t('workTypeAnalysisTitle', 'chartTitles')}</h3>
                 <div className="flex-column">
                     <DataErrorBoundary data={rawWorks} >
                         <ChartErrorBoundary >
                             <WorkTypeAnalysisComponent
                                 works={rawWorks}
+                                chartType={CHART_TYPES.WORK_TYPE_ANALYSIS}
                             />
                         </ChartErrorBoundary>
                     </DataErrorBoundary>

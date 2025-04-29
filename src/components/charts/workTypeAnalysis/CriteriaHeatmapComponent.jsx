@@ -1,14 +1,16 @@
 import React, { memo, useMemo } from 'react';
 import { getDifferenceColor } from '../../../utils/chartUtils';
 import useChart from "../../../hooks/useChart";
-import {CHART_TYPES} from "../../../constants/chartTypes";
+import { CHART_TYPES } from "../../../constants/chartTypes";
+import {CHART_MODE} from "../../../constants/chartConstants";
 
-const CriteriaHeatmapComponent = memo(({ data }) => {
+const CriteriaHeatmapComponent = memo(({ data, chartType = CHART_TYPES.WORK_TYPE_ANALYSIS }) => {
     const {
         t,
         chartColors
     } = useChart({
-        chartType: CHART_TYPES.WORK_TYPE_ANALYSIS
+        chartType,
+        mode: CHART_MODE.WORK_TYPE
     });
 
     // Gruppieren der Daten nach Typ für bessere Struktur

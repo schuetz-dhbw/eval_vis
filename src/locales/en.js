@@ -69,7 +69,7 @@ export const en = {
         humanWeight: "Human Weighting",
         score: "Score",
         difference: "Difference",
-        deviation: "Deviation",
+        deviation: "Standard Deviation",
         criteriaDeviations: "Criteria Deviations",
         correlation: "Correlation",
         grade: "Grade"

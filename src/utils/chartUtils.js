@@ -117,13 +117,50 @@ export const renderScatterChartBase = (t, dataKeys, tooltipConfig, defaultLegend
     ];
 };
 
-export const getDifferenceColor = (value, CHART_COLORS) => {
-    if (value > 30) return CHART_COLORS.TERTIARY;  // Großer Unterschied
-    if (value > 15) return CHART_COLORS.PRIMARY;   // Mittlerer Unterschied
-    return CHART_COLORS.SECONDARY;                 // Kleiner Unterschied
+// Funktion zum Rendern von Composite-Chart-Elementen
+export const renderCompositeElements = (t, chartColors) => {
+    return [
+        <Bar
+            key="aiScore"
+            yAxisId="left"
+            dataKey={DATA_KEYS.AI_SCORE}
+            name={t('aiScore', 'labels')}
+            fill={chartColors.PRIMARY}
+        />,
+        <Bar
+            key="humanScore"
+            yAxisId="left"
+            dataKey={DATA_KEYS.HUMAN_SCORE}
+            name={t('humanScore', 'labels')}
+            fill={chartColors.SECONDARY}
+        />,
+        <Line
+            key="aiWeight"
+            yAxisId="right"
+            type="monotone"
+            dataKey={DATA_KEYS.AI_WEIGHT}
+            name={t('aiWeight', 'labels')}
+            stroke={chartColors.TERTIARY}
+        />,
+        <Line
+            key="humanWeight"
+            yAxisId="right"
+            type="monotone"
+            dataKey={DATA_KEYS.HUMAN_WEIGHT}
+            name={t('humanWeight', 'labels')}
+            stroke={chartColors.QUATERNARY}
+        />
+    ];
 };
 
-// Hilfsfunktion für einheitliche Cell-Styling in Heatmaps und Korrelationsmatrizen
+// Verbesserte und vereinheitlichte Funktion für die Farbzuweisung basierend auf Differenzwerten
+export const getDifferenceColor = (value, chartColors, thresholds = { high: 30, medium: 15 }) => {
+    if (value > thresholds.high) return chartColors.TERTIARY;  // Großer Unterschied
+    if (value > thresholds.medium) return chartColors.PRIMARY; // Mittlerer Unterschied
+    return chartColors.SECONDARY;                             // Kleiner Unterschied
+};
+
+// Verbesserte Funktion für Intensitätsklassen mit standardisierten Schwellenwerten
 export const getIntensityClass = (value, thresholds = { high: 0.7, medium: 0.3 }) => {
     const absValue = Math.abs(parseFloat(value));
     if (absValue > thresholds.high) return 'high-intensity';

@@ -68,7 +68,7 @@ export const de = {
         aiWeight: "KI Gewichtung",
         humanWeight: "Human Gewichtung",
         score: "Wert",
-        deviation: "Abweichung",
+        deviation: "Standardabweichung",
         difference: "Differenz",
         criteriaDeviations: "Kriterienabweichungen",
         correlation: "Korrelation",

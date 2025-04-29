@@ -3,7 +3,7 @@ import { RadarChart, Radar } from 'recharts';
 import BaseChartComponent from './BaseChartComponent';
 import useChart from '../../hooks/useChart';
 import { renderRadarBase } from '../../utils/chartUtils';
-import { DATA_KEYS } from "../../constants/chartConstants";
+import {CHART_MODE, DATA_KEYS} from "../../constants/chartConstants";
 
 const RadarChartComponent = memo(({ data, chartType, title }) => {
     const {
@@ -12,7 +12,7 @@ const RadarChartComponent = memo(({ data, chartType, title }) => {
         chartColors,
         tooltipConfig,
         radarConfig
-    } = useChart({ chartType, isRadar: true });
+    } = useChart({ chartType, mode: CHART_MODE.RADAR});
 
     return (
         <BaseChartComponent title={title} height={chartDimensions.height}>

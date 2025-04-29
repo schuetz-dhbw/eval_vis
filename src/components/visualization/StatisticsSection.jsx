@@ -7,6 +7,7 @@ import DataErrorBoundary from '../common/DataErrorBoundary';
 import ErrorBoundary from '../common/ErrorBoundary';
 import {useAppContext} from "../../AppContext";
 import {METRICS} from "../../constants/metrics";
+import {CHART_TYPES} from "../../constants/chartTypes";
 
 const StatisticsSection = () => {
     const { currentWork } = useAppContext();
@@ -36,7 +37,7 @@ const StatisticsSection = () => {
 
                 <div className="component-grid grid-3-cols">
                     <div className="info-box">
-                        <h4 className="data-label">{t('avgDifference', 'metrics') || "Average Score Difference"}</h4>
+                        <h4 className="data-label">{t('avgDifference', 'metrics')}</h4>
                         <div className="data-value">{formatNum(stats.avgDifference)}%</div>
                         <p className="item-description">
                             {t('maxDiff', 'metrics') || "Max"}: {formatNum(stats.maxDifference)}% | { }
@@ -45,7 +46,7 @@ const StatisticsSection = () => {
                     </div>
 
                     <div className="info-box">
-                        <h4 className="data-label">{t('standardDeviation', 'metrics') || "Standard Deviation"}</h4>
+                        <h4 className="data-label">{t('standardDeviation', 'metrics')}</h4>
                         <div className="data-value">
                             {t('ai', 'labels')}: {formatNum(stats.aiStdDev)}
                         </div>
@@ -55,7 +56,7 @@ const StatisticsSection = () => {
                     </div>
 
                     <div className="info-box">
-                        <h4 className="data-label">{t('weightDifference', 'metrics') || "Weight Difference"}</h4>
+                        <h4 className="data-label">{t('weightDifference', 'metrics')}</h4>
                         <div className="data-value">{formatNum(stats.avgWeightDiff * 100)}%</div>
                         <p className="item-description">
                             {t('cosine', 'metrics')}: {metrics.similarity.toFixed(4)}
@@ -68,6 +69,7 @@ const StatisticsSection = () => {
                         <ChartErrorBoundary>
                             <CriteriaAnalysisComponent
                                 work={currentWork}
+                                chartType={CHART_TYPES.STATISTICS}
                             />
                         </ChartErrorBoundary>
                     </DataErrorBoundary>

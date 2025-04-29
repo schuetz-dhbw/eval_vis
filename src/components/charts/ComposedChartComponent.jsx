@@ -3,7 +3,7 @@ import { ComposedChart, Bar, Line, YAxis } from 'recharts';
 import BaseChartComponent from './BaseChartComponent';
 import useChart from '../../hooks/useChart';
 import { renderCartesianBase } from '../../utils/chartUtils';
-import { DATA_KEYS } from "../../constants/chartConstants";
+import {CHART_MODE, DATA_KEYS} from "../../constants/chartConstants";
 
 const ComposedChartComponent = memo(({ data, chartType, title }) => {
     const {
@@ -14,7 +14,7 @@ const ComposedChartComponent = memo(({ data, chartType, title }) => {
         axisConfig,
         tooltipConfig,
         defaultLegendProps
-    } = useChart({ chartType });
+    } = useChart({ chartType, mode: CHART_MODE.COMBINED });
 
     return (
         <BaseChartComponent title={title} height={chartDimensions.height}>
