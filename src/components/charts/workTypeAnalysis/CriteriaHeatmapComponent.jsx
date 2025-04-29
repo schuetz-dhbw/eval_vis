@@ -50,7 +50,7 @@ const CriteriaHeatmapComponent = memo(({ data }) => {
                             return (
                                 <div
                                     key={index}
-                                    className={`color-cell`}
+                                    className={`analysis-cell`}
                                     style={{
                                         backgroundColor: getDifferenceColor(item.averageDifference, CHART_COLORS),
                                         opacity: 0.7 + (item.averageDifference / 100 * 0.3)

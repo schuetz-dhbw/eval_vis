@@ -1,18 +1,77 @@
 /*
- * Wiederverwendbare Komponenten-Styles
- * Konsolidierte Styles aus allen komponentenspezifischen CSS-Dateien
- */
+* Wiederverwendbare Komponenten-Styles
+* Konsolidierte und optimierte Styles für alle Komponenten
+*/
+
+/* ===== LAYOUT & CONTAINERS ===== */
+/* Wiederverwendbare Grid- und Flex-Layouts */
+.component-container {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: var(--inset-lg);
+    background-color: var(--color-white);
+    margin-top: var(--stack-lg);
+}
+
+.component-grid {
+    display: grid;
+    gap: var(--space-md);
+    margin-bottom: var(--stack-lg);
+}
+
+.grid-3-cols {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-2-cols {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.split-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-md);
+}
+
+.flex-center {
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-between {
+    justify-content: space-between;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.full-width {
+    grid-column: span 1;
+}
 
 /* ===== HEADER STYLES ===== */
 .header-section {
     text-align: center;
-    margin-bottom: var(--padding-xl);
+    margin-bottom: var(--space-xl);
 }
 
 .main-title {
     font-size: var(--font-size-xl);
     font-weight: 700;
-    margin-bottom: var(--padding-sm);
+    margin-bottom: var(--space-sm);
     color: var(--color-text);
     letter-spacing: var(--letter-spacing);
 }
@@ -20,7 +79,21 @@
 .sub-title {
     font-size: var(--font-size-xl);
     font-weight: 500;
-    margin-bottom: var(--padding-xl);
+    margin-bottom: var(--space-xl);
+    color: var(--color-text);
+}
+
+.section-title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin-bottom: var(--stack-lg);
+    color: var(--color-text);
+}
+
+.subtitle {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    margin-bottom: var(--stack-md);
     color: var(--color-text);
 }
 
@@ -30,15 +103,15 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: var(--padding-sm);
-    margin-bottom: var(--padding-lg);
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
 }
 
 .dropdown-selector {
     background-color: var(--color-white);
     border: 1px solid var(--color-border-light);
     border-radius: var(--border-radius);
-    padding: var(--padding-sm) var(--padding-md);
+    padding: var(--inset-sm) var(--inset-md);
     font-size: var(--font-size-base);
     line-height: 20px;
     color: var(--color-text);
@@ -51,6 +124,12 @@
     cursor: pointer;
 }
 
+.dropdown-selector:focus {
+    outline: none;
+    border-color: var(--color-border-focus);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
 .work-selector {
     flex-grow: 1;
     max-width: calc(100% - 36px);
@@ -59,14 +138,9 @@
     text-overflow: ellipsis;
 }
 
-.chart-selector, .language-selector {
+.chart-selector,
+.language-selector {
     flex-shrink: 0;
-}
-
-.dropdown-selector:focus {
-    outline: none;
-    border-color: var(--color-border-focus);
-    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
 }
 
 /* ===== DARK MODE TOGGLE ===== */
@@ -83,7 +157,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Nur die benötigte Eigenschaft animieren */
     transition: background-color var(--transition-speed) var(--transition-timing);
     z-index: 100;
 }
@@ -97,255 +170,49 @@
     box-shadow: 0 0 0 2px var(--color-border-focus);
 }
 
-/* ===== USAGE HINTS ===== */
-.usage-hints {
-    margin-top: var(--padding-lg);
-    font-size: var(--font-size-base);
-    color: var(--color-text-light);
-    background-color: var(--background-even-row);
-    padding: var(--padding-lg);
-    border-radius: var(--border-radius);
-}
-
-.hints-title {
-    font-weight: 600;
-    margin-bottom: var(--padding-sm);
-    font-size: var(--font-size-base);
-}
-
-.hints-list {
-    list-style-type: disc;
-    padding-left: 20px;
-    line-height: 1.5;
-}
-
-.hints-list li {
-    margin-top: 4px;
-    margin-bottom: 4px;
-}
-
-.term {
-    font-weight: 500;
-}
-
-/* ===== ERROR HANDLING ===== */
-.error-container {
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
-    padding: var(--padding-lg);
-    background-color: rgba(255, 115, 0, 0.05);
-    margin: var(--padding-md) 0;
-    text-align: center;
-}
-
-.error-title {
-    color: var(--color-tertiary);
-    font-size: var(--font-size-lg);
-    margin-bottom: var(--padding-sm);
-}
-
-.error-message {
-    color: var(--color-text);
-    margin-bottom: var(--padding-md);
-    font-size: var(--font-size-base);
-}
-
-.error-details {
-    text-align: left;
-    margin-top: var(--padding-md);
-    padding: var(--padding-md);
+/* ===== DATA DISPLAY ELEMENTS ===== */
+/* Informationsboxen und Datendarstellung */
+.info-box {
     background-color: var(--background-even-row);
     border-radius: var(--border-radius);
-    font-size: var(--font-size-sm);
-}
-
-.data-error-container,
-.data-error-fallback {
+    padding: var(--inset-md);
     border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
-    padding: var(--padding-lg);
-    background-color: rgba(136, 132, 216, 0.05);
-    margin: var(--padding-md) 0;
-    text-align: center;
-    min-height: 200px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
-.chart-error-boundary {
-    width: 100%;
-    height: 100%;
-}
-
-/* ===== WORK TYPE ANALYSIS ===== */
-.work-type-analysis {
-    margin-top: var(--padding-sm);
-    background-color: var(--color-white);
-}
-
-.analysis-content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--padding-md);
-}
-
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: var(--font-size-sm);
-}
-
-.legend-color {
-    width: 16px;
-    height: 16px;
-    border-radius: 4px;
-}
-
-.heatmap-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    gap: 2px;
-}
-
-.heatmap-cell {
-    padding: var(--padding-sm);
-    color: white;
-    text-align: center;
-    font-weight: 500;
-    font-size: var(--font-size-sm);
-    border-radius: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    cursor: default;
-}
-
-.heatmap-cell:hover {
-    transform: scale(1.05);
-    z-index: 1;
-    will-change: transform;
-}
-
-/* ===== CORRELATION ANALYSIS ===== */
-
-.highlight-row {
-    background-color: rgba(255, 115, 0, 0.1);
-}
-
-.grid-template-columns-5 {
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(2, minmax(80px, auto));
-}
-
-.correlation-item {
-    background-color: var(--color-white);
-    border-radius: var(--border-radius);
-    padding: var(--padding-sm);
-    border: 1px solid var(--color-border);
-    font-size: var(--font-size-xs);
-    text-align: center;
-}
-
-.correlation-value {
+.data-label {
     font-weight: 600;
+    margin-bottom: var(--space-sm);
     font-size: var(--font-size-base);
 }
 
-.correlation-high {
-    color: var(--color-secondary);
-}
-
-.correlation-medium {
+.data-value {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
     color: var(--color-primary);
+    margin-bottom: var(--space-sm);
 }
 
-.correlation-low {
-    color: var(--color-tertiary);
-}
-
-/* Korrelationsmatrix-Container */
-.correlation-matrix {
-    margin-top: var(--space-lg);
-}
-
-.matrix-title {
-    font-size: var(--font-size-base);
-    font-weight: 600;
-    margin-bottom: var(--padding-sm);
-    color: var(--color-text);
-}
-
-.correlation-cell {
-    padding: var(--padding-md);
-    min-height: 100px;
-    border-radius: var(--border-radius);
-    text-align: center;
-    font-weight: 500;
+.item-description {
     font-size: var(--font-size-sm);
-    color: white;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    transition: all 0.2s ease;
+    color: var(--color-text-light);
+    margin-bottom: var(--space-sm);
 }
 
-.correlation-cell:hover {
-    transform: scale(1.05);
-    z-index: 1;
-    box-shadow: var(--shadow-hover);
-    /* Will-change für Performanceoptimierung bei Transform-Effekten */
-    will-change: transform;
+.quality-indicator {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    padding-top: var(--space-sm);
+    border-top: 1px dashed var(--color-border-light);
 }
 
-.strong-correlation {
-    background-color: var(--color-secondary);
-}
-
-.medium-correlation {
-    background-color: var(--color-primary);
-}
-
-.weak-correlation {
-    background-color: var(--color-tertiary);
-}
-
-/* ===== TABLE CONTAINER ===== */
+/* ===== TABELLEN ===== */
 .table-container {
     overflow-x: auto;
     margin-top: var(--space-lg);
 }
 
-/* Gemeinsame Container-Stile mit neuem Spacing-System */
-.component-container {
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
-    padding: var(--inset-lg);
-    background-color: var(--color-white);
-    margin-top: var(--stack-lg);
-}
-
-/* Gemeinsame Titelstile */
-.section-title {
-    font-size: var(--font-size-lg);
-    font-weight: 600;
-    margin-bottom: var(--stack-lg);
-    color: var(--color-text);
-}
-
-/* Für Unterüberschriften */
-.subtitle {
-    font-size: var(--font-size-base);
-    font-weight: 600;
-    margin-bottom: var(--stack-md);
-    color: var(--color-text);
-}
-
-/* Konsistente Tabellenstile */
 .data-table {
     width: 100%;
     border-collapse: collapse;
@@ -382,170 +249,225 @@
     font-weight: 600;
 }
 
-/* Konsistente Chart-Stile */
+.highlight-row {
+    background-color: rgba(255, 115, 0, 0.1);
+}
+
+/* ===== CHART COMPONENTS ===== */
 .chart-wrapper {
     height: 250px;
     width: 100%;
     position: relative;
 }
 
-.chart-title {
-    font-size: var(--font-size-base);
-    font-weight: 600;
-    margin-bottom: var(--padding-sm);
-    color: var(--color-text);
-    text-align: center;
-}
-
-/* Gemeinsame Info-Box Stile */
-.info-box {
-    background-color: var(--background-even-row);
-    border-radius: var(--border-radius);
-    padding: var(--inset-md);
-    border: 1px solid var(--color-border);
-    display: flex;
-    flex-direction: column;
-}
-
-/* Daten-Label und Wert Stile */
-.data-label {
-    font-weight: 600;
-    margin-bottom: var(--padding-sm);
-    font-size: var(--font-size-base);
-}
-
-.data-value {
-    font-size: var(--font-size-xl);
-    font-weight: 700;
-    color: var(--color-primary);
-    margin-bottom: var(--padding-sm);
-}
-
-/* Beschreibungstexte */
-.item-description {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-light);
-    margin-bottom: var(--padding-sm);
-}
-
-/* Qualitäts-Indikator für Metriken */
-.quality-indicator {
-    font-size: var(--font-size-sm);
-    font-weight: 500;
-    padding-top: var(--padding-sm);
-    border-top: 1px dashed var(--color-border-light);
-}
-
-/* Flexibles Grid-Layout */
-.component-grid {
-    display: grid;
-    gap: var(--space-md);
-    margin-bottom: var(--stack-lg);
-}
-
-/* Flexible Layoutcontainer */
-.flex-column {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-}
-
-.flex-row {
-    display: flex;
-    flex-direction: row;
-    gap: var(--space-md);
-}
-
-/* Standardmäßig 3 Spalten, responsives Verhalten in media-queries.css */
-.grid-3-cols {
-    grid-template-columns: repeat(3, 1fr);
-}
-
-.grid-2-cols {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-/* Häufig genutzte Varianten */
-.flex-center {
-    align-items: center;
-    justify-content: center;
-}
-
-.flex-between {
-    justify-content: space-between;
-}
-
-.flex-wrap {
-    flex-wrap: wrap;
-}
-
-/* Zweispalten-Layout für gleichbreite Elemente */
-.split-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-lg);
-}
-
-/* Chart-spezifische Klassen */
 .radar-wrapper {
     height: 350px !important;
     padding-top: 1rem;
 }
 
-/* Recharts Komponenten-Optimierungen */
-.recharts-radar {
-    filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.15));
-    transition: filter 0.3s ease;
+.chart-title {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+    color: var(--color-text);
+    text-align: center;
 }
 
-.recharts-radar .recharts-polygon {
-    stroke-width: 2px;
+.chart-error-boundary {
+    width: 100%;
+    height: 100%;
 }
 
-.recharts-cartesian-axis-tick-value {
+/* ===== ANALYSIS CELLS & HEATMAPS ===== */
+/* Gemeinsame Stile für alle Zellen in Heatmaps und Analysen */
+.analysis-cell {
+    padding: var(--inset-md);
+    min-height: 60px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-weight: 500;
+    font-size: var(--font-size-sm);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 0.2s ease;
+    cursor: default;
+}
+
+.analysis-cell:hover {
+    transform: scale(1.05);
+    z-index: 1;
+    box-shadow: var(--shadow-hover);
+    will-change: transform;
+}
+
+/* Intensitäts-Stufen für Analyse-Zellen */
+.high-intensity {
+    background-color: var(--color-secondary);
+}
+
+.medium-intensity {
+    background-color: var(--color-primary);
+}
+
+.low-intensity {
+    background-color: var(--color-tertiary);
+}
+
+/* Zellinhalte */
+.cell-criterion {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-xs);
+}
+
+.cell-value {
+    font-weight: 600;
+    font-size: var(--font-size-base);
+    margin-bottom: var(--space-xs);
+}
+
+.cell-count {
     font-size: var(--font-size-xs);
-    fill: var(--color-text);
-    transition: fill 0.3s ease;
+    opacity: 0.9;
 }
 
-[data-theme='dark'] .recharts-radar {
-    filter: drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.15));
+/* Analyse-Grids */
+.analysis-grid {
+    display: grid;
+    gap: var(--space-xs);
 }
 
-[data-theme='dark'] .recharts-text,
-[data-theme='dark'] .recharts-cartesian-axis-tick-value {
-    fill: var(--color-text);
+.small-cells {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
 }
 
-[data-theme='dark'] .recharts-legend-item-text {
-    color: var(--color-text) !important;
+.medium-cells {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 }
 
-.recharts-tooltip-wrapper {
-    z-index: 1000;
+.big-cells {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
-.recharts-default-tooltip {
-    background-color: rgba(255, 255, 255, 0.95) !important;
-    border: 1px solid var(--color-border) !important;
-    border-radius: var(--border-radius) !important;
-    padding: var(--padding-sm) var(--padding-md) !important;
-    box-shadow: var(--shadow-sm) !important;
+/* ===== LEGENDS ===== */
+.legend-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
 }
 
-/* Benutzerdefinierter Tooltip */
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--font-size-sm);
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+/* ===== USAGE HINTS ===== */
+.usage-hints {
+    margin-top: var(--space-lg);
+    font-size: var(--font-size-base);
+    color: var(--color-text-light);
+    background-color: var(--background-even-row);
+    padding: var(--inset-lg);
+    border-radius: var(--border-radius);
+}
+
+.hints-title {
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+    font-size: var(--font-size-base);
+}
+
+.hints-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    line-height: 1.5;
+}
+
+.hints-list li {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.term {
+    font-weight: 500;
+}
+
+/* ===== ERROR HANDLING ===== */
+.error-container {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: var(--inset-lg);
+    background-color: rgba(255, 115, 0, 0.05);
+    margin: var(--space-md) 0;
+    text-align: center;
+}
+
+.error-title {
+    color: var(--color-tertiary);
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-sm);
+}
+
+.error-message {
+    color: var(--color-text);
+    margin-bottom: var(--space-md);
+    font-size: var(--font-size-base);
+}
+
+.error-details {
+    text-align: left;
+    margin-top: var(--space-md);
+    padding: var(--inset-md);
+    background-color: var(--background-even-row);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+}
+
+.data-error-container,
+.data-error-fallback {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: var(--inset-lg);
+    background-color: rgba(136, 132, 216, 0.05);
+    margin: var(--space-md) 0;
+    text-align: center;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-data-message {
+    text-align: center;
+    padding: var(--inset-lg);
+    color: var(--color-text-light);
+    font-style: italic;
+}
+
+/* ===== CUSTOM TOOLTIP ===== */
 .custom-tooltip {
     background-color: rgba(255, 255, 255, 0.95);
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
-    padding: var(--padding-sm) var(--padding-md);
+    padding: var(--inset-sm) var(--inset-md);
     box-shadow: var(--shadow-sm);
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .tooltip-title {
     font-weight: 600;
-    margin-bottom: var(--padding-sm);
+    margin-bottom: var(--space-sm);
     margin-top: 0;
     color: var(--color-text);
 }
@@ -566,21 +488,6 @@
     color: var(--color-text);
 }
 
-/* Dark mode support für Tooltips */
-[data-theme='dark'] .custom-tooltip {
-    background-color: rgba(40, 40, 40, 0.95);
-    border-color: var(--color-border);
-}
-
-[data-theme='dark'] .tooltip-title,
-[data-theme='dark'] .tooltip-value {
-    color: var(--color-text);
-}
-
-[data-theme='dark'] .tooltip-label {
-    color: var(--color-text-light);
-}
-
 /* Farbspezifische Tooltip-Elemente */
 .tooltip-item.ai .tooltip-label,
 .tooltip-item.ai .tooltip-value {
@@ -592,86 +499,30 @@
     color: var(--color-secondary);
 }
 
-/* Farbkodierte Zellen für Heatmaps und Korrelationsmatrizen */
-.color-cell {
-    padding: var(--inset-md);
-    min-height: 60px;
-    border-radius: var(--border-radius);
-    text-align: center;
-    font-weight: 500;
-    font-size: var(--font-size-sm);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    transition: all 0.2s ease;
+/* ===== RECHARTS OPTIMIERUNGEN ===== */
+.recharts-radar {
+    filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.15));
+    transition: filter 0.3s ease;
 }
 
-.color-cell:hover {
-    transform: scale(1.05);
-    z-index: 1;
-    box-shadow: var(--shadow-hover);
-    will-change: transform;
+.recharts-radar .recharts-polygon {
+    stroke-width: 2px;
 }
 
-/* Farbkodierungen für Korrelation und Heatmaps */
-.high-intensity {
-    background-color: var(--color-secondary);
+.recharts-cartesian-axis-tick-value {
+    font-size: var(--font-size-xs);
+    fill: var(--color-text);
+    transition: fill 0.3s ease;
 }
 
-.medium-intensity {
-    background-color: var(--color-primary);
+.recharts-tooltip-wrapper {
+    z-index: 1000;
 }
 
-.low-intensity {
-    background-color: var(--color-tertiary);
-}
-
-/* Wertanzeige innerhalb von farbigen Zellen */
-.cell-value {
-    font-weight: 600;
-    font-size: var(--font-size-base);
-    margin-bottom: var(--space-xs);
-}
-
-/* Grid für Heatmap und Korrelationsmatrix */
-.analysis-grid {
-    display: grid;
-    gap: var(--space-xs);
-}
-
-/* Standardgröße für die Zellen */
-.small-cells {
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-}
-
-/* Mittelgroße Zellen */
-.medium-cells {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-}
-
-/* Große Zellen */
-.big-cells {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-}
-
-/* Legende-Elemente */
-.legend-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-md);
-    margin-bottom: var(--space-md);
-}
-
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: var(--space-xs);
-    font-size: var(--font-size-sm);
-}
-
-.legend-color {
-    width: 16px;
-    height: 16px;
-    border-radius: 4px;
+.recharts-default-tooltip {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--border-radius) !important;
+    padding: var(--inset-sm) var(--inset-md) !important;
+    box-shadow: var(--shadow-sm) !important;
 }

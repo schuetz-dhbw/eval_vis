@@ -123,7 +123,7 @@ const CriteriaAnalysisComponent = memo(({ work }) => {
                             return (
                                 <div
                                     key={index}
-                                    className={`color-cell ${intensityClass}`}
+                                    className={`analysis-cell ${intensityClass}`}
                                     title={`${item.name1} - ${item.name2}: ${item.correlation}`}
                                 >
                                     <div className="cell-value">
