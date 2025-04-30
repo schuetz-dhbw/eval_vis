@@ -3,9 +3,9 @@ import { ComposedChart, Bar, Line, YAxis } from 'recharts';
 import BaseChartComponent from './BaseChartComponent';
 import useChart from '../../hooks/useChart';
 import { renderCartesianBase } from '../../utils/chartUtils';
-import {CHART_MODE, DATA_KEYS} from "../../constants/chartConstants";
+import {CHART_TYPES, DATA_KEYS} from "../../constants/chartConstants";
 
-const ComposedChartComponent = memo(({ data, chartType, title }) => {
+const ComposedChartComponent = memo(({ data, analysisType, title }) => {
     const {
         t,
         chartDimensions,
@@ -14,7 +14,7 @@ const ComposedChartComponent = memo(({ data, chartType, title }) => {
         axisConfig,
         tooltipConfig,
         defaultLegendProps
-    } = useChart({ chartType, mode: CHART_MODE.COMBINED });
+    } = useChart({ analysisType, chartType: CHART_TYPES.COMBINED });
 
     return (
         <BaseChartComponent title={title} height={chartDimensions.height}>

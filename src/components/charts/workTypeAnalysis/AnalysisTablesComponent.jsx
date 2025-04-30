@@ -1,12 +1,7 @@
 import React, { memo } from 'react';
 import { useTranslation } from '../../../hooks/useTranslation';
-import {CHART_TYPES} from "../../../constants/chartTypes";
 
-const AnalysisTablesComponent = memo(({
-                                          largestDifferencesByType,
-                                          topCriteriaByDifference,
-                                          chartType = CHART_TYPES.WORK_TYPE_ANALYSIS
-                                      }) => {
+const AnalysisTablesComponent = memo(({ largestDifferencesByType, topCriteriaByDifference }) => {
     const t = useTranslation();
 
     return (

@@ -1,5 +1,4 @@
 import React, { memo, useMemo } from 'react';
-import { CHART_TYPES } from '../../constants/chartTypes';
 import { useTranslation } from '../../hooks/useTranslation';
 import { useAppContext } from '../../AppContext';
 import LineChartComponent from '../charts/LineChartComponent';
@@ -10,10 +9,10 @@ import {
     getWeightedData,
     getWeightsData,
     getScoresData,
-    getCombinedData,
-    getRadarData
+    getCombinedData
 } from "../../utils/dataTransformers";
 import DataErrorBoundary from '../common/DataErrorBoundary';
+import {ANALYSIS_TYPES } from "../../constants/chartConstants";
 
 /**
  * ChartSection - Container für alle Chart-Komponenten
@@ -21,32 +20,25 @@ import DataErrorBoundary from '../common/DataErrorBoundary';
  * @returns {JSX.Element} Container mit allen Charts
  */
 const ChartSection = memo(() => {
-    const { chartType, currentWork, language } = useAppContext();
+    const { analysisType, currentWork, language } = useAppContext();
     const t = useTranslation();
 
     // Zentralisiertes Memoizing der Chart-Daten
     const chartData = useMemo(() => {
-        if (!currentWork) return { scoresData: [], combinedData: [], radarData: [] };
-
         const scoresData = getScoresData(currentWork, language);
         const weightsData = getWeightsData(currentWork, language);
         const combinedData = getCombinedData(currentWork, language);
         const weightedData = getWeightedData(currentWork, language);
 
-        const radarData = getRadarData(
-            currentWork,
-            chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType,
-            language
-        );
+        //const radarData = getRadarData(currentWork, analysisType, language);
 
         return {
             scoresData,
             weightsData,
             combinedData,
-            weightedData,
-            radarData
+            weightedData
         };
-    }, [currentWork, language, chartType]);
+    }, [currentWork, language]);
 
     // Fallback, wenn keine Daten verfügbar
     if (!currentWork) {
@@ -58,25 +50,24 @@ const ChartSection = memo(() => {
             {/* Linien- oder kombiniertes Diagramm */}
             <div className="component-container  full-width">
                 <h3 className="section-title">
-                    {chartType === CHART_TYPES.COMBINED ? t('combinedTitle', 'chartTitles') : t('vectors', 'chartTitles')}
+                    {analysisType === ANALYSIS_TYPES.COMBINED ? t('combinedTitle', 'chartTitles') : t('vectors', 'chartTitles')}
                 </h3>
                 <div className="chart-wrapper">
                     <DataErrorBoundary
-                        data={chartType === CHART_TYPES.COMBINED ? chartData.combinedData : chartData.scoresData}
+                        data={analysisType === ANALYSIS_TYPES.COMBINED ? chartData.combinedData : chartData.scoresData}
                     >
-                        {chartType === CHART_TYPES.COMBINED ? (
+                        {analysisType === ANALYSIS_TYPES.COMBINED ? (
                             <ComposedChartComponent
                                 data={chartData.combinedData}
-                                chartType={chartType}
+                                analysisType={analysisType}
                             />
                         ) : (
                             <LineChartComponent
                                 data={
-                                    chartType === CHART_TYPES.WEIGHTS ? chartData.weightsData :
-                                        chartType === CHART_TYPES.WEIGHTED ? chartData.weightedData :
+                                    analysisType === ANALYSIS_TYPES.WEIGHTS ? chartData.weightsData :
                                             chartData.scoresData
                                 }
-                                chartType={chartType}
+                                analysisType={analysisType}
                             />
                         )}
                     </DataErrorBoundary>
@@ -86,22 +77,21 @@ const ChartSection = memo(() => {
             {/* Balkendiagramm */}
             <div className="component-container  full-width">
                 <h3 className="section-title">
-                    {chartType === CHART_TYPES.COMBINED ?
+                    {analysisType === ANALYSIS_TYPES.COMBINED ?
                         t('barWeighted', 'chartTitles') :
                         t('bar', 'chartTitles')}
                 </h3>
                 <div className="chart-wrapper">
                     <DataErrorBoundary
-                        data={chartType === CHART_TYPES.COMBINED ? chartData.weightedData : chartData.scoresData}
+                        data={analysisType === ANALYSIS_TYPES.COMBINED ? chartData.weightedData : chartData.scoresData}
                     >
                         <BarChartComponent
                             data={
-                                chartType === CHART_TYPES.COMBINED ? chartData.weightedData :
-                                    chartType === CHART_TYPES.WEIGHTS ? chartData.weightsData :
-                                        chartType === CHART_TYPES.WEIGHTED ? chartData.weightedData :
+                                analysisType === ANALYSIS_TYPES.COMBINED ? chartData.weightedData :
+                                    analysisType === ANALYSIS_TYPES.WEIGHTS ? chartData.weightsData :
                                             chartData.scoresData
                             }
-                            chartType={chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType}
+                            analysisType={analysisType}
                         />
                     </DataErrorBoundary>
                 </div>
@@ -110,15 +100,21 @@ const ChartSection = memo(() => {
             {/* Spinnendiagramm */}
             <div className="component-container  full-width">
                 <h3 className="section-title">
-                    {chartType === CHART_TYPES.COMBINED ?
-                        `${t('radar', 'chartTitles')} (${t('weighted', 'chartTypes')})` :
+                    {analysisType === ANALYSIS_TYPES.COMBINED ?
+                        `${t('radar', 'chartTitles')} (${t('weighted', 'analysisTypes')})` :
                         t('radar', 'chartTitles')}
                 </h3>
                 <div className="chart-wrapper radar-wrapper">
-                    <DataErrorBoundary data={chartData.radarData} >
+                    <DataErrorBoundary
+                        data={analysisType === ANALYSIS_TYPES.COMBINED ? chartData.weightedData : chartData.scoresData}
+                    >
                         <RadarChartComponent
-                            data={chartData.radarData}
-                            chartType={chartType === CHART_TYPES.COMBINED ? 'weighted' : chartType}
+                            data={
+                                analysisType === ANALYSIS_TYPES.COMBINED ? chartData.weightedData :
+                                    analysisType === ANALYSIS_TYPES.WEIGHTS ? chartData.weightsData :
+                                        chartData.scoresData
+                            }
+                            analysisType={analysisType}
                         />
                     </DataErrorBoundary>
                 </div>

@@ -1,19 +1,12 @@
 // Chart-spezifische Konstanten
-export const CHART_TYPE_KEYS = {
-    SCORES: 'scores',
-    WEIGHTS: 'weights',
-    WEIGHTED: 'weighted',
-    COMBINED: 'combined',
-    STATISTICS: 'statistics',
-    WORK_TYPE_ANALYSIS: 'workTypeAnalysis'
-};
 
 // Enum für Chart-Modi (Visualisierungstypen)
-export const CHART_MODE = {
-    STANDARD: 'standard',
+export const CHART_TYPES = {
+    BAR: 'bar',
+    LINE: 'line',
     RADAR: 'radar',
     SCATTER: 'scatter',
-    WORK_TYPE: 'workType',
+    HEATMAP: 'heatmap',
     COMBINED: 'combined'
 };
 
@@ -29,8 +22,6 @@ export const DATA_KEYS = {
     HUMAN_WEIGHTED: 'humanWeighted',
     NAME: 'name',
     SHORT_NAME: 'shortName',
-    SUBJECT: 'subject',
-    SHORT_SUBJECT: 'shortSubject',
     FULL_MARK: 'fullMark'
 };
 
@@ -40,5 +31,14 @@ export const CACHE_KEYS = {
     WEIGHTS: 'weights',
     WEIGHTED: 'weighted',
     COMBINED: 'combined',
-    RADAR: 'radar'
+    RADAR: 'radar-TODELETE'
 };
+
+// Analysearten für die Darstellung
+export const ANALYSIS_TYPES = Object.freeze({
+    SCORES: 'scores',
+    WEIGHTS: 'weights',
+    COMBINED: 'combined',
+    STATISTICS: 'statistics',
+    WORK_TYPE_ANALYSIS: 'workType'
+});

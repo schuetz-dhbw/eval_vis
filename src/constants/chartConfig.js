@@ -1,13 +1,11 @@
-// src/constants/chartConfig.js - Ändern
 import { getCSSVariable } from '../utils/cssHelpers';
+import {CHART_TYPES, DATA_KEYS} from './chartConstants';
 
 // Wiederverwendbare Chart-Dimensionen
 export const CHART_DIMENSIONS = {
     DEFAULT_HEIGHT: 250,
     RADAR_HEIGHT: 350,
-    WORK_TYPE_HEIGHT: 300,
-    CORRELATION_HEIGHT: 400,
-    HEATMAP_HEIGHT: 400,
+    SCATTER_HEIGHT: 400,
     FULL_WIDTH: '100%'
 };
 
@@ -15,8 +13,8 @@ export const CHART_DIMENSIONS = {
 export const CHART_MARGINS = {
     DEFAULT: { top: 5, right: 10, left: 0, bottom: 20 },
     NO_MARGIN: { top: 0, right: 0, left: 0, bottom: 0 }, // Radar
-    WORK_TYPE_BAR: { top: 15, right: 10, left: 0, bottom: 10 },
-    CORRELATION: { top: 5, right: 10, left: 10, bottom: 20 }
+    WORK_TYPE: { top: 15, right: 10, left: 0, bottom: 10 },
+    SCATTER: { top: 5, right: 10, left: 10, bottom: 20 }
 };
 
 // Standard-Achsenkonfigurationen
@@ -68,17 +66,14 @@ export const getChartColors = () => ({
     PRIMARY: getCSSVariable('--color-primary'),
     SECONDARY: getCSSVariable('--color-secondary'),
     TERTIARY: getCSSVariable('--color-tertiary'),
-    QUATERNARY: getCSSVariable('--color-quaternary'),
-    SUCCESS: getCSSVariable('--color-success'),
-    WARNING: getCSSVariable('--color-warning'),
-    ERROR: getCSSVariable('--color-error')
+    QUATERNARY: getCSSVariable('--color-quaternary')
 });
 
 // Konfigurations-Factory für verschiedene Chart-Typen
 export const getChartConfig = (chartType) => {
     const colors = getChartColors();
 
-    // Grundlegende Konfiguration
+    // Basiskonfiguration mit Defaultwerten
     const baseConfig = {
         colors,
         margin: CHART_MARGINS.DEFAULT,
@@ -86,23 +81,55 @@ export const getChartConfig = (chartType) => {
         grid: { strokeDasharray: "3 3" }
     };
 
-    // Chart-Typ-spezifische Konfigurationen
+    // Modus-spezifische Konfigurationen
     switch(chartType) {
-        case 'radar':
+        case CHART_TYPES.RADAR:
             return {
                 ...baseConfig,
                 margin: CHART_MARGINS.NO_MARGIN,
                 outerRadius: RADAR_CONFIG.OUTER_RADIUS,
-                fillOpacity: RADAR_CONFIG.FILL_OPACITY
+                fillOpacity: RADAR_CONFIG.FILL_OPACITY,
+                radar: {
+                    strokeWidth: RADAR_CONFIG.STROKE_WIDTH,
+                    fillOpacity: RADAR_CONFIG.FILL_OPACITY,
+                    dot: {
+                        r: RADAR_CONFIG.DOT_RADIUS,
+                        strokeWidth: RADAR_CONFIG.DOT_STROKE_WIDTH,
+                        fill: "white"
+                    }
+                },
+                polarAxes: {
+                    angleAxis: {
+                        dataKey: DATA_KEYS.SHORT_NAME,
+                        tick: { fontSize: 10 }
+                    },
+                    radiusAxis: {
+                        angle: 90
+                    }
+                }
             };
-        case 'scatter':
+        case CHART_TYPES.SCATTER:
             return {
                 ...baseConfig,
-                margin: CHART_MARGINS.CORRELATION,
-                zRange: SCATTER_CONFIG.Z_RANGE
+                margin: CHART_MARGINS.SCATTER,
+                zRange: SCATTER_CONFIG.Z_RANGE,
+                dot: {
+                    r: SCATTER_CONFIG.DOT_RADIUS
+                }
             };
-        case 'bar':
-        case 'line':
+        case CHART_TYPES.COMBINED:
+            return {
+                ...baseConfig,
+                line: {
+                    strokeWidth: LINE_CONFIG.STROKE_WIDTH
+                },
+                dot: {
+                    r: LINE_CONFIG.DOT_RADIUS,
+                    activeDot: {
+                        r: LINE_CONFIG.ACTIVEDOT_RADIUS
+                    }
+                }
+            };
         default:
             return baseConfig;
     }

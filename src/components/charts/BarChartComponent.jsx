@@ -4,9 +4,9 @@ import BaseChartComponent from './BaseChartComponent';
 import useChart from '../../hooks/useChart';
 import CustomTooltip from "./CustomTooltip";
 import { renderBars } from '../../utils/chartUtils';
-import {CHART_MODE} from "../../constants/chartConstants";
+import {CHART_TYPES} from "../../constants/chartConstants";
 
-const BarChartComponent = memo(({ data, chartType, title }) => {
+const BarChartComponent = memo(({ data, analysisType, title }) => {
     const {
         t,
         chartDimensions,
@@ -15,7 +15,7 @@ const BarChartComponent = memo(({ data, chartType, title }) => {
         axisConfig,
         tooltipConfig,
         defaultLegendProps
-    } = useChart({ chartType, mode: CHART_MODE.STANDARD });
+    } = useChart({ analysisType, chartType: CHART_TYPES.BAR });
 
     return (
         <BaseChartComponent title={title} height={chartDimensions.height}>

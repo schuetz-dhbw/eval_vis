@@ -8,13 +8,13 @@ export const en = {
         dataErrorMessage: "The data could not be processed.",
         tryAgain: "Try again"
     },
-    chartTypes: {
+    analysisTypes: {
         scores: "Achievement Levels",
         weights: "Weightings",
         weighted: "Weighted Values",
         combined: "Combined View",
         statistics: "Statistical Analysis",
-        workTypeAnalysis: "Work Type Analysis"
+        workType: "Work Type Analysis"
     },
     darkMode: {
         toggleToLight: "Switch to light mode",

@@ -1,11 +1,7 @@
 import React, { memo } from 'react';
 import { useTranslation } from '../../../hooks/useTranslation';
-import {CHART_TYPES} from "../../../constants/chartTypes";
 
-const CriteriaDeviationTable = memo(({
-                                         criteriaData,
-                                         chartType = CHART_TYPES.STATISTICS
-                                     }) => {
+const CriteriaDeviationTable = memo(({ criteriaData }) => {
     const t = useTranslation();
 
     return (

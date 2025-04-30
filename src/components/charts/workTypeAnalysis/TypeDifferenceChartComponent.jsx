@@ -4,10 +4,9 @@ import CustomTooltip from '../CustomTooltip';
 import BaseChartComponent from '../BaseChartComponent';
 import useChart from "../../../hooks/useChart";
 import { getDifferenceColor } from '../../../utils/chartUtils';
-import { CHART_TYPES } from "../../../constants/chartTypes";
-import {CHART_MODE} from "../../../constants/chartConstants";
+import {CHART_TYPES, ANALYSIS_TYPES} from "../../../constants/chartConstants";
 
-const TypeDifferenceChartComponent = memo(({ data, chartType = CHART_TYPES.WORK_TYPE_ANALYSIS }) => {
+const TypeDifferenceChartComponent = memo(({ data, analysisType = ANALYSIS_TYPES.WORK_TYPE_ANALYSIS }) => {
     const {
         t,
         chartDimensions,
@@ -17,8 +16,8 @@ const TypeDifferenceChartComponent = memo(({ data, chartType = CHART_TYPES.WORK_
         tooltipConfig,
         defaultLegendProps
     } = useChart({
-        chartType,
-        mode: CHART_MODE.WORK_TYPE
+        analysisType,
+        chartType: CHART_TYPES.BAR
     });
 
     return (

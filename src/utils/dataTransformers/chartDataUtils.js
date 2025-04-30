@@ -3,7 +3,7 @@
  */
 
 import { METRICS } from "../../constants/metrics";
-import { DATA_KEYS, CACHE_KEYS, CHART_TYPE_KEYS } from "../../constants/chartConstants";
+import {DATA_KEYS, CACHE_KEYS } from "../../constants/chartConstants";
 import { generateCacheKey, getFromCacheOrCompute, getCacheMapForKey } from './cacheUtils';
 import { getTranslatedLabels } from './translationUtils';
 
@@ -96,68 +96,4 @@ export const getCombinedData = (work, language) => {
             [DATA_KEYS.HUMAN_WEIGHTED]: work.humanScores[index] * work.humanWeights[index]
         })
     );
-};
-
-// Mapper-Funktion für Radar-Chart basierend auf Chart-Typ
-const getRadarMapperForChartType = (chartType) => {
-    switch(chartType) {
-        case CHART_TYPE_KEYS.WEIGHTED:
-            return (label, index, shortLabel, work) => ({
-                [DATA_KEYS.SUBJECT]: label,
-                [DATA_KEYS.SHORT_SUBJECT]: shortLabel,
-                [DATA_KEYS.AI]: work.aiScores[index] * work.aiWeights[index],
-                [DATA_KEYS.HUMAN]: work.humanScores[index] * work.humanWeights[index],
-                [DATA_KEYS.FULL_MARK]: METRICS.WEIGHTED_MAX
-            });
-        case CHART_TYPE_KEYS.WEIGHTS:
-            return (label, index, shortLabel, work) => ({
-                [DATA_KEYS.SUBJECT]: label,
-                [DATA_KEYS.SHORT_SUBJECT]: shortLabel,
-                [DATA_KEYS.AI]: work.aiWeights[index] * 100,
-                [DATA_KEYS.HUMAN]: work.humanWeights[index] * 100,
-                [DATA_KEYS.FULL_MARK]: METRICS.WEIGHT_MAX
-            });
-        default:
-            return (label, index, shortLabel, work) => ({
-                [DATA_KEYS.SUBJECT]: label,
-                [DATA_KEYS.SHORT_SUBJECT]: shortLabel,
-                [DATA_KEYS.AI]: work.aiScores[index],
-                [DATA_KEYS.HUMAN]: work.humanScores[index],
-                [DATA_KEYS.FULL_MARK]: METRICS.FULL_MARK
-            });
-    }
-};
-
-// Data for radar diagram
-export const getRadarData = (work, chartType, language) => {
-    const cacheKey = `${CACHE_KEYS.RADAR}_${chartType}`;
-    const mapper = getRadarMapperForChartType(chartType);
-
-    return createChartData(work, language, cacheKey, mapper);
-};
-
-// Y-axis domain based on chart type
-export const getYDomain = (chartType) => {
-    switch(chartType) {
-        case CHART_TYPE_KEYS.WEIGHTS:
-            return [0, METRICS.WEIGHT_MAX];
-        case CHART_TYPE_KEYS.WEIGHTED:
-            return [0, METRICS.WEIGHTED_MAX];
-        case CHART_TYPE_KEYS.COMBINED:
-        case CHART_TYPE_KEYS.SCORES:
-        default:
-            return [0, METRICS.FULL_MARK];
-    }
-};
-
-// Radar domain based on chart type
-export const getRadarDomain = (chartType) => {
-    switch(chartType) {
-        case CHART_TYPE_KEYS.WEIGHTS:
-            return [0, 25];
-        case CHART_TYPE_KEYS.WEIGHTED:
-            return [0, 20];
-        default:
-            return [0, 100];
-    }
 };

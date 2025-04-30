@@ -8,13 +8,13 @@ export const de = {
         dataErrorMessage: "Die Daten konnten nicht verarbeitet werden.",
         tryAgain: "Erneut versuchen"
     },
-    chartTypes: {
+    analysisTypes: {
         scores: "Zielerreichungsgrade",
         weights: "Gewichtungen",
         weighted: "Gewichtete Werte",
         combined: "Kombinierte Darstellung",
         statistics: "Statistische Analyse",
-        workTypeAnalysis: "Analyse nach Arbeitstyp"
+        workType: "Analyse nach Arbeitstyp"
     },
     darkMode: {
         toggleToLight: "Zum hellen Modus wechseln",

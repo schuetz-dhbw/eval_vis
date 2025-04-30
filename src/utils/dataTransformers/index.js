@@ -17,10 +17,7 @@ export {
     getScoresData,
     getWeightsData,
     getWeightedData,
-    getCombinedData,
-    getRadarData,
-    getYDomain,
-    getRadarDomain
+    getCombinedData
 } from './chartDataUtils';
 
 export {

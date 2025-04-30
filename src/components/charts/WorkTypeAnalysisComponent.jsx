@@ -10,13 +10,12 @@ import TypeDifferenceChartComponent from './workTypeAnalysis/TypeDifferenceChart
 import CriteriaHeatmapComponent from './workTypeAnalysis/CriteriaHeatmapComponent';
 import AnalysisTablesComponent from './workTypeAnalysis/AnalysisTablesComponent';
 import useChart from "../../hooks/useChart";
-import {CHART_TYPES} from "../../constants/chartTypes";
-import {CHART_MODE} from "../../constants/chartConstants";
+import {CHART_TYPES, ANALYSIS_TYPES} from "../../constants/chartConstants";
 
-const WorkTypeAnalysisComponent = memo(({ works, chartType = CHART_TYPES.WORK_TYPE_ANALYSIS }) => {
+const WorkTypeAnalysisComponent = memo(({ works, analysisType = ANALYSIS_TYPES.WORK_TYPE_ANALYSIS }) => {
     const { t } = useChart({
-        chartType,
-        mode: CHART_MODE.WORK_TYPE
+        analysisType,
+        chartType: CHART_TYPES.BAR
     });
 
     // Gruppiere Arbeiten nach Typ
@@ -51,7 +50,7 @@ const WorkTypeAnalysisComponent = memo(({ works, chartType = CHART_TYPES.WORK_TY
                     <h4 className="section-title">{t('differenceByTypeTitle', 'chartTitles')}</h4>
                     <TypeDifferenceChartComponent
                         data={overallDifferenceByType}
-                        chartType={chartType}
+                        analysisType={analysisType}
                     />
                 </div>
 
@@ -59,7 +58,7 @@ const WorkTypeAnalysisComponent = memo(({ works, chartType = CHART_TYPES.WORK_TY
                     <h4 className="section-title">{t('criteriaByTypeTitle', 'chartTitles')}</h4>
                     <CriteriaHeatmapComponent
                         data={differencesByType}
-                        chartType={chartType}
+                        analysisType={analysisType}
                     />
                 </div>
 
@@ -68,7 +67,7 @@ const WorkTypeAnalysisComponent = memo(({ works, chartType = CHART_TYPES.WORK_TY
                     <AnalysisTablesComponent
                         largestDifferencesByType={largestDifferencesByType}
                         topCriteriaByDifference={topCriteriaByDifference}
-                        chartType={chartType}
+                        analysisType={analysisType}
                     />
                 </div>
             </div>

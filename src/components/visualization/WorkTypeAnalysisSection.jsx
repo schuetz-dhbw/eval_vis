@@ -5,7 +5,8 @@ import ChartErrorBoundary from '../charts/ChartErrorBoundary';
 import DataErrorBoundary from '../common/DataErrorBoundary';
 import ErrorBoundary from '../common/ErrorBoundary';
 import {useAppContext} from "../../AppContext";
-import {CHART_TYPES} from "../../constants/chartTypes";
+
+import {ANALYSIS_TYPES} from "../../constants/chartConstants";
 
 const WorkTypeAnalysisSection = () => {
     const { rawWorks } = useAppContext();
@@ -24,7 +25,7 @@ const WorkTypeAnalysisSection = () => {
                         <ChartErrorBoundary >
                             <WorkTypeAnalysisComponent
                                 works={rawWorks}
-                                chartType={CHART_TYPES.WORK_TYPE_ANALYSIS}
+                                analysisType={ANALYSIS_TYPES.WORK_TYPE_ANALYSIS}
                             />
                         </ChartErrorBoundary>
                     </DataErrorBoundary>

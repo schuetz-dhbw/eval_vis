@@ -79,7 +79,8 @@ src/
 │       ├── MetricsSection.jsx
 │       └── ...
 ├── constants/                  # Konstanten
-│   ├── chartTypes.js
+│   ├── chartConfig.js
+│   ├── chartConstants.js
 │   ├── languages.js
 │   └── thresholds.js
 ├── data/                       # Datenbasis

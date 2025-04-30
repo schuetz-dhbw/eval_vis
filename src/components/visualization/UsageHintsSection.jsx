@@ -1,10 +1,10 @@
 import React, { memo } from 'react';
 import { useTranslation } from '../../hooks/useTranslation';
-import { CHART_TYPES } from '../../constants/chartTypes';
 import { useAppContext } from '../../AppContext';
+import {ANALYSIS_TYPES} from "../../constants/chartConstants";
 
 const UsageHintsSection = memo(() => {
-    const { chartType } = useAppContext();
+    const { analysisType } = useAppContext();
     const t = useTranslation();
 
     return (
@@ -17,7 +17,7 @@ const UsageHintsSection = memo(() => {
                 <li><span className="term">{t('statistics', 'hints')}</span> {t('statisticsDesc', 'hints')}</li>
                 <li><span className="term">{t('workTypeAnalysis', 'hints')}</span> {t('workTypeAnalysisDesc', 'hints')}</li>
                 <li>{t('tooltip', 'hints')}</li>
-                {![CHART_TYPES.STATISTICS, CHART_TYPES.WORK_TYPE_ANALYSIS].includes(chartType) && (<li>{t('table', 'hints')}</li>)}
+                {![ANALYSIS_TYPES.STATISTICS, ANALYSIS_TYPES.WORK_TYPE_ANALYSIS].includes(analysisType) && (<li>{t('table', 'hints')}</li>)}
             </ul>
         </div>
     );

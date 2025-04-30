@@ -1,18 +1,17 @@
 import React, { memo, useMemo } from 'react';
 import { ScatterChart, Scatter, ZAxis, Cell } from 'recharts';
 import BaseChartComponent from './BaseChartComponent';
-import {CHART_MODE, DATA_KEYS} from "../../constants/chartConstants";
+import {CHART_TYPES, ANALYSIS_TYPES, DATA_KEYS} from "../../constants/chartConstants";
 import {
     calculateCriteriaDeviationData,
     calculateCriteriaCorrelationData
 } from '../../utils/statistics/criteriaAnalysisUtils';
 import useChart from "../../hooks/useChart";
-import { CHART_TYPES } from "../../constants/chartTypes";
 import { renderScatterChartBase } from "../../utils/chartUtils";
 import CriteriaDeviationTable from './criteriaAnalysis/CriteriaDeviationTable';
 import CriteriaCorrelationGrid from './criteriaAnalysis/CriteriaCorrelationGrid';
 
-const CriteriaAnalysisComponent = memo(({ work, chartType = CHART_TYPES.STATISTICS }) => {
+const CriteriaAnalysisComponent = memo(({ work, analysisType = ANALYSIS_TYPES.STATISTICS }) => {
     const {
         t,
         chartDimensions,
@@ -22,8 +21,8 @@ const CriteriaAnalysisComponent = memo(({ work, chartType = CHART_TYPES.STATISTI
         defaultLegendProps,
         scatterConfig
     } = useChart({
-        chartType,
-        mode: CHART_MODE.SCATTER
+        analysisType,
+        chartType: CHART_TYPES.SCATTER
     });
 
     // Berechnungsfunktionen
@@ -70,12 +69,12 @@ const CriteriaAnalysisComponent = memo(({ work, chartType = CHART_TYPES.STATISTI
 
             <CriteriaDeviationTable
                 criteriaData={criteriaData.slice(0, 5)}
-                chartType={chartType}
+                analysisType={analysisType}
             />
 
             <CriteriaCorrelationGrid
                 correlationData={correlationData}
-                chartType={chartType}
+                analysisType={analysisType}
             />
         </div>
     );

@@ -7,9 +7,10 @@ import DataErrorBoundary from '../common/DataErrorBoundary';
 import ErrorBoundary from '../common/ErrorBoundary';
 import {useAppContext} from "../../AppContext";
 import {METRICS} from "../../constants/metrics";
-import {CHART_TYPES} from "../../constants/chartTypes";
 
-const StatisticsSection = () => {
+import {ANALYSIS_TYPES} from "../../constants/chartConstants";
+
+const CriteriaAnalysisSection = () => {
     const { currentWork } = useAppContext();
     const t = useTranslation();
 
@@ -33,7 +34,7 @@ const StatisticsSection = () => {
             showDetails={false}
         >
             <div className="component-container">
-                <h3 className="section-title">{t('statistics', 'chartTypes')}</h3>
+                <h3 className="section-title">{t('statistics', 'analysisTypes')}</h3>
 
                 <div className="component-grid grid-3-cols">
                     <div className="info-box">
@@ -69,7 +70,7 @@ const StatisticsSection = () => {
                         <ChartErrorBoundary>
                             <CriteriaAnalysisComponent
                                 work={currentWork}
-                                chartType={CHART_TYPES.STATISTICS}
+                                analysisType={ANALYSIS_TYPES.STATISTICS}
                             />
                         </ChartErrorBoundary>
                     </DataErrorBoundary>
@@ -79,4 +80,4 @@ const StatisticsSection = () => {
     );
 };
 
-export default StatisticsSection;
+export default CriteriaAnalysisSection;

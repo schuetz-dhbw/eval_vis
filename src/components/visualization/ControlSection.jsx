@@ -1,16 +1,16 @@
 import React from 'react';
 import { useTranslation } from '../../hooks/useTranslation';
-import { CHART_TYPES } from '../../constants/chartTypes';
 import { LANGUAGES } from '../../constants/languages';
 import { useAppContext } from '../../AppContext';
+import {ANALYSIS_TYPES} from "../../constants/chartConstants";
 
 const ControlSection = () => {
     const {
         translatedWorks,
         selectedWorkIndex,
         setSelectedWorkIndex,
-        chartType,
-        setChartType,
+        analysisType,
+        setAnalysisType,
         language,
         setLanguage
     } = useAppContext();
@@ -18,7 +18,7 @@ const ControlSection = () => {
     const t = useTranslation();
 
     // Check if we should show the work selector
-    const showWorkSelector = chartType !== CHART_TYPES.WORK_TYPE_ANALYSIS;
+    const showWorkSelector = analysisType !== ANALYSIS_TYPES.WORK_TYPE_ANALYSIS;
 
     return (
         <div className="controls">
@@ -38,12 +38,12 @@ const ControlSection = () => {
             )}
             <select
                 className="dropdown-selector chart-selector"
-                value={chartType}
-                onChange={(e) => setChartType(e.target.value)}
+                value={analysisType}
+                onChange={(e) => setAnalysisType(e.target.value)}
             >
-                {Object.values(CHART_TYPES).map((type) => (
+                {Object.values(ANALYSIS_TYPES).map((type) => (
                     <option key={type} value={type}>
-                        {t(type, 'chartTypes')}
+                        {t(type, 'analysisTypes')}
                     </option>
                 ))}
             </select>

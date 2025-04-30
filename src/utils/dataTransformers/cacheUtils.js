@@ -2,16 +2,16 @@
  * Funktionen für das Caching von Berechnungsergebnissen
  */
 
-import {CACHE_KEYS, CHART_TYPE_KEYS} from '../../constants/chartConstants';
+import {CACHE_KEYS, ANALYSIS_TYPES} from '../../constants/chartConstants';
 
 // Maximale Cache-Größe
 const MAX_CACHE_SIZE = 100;
 
 // Allgemeine Cache-Key-Generierung für verschiedene Funktionen
-export const generateCacheKey = (work, chartType = null, language = null) => {
+export const generateCacheKey = (work, analysisType = null, language = null) => {
     const langKey = language || '';
-    if (chartType) {
-        return `${work.key}_${chartType}_${langKey}`;
+    if (analysisType) {
+        return `${work.key}_${analysisType}_${langKey}`;
     }
     return `${work.key}_${langKey}`;
 };
@@ -68,10 +68,10 @@ export const getCacheMapForKey = (calculationCache, cacheKey) => {
             return calculationCache.weightedData;
         case CACHE_KEYS.COMBINED:
             return calculationCache.combinedData;
-        case `${CACHE_KEYS.RADAR}_${CHART_TYPE_KEYS.SCORES}`:
-        case `${CACHE_KEYS.RADAR}_${CHART_TYPE_KEYS.WEIGHTS}`:
-        case `${CACHE_KEYS.RADAR}_${CHART_TYPE_KEYS.WEIGHTED}`:
-        case `${CACHE_KEYS.RADAR}_${CHART_TYPE_KEYS.COMBINED}`:
+        case `${CACHE_KEYS.RADAR}_${ANALYSIS_TYPES.SCORES}`:
+        case `${CACHE_KEYS.RADAR}_${ANALYSIS_TYPES.WEIGHTS}`:
+        case `${CACHE_KEYS.RADAR}_${ANALYSIS_TYPES.WEIGHTED}`:
+        case `${CACHE_KEYS.RADAR}_${ANALYSIS_TYPES.COMBINED}`:
             return calculationCache.radarData;
         default:
             return null;

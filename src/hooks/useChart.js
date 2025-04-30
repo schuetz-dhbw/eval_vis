@@ -1,49 +1,42 @@
 import { useMemo } from 'react';
 import { useTranslation } from './useTranslation';
-import { getYDomain, getRadarDomain } from '../utils/dataTransformers';
 import {
     getChartColors,
-    CHART_MARGINS,
-    AXIS_CONFIG,
-    RADAR_CONFIG,
-    SCATTER_CONFIG,
+    getChartConfig,
     CHART_DIMENSIONS
 } from '../constants/chartConfig';
 import { METRICS } from '../constants/metrics';
-import { DATA_KEYS, CHART_MODE } from "../constants/chartConstants";
-import { CHART_TYPES } from "../constants/chartTypes";
+import {DATA_KEYS, CHART_TYPES, ANALYSIS_TYPES} from "../constants/chartConstants";
 
 /**
  * useChart - Ein Hook für wiederverwendbare Chart-Funktionalität
  *
  * @param {Object} options - Die Konfigurationsoptionen
- * @param {string} options.chartType - Der Chart-Typ (scores, weights, combined usw.)
- * @param {string} options.mode - Der Chart-Modus (standard, radar, scatter, workType)
+ * @param {string} options.analysisType - Der Chart-Typ (scores, weights, combined usw.)
+ * @param {string} options.chartType - Der Chart-Modus (standard, radar, scatter, workType)
  * @returns {Object} - Chart-bezogene Hilfsfunktionen und Daten
  */
 const useChart = ({
-                      chartType = CHART_TYPES.SCORES,
-                      mode = CHART_MODE.STANDARD
+                      analysisType,
+                      chartType
                   }) => {
     const t = useTranslation();
     const chartColors = getChartColors();
 
+    // Holen der modus-spezifischen Konfiguration
+    const chartConfig = useMemo(() => getChartConfig(chartType), [chartType]);
+
     // Einheitliche Chart-Dimensionen basierend auf dem Modus
     const chartDimensions = useMemo(() => {
-        switch(mode) {
-            case CHART_MODE.RADAR:
+        switch(chartType) {
+            case CHART_TYPES.RADAR:
                 return { height: CHART_DIMENSIONS.RADAR_HEIGHT };
-            case CHART_MODE.SCATTER:
-                return { height: CHART_DIMENSIONS.CORRELATION_HEIGHT };
-            case CHART_MODE.WORK_TYPE:
-                return { height: CHART_DIMENSIONS.WORK_TYPE_HEIGHT };
-            case CHART_MODE.COMBINED:
-                return { height: CHART_DIMENSIONS.DEFAULT_HEIGHT };
-            case CHART_MODE.STANDARD:
+            case CHART_TYPES.SCATTER:
+                return { height: CHART_DIMENSIONS.SCATTER_HEIGHT };
             default:
                 return { height: CHART_DIMENSIONS.DEFAULT_HEIGHT };
         }
-    }, [mode]);
+    }, [chartType]);
 
     const formatValue = useMemo(() => {
         return (value) => {
@@ -52,30 +45,20 @@ const useChart = ({
         };
     }, []);
 
-    // Erweiterte yDomain-Logik
+    // Y-axis domain based on chart type and analysis type
     const yDomain = useMemo(() => {
-        if (mode === CHART_MODE.RADAR) return getRadarDomain(chartType);
-        if (mode === CHART_MODE.SCATTER) return [0, 100];
-        return getYDomain(chartType);
-    }, [chartType, mode]);
-
-    // Spezifische Chart-Margins basierend auf dem Modus
-    const margins = useMemo(() => {
-        switch(mode) {
-            case CHART_MODE.RADAR:
-                return CHART_MARGINS.NO_MARGIN;
-            case CHART_MODE.SCATTER:
-                return CHART_MARGINS.CORRELATION;
-            case CHART_MODE.WORK_TYPE:
-                return CHART_MARGINS.WORK_TYPE_BAR;
-            default:
-                return CHART_MARGINS.DEFAULT;
-        }
-    }, [mode]);
+        if (chartType === CHART_TYPES.COMBINED || chartType === CHART_TYPES.SCATTER || chartType === CHART_TYPES.HEATMAP)
+            return [0, METRICS.FULL_MARK];
+        else if (chartType === CHART_TYPES.LINE || chartType === CHART_TYPES.BAR || chartType === CHART_TYPES.RADAR)
+            if (analysisType === ANALYSIS_TYPES.SCORES)
+                return [0, METRICS.FULL_MARK];
+            else
+                return [0, METRICS.DATA_MAX];
+    }, [analysisType, chartType]);
 
     // Tooltip-Konfiguration für verschiedene Chart-Typen
     const tooltipConfig = useMemo(() => {
-        if (chartType === CHART_TYPES.WORK_TYPE_ANALYSIS) {
+        if (analysisType === ANALYSIS_TYPES.WORK_TYPE_ANALYSIS) {
             return {
                 formatter: formatValue,
                 labelFormatter: (data) => {
@@ -83,7 +66,7 @@ const useChart = ({
                 }
             };
         }
-        else if (chartType === CHART_TYPES.STATISTICS && mode === CHART_MODE.SCATTER) {
+        else if (analysisType === ANALYSIS_TYPES.STATISTICS && chartType === CHART_TYPES.SCATTER) {
             // Spezieller Formatter für die Criteria-Analyse
             return {
                 formatter: (data) => {
@@ -104,12 +87,11 @@ const useChart = ({
             return {
                 formatter: formatValue,
                 labelFormatter: (data) => {
-                    return data[DATA_KEYS.SHORT_NAME] || data[DATA_KEYS.NAME] ||
-                        data[DATA_KEYS.SHORT_SUBJECT] || data[DATA_KEYS.SUBJECT] || '';
+                    return data[DATA_KEYS.SHORT_NAME] || data[DATA_KEYS.NAME] || 'No data key name found.';
                 }
             };
         }
-    }, [chartType, formatValue, mode, t]);
+    }, [analysisType, chartType, formatValue, t]);
 
     const defaultLegendProps = useMemo(() => {
         return {
@@ -118,62 +100,56 @@ const useChart = ({
         };
     }, []);
 
-    // Gemeinsame Konfiguration für Barchart, Linechart usw.
+    // Gemeinsame Konfiguration für Charts
     const commonChartConfig = useMemo(() => {
         return {
-            margin: margins
+            margin: chartConfig.margin
         };
-    }, [margins]);
+    }, [chartConfig.margin]);
 
-    // Achsen-Konfiguration
+// Achsen-Konfiguration
     const axisConfig = useMemo(() => {
         return {
             xAxis: {
                 dataKey: DATA_KEYS.SHORT_NAME,
-                ...AXIS_CONFIG.DEFAULT_X
+                ...(chartType === CHART_TYPES.SCATTER ?
+                    { type: 'number', domain: [0, 100] } :
+                    { angle: -45, textAnchor: 'end', height: 70, tick: { fontSize: 10 } })
             },
             yAxis: {
                 domain: yDomain,
                 tickFormatter: formatValue
             }
         };
-    }, [yDomain, formatValue]);
+    }, [chartType, yDomain, formatValue]);
 
-    // Radar-spezifische Konfiguration
+// Radar-spezifische Konfiguration
     const radarConfig = useMemo(() => {
-        return mode === CHART_MODE.RADAR ? {
-            outerRadius: RADAR_CONFIG.OUTER_RADIUS,
-            margin: CHART_MARGINS.NO_MARGIN,
-            polarAngleAxis: {
-                dataKey: DATA_KEYS.SHORT_SUBJECT,
-                tick: { fontSize: 10 }
-            },
+        if (chartType !== CHART_TYPES.RADAR) return null;
+
+        return {
+            outerRadius: chartConfig.outerRadius,
+            margin: chartConfig.margin,
+            polarAngleAxis: chartConfig.polarAxes?.angleAxis,
             polarRadiusAxis: {
-                angle: 90,
+                ...chartConfig.polarAxes?.radiusAxis,
                 domain: yDomain
             },
-            radar: {
-                strokeWidth: RADAR_CONFIG.STROKE_WIDTH,
-                fillOpacity: RADAR_CONFIG.FILL_OPACITY,
-                dot: {
-                    r: RADAR_CONFIG.DOT_RADIUS,
-                    strokeWidth: RADAR_CONFIG.DOT_STROKE_WIDTH,
-                    fill: "white"
-                }
-            }
-        } : null;
-    }, [mode, yDomain]);
+            radar: chartConfig.radar
+        };
+    }, [chartType, chartConfig, yDomain]);
 
-    // Scatter-spezifische Konfiguration
+// Scatter-spezifische Konfiguration
     const scatterConfig = useMemo(() => {
-        return mode === CHART_MODE.SCATTER ? {
-            zRange: SCATTER_CONFIG.Z_RANGE,
-            dot: {
-                r: SCATTER_CONFIG.DOT_RADIUS
-            }
-        } : null;
-    }, [mode]);
+        if (chartType !== CHART_TYPES.SCATTER) return null;
 
+        return {
+            zRange: chartConfig.zRange,
+            dot: chartConfig.dot
+        };
+    }, [chartType, chartConfig]);
+
+    // Konfigurationen je nach Modus auswählen
     return {
         t,
         chartDimensions,

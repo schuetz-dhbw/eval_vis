@@ -1,11 +1,11 @@
 import React, {createContext, useState, useContext, useMemo, useEffect, useCallback} from 'react';
-import { CHART_TYPES } from './constants/chartTypes';
 import { DEFAULT_LANGUAGE } from './constants/languages';
 import { works } from './data/works';
 import { translations } from './locales';
 import { getTranslatedWorks } from './utils/dataTransformers';
 import { toggleDarkMode as toggleDarkModeUtil } from './utils/darkmode';
 import { setCurrentLanguage } from './services/languageService';
+import {ANALYSIS_TYPES} from "./constants/chartConstants";
 
 // Context erstellen
 const AppContext = createContext();
@@ -13,7 +13,7 @@ const AppContext = createContext();
 // Provider-Komponente
 export const AppProvider = ({ children }) => {
     const [selectedWorkIndex, setSelectedWorkIndex] = useState(0);
-    const [chartType, setChartType] = useState(CHART_TYPES.SCORES);
+    const [analysisType, setAnalysisType] = useState(ANALYSIS_TYPES.SCORES);
     const [isDarkMode, setIsDarkMode] = useState(() => {
         // Initialisierung mit dem Wert aus initDarkMode
         return document.documentElement.getAttribute('data-theme') === 'dark';
@@ -40,8 +40,8 @@ export const AppProvider = ({ children }) => {
         setLanguage(newLang);
     }, []);
 
-    const setChartTypeCallback = useCallback((newType) => {
-        setChartType(newType);
+    const setAnalysisTypeCallback = useCallback((newType) => {
+        setAnalysisType(newType);
     }, []);
 
     const setSelectedWorkIndexCallback = useCallback((newIndex) => {
@@ -51,8 +51,8 @@ export const AppProvider = ({ children }) => {
     const contextValue = useMemo(() => ({
         selectedWorkIndex,
         setSelectedWorkIndex: setSelectedWorkIndexCallback,
-        chartType,
-        setChartType: setChartTypeCallback,
+        analysisType: analysisType,
+        setAnalysisType: setAnalysisTypeCallback,
         language,
         setLanguage: setLanguageCallback,
         translatedWorks,
@@ -64,13 +64,13 @@ export const AppProvider = ({ children }) => {
         toggleDarkMode
     }), [
         selectedWorkIndex,
-        chartType,
+        analysisType,
         language,
         translatedWorks,
         currentWork,
         isDarkMode,
         setSelectedWorkIndexCallback,
-        setChartTypeCallback,
+        setAnalysisTypeCallback,
         setLanguageCallback,
         toggleDarkMode
     ]);

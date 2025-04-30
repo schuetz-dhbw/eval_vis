@@ -1,12 +1,8 @@
 import React, { memo } from 'react';
 import { useTranslation } from '../../../hooks/useTranslation';
 import { getIntensityClass } from '../../../utils/chartUtils';
-import {CHART_TYPES} from "../../../constants/chartTypes";
 
-const CriteriaCorrelationGrid = memo(({
-                                          correlationData,
-                                          chartType = CHART_TYPES.STATISTICS
-                                      }) => {
+const CriteriaCorrelationGrid = memo(({ correlationData }) => {
     const t = useTranslation();
 
     return (
