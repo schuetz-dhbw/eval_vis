@@ -1,8 +1,9 @@
+// src/components/visualization/ControlSection.jsx
 import React from 'react';
 import { useTranslation } from '../../hooks/useTranslation';
 import { LANGUAGES } from '../../constants/languages';
 import { useAppContext } from '../../AppContext';
-import {ANALYSIS_TYPES} from "../../constants/chartConstants";
+import { ANALYSIS_TYPES } from "../../constants/chartConstants";
 
 const ControlSection = () => {
     const {
@@ -17,12 +18,11 @@ const ControlSection = () => {
 
     const t = useTranslation();
 
-    // Check if we should show the work selector
-    const showWorkSelector = !(analysisType === ANALYSIS_TYPES.WORK_TYPE_ANALYSIS || analysisType === ANALYSIS_TYPES.DASHBOARD);
+    // Nur die Dashboard-Bedingung bleibt übrig
+    const showWorkSelector = analysisType !== ANALYSIS_TYPES.DASHBOARD;
 
     return (
         <div className="controls">
-            {/* Only show the work selector if not in Work Type Analysis mode */}
             {showWorkSelector && (
                 <select
                     className="dropdown-selector work-selector"
@@ -41,6 +41,7 @@ const ControlSection = () => {
                 value={analysisType}
                 onChange={(e) => setAnalysisType(e.target.value)}
             >
+                {/* Kein Filter mehr nötig */}
                 {Object.values(ANALYSIS_TYPES).map((type) => (
                     <option key={type} value={type}>
                         {t(type, 'analysisTypes')}

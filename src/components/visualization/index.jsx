@@ -8,7 +8,6 @@ import ChartSection from './ChartSection';
 import DetailsSection from './DetailsSection';
 import UsageHintsSection from './UsageHintsSection';
 import CriteriaAnalysisSection from './CriteriaAnalysisSection';
-import WorkTypeAnalysisSection from './WorkTypeAnalysisSection';
 import DashboardSection from '../dashboard/DashboardSection';
 import {ANALYSIS_TYPES} from "../../constants/chartConstants";
 
@@ -21,25 +20,21 @@ const Visualization = () => {
 
             <ControlSection />
 
-            {analysisType !== ANALYSIS_TYPES.WORK_TYPE_ANALYSIS &&
-                analysisType !== ANALYSIS_TYPES.DASHBOARD && (
-                    <MetricsSection />
-                )}
+            {analysisType !== ANALYSIS_TYPES.DASHBOARD && (
+                <MetricsSection />
+            )}
 
             {analysisType === ANALYSIS_TYPES.STATISTICS ? (
                 <CriteriaAnalysisSection />
-            ) : analysisType === ANALYSIS_TYPES.WORK_TYPE_ANALYSIS ? (
-                <WorkTypeAnalysisSection />
             ) : analysisType === ANALYSIS_TYPES.DASHBOARD ? (
                 <DashboardSection />
             ) : (
                 <ChartSection />
             )}
 
-            {analysisType !== ANALYSIS_TYPES.WORK_TYPE_ANALYSIS &&
-                analysisType !== ANALYSIS_TYPES.DASHBOARD && (
-                    <DetailsSection />
-                )}
+            {analysisType !== ANALYSIS_TYPES.DASHBOARD && (
+                <DetailsSection />
+            )}
 
             <UsageHintsSection />
         </div>

@@ -51,8 +51,7 @@ export const ANALYSIS_TYPES = Object.freeze({
     SCORES: 'scores',
     WEIGHTS: 'weights',
     COMBINED: 'combined',
-    STATISTICS: 'statistics',
-    WORK_TYPE_ANALYSIS: 'workType'
+    STATISTICS: 'statistics'
 });
 
 export const DEFAULT_ANALYSIS_TYPE = ANALYSIS_TYPES.DASHBOARD;

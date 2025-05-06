@@ -1,14 +1,8 @@
-import React, { useMemo } from 'react';
+import React, {useMemo, useState} from 'react';
 import { useTranslation } from '../../hooks/useTranslation';
 import { useAppContext } from '../../AppContext';
 import ErrorBoundary from '../common/ErrorBoundary';
-import GradeDistributionComponent from './GradeDistributionComponent';
-import CriteriaComparisonComponent from './CriteriaComparisonComponent';
 import KPICardComponent from './KPICardComponent';
-import TypeComparisonComponent from './TypeComparisonComponent';
-import { ANALYSIS_TYPES } from '../../constants/chartConstants';
-import SpearmanCorrelationComponent from './SpearmanCorrelationComponent';
-import RankDifferenceAnalysisComponent from './RankDifferenceAnalysisComponent';
 import DashboardContainer from './DashboardContainer';
 import {
     calculateAggregatedMetrics, calculateRankAnalysis,
@@ -17,12 +11,29 @@ import {
 } from '../../utils/dataTransformers/dashboardUtils';
 import { formatNumber } from '../../utils/dataUtils';
 import {METRICS} from "../../constants/metrics";
-import ViolinPlotComponent from './ViolinPlotComponent';
-import ParallelCoordinatePlotComponent from './ParallelCoordinatePlotComponent';
+import TabContent from "../common/TabContent";
+import CriteriaAnalysisTab from "./tabs/CriteriaAnalysisTab";
+import WorkTypeTab from "./tabs/WorkTypeTab";
+import RankAnalysisTab from "./tabs/RankAnalysisTab";
+import GradeDistributionTab from "./tabs/GradeDistributionTab";
+import OverviewTab from "./tabs/OverviewTab";
+import TabNavigation from "../common/TabNavigation";
+
+// Konstanten für die Tab-Keys
+const DASHBOARD_TABS = {
+    OVERVIEW: 'overview',
+    GRADE_DISTRIBUTION: 'gradeDistribution',
+    RANK_ANALYSIS: 'rankAnalysis',
+    CRITERIA_ANALYSIS: 'criteriaAnalysis',
+    WORK_TYPE: 'workType'
+};
 
 const DashboardSection = () => {
     const { rawWorks, translatedWorks } = useAppContext();
     const t = useTranslation();
+
+    // State für aktiven Tab
+    const [activeTab, setActiveTab] = useState(DASHBOARD_TABS.OVERVIEW);
 
     // Berechnete Metriken für das Dashboard
     const dashboardMetrics = useMemo(() => {
@@ -53,6 +64,15 @@ const DashboardSection = () => {
     const formatValue = (value) => {
         return formatNumber(value, METRICS.DEFAULT_DECIMAL_PLACES);
     };
+
+    // Tab-Definitionen
+    const tabs = [
+        { key: DASHBOARD_TABS.OVERVIEW, label: t('overview', 'dashboard') || "Überblick" },
+        { key: DASHBOARD_TABS.GRADE_DISTRIBUTION, label: t('gradeDistribution', 'dashboard') || "Notenverteilung" },
+        { key: DASHBOARD_TABS.RANK_ANALYSIS, label: t('rankAnalysis', 'dashboard') || "Rang-Analyse" },
+        { key: DASHBOARD_TABS.CRITERIA_ANALYSIS, label: t('criteriaAnalysis', 'dashboard') || "Kriterien-Analyse" },
+        { key: DASHBOARD_TABS.WORK_TYPE, label: t('workType', 'dashboard') || "Arbeitstypen" }
+    ];
 
     const renderKPICards = (metrics) => {
         return (
@@ -91,39 +111,45 @@ const DashboardSection = () => {
             <DashboardContainer title={t('dashboardTitle', 'chartTitles') || "Analytics Dashboard"}>
                 {renderKPICards(dashboardMetrics.summary)}
 
-                <div className="component-grid grid-2-cols">
-                    <DashboardContainer title={t('gradeDistribution', 'dashboard') + ' - ' + t('gradeBoxplot', 'dashboard')}>
-                        <GradeDistributionComponent data={boxPlotData} analysisType={ANALYSIS_TYPES.DASHBOARD} />
-                    </DashboardContainer>
+                <TabNavigation
+                    activeTab={activeTab}
+                    setActiveTab={setActiveTab}
+                    tabs={tabs}
+                />
 
-                    <DashboardContainer title={t('avgGrade', 'dashboard') + ' - ' + t('byWorkType', 'dashboard')}>
-                        <TypeComparisonComponent data={dashboardMetrics.byType} analysisType={ANALYSIS_TYPES.DASHBOARD} />
-                    </DashboardContainer>
-                </div>
-
-                <DashboardContainer title={t('gradeDistribution', 'dashboard') + ' - ' + t('gradeViolinplot', 'dashboard')}>
-                    <ViolinPlotComponent data={violinData} />
-                </DashboardContainer>
-
-                <DashboardContainer title={t('gradeComparison', 'dashboard')}>
-                    <ParallelCoordinatePlotComponent data={parallelData} />
-                </DashboardContainer>
-
-                <div className="component-grid">
-                    <SpearmanCorrelationComponent data={rankAnalysisData} />
-                </div>
-
-                <div className="component-grid">
-                    <RankDifferenceAnalysisComponent data={rankAnalysisData} />
-                </div>
-
-                <DashboardContainer title={t('criteriaDifferences', 'dashboard') || "Criteria Differences"}>
-                    <CriteriaComparisonComponent
-                        data={dashboardMetrics.criteriaAverages}
-                        works={translatedWorks}
-                        analysisType={ANALYSIS_TYPES.DASHBOARD}
+                <TabContent activeTab={activeTab} tabKey={DASHBOARD_TABS.OVERVIEW}>
+                    <OverviewTab
+                        metrics={dashboardMetrics.summary}
+                        boxPlotData={boxPlotData}
                     />
-                </DashboardContainer>
+                </TabContent>
+
+                <TabContent activeTab={activeTab} tabKey={DASHBOARD_TABS.GRADE_DISTRIBUTION}>
+                    <GradeDistributionTab
+                        violinData={violinData}
+                        parallelData={parallelData}
+                    />
+                </TabContent>
+
+                <TabContent activeTab={activeTab} tabKey={DASHBOARD_TABS.RANK_ANALYSIS}>
+                    <RankAnalysisTab
+                        rankData={rankAnalysisData}
+                    />
+                </TabContent>
+
+                <TabContent activeTab={activeTab} tabKey={DASHBOARD_TABS.CRITERIA_ANALYSIS}>
+                    <CriteriaAnalysisTab
+                        criteriaAverages={dashboardMetrics.criteriaAverages}
+                        translatedWorks={translatedWorks}
+                    />
+                </TabContent>
+
+                <TabContent activeTab={activeTab} tabKey={DASHBOARD_TABS.WORK_TYPE}>
+                    <WorkTypeTab
+                        byType={dashboardMetrics.byType}
+                        rawWorks={rawWorks}
+                    />
+                </TabContent>
             </DashboardContainer>
         </ErrorBoundary>
     );

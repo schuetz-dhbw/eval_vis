@@ -12,7 +12,7 @@ import AnalysisTablesComponent from './workTypeAnalysis/AnalysisTablesComponent'
 import useChart from "../../hooks/useChart";
 import {CHART_TYPES, ANALYSIS_TYPES} from "../../constants/chartConstants";
 
-const WorkTypeAnalysisComponent = memo(({ works, analysisType = ANALYSIS_TYPES.WORK_TYPE_ANALYSIS }) => {
+const WorkTypeAnalysisComponent = memo(({ works, analysisType = ANALYSIS_TYPES.DASHBOARD }) => {
     const { t } = useChart({
         analysisType,
         chartType: CHART_TYPES.BAR

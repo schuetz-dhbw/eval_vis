@@ -58,7 +58,7 @@ const useChart = ({
 
     // Tooltip-Konfiguration für verschiedene Chart-Typen
     const tooltipConfig = useMemo(() => {
-        if (analysisType === ANALYSIS_TYPES.WORK_TYPE_ANALYSIS) {
+        if (analysisType === ANALYSIS_TYPES.DASHBOARD) {
             return {
                 formatter: formatValue,
                 labelFormatter: (data) => {

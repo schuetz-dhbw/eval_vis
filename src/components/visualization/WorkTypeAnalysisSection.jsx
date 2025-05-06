@@ -25,7 +25,7 @@ const WorkTypeAnalysisSection = () => {
                         <ChartErrorBoundary >
                             <WorkTypeAnalysisComponent
                                 works={rawWorks}
-                                analysisType={ANALYSIS_TYPES.WORK_TYPE_ANALYSIS}
+                                analysisType={ANALYSIS_TYPES.DASHBOARD}
                             />
                         </ChartErrorBoundary>
                     </DataErrorBoundary>

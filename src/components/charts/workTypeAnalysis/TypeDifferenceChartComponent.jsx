@@ -5,7 +5,7 @@ import BaseChartComponent from '../BaseChartComponent';
 import useChart from "../../../hooks/useChart";
 import {CHART_TYPES, ANALYSIS_TYPES} from "../../../constants/chartConstants";
 
-const TypeDifferenceChartComponent = memo(({ data, analysisType = ANALYSIS_TYPES.WORK_TYPE_ANALYSIS }) => {
+const TypeDifferenceChartComponent = memo(({ data, analysisType = ANALYSIS_TYPES.DASHBOARD }) => {
     const {
         t,
         chartDimensions,
