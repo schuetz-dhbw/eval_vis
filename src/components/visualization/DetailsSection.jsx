@@ -22,12 +22,12 @@ const DetailsSection = memo(() => {
 
             <div className="component-grid grid-2-cols">
                 <div className="info-box">
-                    <span className="data-label">{t('ai', 'labels')} {t('grade', 'labels') || 'Note'}:</span>
-                    <span className="data-value">{currentWork.aiGrade.toFixed(1)}</span>
+                    <span className="data-label ai">{t('ai', 'labels')} {t('grade', 'labels') || 'Note'}:</span>
+                    <span className="data-value ai">{currentWork.aiGrade.toFixed(1)}</span>
                 </div>
                 <div className="info-box">
-                    <span className="data-label">{t('human', 'labels')} {t('grade', 'labels') || 'Note'}:</span>
-                    <span className="data-value">{currentWork.humanGrade.toFixed(1)}</span>
+                    <span className="data-label human">{t('human', 'labels')} {t('grade', 'labels') || 'Note'}:</span>
+                    <span className="data-value human">{currentWork.humanGrade.toFixed(1)}</span>
                 </div>
             </div>
 

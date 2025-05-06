@@ -9,6 +9,7 @@ export const en = {
         tryAgain: "Try again"
     },
     analysisTypes: {
+        dashboard: "Analytics Dashboard",
         scores: "Achievement Levels",
         weights: "Weightings",
         weighted: "Weighted Values",
@@ -19,6 +20,18 @@ export const en = {
     darkMode: {
         toggleToLight: "Switch to light mode",
         toggleToDark: "Switch to dark mode"
+    },
+    dashboard: {
+        dashboardTitle: "Analytics Dashboard",
+        totalWorks: "Total Works",
+        avgGrades: "Avg. Grades (AI/Human)",
+        avgGrade: "Avg. Grade",
+        avgDiff: "Avg. Grade Difference",
+        minMaxDiff: "Min/Max",
+        gradeDistribution: "Grade Distribution",
+        byWorkType: "By Work Type",
+        criteriaDifferences: "Top Criteria Differences",
+        avgScore: "Avg. Score"
     },
     metricsDescriptions: {
         cosineDescription: "Measures angle similarity between AI and human ratings (1.0 = identical, 0.0 = completely different)",
@@ -43,6 +56,7 @@ export const en = {
         deviation: "Deviation Analysis"
     },
     chartTitles: {
+        dashboardTitle: "Analytics Dashboard",
         metricsTitle: "Similarity Metrics",
         vectors: "Assessment Vectors",
         combinedTitle: "Scores and Weights",

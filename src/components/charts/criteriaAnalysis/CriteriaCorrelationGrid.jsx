@@ -1,9 +1,16 @@
-import React, { memo } from 'react';
-import { useTranslation } from '../../../hooks/useTranslation';
-import { getIntensityClass } from '../../../utils/chartUtils';
+import React from 'react';
+import {getDifferenceColor} from "../../../utils/chartUtils";
+import {CHART_TYPES} from "../../../constants/chartConstants";
+import useChart from "../../../hooks/useChart";
 
-const CriteriaCorrelationGrid = memo(({ correlationData }) => {
-    const t = useTranslation();
+const CriteriaCorrelationGrid = ({ correlationData, analysisType }) => {
+    const {
+        t,
+        chartColors
+    } = useChart({
+        analysisType,
+        chartType: CHART_TYPES.SCATTER
+    });
 
     return (
         <div className="component-container">
@@ -13,14 +20,19 @@ const CriteriaCorrelationGrid = memo(({ correlationData }) => {
                     .sort((a, b) => Math.abs(parseFloat(b.correlation)) - Math.abs(parseFloat(a.correlation)))
                     .slice(0, 10)
                     .map((item, index) => {
-                        // Klassen und Anzeige basierend auf Korrelationsstärke
+                        // Korrelationswert parsen
                         const corrValue = parseFloat(item.correlation);
-                        const intensityClass = getIntensityClass(corrValue, { high: 0.7, medium: 0.3 });
+
+                        // Hintergrundfarbe mit getDifferenceColor bestimmen
+                        const backgroundColor = getDifferenceColor(Math.abs(corrValue) * 100, chartColors);
 
                         return (
                             <div
                                 key={index}
-                                className={`analysis-cell ${intensityClass}`}
+                                className="analysis-cell"
+                                style={{
+                                    backgroundColor: backgroundColor
+                                }}
                                 title={`${item.name1} - ${item.name2}: ${item.correlation}`}
                             >
                                 <div className="cell-value">
@@ -37,6 +49,6 @@ const CriteriaCorrelationGrid = memo(({ correlationData }) => {
             </div>
         </div>
     );
-});
+};
 
 export default CriteriaCorrelationGrid;

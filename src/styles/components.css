@@ -190,14 +190,22 @@
 .data-value {
     font-size: var(--font-size-xl);
     font-weight: 700;
-    color: var(--color-primary);
     margin-bottom: var(--space-sm);
+}
+
+.ai {
+    color: var(--color-primary);
+}
+
+.human {
+    color: var(--color-secondary);
 }
 
 .item-description {
     font-size: var(--font-size-sm);
     color: var(--color-text-light);
     margin-bottom: var(--space-sm);
+    height: 3em;
 }
 
 .quality-indicator {
@@ -303,15 +311,15 @@
 
 /* Intensitäts-Stufen für Analyse-Zellen */
 .high-intensity {
-    background-color: var(--color-secondary);
+    background-color: var(--color-critical);
 }
 
 .medium-intensity {
-    background-color: var(--color-primary);
+    background-color: var(--color-moderate);
 }
 
 .low-intensity {
-    background-color: var(--color-tertiary);
+    background-color: var(--color-optimal);
 }
 
 /* Zellinhalte */
@@ -412,7 +420,7 @@
 }
 
 .error-title {
-    color: var(--color-tertiary);
+    color: var(--color-critical);
     font-size: var(--font-size-lg);
     margin-bottom: var(--space-sm);
 }

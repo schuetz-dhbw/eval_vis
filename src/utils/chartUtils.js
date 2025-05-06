@@ -1,5 +1,17 @@
 import React from 'react';
-import { CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line, Bar, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
+import {
+    CartesianGrid,
+    XAxis,
+    YAxis,
+    Tooltip,
+    Legend,
+    Line,
+    Bar,
+    PolarGrid,
+    PolarAngleAxis,
+    PolarRadiusAxis,
+    Cell
+} from 'recharts';
 import CustomTooltip from '../components/charts/CustomTooltip';
 import { DATA_KEYS } from "../constants/chartConstants";
 
@@ -47,6 +59,7 @@ export const renderLines = (t, CHART_COLORS) => {
             dataKey={DATA_KEYS.AI}
             name={t('ai', 'labels')}
             stroke={CHART_COLORS.PRIMARY}
+            strokeWidth={2}
             activeDot={{ r: 8 }}
         />,
         <Line
@@ -55,6 +68,7 @@ export const renderLines = (t, CHART_COLORS) => {
             dataKey={DATA_KEYS.HUMAN}
             name={t('human', 'labels')}
             stroke={CHART_COLORS.SECONDARY}
+            strokeWidth={2}
             activeDot={{ r: 8 }}
         />
     ];
@@ -117,47 +131,71 @@ export const renderScatterChartBase = (t, dataKeys, tooltipConfig, defaultLegend
     ];
 };
 
-// Funktion zum Rendern von Composite-Chart-Elementen
-export const renderCompositeElements = (t, chartColors) => {
+export const renderDashboardTypeComparisonBars = (t, data, CHART_COLORS) => {
     return [
         <Bar
-            key="aiScore"
-            yAxisId="left"
-            dataKey={DATA_KEYS.AI_SCORE}
-            name={t('aiScore', 'labels')}
-            fill={chartColors.PRIMARY}
+            key="ai-bar"
+            dataKey={DATA_KEYS.AI}
+            name={t('ai', 'labels') + " " + t('avgGrade', 'dashboard')}
+            fill={CHART_COLORS.PRIMARY}
         />,
         <Bar
-            key="humanScore"
-            yAxisId="left"
-            dataKey={DATA_KEYS.HUMAN_SCORE}
-            name={t('humanScore', 'labels')}
-            fill={chartColors.SECONDARY}
+            key="human-bar"
+            dataKey={DATA_KEYS.HUMAN}
+            name={t('human', 'labels') + " " + t('avgGrade', 'dashboard')}
+            fill={CHART_COLORS.SECONDARY}
         />,
-        <Line
-            key="aiWeight"
-            yAxisId="right"
-            type="monotone"
-            dataKey={DATA_KEYS.AI_WEIGHT}
-            name={t('aiWeight', 'labels')}
-            stroke={chartColors.TERTIARY}
+        <Bar
+            key="diff-bar"
+            dataKey={DATA_KEYS.DIFF}
+            name={t('avgDifference', 'metrics')}
+            fill={CHART_COLORS.TERTIARY}
+            >
+            {data.map((entry, index) => (
+                <Cell
+                    key={`cell-${index}`}
+                    fill={getDifferenceColor(entry.diff, CHART_COLORS)}
+                />
+            ))}
+        </Bar>
+    ];
+};
+
+export const renderDashboardCriteriaBars = (t, CHART_COLORS, data) => {
+    return [
+        <Bar
+            key="ai-bar"
+            dataKey={DATA_KEYS.AI}
+            name={t('ai', 'labels') + " " + t('avgScore', 'dashboard')}
+            fill={CHART_COLORS.PRIMARY}
         />,
-        <Line
-            key="humanWeight"
-            yAxisId="right"
-            type="monotone"
-            dataKey={DATA_KEYS.HUMAN_WEIGHT}
-            name={t('humanWeight', 'labels')}
-            stroke={chartColors.QUATERNARY}
-        />
+        <Bar
+            key="human-bar"
+            dataKey={DATA_KEYS.HUMAN}
+            name={t('human', 'labels') + " " + t('avgScore', 'dashboard')}
+            fill={CHART_COLORS.SECONDARY}
+        />,
+        <Bar
+            key="diff-bar"
+            dataKey={DATA_KEYS.DIFF}
+            name={t('avgDifference', 'metrics')}
+            fill={CHART_COLORS.TERTIARY}
+        >
+            {data.map((entry, index) => (
+                <Cell
+                    key={`cell-${index}`}
+                    fill={getDifferenceColor(entry.diff, CHART_COLORS)}
+                />
+            ))}
+        </Bar>
     ];
 };
 
 // Verbesserte und vereinheitlichte Funktion für die Farbzuweisung basierend auf Differenzwerten
 export const getDifferenceColor = (value, chartColors, thresholds = { high: 30, medium: 15 }) => {
-    if (value > thresholds.high) return chartColors.TERTIARY;  // Großer Unterschied
-    if (value > thresholds.medium) return chartColors.PRIMARY; // Mittlerer Unterschied
-    return chartColors.SECONDARY;                             // Kleiner Unterschied
+    if (value > thresholds.high) return chartColors.CRITICAL;  // Großer Unterschied
+    if (value > thresholds.medium) return chartColors.MODERATE; // Mittlerer Unterschied
+    return chartColors.OPTIMAL;                             // Kleiner Unterschied
 };
 
 // Verbesserte Funktion für Intensitätsklassen mit standardisierten Schwellenwerten

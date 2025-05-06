@@ -66,7 +66,11 @@ export const getChartColors = () => ({
     PRIMARY: getCSSVariable('--color-primary'),
     SECONDARY: getCSSVariable('--color-secondary'),
     TERTIARY: getCSSVariable('--color-tertiary'),
-    QUATERNARY: getCSSVariable('--color-quaternary')
+    QUATERNARY: getCSSVariable('--color-quaternary'),
+    QUINARY: getCSSVariable('--color-quinary'),
+    CRITICAL: getCSSVariable('--color-critical'),
+    MODERATE: getCSSVariable('--color-moderate'),
+    OPTIMAL: getCSSVariable('--color-optimal')
 });
 
 // Konfigurations-Factory für verschiedene Chart-Typen

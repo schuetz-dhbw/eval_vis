@@ -29,15 +29,15 @@ const CriteriaHeatmapComponent = memo(({ data }) => {
 
             <div className="legend-container">
                 <div className="legend-item">
-                    <span className="legend-color" style={{ backgroundColor: chartColors.SECONDARY }}></span>
+                    <span className="legend-color" style={{ backgroundColor: chartColors.OPTIMAL }}></span>
                     <span className="legend-text">&lt; 15%</span>
                 </div>
                 <div className="legend-item">
-                    <span className="legend-color" style={{ backgroundColor: chartColors.PRIMARY }}></span>
+                    <span className="legend-color" style={{ backgroundColor: chartColors.MODERATE }}></span>
                     <span className="legend-text">15-30%</span>
                 </div>
                 <div className="legend-item">
-                    <span className="legend-color" style={{ backgroundColor: chartColors.TERTIARY }}></span>
+                    <span className="legend-color" style={{ backgroundColor: chartColors.CRITICAL }}></span>
                     <span className="legend-text">&gt; 30%</span>
                 </div>
             </div>

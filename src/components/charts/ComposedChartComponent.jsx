@@ -26,8 +26,8 @@ const ComposedChartComponent = memo(({ data, analysisType, title }) => {
                 <YAxis yAxisId="right" orientation="right" domain={[0, 25]} />
                 <Bar yAxisId="left" dataKey={DATA_KEYS.AI_SCORE} name={t('aiScore', 'labels')} fill={chartColors.PRIMARY} />
                 <Bar yAxisId="left" dataKey={DATA_KEYS.HUMAN_SCORE} name={t('humanScore', 'labels')} fill={chartColors.SECONDARY} />
-                <Line yAxisId="right" type="monotone" dataKey={DATA_KEYS.AI_WEIGHT} name={t('aiWeight', 'labels')} stroke={chartColors.TERTIARY} />
-                <Line yAxisId="right" type="monotone" dataKey={DATA_KEYS.HUMAN_WEIGHT} name={t('humanWeight', 'labels')} stroke={chartColors.QUATERNARY} />
+                <Line yAxisId="right" type="monotone" dataKey={DATA_KEYS.AI_WEIGHT} name={t('aiWeight', 'labels')} stroke={chartColors.TERTIARY} strokeWidth={2} />
+                <Line yAxisId="right" type="monotone" dataKey={DATA_KEYS.HUMAN_WEIGHT} name={t('humanWeight', 'labels')} stroke={chartColors.QUATERNARY} strokeWidth={2} />
             </ComposedChart>
         </BaseChartComponent>
     );

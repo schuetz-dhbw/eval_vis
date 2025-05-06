@@ -3,7 +3,6 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Cell } fro
 import CustomTooltip from '../CustomTooltip';
 import BaseChartComponent from '../BaseChartComponent';
 import useChart from "../../../hooks/useChart";
-import { getDifferenceColor } from '../../../utils/chartUtils';
 import {CHART_TYPES, ANALYSIS_TYPES} from "../../../constants/chartConstants";
 
 const TypeDifferenceChartComponent = memo(({ data, analysisType = ANALYSIS_TYPES.WORK_TYPE_ANALYSIS }) => {
@@ -34,12 +33,12 @@ const TypeDifferenceChartComponent = memo(({ data, analysisType = ANALYSIS_TYPES
                 <Bar
                     dataKey="averageDifference"
                     name={t('avgDifference', 'metrics')}
-                    fill={chartColors.PRIMARY}
+                    fill={chartColors.QUINARY}
                 >
                     {data.map((entry, index) => (
                         <Cell
                             key={`cell-${index}`}
-                            fill={getDifferenceColor(entry.averageDifference, chartColors)}
+                            fill={chartColors.QUINARY}
                         />
                     ))}
                 </Bar>

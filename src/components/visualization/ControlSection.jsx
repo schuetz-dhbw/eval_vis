@@ -18,7 +18,7 @@ const ControlSection = () => {
     const t = useTranslation();
 
     // Check if we should show the work selector
-    const showWorkSelector = analysisType !== ANALYSIS_TYPES.WORK_TYPE_ANALYSIS;
+    const showWorkSelector = !(analysisType === ANALYSIS_TYPES.WORK_TYPE_ANALYSIS || analysisType === ANALYSIS_TYPES.DASHBOARD);
 
     return (
         <div className="controls">

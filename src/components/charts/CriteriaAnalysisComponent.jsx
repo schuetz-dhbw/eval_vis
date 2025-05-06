@@ -7,7 +7,7 @@ import {
     calculateCriteriaCorrelationData
 } from '../../utils/statistics/criteriaAnalysisUtils';
 import useChart from "../../hooks/useChart";
-import { renderScatterChartBase } from "../../utils/chartUtils";
+import {getDifferenceColor, renderScatterChartBase} from "../../utils/chartUtils";
 import CriteriaDeviationTable from './criteriaAnalysis/CriteriaDeviationTable';
 import CriteriaCorrelationGrid from './criteriaAnalysis/CriteriaCorrelationGrid';
 
@@ -54,12 +54,12 @@ const CriteriaAnalysisComponent = memo(({ work, analysisType = ANALYSIS_TYPES.ST
                         <Scatter
                             name={t('criteriaDeviations', 'labels')}
                             data={criteriaData}
-                            fill={chartColors.PRIMARY}
+                            fill={chartColors.QUINARY}
                         >
                             {criteriaData.map((entry, index) => (
                                 <Cell
                                     key={`cell-${index}`}
-                                    fill={entry.scoreDiff > 20 ? chartColors.TERTIARY : chartColors.SECONDARY}
+                                    fill={getDifferenceColor(entry.scoreDiff, chartColors)}
                                 />
                             ))}
                         </Scatter>

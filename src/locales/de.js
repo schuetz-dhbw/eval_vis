@@ -9,6 +9,7 @@ export const de = {
         tryAgain: "Erneut versuchen"
     },
     analysisTypes: {
+        dashboard: "Analyse-Dashboard",
         scores: "Zielerreichungsgrade",
         weights: "Gewichtungen",
         weighted: "Gewichtete Werte",
@@ -19,6 +20,18 @@ export const de = {
     darkMode: {
         toggleToLight: "Zum hellen Modus wechseln",
         toggleToDark: "Zum dunklen Modus wechseln"
+    },
+    dashboard: {
+        dashboardTitle: "Analyse-Dashboard",
+        totalWorks: "Arbeiten Gesamt",
+        avgGrades: "Ø Noten (KI/Human)",
+        avgGrade: "Ø Note",
+        avgDiff: "Ø Notendifferenz",
+        minMaxDiff: "Min/Max",
+        gradeDistribution: "Notenverteilung",
+        byWorkType: "Nach Arbeitstyp",
+        criteriaDifferences: "Top-Kriterien-Differenzen",
+        avgScore: "Ø Wert"
     },
     metricsDescriptions: {
         cosineDescription: "Misst die Winkelähnlichkeit zwischen KI- und Human-Bewertungen (1,0 = identisch, 0,0 = völlig unterschiedlich)",
@@ -43,6 +56,7 @@ export const de = {
         deviation: "Abweichungsanalyse"
     },
     chartTitles: {
+        dashboardTitle: "Analyse-Dashboard",
         metricsTitle: "Ähnlichkeitsmetriken",
         vectors: "Bewertungsvektoren",
         combinedTitle: "Bewertungen und Gewichtungen",

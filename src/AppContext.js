@@ -5,7 +5,7 @@ import { translations } from './locales';
 import { getTranslatedWorks } from './utils/dataTransformers';
 import { toggleDarkMode as toggleDarkModeUtil } from './utils/darkmode';
 import { setCurrentLanguage } from './services/languageService';
-import {ANALYSIS_TYPES} from "./constants/chartConstants";
+import { DEFAULT_ANALYSIS_TYPE} from "./constants/chartConstants";
 
 // Context erstellen
 const AppContext = createContext();
@@ -13,7 +13,7 @@ const AppContext = createContext();
 // Provider-Komponente
 export const AppProvider = ({ children }) => {
     const [selectedWorkIndex, setSelectedWorkIndex] = useState(0);
-    const [analysisType, setAnalysisType] = useState(ANALYSIS_TYPES.SCORES);
+    const [analysisType, setAnalysisType] = useState(DEFAULT_ANALYSIS_TYPE);
     const [isDarkMode, setIsDarkMode] = useState(() => {
         // Initialisierung mit dem Wert aus initDarkMode
         return document.documentElement.getAttribute('data-theme') === 'dark';

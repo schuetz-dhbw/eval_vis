@@ -46,7 +46,9 @@ const MetricsSection = memo(() => {
                     </div>
                 </div>
                 <div className="info-box">
-                    <div className="data-value">{currentWork.aiGrade.toFixed(1)} / {currentWork.humanGrade.toFixed(1)}</div>
+                    <div className="data-value">
+                        {Math.abs(currentWork.aiGrade - currentWork.humanGrade).toFixed(2)}
+                    </div>
                     <div className="data-label">{t('gradeDifference', 'metrics') || "Grade Difference"}</div>
                     <div className="item-description">
                         {t('gradeDifferenceDescription', 'metricsDescriptions') ||

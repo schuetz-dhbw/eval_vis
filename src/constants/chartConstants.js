@@ -22,7 +22,9 @@ export const DATA_KEYS = {
     HUMAN_WEIGHTED: 'humanWeighted',
     NAME: 'name',
     SHORT_NAME: 'shortName',
-    FULL_MARK: 'fullMark'
+    FULL_MARK: 'fullMark',
+    DIFF: 'diff',       // Für Differenzwerte
+    COUNT: 'count'      // Für Anzahlen
 };
 
 // Cache-Keys
@@ -36,9 +38,12 @@ export const CACHE_KEYS = {
 
 // Analysearten für die Darstellung
 export const ANALYSIS_TYPES = Object.freeze({
+    DASHBOARD: 'dashboard',
     SCORES: 'scores',
     WEIGHTS: 'weights',
     COMBINED: 'combined',
     STATISTICS: 'statistics',
     WORK_TYPE_ANALYSIS: 'workType'
 });
+
+export const DEFAULT_ANALYSIS_TYPE = ANALYSIS_TYPES.DASHBOARD;
