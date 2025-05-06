@@ -7,7 +7,8 @@ export const CHART_TYPES = {
     RADAR: 'radar',
     SCATTER: 'scatter',
     HEATMAP: 'heatmap',
-    COMBINED: 'combined'
+    COMBINED: 'combined',
+    BOXPLOT: 'boxplot'
 };
 
 // Daten-Keys für die Charts

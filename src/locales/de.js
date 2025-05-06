@@ -31,7 +31,8 @@ export const de = {
         gradeDistribution: "Notenverteilung",
         byWorkType: "Nach Arbeitstyp",
         criteriaDifferences: "Top-Kriterien-Differenzen",
-        avgScore: "Ø Wert"
+        avgScore: "Ø Wert",
+        difference: "Differenz"
     },
     metricsDescriptions: {
         cosineDescription: "Misst die Winkelähnlichkeit zwischen KI- und Human-Bewertungen (1,0 = identisch, 0,0 = völlig unterschiedlich)",

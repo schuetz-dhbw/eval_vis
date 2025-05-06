@@ -31,7 +31,8 @@ export const en = {
         gradeDistribution: "Grade Distribution",
         byWorkType: "By Work Type",
         criteriaDifferences: "Top Criteria Differences",
-        avgScore: "Avg. Score"
+        avgScore: "Avg. Score",
+        difference: "Difference"
     },
     metricsDescriptions: {
         cosineDescription: "Measures angle similarity between AI and human ratings (1.0 = identical, 0.0 = completely different)",

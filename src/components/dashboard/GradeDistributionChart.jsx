@@ -1,63 +1,69 @@
 import React from 'react';
 import BaseChartComponent from '../charts/BaseChartComponent';
-import { useTranslation } from '../../hooks/useTranslation';
-import { CHART_DIMENSIONS } from '../../constants/chartConfig';
 import useChart from '../../hooks/useChart';
 import { CHART_TYPES } from '../../constants/chartConstants';
+import {formatNumber} from "../../utils/dataUtils";
+import {METRICS} from "../../constants/metrics";
 
 const GradeDistributionChart = ({ data, analysisType }) => {
-    const t = useTranslation();
-    const { chartColors } = useChart({
+    const {
+        t,
+        chartDimensions
+    } = useChart({
         analysisType,
-        chartType: CHART_TYPES.BAR
+        chartType: CHART_TYPES.BOXPLOT
     });
 
+    // Formatierung über bestehende Hilfsfunktion
+    const formatValue = (value) => {
+        return formatNumber(value, METRICS.DEFAULT_DECIMAL_PLACES);
+    };
+
     return (
-        <BaseChartComponent height={CHART_DIMENSIONS.DEFAULT_HEIGHT}>
-            <div className="grade-distribution-chart">
-                <div className="boxplot-stats">
-                    <div className="boxplot-legend">
-                        <div className="legend-item">
-                            <span className="legend-color" style={{ backgroundColor: chartColors.PRIMARY }}></span>
-                            <span>{t('ai', 'labels')}</span>
-                        </div>
-                        <div className="legend-item">
-                            <span className="legend-color" style={{ backgroundColor: chartColors.SECONDARY }}></span>
-                            <span>{t('human', 'labels')}</span>
-                        </div>
-                    </div>
-                    <table className="boxplot-table">
+        <BaseChartComponent height={chartDimensions.DEFAULT_HEIGHT}>
+
+                {/* Box-Plot-Tabelle */}
+                <div className="table-container">
+                    <table className="data-table">
                         <thead>
                         <tr>
                             <th></th>
-                            <th>Min</th>
-                            <th>Q1</th>
-                            <th>Median</th>
-                            <th>Q3</th>
-                            <th>Max</th>
+                            <th>{t('min', 'dashboard')}</th>
+                            <th>{t('q1', 'dashboard')}</th>
+                            <th>{t('median', 'dashboard')}</th>
+                            <th>{t('q3', 'dashboard')}</th>
+                            <th>{t('max', 'dashboard')}</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr className="ai">
                             <td>{t('ai', 'labels')}</td>
-                            <td>{data[0].min.toFixed(2)}</td>
-                            <td>{data[0].q1.toFixed(2)}</td>
-                            <td>{data[0].median.toFixed(2)}</td>
-                            <td>{data[0].q3.toFixed(2)}</td>
-                            <td>{data[0].max.toFixed(2)}</td>
+                            <td>{formatValue(data[0].min)}</td>
+                            <td>{formatValue(data[0].q1)}</td>
+                            <td>{formatValue(data[0].median)}</td>
+                            <td>{formatValue(data[0].q3)}</td>
+                            <td>{formatValue(data[0].max)}</td>
                         </tr>
-                        <tr>
+                        <tr className="human">
                             <td>{t('human', 'labels')}</td>
-                            <td>{data[1].min.toFixed(2)}</td>
-                            <td>{data[1].q1.toFixed(2)}</td>
-                            <td>{data[1].median.toFixed(2)}</td>
-                            <td>{data[1].q3.toFixed(2)}</td>
-                            <td>{data[1].max.toFixed(2)}</td>
+                            <td>{formatValue(data[1].min)}</td>
+                            <td>{formatValue(data[1].q1)}</td>
+                            <td>{formatValue(data[1].median)}</td>
+                            <td>{formatValue(data[1].q3)}</td>
+                            <td>{formatValue(data[1].max)}</td>
+                        </tr>
+                        <tr className="totals-row">
+                            <td>{t('difference', 'dashboard')}</td>
+                            <td>{formatValue(Math.abs(data[0].min - data[1].min))}</td>
+                            <td>{formatValue(Math.abs(data[0].q1 - data[1].q1))}</td>
+                            <td>{formatValue(Math.abs(data[0].median - data[1].median))}</td>
+                            <td>{formatValue(Math.abs(data[0].q3 - data[1].q3))}</td>
+                            <td>{formatValue(Math.abs(data[0].max - data[1].max))}</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-            </div>
+
         </BaseChartComponent>
     );
 };
