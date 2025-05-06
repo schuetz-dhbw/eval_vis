@@ -274,9 +274,17 @@ export const generateParallelCoordinateData = (works) => {
 /**
  * Berechnet Rangdaten für alle Arbeiten
  * @param {Array} works - Alle Arbeiten
+ * @param translatedWorks - Übersetzte Arbeiten
  * @returns {Object} - Rangdaten und Korrelation
  */
-export const calculateRankAnalysis = (works) => {
+export const calculateRankAnalysis = (works, translatedWorks) => {
+    // Erstelle Map für Titel-Lookup
+    const titleMap = new Map();
+    if (translatedWorks && translatedWorks.length) {
+        translatedWorks.forEach(work => {
+            titleMap.set(work.key, work.title);
+        });
+    }
     const cacheKey = generateCacheKey(works);
 
     if (dashboardCache.rankAnalysis.has(cacheKey)) {
@@ -295,7 +303,8 @@ export const calculateRankAnalysis = (works) => {
 
         return {
             key: work.key,
-            title: work.title || work.key,
+            // Übersetzte Titel verwenden, wenn verfügbar
+            title: titleMap.get(work.key) || work.title || work.key,
             aiGrade: work.aiGrade,
             humanGrade: work.humanGrade,
             aiRank,

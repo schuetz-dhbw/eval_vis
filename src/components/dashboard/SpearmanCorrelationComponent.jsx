@@ -2,6 +2,7 @@ import React from 'react';
 import BaseChartComponent from '../charts/BaseChartComponent';
 import useChart from '../../hooks/useChart';
 import { CHART_TYPES, ANALYSIS_TYPES } from '../../constants/chartConstants';
+import {getDifferenceColor} from "../../utils/chartUtils";
 
 const SpearmanCorrelationComponent = ({ data }) => {
     const {
@@ -79,7 +80,7 @@ const SpearmanCorrelationComponent = ({ data }) => {
                                 cx={xScale(item.humanRank)}
                                 cy={yScale(item.aiRank)}
                                 r="4"
-                                fill={chartColors.PRIMARY}
+                                fill={getDifferenceColor(Math.abs(item.rankDiff) * 5, chartColors)}
                                 fillOpacity="0.7"
                             >
                                 <title>{item.title} - AI: {item.aiRank}, Human: {item.humanRank}</title>

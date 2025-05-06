@@ -45,8 +45,8 @@ const DashboardSection = () => {
 
     // Rangdaten berechnen
     const rankAnalysisData = useMemo(() => {
-        return calculateRankAnalysis(rawWorks);
-    }, [rawWorks]);
+        return calculateRankAnalysis(rawWorks, translatedWorks);
+    }, [rawWorks, translatedWorks]);
 
     // Formatierungs-Hilfsfunktion
     const formatValue = (value) => {
@@ -114,8 +114,11 @@ const DashboardSection = () => {
                     <ParallelCoordinatePlotComponent data={parallelData} />
                 </div>
 
-                <div className="component-grid grid-2-cols">
+                <div className="component-grid">
                     <SpearmanCorrelationComponent data={rankAnalysisData} />
+                </div>
+
+                <div className="component-grid">
                     <RankDifferenceAnalysisComponent data={rankAnalysisData} />
                 </div>
 
