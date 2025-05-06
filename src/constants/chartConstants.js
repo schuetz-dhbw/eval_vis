@@ -8,7 +8,11 @@ export const CHART_TYPES = {
     SCATTER: 'scatter',
     HEATMAP: 'heatmap',
     COMBINED: 'combined',
-    BOXPLOT: 'boxplot'
+    BOXPLOT: 'boxplot',
+    VIOLIN: 'violin',
+    PARALLEL: 'parallel',
+    RANK_CORRELATION: 'rankCorrelation',
+    RANK_DIFFERENCE: 'rankDifference'
 };
 
 // Daten-Keys für die Charts
@@ -24,8 +28,12 @@ export const DATA_KEYS = {
     NAME: 'name',
     SHORT_NAME: 'shortName',
     FULL_MARK: 'fullMark',
-    DIFF: 'diff',       // Für Differenzwerte
-    COUNT: 'count'      // Für Anzahlen
+    DIFF: 'diff',
+    COUNT: 'count',
+    RANK_DIFF: 'rankDiff',
+    AI_RANK: 'aiRank',
+    HUMAN_RANK: 'humanRank',
+    DENSITY: 'density'
 };
 
 // Cache-Keys

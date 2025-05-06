@@ -134,6 +134,32 @@ export const getChartConfig = (chartType) => {
                     }
                 }
             };
+        case CHART_TYPES.VIOLIN:
+            return {
+                ...baseConfig,
+                margin: CHART_MARGINS.DEFAULT,
+                height: 200,
+                padding: 40
+            };
+        case CHART_TYPES.PARALLEL:
+            return {
+                ...baseConfig,
+                margin: CHART_MARGINS.DEFAULT,
+                height: 300,
+                padding: { top: 40, right: 60, bottom: 40, left: 60 }
+            };
+        case CHART_TYPES.RANK_CORRELATION:
+            return {
+                ...baseConfig,
+                margin: CHART_MARGINS.SCATTER,
+                height: 250
+            };
+        case CHART_TYPES.RANK_DIFFERENCE:
+            return {
+                ...baseConfig,
+                margin: CHART_MARGINS.DEFAULT,
+                height: 300
+            };
         default:
             return baseConfig;
     }

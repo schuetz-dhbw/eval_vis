@@ -2,8 +2,6 @@ import React from 'react';
 import BaseChartComponent from '../charts/BaseChartComponent';
 import useChart from '../../hooks/useChart';
 import { CHART_TYPES } from '../../constants/chartConstants';
-import {formatNumber} from "../../utils/dataUtils";
-import {METRICS} from "../../constants/metrics";
 
 const GradeDistributionComponent = ({ data, analysisType }) => {
     const {

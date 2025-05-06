@@ -50,3 +50,95 @@
     color: var(--color-text);
 }
 
+/* Ergänzungen für src/styles/dashboard.css */
+
+/* Verteilungs-Visualisierungen */
+.distribution-visualizations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+    justify-content: center;
+}
+
+/* Spearman-Korrelation */
+.correlation-container {
+    text-align: center;
+}
+
+.correlation-value-container {
+    margin: var(--space-md) 0;
+    padding: var(--space-md);
+    border-radius: var(--border-radius);
+    background-color: var(--background-even-row);
+}
+
+.correlation-value {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+}
+
+.correlation-strong {
+    color: var(--color-optimal);
+}
+
+.correlation-moderate {
+    color: var(--color-moderate);
+}
+
+.correlation-weak {
+    color: var(--color-critical);
+}
+
+.correlation-interpretation {
+    font-size: var(--font-size-base);
+    color: var(--color-text-light);
+}
+
+/* Rangdifferenz-Analyse */
+.rank-difference-legend {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--font-size-sm);
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.rank-difference-table {
+    margin-top: var(--space-md);
+}
+
+.difference-bar-container {
+    width: 100%;
+    height: 16px;
+    background-color: var(--background-even-row);
+    border-radius: 2px;
+    position: relative;
+}
+
+.difference-bar {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.difference-right {
+    margin-left: 50%;
+}
+
+.difference-left {
+    margin-right: 50%;
+    margin-left: auto;
+}
