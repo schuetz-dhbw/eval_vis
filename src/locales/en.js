@@ -27,12 +27,14 @@ export const en = {
         avgGrades: "Avg. Grades (AI/Human)",
         avgGrade: "Avg. Grade",
         avgDiff: "Avg. Grade Difference",
-        minMaxDiff: "Min/Max",
+        minMaxDiff: "Difference for Min/Max",
         gradeDistribution: "Grade Distribution",
         byWorkType: "By Work Type",
         criteriaDifferences: "Top Criteria Differences",
         avgScore: "Avg. Score",
-        difference: "Difference"
+        difference: "Difference",
+        analyticalWorks: "Analytical Works",
+        constructiveWorks: "Constructive Works"
     },
     metricsDescriptions: {
         cosineDescription: "Measures angle similarity between AI and human ratings (1.0 = identical, 0.0 = completely different)",

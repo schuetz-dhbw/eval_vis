@@ -6,7 +6,7 @@ import useChart from "../../hooks/useChart";
 import {CHART_TYPES} from "../../constants/chartConstants";
 import {renderDashboardTypeComparisonBars} from "../../utils/chartUtils";
 
-const TypeComparisonChart = ({ data, analysisType }) => {
+const TypeComparisonComponent = ({ data, analysisType }) => {
     const {
         t,
         chartDimensions,
@@ -34,4 +34,4 @@ const TypeComparisonChart = ({ data, analysisType }) => {
     );
 };
 
-export default TypeComparisonChart;
+export default TypeComparisonComponent;

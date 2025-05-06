@@ -345,6 +345,10 @@
     gap: var(--space-xs);
 }
 
+.grid-4-cols {
+    grid-template-columns: repeat(4, 1fr);
+}
+
 .small-cells {
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
 }
@@ -355,6 +359,12 @@
 
 .big-cells {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* Marker-Klassen für die verschiedenen KPI-Karten */
+.kpi {
+    border-left: 4px solid;
+    border-left-color: var(--color-quinary);
 }
 
 /* ===== LEGENDS ===== */

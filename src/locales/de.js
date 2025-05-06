@@ -27,12 +27,14 @@ export const de = {
         avgGrades: "Ø Noten (KI/Human)",
         avgGrade: "Ø Note",
         avgDiff: "Ø Notendifferenz",
-        minMaxDiff: "Min/Max",
+        minMaxDiff: "Differenz bei Min./Max.",
         gradeDistribution: "Notenverteilung",
         byWorkType: "Nach Arbeitstyp",
         criteriaDifferences: "Top-Kriterien-Differenzen",
         avgScore: "Ø Wert",
-        difference: "Differenz"
+        difference: "Differenz",
+        analyticalWorks: "Analytische Arbeiten",
+        constructiveWorks: "Konstruktive Arbeiten"
     },
     metricsDescriptions: {
         cosineDescription: "Misst die Winkelähnlichkeit zwischen KI- und Human-Bewertungen (1,0 = identisch, 0,0 = völlig unterschiedlich)",

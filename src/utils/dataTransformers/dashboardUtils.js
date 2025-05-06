@@ -15,6 +15,8 @@ export const calculateAggregatedMetrics = (works) => {
     const aiGrades = works.map(work => work.aiGrade);
     const humanGrades = works.map(work => work.humanGrade);
     const gradeDifferences = works.map(work => Math.abs(work.aiGrade - work.humanGrade));
+    const analyticalWorks = works.filter(work => work.typeKey === 'analytic').length;
+    const constructiveWorks = works.filter(work => work.typeKey === 'constructive').length;
 
     // Durchschnittliche Bewertungen für jedes Kriterium über alle Arbeiten
     const criteriaMap = new Map();
@@ -66,7 +68,15 @@ export const calculateAggregatedMetrics = (works) => {
             maxGradeDifference: Math.max(...gradeDifferences),
             minGradeDifference: Math.min(...gradeDifferences),
             stdDevAiGrade: calculateStdDev(aiGrades),
-            stdDevHumanGrade: calculateStdDev(humanGrades)
+            stdDevHumanGrade: calculateStdDev(humanGrades),
+            analyticalWorks,
+            constructiveWorks,
+            analyticalWorksPercentage: Math.round((analyticalWorks / works.length) * 100),
+            constructiveWorksPercentage: Math.round((constructiveWorks / works.length) * 100),
+            minAiGrade: Math.min(...aiGrades),
+            maxAiGrade: Math.max(...aiGrades),
+            minHumanGrade: Math.min(...humanGrades),
+            maxHumanGrade: Math.max(...humanGrades)
         },
         criteriaAverages,
         // Gruppieren nach Arbeitstyp

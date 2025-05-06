@@ -8,8 +8,8 @@ import {
 } from '../../utils/statistics/criteriaAnalysisUtils';
 import useChart from "../../hooks/useChart";
 import {getDifferenceColor, renderScatterChartBase} from "../../utils/chartUtils";
-import CriteriaDeviationTable from './criteriaAnalysis/CriteriaDeviationTable';
-import CriteriaCorrelationGrid from './criteriaAnalysis/CriteriaCorrelationGrid';
+import CriteriaDeviationComponent from './criteriaAnalysis/CriteriaDeviationComponent';
+import CriteriaCorrelationComponent from './criteriaAnalysis/CriteriaCorrelationComponent';
 
 const CriteriaAnalysisComponent = memo(({ work, analysisType = ANALYSIS_TYPES.STATISTICS }) => {
     const {
@@ -67,12 +67,12 @@ const CriteriaAnalysisComponent = memo(({ work, analysisType = ANALYSIS_TYPES.ST
                 </BaseChartComponent>
             </div>
 
-            <CriteriaDeviationTable
+            <CriteriaDeviationComponent
                 criteriaData={criteriaData.slice(0, 5)}
                 analysisType={analysisType}
             />
 
-            <CriteriaCorrelationGrid
+            <CriteriaCorrelationComponent
                 correlationData={correlationData}
                 analysisType={analysisType}
             />

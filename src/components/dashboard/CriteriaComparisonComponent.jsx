@@ -6,7 +6,7 @@ import { renderDashboardCriteriaBars} from '../../utils/chartUtils';
 import useChart from "../../hooks/useChart";
 import {CHART_TYPES} from "../../constants/chartConstants";
 
-const CriteriaComparisonChart = ({ data, analysisType }) => {
+const CriteriaComparisonComponent = ({ data, analysisType }) => {
     const {
         t,
         chartDimensions,
@@ -48,4 +48,4 @@ const CriteriaComparisonChart = ({ data, analysisType }) => {
     );
 };
 
-export default CriteriaComparisonChart;
+export default CriteriaComparisonComponent;

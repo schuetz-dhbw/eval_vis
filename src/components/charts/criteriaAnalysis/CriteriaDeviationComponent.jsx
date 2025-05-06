@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { useTranslation } from '../../../hooks/useTranslation';
 
-const CriteriaDeviationTable = memo(({ criteriaData }) => {
+const CriteriaDeviationComponent = memo(({ criteriaData }) => {
     const t = useTranslation();
 
     return (
@@ -35,4 +35,4 @@ const CriteriaDeviationTable = memo(({ criteriaData }) => {
     );
 });
 
-export default CriteriaDeviationTable;
+export default CriteriaDeviationComponent;

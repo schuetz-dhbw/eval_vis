@@ -3,7 +3,7 @@ import {getDifferenceColor} from "../../../utils/chartUtils";
 import {CHART_TYPES} from "../../../constants/chartConstants";
 import useChart from "../../../hooks/useChart";
 
-const CriteriaCorrelationGrid = ({ correlationData, analysisType }) => {
+const CriteriaCorrelationComponent = ({ correlationData, analysisType }) => {
     const {
         t,
         chartColors
@@ -51,4 +51,4 @@ const CriteriaCorrelationGrid = ({ correlationData, analysisType }) => {
     );
 };
 
-export default CriteriaCorrelationGrid;
+export default CriteriaCorrelationComponent;

@@ -5,19 +5,15 @@ import { CHART_TYPES } from '../../constants/chartConstants';
 import {formatNumber} from "../../utils/dataUtils";
 import {METRICS} from "../../constants/metrics";
 
-const GradeDistributionChart = ({ data, analysisType }) => {
+const GradeDistributionComponent = ({ data, analysisType }) => {
     const {
         t,
-        chartDimensions
+        chartDimensions,
+        formatValue
     } = useChart({
         analysisType,
         chartType: CHART_TYPES.BOXPLOT
     });
-
-    // Formatierung über bestehende Hilfsfunktion
-    const formatValue = (value) => {
-        return formatNumber(value, METRICS.DEFAULT_DECIMAL_PLACES);
-    };
 
     return (
         <BaseChartComponent height={chartDimensions.DEFAULT_HEIGHT}>
@@ -68,4 +64,4 @@ const GradeDistributionChart = ({ data, analysisType }) => {
     );
 };
 
-export default GradeDistributionChart;
+export default GradeDistributionComponent;
