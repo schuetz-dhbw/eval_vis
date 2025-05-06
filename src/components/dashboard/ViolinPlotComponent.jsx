@@ -1,4 +1,3 @@
-// src/components/dashboard/ViolinPlotComponent.jsx - Vollständig überarbeitete Version
 import React, { useMemo } from 'react';
 import BaseChartComponent from '../charts/BaseChartComponent';
 import useChart from '../../hooks/useChart';
@@ -18,41 +17,137 @@ const ViolinPlotComponent = ({ data }) => {
     const height = 300;
     const padding = 40;
 
-    // Finden der min und max Noten
-    const minGrade = data.min;
-    const maxGrade = data.max;
+    // Memoize Basis-Berechnungen
+    const plotConfig = useMemo(() => {
+        // Finden der min und max Noten
+        const minGrade = data.min;
+        const maxGrade = data.max;
 
-    // Hilfsfunktion für Notenposition auf X-Achse
-    const gradeToX = (grade) => {
-        return padding + (width - 2 * padding) * (grade - minGrade) / (maxGrade - minGrade);
-    };
+        // Position für jede Violin
+        const yAI = height / 3;
+        const yHuman = (height * 2) / 3;
 
-    // Position für jede Violin
-    const yAI = height / 3;
-    const yHuman = (height * 2) / 3;
+        return {
+            minGrade,
+            maxGrade,
+            yAI,
+            yHuman,
+            // Hilfsfunktion für Notenposition auf X-Achse
+            gradeToX: (grade) => {
+                return padding + (width - 2 * padding) * (grade - minGrade) / (maxGrade - minGrade);
+            }
+        };
+    }, [data.min, data.max, width, height, padding]);
 
-    // Berechne Häufigkeiten der Noten für beide Datensätze
-    const aiGradeGroups = useMemo(() => {
+    // Memoize Frequenz-Berechnungen für AI Noten
+    const aiFrequencyData = useMemo(() => {
         const groups = {};
         data.aiGrades.forEach(grade => {
             const roundedGrade = Math.round(grade * 10) / 10;
             groups[roundedGrade] = (groups[roundedGrade] || 0) + 1;
         });
-        return groups;
-    }, [data.aiGrades]);
+        const maxCount = Math.max(...Object.values(groups));
 
-    const humanGradeGroups = useMemo(() => {
+        // Vorberechnete Daten für jeden Punkt
+        const pointsPositions = [];
+        const pointsCount = {};
+
+        data.aiGrades.forEach((grade, i) => {
+            const x = plotConfig.gradeToX(grade);
+            const roundedGrade = Math.round(grade * 10) / 10;
+
+            // Zähle, wie oft wir diese Note bereits gesehen haben
+            pointsCount[roundedGrade] = (pointsCount[roundedGrade] || 0) + 1;
+            const currentCount = pointsCount[roundedGrade];
+
+            // Gesamtzahl für diese Note
+            const totalForThisGrade = groups[roundedGrade];
+
+            // Gleichmäßige Verteilung berechnen
+            let yOffset = 0;
+            if (totalForThisGrade > 1) {
+                const maxOffset = (groups[roundedGrade] / maxCount) * 40 / 2 * 0.9;
+                yOffset = ((currentCount - 1) / (totalForThisGrade - 1) * 2 - 1) * maxOffset;
+            }
+
+            pointsPositions.push({
+                key: `ai-${i}`,
+                x,
+                y: yOffset,
+                grade,
+                tooltip: `${t('grade', 'labels')}: ${grade.toFixed(1)} (Work ${i+1})`
+            });
+        });
+
+        return {
+            groups,
+            maxCount,
+            pointsPositions
+        };
+    }, [data.aiGrades, plotConfig, t]);
+
+    // Memoize Frequenz-Berechnungen für Human Noten
+    const humanFrequencyData = useMemo(() => {
         const groups = {};
         data.humanGrades.forEach(grade => {
             const roundedGrade = Math.round(grade * 10) / 10;
             groups[roundedGrade] = (groups[roundedGrade] || 0) + 1;
         });
-        return groups;
-    }, [data.humanGrades]);
+        const maxCount = Math.max(...Object.values(groups));
 
-    // Maximale Anzahl für die Normalisierung
-    const aiMaxCount = Math.max(...Object.values(aiGradeGroups));
-    const humanMaxCount = Math.max(...Object.values(humanGradeGroups));
+        // Vorberechnete Daten für jeden Punkt
+        const pointsPositions = [];
+        const pointsCount = {};
+
+        data.humanGrades.forEach((grade, i) => {
+            const x = plotConfig.gradeToX(grade);
+            const roundedGrade = Math.round(grade * 10) / 10;
+
+            // Zähle, wie oft wir diese Note bereits gesehen haben
+            pointsCount[roundedGrade] = (pointsCount[roundedGrade] || 0) + 1;
+            const currentCount = pointsCount[roundedGrade];
+
+            // Gesamtzahl für diese Note
+            const totalForThisGrade = groups[roundedGrade];
+
+            // Gleichmäßige Verteilung berechnen
+            let yOffset = 0;
+            if (totalForThisGrade > 1) {
+                const maxOffset = (groups[roundedGrade] / maxCount) * 40 / 2 * 0.9;
+                yOffset = ((currentCount - 1) / (totalForThisGrade - 1) * 2 - 1) * maxOffset;
+            }
+
+            pointsPositions.push({
+                key: `human-${i}`,
+                x,
+                y: yOffset,
+                grade,
+                tooltip: `${t('grade', 'labels')}: ${grade.toFixed(1)} (Work ${i+1})`
+            });
+        });
+
+        return {
+            groups,
+            maxCount,
+            pointsPositions
+        };
+    }, [data.humanGrades, plotConfig, t]);
+
+    // Memoize Achsen-Ticks für X-Achse
+    const xAxisTicks = useMemo(() => {
+        return Array.from({ length: Math.round((plotConfig.maxGrade - plotConfig.minGrade) * 10) + 1 }, (_, i) => {
+            const grade = plotConfig.minGrade + i / 10;
+            const isFullGrade = Math.abs(Math.round(grade) - grade) < 0.05;
+            const isHalfGrade = Math.abs(grade - Math.floor(grade) - 0.5) < 0.05;
+
+            return {
+                grade,
+                isFullGrade,
+                isHalfGrade,
+                x: plotConfig.gradeToX(grade)
+            };
+        });
+    }, [plotConfig]);
 
     return (
         <BaseChartComponent height={height}>
@@ -65,61 +160,53 @@ const ViolinPlotComponent = ({ data }) => {
                 <line x1={padding} y1={padding} x2={padding} y2={height-padding}
                       stroke="currentColor" strokeWidth="1" />
 
-                {/* X-Achsen-Beschriftungen (Noten) in 0.1 Schritten */}
-                {Array.from({ length: Math.round((maxGrade - minGrade) * 10) + 1 }, (_, i) => {
-                    const grade = minGrade + i / 10;
-                    const isFullGrade = Math.abs(Math.round(grade) - grade) < 0.05;
-
-                    return (
-                        <React.Fragment key={i}>
-                            {/* Vollständige Noten werden größer und mit Textbeschriftung dargestellt */}
-                            {isFullGrade ? (
-                                <>
-                                    <text
-                                        x={gradeToX(grade)}
-                                        y={height-padding+15}
-                                        textAnchor="middle"
-                                        fontSize="11"
-                                        fill="currentColor"
-                                    >
-                                        {Math.round(grade)}
-                                    </text>
-                                    <line
-                                        x1={gradeToX(grade)}
-                                        y1={height-padding}
-                                        x2={gradeToX(grade)}
-                                        y2={height-padding+5}
-                                        stroke="currentColor"
-                                        strokeWidth="1"
-                                    />
-                                </>
-                            ) : (
-                                // Zehntelschritte werden als kleinere Striche dargestellt
-                                <line
-                                    x1={gradeToX(grade)}
-                                    y1={height-padding}
-                                    x2={gradeToX(grade)}
-                                    y2={height-padding+2}
-                                    stroke="currentColor"
-                                    strokeWidth="0.5"
-                                />
-                            )}
-
-                            {/* Bei x.5-Werten kleine Beschriftung hinzufügen */}
-                            {Math.abs(grade - Math.floor(grade) - 0.5) < 0.05 && (
+                {/* X-Achsen-Beschriftungen (Noten) - aus memoized xAxisTicks */}
+                {xAxisTicks.map((tick, idx) => (
+                    <React.Fragment key={idx}>
+                        {tick.isFullGrade ? (
+                            <>
                                 <text
-                                    x={gradeToX(grade)}
-                                    y={height-padding+12}
+                                    x={tick.x}
+                                    y={height-padding+15}
                                     textAnchor="middle"
-                                    fontSize="8"
+                                    fontSize="11"
                                     fill="currentColor"
                                 >
-                                    {grade.toFixed(1)}
+                                    {Math.round(tick.grade)}
                                 </text>
-                            )}
-                        </React.Fragment>
-                    );
-                })}
+                                <line
+                                    x1={tick.x}
+                                    y1={height-padding}
+                                    x2={tick.x}
+                                    y2={height-padding+5}
+                                    stroke="currentColor"
+                                    strokeWidth="1"
+                                />
+                            </>
+                        ) : (
+                            <line
+                                x1={tick.x}
+                                y1={height-padding}
+                                x2={tick.x}
+                                y2={height-padding+2}
+                                stroke="currentColor"
+                                strokeWidth="0.5"
+                            />
+                        )}
+
+                        {tick.isHalfGrade && (
+                            <text
+                                x={tick.x}
+                                y={height-padding+12}
+                                textAnchor="middle"
+                                fontSize="8"
+                                fill="currentColor"
+                            >
+                                {tick.grade.toFixed(1)}
+                            </text>
+                        )}
+                    </React.Fragment>
+                ))}
 
                 {/* X-Achsenbeschriftung */}
                 <text x={width/2} y={height-5} textAnchor="middle" fontSize="10" fill="currentColor">
@@ -127,11 +214,11 @@ const ViolinPlotComponent = ({ data }) => {
                 </text>
 
                 {/* AI Violin */}
-                <g transform={`translate(0, ${yAI})`}>
+                <g transform={`translate(0, ${plotConfig.yAI})`}>
                     {/* Violin-Form basierend auf tatsächlichen Punkten */}
-                    {Object.entries(aiGradeGroups).map(([grade, count], i) => {
-                        const x = gradeToX(parseFloat(grade));
-                        const height = (count / aiMaxCount) * 40; // Maximale Höhe
+                    {Object.entries(aiFrequencyData.groups).map(([grade, count], i) => {
+                        const x = plotConfig.gradeToX(parseFloat(grade));
+                        const height = (count / aiFrequencyData.maxCount) * 40;
 
                         return (
                             <rect key={i}
@@ -145,44 +232,20 @@ const ViolinPlotComponent = ({ data }) => {
                         );
                     })}
 
-                    {/* Scatter-Punkte an der exakten Position */}
-                    {(() => {
-                        const pointsCount = {}; // Zähler für gleichartige Punkte
-
-                        return data.aiGrades.map((grade, i) => {
-                            const x = gradeToX(grade);
-                            const roundedGrade = Math.round(grade * 10) / 10;
-
-                            // Zähle, wie oft wir diese Note bereits gesehen haben
-                            pointsCount[roundedGrade] = (pointsCount[roundedGrade] || 0) + 1;
-                            const currentCount = pointsCount[roundedGrade];
-
-                            // Gesamtzahl für diese Note (aus aiGradeGroups)
-                            const totalForThisGrade = aiGradeGroups[roundedGrade];
-
-                            // Gleichmäßige Verteilung
-                            let yOffset = 0;
-                            if (totalForThisGrade > 1) {
-                                // Maximaler Offset ist die Hälfte der Rechteckhöhe
-                                const maxOffset = (aiGradeGroups[roundedGrade] / aiMaxCount) * 40 / 2 * 0.9;
-                                yOffset = ((currentCount - 1) / (totalForThisGrade - 1) * 2 - 1) * maxOffset;
-                            }
-
-                            return (
-                                <circle
-                                    key={i}
-                                    cx={x}
-                                    cy={yOffset}
-                                    r="2"
-                                    fill={chartColors.PRIMARY}
-                                    stroke="white"
-                                    strokeWidth="0.5"
-                                >
-                                    <title>{t('grade', 'labels')}: {grade.toFixed(1)} (Work {i+1})</title>
-                                </circle>
-                            );
-                        });
-                    })()}
+                    {/* Scatter-Punkte an der exakten Position - aus memoized pointsPositions */}
+                    {aiFrequencyData.pointsPositions.map((point) => (
+                        <circle
+                            key={point.key}
+                            cx={point.x}
+                            cy={point.y}
+                            r="2"
+                            fill={chartColors.PRIMARY}
+                            stroke="white"
+                            strokeWidth="0.5"
+                        >
+                            <title>{point.tooltip}</title>
+                        </circle>
+                    ))}
 
                     <text x={padding-25} y="0" textAnchor="end" dominantBaseline="middle" fontSize="10" fill={chartColors.PRIMARY}>
                         {t('ai', 'labels')}
@@ -190,11 +253,11 @@ const ViolinPlotComponent = ({ data }) => {
                 </g>
 
                 {/* Human Violin */}
-                <g transform={`translate(0, ${yHuman})`}>
+                <g transform={`translate(0, ${plotConfig.yHuman})`}>
                     {/* Violin-Form basierend auf tatsächlichen Punkten */}
-                    {Object.entries(humanGradeGroups).map(([grade, count], i) => {
-                        const x = gradeToX(parseFloat(grade));
-                        const height = (count / humanMaxCount) * 40; // Maximale Höhe
+                    {Object.entries(humanFrequencyData.groups).map(([grade, count], i) => {
+                        const x = plotConfig.gradeToX(parseFloat(grade));
+                        const height = (count / humanFrequencyData.maxCount) * 40;
 
                         return (
                             <rect key={i}
@@ -208,44 +271,20 @@ const ViolinPlotComponent = ({ data }) => {
                         );
                     })}
 
-                    {/* Scatter-Punkte an der exakten Position */}
-                    {(() => {
-                        const pointsCount = {}; // Zähler für gleichartige Punkte
-
-                        return data.humanGrades.map((grade, i) => {
-                            const x = gradeToX(grade);
-                            const roundedGrade = Math.round(grade * 10) / 10;
-
-                            // Zähle, wie oft wir diese Note bereits gesehen haben
-                            pointsCount[roundedGrade] = (pointsCount[roundedGrade] || 0) + 1;
-                            const currentCount = pointsCount[roundedGrade];
-
-                            // Gesamtzahl für diese Note (aus humanGradeGroups)
-                            const totalForThisGrade = humanGradeGroups[roundedGrade];
-
-                            // Gleichmäßige Verteilung
-                            let yOffset = 0;
-                            if (totalForThisGrade > 1) {
-                                // Maximaler Offset ist die Hälfte der Rechteckhöhe
-                                const maxOffset = (humanGradeGroups[roundedGrade] / humanMaxCount) * 40 / 2 * 0.9;
-                                yOffset = ((currentCount - 1) / (totalForThisGrade - 1) * 2 - 1) * maxOffset;
-                            }
-
-                            return (
-                                <circle
-                                    key={i}
-                                    cx={x}
-                                    cy={yOffset}
-                                    r="2"
-                                    fill={chartColors.SECONDARY}
-                                    stroke="white"
-                                    strokeWidth="0.5"
-                                >
-                                    <title>{t('grade', 'labels')}: {grade.toFixed(1)} (Work {i+1})</title>
-                                </circle>
-                            );
-                        });
-                    })()}
+                    {/* Scatter-Punkte an der exakten Position - aus memoized pointsPositions */}
+                    {humanFrequencyData.pointsPositions.map((point) => (
+                        <circle
+                            key={point.key}
+                            cx={point.x}
+                            cy={point.y}
+                            r="2"
+                            fill={chartColors.SECONDARY}
+                            stroke="white"
+                            strokeWidth="0.5"
+                        >
+                            <title>{point.tooltip}</title>
+                        </circle>
+                    ))}
 
                     <text x={padding-25} y="0" textAnchor="end" dominantBaseline="middle" fontSize="10" fill={chartColors.SECONDARY}>
                         {t('human', 'labels')}
@@ -256,4 +295,4 @@ const ViolinPlotComponent = ({ data }) => {
     );
 };
 
-export default ViolinPlotComponent;
+export default React.memo(ViolinPlotComponent);

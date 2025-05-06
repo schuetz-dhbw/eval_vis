@@ -18,7 +18,7 @@ const ParallelCoordinatePlotComponent = ({ data }) => {
     const width = 800;
     const padding = { top: 40, right: 60, bottom: 40, left: 60 };
 
-    // Min/Max-Werte berechnen
+    // Min/Max-Werte berechnen - jetzt mit useMemo
     const minGrade = useMemo(() => Math.floor(
         Math.min(...data.map(d => Math.min(d.aiGrade, d.humanGrade)))
     ), [data]);
@@ -27,14 +27,54 @@ const ParallelCoordinatePlotComponent = ({ data }) => {
         Math.max(...data.map(d => Math.max(d.aiGrade, d.humanGrade)))
     ), [data]);
 
-    // Positionsberechnungen
+    // Positionsberechnungen als Memoized Functions
     const xAI = padding.left;
     const xHuman = width - padding.right;
 
-    const yScale = (grade) => {
-        return padding.top + (height - padding.top - padding.bottom) *
-            (grade - minGrade) / (maxGrade - minGrade);
-    };
+    // Memoize Scale Funktion
+    const yScale = useMemo(() => {
+        return (grade) => {
+            return padding.top + (height - padding.top - padding.bottom) *
+                (grade - minGrade) / (maxGrade - minGrade);
+        };
+    }, [padding.top, padding.bottom, height, minGrade, maxGrade]);
+
+    // Memoize Tick-Berechnungen für die Achsen
+    const axisTicks = useMemo(() => {
+        return Array.from({ length: Math.round((maxGrade - minGrade) * 10) + 1 }, (_, i) => {
+            const grade = minGrade + i / 10;
+            const isFullGrade = Math.abs(Math.round(grade) - grade) < 0.05;
+            const isFifthGrade = Math.abs(grade - Math.floor(grade) - 0.5) < 0.05;
+
+            return {
+                grade,
+                isFullGrade,
+                isFifthGrade,
+                y: padding.top + (height - padding.top - padding.bottom) *
+                    ((grade - minGrade) / (maxGrade - minGrade))
+            };
+        });
+    }, [minGrade, maxGrade, padding.top, padding.bottom, height]);
+
+    // Memoize Line Data für bessere Performance
+    const lineData = useMemo(() => {
+        return data.map(item => {
+            const y1 = yScale(item.aiGrade);
+            const y2 = yScale(item.humanGrade);
+            const lineColor = getDifferenceColor(item.difference * 25, chartColors);
+
+            return {
+                key: item.id || item.title,
+                title: item.title,
+                aiGrade: item.aiGrade,
+                humanGrade: item.humanGrade,
+                y1,
+                y2,
+                lineColor,
+                tooltip: `${item.title}: AI ${item.aiGrade.toFixed(1)}, Human ${item.humanGrade.toFixed(1)}`
+            };
+        });
+    }, [data, yScale, chartColors]);
 
     return (
         <BaseChartComponent height={height}>
@@ -53,88 +93,68 @@ const ParallelCoordinatePlotComponent = ({ data }) => {
                     {t('human', 'labels')}
                 </text>
 
-                {/* Y-Achsen-Labels */}
-                {Array.from({ length: Math.round((maxGrade - minGrade) * 10) + 1 }, (_, i) => {
-                    const grade = minGrade + i / 10;
-                    const isFullGrade = Math.abs(Math.round(grade) - grade) < 0.05;
-                    const isFifthGrade = Math.abs(grade - Math.floor(grade) - 0.5) < 0.05;
+                {/* Y-Achsen-Labels - jetzt aus memoized axisTicks */}
+                {axisTicks.map((tick, idx) => (
+                    <React.Fragment key={idx}>
+                        {(tick.isFullGrade || tick.isFifthGrade) && (
+                            <>
+                                <text
+                                    x={xAI-5}
+                                    y={tick.y+3}
+                                    textAnchor="end"
+                                    fontSize={tick.isFullGrade ? 12 : 10}
+                                    fill="currentColor"
+                                >
+                                    {tick.isFullGrade ? Math.round(tick.grade) : tick.grade.toFixed(1)}
+                                </text>
+                                <text
+                                    x={xHuman+5}
+                                    y={tick.y+3}
+                                    textAnchor="start"
+                                    fontSize={tick.isFullGrade ? 12 : 10}
+                                    fill="currentColor"
+                                >
+                                    {tick.isFullGrade ? Math.round(tick.grade) : tick.grade.toFixed(1)}
+                                </text>
+                            </>
+                        )}
 
-                    const gradeToY = (grade) => {
-                        // Diese Version hat 1 oben und 4 unten
-                        return padding.top + (height - padding.top - padding.bottom) *
-                            ((grade - minGrade) / (maxGrade - minGrade));
-                    };
+                        <line
+                            x1={xAI-3}
+                            x2={xAI}
+                            y1={tick.y}
+                            y2={tick.y}
+                            stroke="currentColor"
+                            strokeWidth={tick.isFullGrade ? 1 : (tick.isFifthGrade ? 0.75 : 0.5)}
+                        />
+                        <line
+                            x1={xHuman}
+                            x2={xHuman+3}
+                            y1={tick.y}
+                            y2={tick.y}
+                            stroke="currentColor"
+                            strokeWidth={tick.isFullGrade ? 1 : (tick.isFifthGrade ? 0.75 : 0.5)}
+                        />
+                    </React.Fragment>
+                ))}
 
-                    return (
-                        <React.Fragment key={i}>
-                            {/* Nur volle und .5-Schritte beschriften */}
-                            {(isFullGrade || isFifthGrade) && (
-                                <>
-                                    <text
-                                        x={xAI-5}
-                                        y={gradeToY(grade)+3}
-                                        textAnchor="end"
-                                        fontSize={isFullGrade ? 12 : 10}
-                                        fill="currentColor"
-                                    >
-                                        {isFullGrade ? Math.round(grade) : grade.toFixed(1)}
-                                    </text>
-                                    <text
-                                        x={xHuman+5}
-                                        y={gradeToY(grade)+3}
-                                        textAnchor="start"
-                                        fontSize={isFullGrade ? 12 : 10}
-                                        fill="currentColor"
-                                    >
-                                        {isFullGrade ? Math.round(grade) : grade.toFixed(1)}
-                                    </text>
-                                </>
-                            )}
+                {/* Verbindungslinien zeichnen - jetzt aus memoized lineData */}
+                {lineData.map((item) => (
+                    <g key={item.key} className="parallel-line-group">
+                        <line
+                            x1={xAI} y1={item.y1}
+                            x2={xHuman} y2={item.y2}
+                            stroke={item.lineColor}
+                            strokeWidth="1.5"
+                            strokeOpacity="0.7"
+                        />
+                        <circle cx={xAI} cy={item.y1} r="3" fill={chartColors.PRIMARY} />
+                        <circle cx={xHuman} cy={item.y2} r="3" fill={chartColors.SECONDARY} />
 
-                            {/* Alle 0.1-Schritte als Striche markieren */}
-                            <line
-                                x1={xAI-3}
-                                x2={xAI}
-                                y1={gradeToY(grade)}
-                                y2={gradeToY(grade)}
-                                stroke="currentColor"
-                                strokeWidth={isFullGrade ? 1 : (isFifthGrade ? 0.75 : 0.5)}
-                            />
-                            <line
-                                x1={xHuman}
-                                x2={xHuman+3}
-                                y1={gradeToY(grade)}
-                                y2={gradeToY(grade)}
-                                stroke="currentColor"
-                                strokeWidth={isFullGrade ? 1 : (isFifthGrade ? 0.75 : 0.5)}
-                            />
-                        </React.Fragment>
-                    );
-                })}
-
-                {/* Verbindungslinien zeichnen */}
-                {data.map((item, i) => {
-                    const y1 = yScale(item.aiGrade);
-                    const y2 = yScale(item.humanGrade);
-                    const lineColor = getDifferenceColor(item.difference * 25, chartColors);
-
-                    return (
-                        <g key={i}>
-                            <line
-                                x1={xAI} y1={y1}
-                                x2={xHuman} y2={y2}
-                                stroke={lineColor}
-                                strokeWidth="1.5"
-                                strokeOpacity="0.7"
-                            />
-                            <circle cx={xAI} cy={y1} r="3" fill={chartColors.PRIMARY} />
-                            <circle cx={xHuman} cy={y2} r="3" fill={chartColors.SECONDARY} />
-
-                            {/* Tooltips über title-Attribut */}
-                            <title>{item.title}: AI {item.aiGrade}, Human {item.humanGrade}</title>
-                        </g>
-                    );
-                })}
+                        {/* Verbessertes Tooltip mit mehr Informationen */}
+                        <title>{item.tooltip}</title>
+                    </g>
+                ))}
 
                 {/* Legende */}
                 <g transform={`translate(${width/2}, ${height-10})`}>
@@ -147,4 +167,4 @@ const ParallelCoordinatePlotComponent = ({ data }) => {
     );
 };
 
-export default ParallelCoordinatePlotComponent;
+export default React.memo(ParallelCoordinatePlotComponent);

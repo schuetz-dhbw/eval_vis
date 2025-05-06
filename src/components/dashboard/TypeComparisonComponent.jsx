@@ -17,15 +17,6 @@ const TypeComparisonComponent = ({ data, analysisType }) => {
         chartType: CHART_TYPES.BAR
     });
 
-    console.log("Type translation test:",
-        t('analytic', 'works.types'),
-        t('constructive', 'works.types'),
-        t('analytic', 'types'),
-        t('constructive', 'types')
-    );
-
-    console.log("Data passed to TypeComparisonChart:", data);
-
     return (
         <BaseChartComponent height={chartDimensions.height}>
             <BarChart

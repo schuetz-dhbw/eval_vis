@@ -9,6 +9,7 @@ import TypeComparisonComponent from './TypeComparisonComponent';
 import { ANALYSIS_TYPES } from '../../constants/chartConstants';
 import SpearmanCorrelationComponent from './SpearmanCorrelationComponent';
 import RankDifferenceAnalysisComponent from './RankDifferenceAnalysisComponent';
+import DashboardContainer from './DashboardContainer';
 import {
     calculateAggregatedMetrics, calculateRankAnalysis,
     generateGradeBoxPlotData,
@@ -57,26 +58,26 @@ const DashboardSection = () => {
         return (
             <div className="dashboard-summary">
                 <div className="component-grid grid-4-cols">
-                <KPICardComponent
-                    title={t('totalWorks', 'dashboard')}
-                    value={metrics.workCount}
-                />
-                <KPICardComponent
-                    title={t('avgGrades', 'dashboard')}
-                    value={`${formatValue(metrics.avgAiGrade)} / ${formatValue(metrics.avgHumanGrade)}`}
-                    description={`${t('minMaxDiff', 'dashboard')}: ${formatValue(metrics.minGradeDifference)} / ${formatValue(metrics.maxGradeDifference)}`}
-                />
-                <KPICardComponent
-                    title={t('analyticalWorks', 'dashboard')}
-                    value={metrics.analyticalWorks}
-                    description={`${metrics.analyticalWorksPercentage}%`}
-                />
-                <KPICardComponent
-                    title={t('constructiveWorks', 'dashboard')}
-                    value={metrics.constructiveWorks}
-                    description={`${metrics.constructiveWorksPercentage}%`}
-                />
-            </div>
+                    <KPICardComponent
+                        title={t('totalWorks', 'dashboard')}
+                        value={metrics.workCount}
+                    />
+                    <KPICardComponent
+                        title={t('avgGrades', 'dashboard')}
+                        value={`${formatValue(metrics.avgAiGrade)} / ${formatValue(metrics.avgHumanGrade)}`}
+                        description={`${t('minMaxDiff', 'dashboard')}: ${formatValue(metrics.minGradeDifference)} / ${formatValue(metrics.maxGradeDifference)}`}
+                    />
+                    <KPICardComponent
+                        title={t('analyticalWorks', 'dashboard')}
+                        value={metrics.analyticalWorks}
+                        description={`${metrics.analyticalWorksPercentage}%`}
+                    />
+                    <KPICardComponent
+                        title={t('constructiveWorks', 'dashboard')}
+                        value={metrics.constructiveWorks}
+                        description={`${metrics.constructiveWorksPercentage}%`}
+                    />
+                </div>
             </div>
         );
     };
@@ -87,32 +88,26 @@ const DashboardSection = () => {
             fallbackMessage={t('dataErrorMessage', 'errors')}
             showDetails={false}
         >
-            <div className="component-container">
-                <h3 className="section-title">{t('dashboardTitle', 'chartTitles') || "Analytics Dashboard"}</h3>
-
+            <DashboardContainer title={t('dashboardTitle', 'chartTitles') || "Analytics Dashboard"}>
                 {renderKPICards(dashboardMetrics.summary)}
 
                 <div className="component-grid grid-2-cols">
-                    <div className="component-container">
-                        <h4 className="subtitle">{t('gradeDistribution', 'dashboard')} - {t('gradeBoxplot', 'dashboard')}</h4>
+                    <DashboardContainer title={t('gradeDistribution', 'dashboard') + ' - ' + t('gradeBoxplot', 'dashboard')}>
                         <GradeDistributionComponent data={boxPlotData} analysisType={ANALYSIS_TYPES.DASHBOARD} />
-                    </div>
+                    </DashboardContainer>
 
-                    <div className="component-container">
-                        <h4 className="subtitle">{t('avgGrade', 'dashboard')} - {t('byWorkType', 'dashboard')}</h4>
+                    <DashboardContainer title={t('avgGrade', 'dashboard') + ' - ' + t('byWorkType', 'dashboard')}>
                         <TypeComparisonComponent data={dashboardMetrics.byType} analysisType={ANALYSIS_TYPES.DASHBOARD} />
-                    </div>
+                    </DashboardContainer>
                 </div>
 
-                <div className="component-container">
-                    <h4 className="subtitle">{t('gradeDistribution', 'dashboard')} - {t('gradeViolinplot', 'dashboard')}</h4>
-                        <ViolinPlotComponent data={violinData} />
-                </div>
+                <DashboardContainer title={t('gradeDistribution', 'dashboard') + ' - ' + t('gradeViolinplot', 'dashboard')}>
+                    <ViolinPlotComponent data={violinData} />
+                </DashboardContainer>
 
-                <div className="component-container">
-                    <h4 className="subtitle">{t('gradeComparison', 'dashboard')}</h4>
+                <DashboardContainer title={t('gradeComparison', 'dashboard')}>
                     <ParallelCoordinatePlotComponent data={parallelData} />
-                </div>
+                </DashboardContainer>
 
                 <div className="component-grid">
                     <SpearmanCorrelationComponent data={rankAnalysisData} />
@@ -122,15 +117,14 @@ const DashboardSection = () => {
                     <RankDifferenceAnalysisComponent data={rankAnalysisData} />
                 </div>
 
-                <div className="component-container">
-                    <h4 className="subtitle">{t('criteriaDifferences', 'dashboard') || "Criteria Differences"}</h4>
+                <DashboardContainer title={t('criteriaDifferences', 'dashboard') || "Criteria Differences"}>
                     <CriteriaComparisonComponent
                         data={dashboardMetrics.criteriaAverages}
                         works={translatedWorks}
                         analysisType={ANALYSIS_TYPES.DASHBOARD}
                     />
-                </div>
-            </div>
+                </DashboardContainer>
+            </DashboardContainer>
         </ErrorBoundary>
     );
 };
