@@ -13,6 +13,7 @@ import { formatNumber } from '../../utils/dataUtils';
 import {METRICS} from "../../constants/metrics";
 import TabContent from "../common/TabContent";
 import CriteriaAnalysisTab from "./tabs/CriteriaAnalysisTab";
+import SimilarityTab from './tabs/SimilarityTab';
 import WorkTypeTab from "./tabs/WorkTypeTab";
 import RankAnalysisTab from "./tabs/RankAnalysisTab";
 import GradeDistributionTab from "./tabs/GradeDistributionTab";
@@ -25,7 +26,8 @@ const DASHBOARD_TABS = {
     GRADE_DISTRIBUTION: 'gradeDistribution',
     RANK_ANALYSIS: 'rankAnalysis',
     CRITERIA_ANALYSIS: 'criteriaAnalysis',
-    WORK_TYPE: 'workType'
+    WORK_TYPE: 'workType',
+    SIMILARITY: 'similarity'
 };
 
 const DashboardSection = () => {
@@ -67,11 +69,12 @@ const DashboardSection = () => {
 
     // Tab-Definitionen
     const tabs = [
-        { key: DASHBOARD_TABS.OVERVIEW, label: t('overview', 'dashboard') || "Überblick" },
-        { key: DASHBOARD_TABS.GRADE_DISTRIBUTION, label: t('gradeDistribution', 'dashboard') || "Notenverteilung" },
-        { key: DASHBOARD_TABS.RANK_ANALYSIS, label: t('rankAnalysis', 'dashboard') || "Rang-Analyse" },
-        { key: DASHBOARD_TABS.CRITERIA_ANALYSIS, label: t('criteriaAnalysis', 'dashboard') || "Kriterien-Analyse" },
-        { key: DASHBOARD_TABS.WORK_TYPE, label: t('workType', 'dashboard') || "Arbeitstypen" }
+        { key: DASHBOARD_TABS.OVERVIEW, label: t('overview', 'dashboard')},
+        { key: DASHBOARD_TABS.GRADE_DISTRIBUTION, label: t('gradeDistribution', 'dashboard')},
+        { key: DASHBOARD_TABS.RANK_ANALYSIS, label: t('rankAnalysis', 'dashboard')},
+        { key: DASHBOARD_TABS.CRITERIA_ANALYSIS, label: t('criteriaAnalysis', 'dashboard')},
+        { key: DASHBOARD_TABS.SIMILARITY, label: t('similarityAnalysis', 'dashboard')},
+        { key: DASHBOARD_TABS.WORK_TYPE, label: t('byWorkType', 'dashboard')}
     ];
 
     const renderKPICards = (metrics) => {
@@ -137,10 +140,15 @@ const DashboardSection = () => {
                     />
                 </TabContent>
 
+                <TabContent activeTab={activeTab} tabKey={DASHBOARD_TABS.SIMILARITY}>
+                    <SimilarityTab works={translatedWorks} />
+                </TabContent>
+
                 <TabContent activeTab={activeTab} tabKey={DASHBOARD_TABS.CRITERIA_ANALYSIS}>
                     <CriteriaAnalysisTab
                         criteriaAverages={dashboardMetrics.criteriaAverages}
                         translatedWorks={translatedWorks}
+                        rawWorks={rawWorks}
                     />
                 </TabContent>
 

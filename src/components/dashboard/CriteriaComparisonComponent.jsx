@@ -11,7 +11,8 @@ const CriteriaComparisonComponent = ({ data, analysisType }) => {
         t,
         chartDimensions,
         chartColors,
-        commonChartConfig
+        commonChartConfig,
+        defaultLegendProps
     } = useChart({
         analysisType,
         chartType: CHART_TYPES.BAR
@@ -27,13 +28,10 @@ const CriteriaComparisonComponent = ({ data, analysisType }) => {
         count: item.count
     }));
 
-    // Nur die Top 10 Kriterien mit höchster Differenz anzeigen
-    const topCriteria = chartData.slice(0, 10);
-
     return (
-        <BaseChartComponent height={chartDimensions.height * 3}>
+        <BaseChartComponent height={chartDimensions.height * 4}>
             <BarChart
-                data={topCriteria}
+                data={chartData}
                 margin={commonChartConfig.margin}
                 layout="vertical"
             >
@@ -41,8 +39,8 @@ const CriteriaComparisonComponent = ({ data, analysisType }) => {
                 <XAxis type="number" domain={[0, 100]} />
                 <YAxis dataKey="name" type="category" width={150} tick={{ fontSize: 12 }} />
                 <Tooltip content={<CustomTooltip />} />
-                <Legend />
-                {renderDashboardCriteriaBars(t, chartColors, topCriteria)}
+                <Legend {...defaultLegendProps}/>
+                {renderDashboardCriteriaBars(t, chartColors, chartData)}
             </BarChart>
         </BaseChartComponent>
     );

@@ -191,11 +191,18 @@ export const renderDashboardCriteriaBars = (t, CHART_COLORS, data) => {
     ];
 };
 
-// Verbesserte und vereinheitlichte Funktion für die Farbzuweisung basierend auf Differenzwerten
+// Farbzuweisung basierend auf Differenzwerten
 export const getDifferenceColor = (value, chartColors, thresholds = { high: 30, medium: 15 }) => {
     if (value > thresholds.high) return chartColors.CRITICAL;  // Großer Unterschied
     if (value > thresholds.medium) return chartColors.MODERATE; // Mittlerer Unterschied
     return chartColors.OPTIMAL;                             // Kleiner Unterschied
+};
+
+// Farbzuweisung basierend auf Ähnlichkeitswerten
+export const getSimilarityColor = (value, chartColors, thresholds = { high: 90, medium: 80 }) => {
+    if (value > thresholds.high) return chartColors.OPTIMAL;  // Großer Unterschied
+    if (value > thresholds.medium) return chartColors.MODERATE; // Mittlerer Unterschied
+    return chartColors.CRITICAL;                             // Kleiner Unterschied
 };
 
 // Verbesserte Funktion für Intensitätsklassen mit standardisierten Schwellenwerten

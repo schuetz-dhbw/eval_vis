@@ -15,7 +15,7 @@ export const de = {
         weighted: "Gewichtete Werte",
         combined: "Kombinierte Darstellung",
         statistics: "Statistische Analyse",
-        workType: "Analyse nach Arbeitstyp"
+        weightingDifferences: "Gewichtungsunterschiede"
     },
     darkMode: {
         toggleToLight: "Zum hellen Modus wechseln",
@@ -30,7 +30,7 @@ export const de = {
         minMaxDiff: "Differenz bei Min./Max.",
         gradeDistribution: "Notenverteilung",
         byWorkType: "Nach Arbeitstyp",
-        criteriaDifferences: "Top-Kriterien-Differenzen",
+        criteriaDifferences: "Kriterien-Differenzen",
         avgScore: "Ø Wert",
         difference: "Differenz",
         analyticalWorks: "Analytische Arbeiten",
@@ -54,7 +54,6 @@ export const de = {
         overview: "Überblick",
         rankAnalysis: "Rang-Analyse",
         criteriaAnalysis: "Kriterien-Analyse",
-        workType: "Arbeitstypen",
         violinDescription: "Die Violin-Plots zeigen die Verteilung der Noten für KI und Human. Die Breite an jeder Stelle zeigt an, wie viele Arbeiten diese Note erhalten haben.",
         parallelDescription: "Der Parallel-Koordinaten-Plot verbindet jede Arbeit durch eine Linie zwischen KI-Note (links) und Human-Note (rechts). Die Farbe der Linie zeigt den Grad der Abweichung.",
         spearmanDescription: "Die Spearman-Korrelation zeigt die Übereinstimmung der Rangordnung. Werte nahe 1 bedeuten ähnliche Rangfolgen, Werte nahe 0 bedeuten unterschiedliche Rangfolgen.",
@@ -66,7 +65,23 @@ export const de = {
         typeMaxDiffDescription_part2: ".",
         noCriteriaData: "Keine Kriterien-Daten verfügbar.",
         noTypeData: "Keine Arbeitstyp-Daten verfügbar.",
-        overviewDescription: "Dieses Dashboard gibt einen Überblick über die Bewertungsunterschiede zwischen KI und menschlichen Gutachtern. Die obigen Kennzahlen zeigen die wichtigsten aggregierten Metriken. Der Boxplot unten zeigt die Verteilung der Noten im Vergleich."
+        overviewDescription: "Dieses Dashboard gibt einen Überblick über die Bewertungsunterschiede zwischen KI und menschlichen Gutachtern. Die obigen Kennzahlen zeigen die wichtigsten aggregierten Metriken. Der Boxplot unten zeigt die Verteilung der Noten im Vergleich.",
+        similarityAnalysis: "Ähnlichkeitsanalyse",
+        similarityTable: "Ähnlichkeitstabelle",
+        similarityVisualization: "Ähnlichkeitsvisualisierung",
+        similarityDescription: "Diese Analyse zeigt die Kosinus-Ähnlichkeit zwischen KI- und Human-Bewertungen für jede Arbeit. Höhere Werte (grün) bedeuten ähnlichere Bewertungsmuster.",
+        cosineSimilarity: "Kosinus-Ähnlichkeit",
+        category: "Kategorie",
+        sectionComparison: "Kriterien-Bereichsvergleich",
+        criteriaBySection: "Kriterien nach Bereich",
+        sectionComparisonDescription: "Diese Analyse zeigt die durchschnittlichen Unterschiede zwischen KI und menschlichen Bewertungen, aufgeteilt nach Kriterienbereichen.",
+        highSimilarity: "Hohe Ähnlichkeit",
+        mediumSimilarity: "Mittlere Ähnlichkeit",
+        lowSimilarity: "Niedrige Ähnlichkeit"
+    },
+    criteriaSection: {
+        contentProcessing: "Inhaltliche Bearbeitung",
+        scientificWork: "Wissenschaftliches Arbeiten"
     },
     metricsDescriptions: {
         cosineDescription: "Misst die Winkelähnlichkeit zwischen KI- und Human-Bewertungen (1,0 = identisch, 0,0 = völlig unterschiedlich)",
@@ -88,7 +103,10 @@ export const de = {
         standardDeviation: "Standardabweichung",
         weightDifference: "Gewichtungsdifferenz",
         gradeDifference: "Notendifferenz",
-        deviation: "Abweichungsanalyse"
+        deviation: "Abweichungsanalyse",
+        aiOnlyWeighted: "Nur KI gewichtet",
+        humanOnlyWeighted: "Nur Human gewichtet",
+        percentageOfWorks: "% der Arbeiten"
     },
     chartTitles: {
         dashboardTitle: "Analyse-Dashboard",

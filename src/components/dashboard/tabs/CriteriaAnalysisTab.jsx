@@ -1,10 +1,11 @@
 import React from 'react';
 import { useTranslation } from '../../../hooks/useTranslation';
 import CriteriaComparisonComponent from '../CriteriaComparisonComponent';
+import CriteriaSectionComparisonComponent from '../CriteriaSectionComparisonComponent';
 import InterpretationBox from '../InterpretationBox';
 import { ANALYSIS_TYPES } from '../../../constants/chartConstants';
 
-const CriteriaAnalysisTab = ({ criteriaAverages, translatedWorks }) => {
+const CriteriaAnalysisTab = ({ criteriaAverages, translatedWorks, rawWorks }) => {
     const t = useTranslation();
 
     // Kriterium mit größter Differenz identifizieren
@@ -12,6 +13,14 @@ const CriteriaAnalysisTab = ({ criteriaAverages, translatedWorks }) => {
 
     return (
         <div className="criteria-analysis-tab">
+            <InterpretationBox title={t('sectionComparison', 'dashboard')}>
+                {t('sectionComparisonDescription', 'dashboard')}
+            </InterpretationBox>
+
+            <div className="dashboard-container">
+                <h4 className="subtitle">{t('criteriaBySection', 'dashboard')}</h4>
+                <CriteriaSectionComparisonComponent works={rawWorks} />
+            </div>
             <InterpretationBox title={t('criteriaDifferences', 'dashboard')}>
                 {maxDiffCriterion ? (
                     <>

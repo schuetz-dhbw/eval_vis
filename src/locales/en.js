@@ -15,7 +15,8 @@ export const en = {
         weighted: "Weighted Values",
         combined: "Combined View",
         statistics: "Statistical Analysis",
-        workType: "Work Type Analysis"
+        workType: "Work Type Analysis",
+        weightingDifferences: "Weighting Differences"
     },
     darkMode: {
         toggleToLight: "Switch to light mode",
@@ -30,7 +31,7 @@ export const en = {
         minMaxDiff: "Difference for Min/Max",
         gradeDistribution: "Grade Distribution",
         byWorkType: "By Work Type",
-        criteriaDifferences: "Top Criteria Differences",
+        criteriaDifferences: "Criteria Differences",
         avgScore: "Avg. Score",
         difference: "Difference",
         analyticalWorks: "Analytical Works",
@@ -54,7 +55,6 @@ export const en = {
         overview: "Overview",
         rankAnalysis: "Rank Analysis",
         criteriaAnalysis: "Criteria Analysis",
-        workType: "Work Types",
         violinDescription: "The violin plots show the distribution of grades for AI and human evaluators. The width at each point indicates how many works received that grade.",
         parallelDescription: "The parallel coordinate plot connects each work with a line between AI grade (left) and human grade (right). The color of the line indicates the degree of deviation.",
         spearmanDescription: "The Spearman correlation shows the agreement in ranking order. Values close to 1 indicate similar rankings, values close to 0 indicate different rankings.",
@@ -66,7 +66,23 @@ export const en = {
         typeMaxDiffDescription_part2: ".",
         noCriteriaData: "No criteria data available.",
         noTypeData: "No work type data available.",
-        overviewDescription: "This dashboard provides an overview of the assessment differences between AI and human reviewers. The KPI cards above show the key aggregated metrics. The boxplot below displays the distribution of grades in comparison."
+        overviewDescription: "This dashboard provides an overview of the assessment differences between AI and human reviewers. The KPI cards above show the key aggregated metrics. The boxplot below displays the distribution of grades in comparison.",
+        similarityAnalysis: "Similarity Analysis",
+        similarityTable: "Similarity Table",
+        similarityVisualization: "Similarity Visualization",
+        similarityDescription: "This analysis shows the cosine similarity between AI and human evaluations for each work. Higher values (green) indicate more similar rating patterns.",
+        cosineSimilarity: "Cosine Similarity",
+        category: "Category",
+        sectionComparison: "Criteria Section Comparison",
+        criteriaBySection: "Criteria by Section",
+        sectionComparisonDescription: "This analysis shows the average differences between AI and human evaluations, divided by criteria sections.",
+        highSimilarity: "High Similarity",
+        mediumSimilarity: "Medium Similarity",
+        lowSimilarity: "Low Similarity"
+    },
+    criteriaSection: {
+        contentProcessing: "Content Processing",
+        scientificWork: "Scientific Work"
     },
     metricsDescriptions: {
         cosineDescription: "Measures angle similarity between AI and human ratings (1.0 = identical, 0.0 = completely different)",
@@ -88,7 +104,10 @@ export const en = {
         standardDeviation: "Standard Deviation",
         weightDifference: "Weight Difference",
         gradeDifference: "Grade Difference",
-        deviation: "Deviation Analysis"
+        deviation: "Deviation Analysis",
+        aiOnlyWeighted: "Only AI weighted",
+        humanOnlyWeighted: "Only Human weighted",
+        percentageOfWorks: "% of works"
     },
     chartTitles: {
         dashboardTitle: "Analytics Dashboard",

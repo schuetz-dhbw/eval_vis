@@ -209,16 +209,34 @@
     to { opacity: 1; }
 }
 
-/* Dark Mode Adjustments */
-[data-theme='dark'] .tab-button {
-    border-color: var(--color-border);
+.mini-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--space-md);
 }
 
-[data-theme='dark'] .tab-button.active {
+.mini-tab-button {
+    background: var(--background-even-row);
+    border: 1px solid var(--color-border);
+    border-bottom: none;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    padding: var(--inset-sm) var(--inset-md);
+    margin-right: var(--space-xs);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-text-light);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mini-tab-button:hover {
+    background-color: var(--color-white);
+    color: var(--color-text);
+}
+
+.mini-tab-button.active {
     background-color: var(--color-white);
     color: var(--color-primary);
-}
-
-[data-theme='dark'] .interpretation-box {
-    border-left-color: var(--color-quinary);
+    border-bottom: 2px solid var(--color-primary);
+    margin-bottom: -1px;
 }
