@@ -54,6 +54,7 @@ export const de = {
         overview: "Überblick",
         rankAnalysis: "Rang-Analyse",
         criteriaAnalysis: "Kriterien-Analyse",
+        similarity: "Ähnlichkeit",
         violinDescription: "Die Violin-Plots zeigen die Verteilung der Noten für KI und Human. Die Breite an jeder Stelle zeigt an, wie viele Arbeiten diese Note erhalten haben.",
         parallelDescription: "Der Parallel-Koordinaten-Plot verbindet jede Arbeit durch eine Linie zwischen KI-Note (links) und Human-Note (rechts). Die Farbe der Linie zeigt den Grad der Abweichung.",
         spearmanDescription: "Die Spearman-Korrelation zeigt die Übereinstimmung der Rangordnung. Werte nahe 1 bedeuten ähnliche Rangfolgen, Werte nahe 0 bedeuten unterschiedliche Rangfolgen.",

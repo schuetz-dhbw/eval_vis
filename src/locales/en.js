@@ -55,6 +55,7 @@ export const en = {
         overview: "Overview",
         rankAnalysis: "Rank Analysis",
         criteriaAnalysis: "Criteria Analysis",
+        similarity: "Similarity",
         violinDescription: "The violin plots show the distribution of grades for AI and human evaluators. The width at each point indicates how many works received that grade.",
         parallelDescription: "The parallel coordinate plot connects each work with a line between AI grade (left) and human grade (right). The color of the line indicates the degree of deviation.",
         spearmanDescription: "The Spearman correlation shows the agreement in ranking order. Values close to 1 indicate similar rankings, values close to 0 indicate different rankings.",

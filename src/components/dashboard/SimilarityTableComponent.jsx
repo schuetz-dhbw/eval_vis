@@ -1,47 +1,36 @@
-import React, { useMemo } from 'react';
-import { useTranslation } from '../../hooks/useTranslation';
-import { calculateCosineSimilarity } from '../../utils/dataTransformers';
+import React, {useMemo} from 'react';
 import { getSimilarityColor} from '../../utils/chartUtils';
 import useChart from '../../hooks/useChart';
-import { CHART_TYPES } from '../../constants/chartConstants';
+import { CHART_TYPES, ANALYSIS_TYPES } from '../../constants/chartConstants';
+import {calculateSimilarityData} from "../../utils/dataTransformers/dashboardUtils";
 
 const SimilarityTableComponent = ({ works }) => {
-    const t = useTranslation();
-    const { chartColors } = useChart({
+    const {
+        t,
+        chartColors
+    } = useChart({
+        analysisType: ANALYSIS_TYPES.DASHBOARD,
         chartType: CHART_TYPES.BAR
     });
 
-    // Berechne die Kosinus-Ähnlichkeit für jede Arbeit
     const similarityData = useMemo(() => {
-        return works.map(work => {
-            const similarity = calculateCosineSimilarity(work.aiScores, work.humanScores);
-            return {
-                key: work.key,
-                title: work.title || work.key,
-                similarity: similarity,
-                // Eine vereinfachte Kategorisierung der Ähnlichkeit
-                category: similarity > 0.9 ? 'high' : (similarity > 0.75 ? 'medium' : 'low')
-            };
-        }).sort((a, b) => b.similarity - a.similarity); // Sortieren nach Ähnlichkeit (absteigend)
+        return calculateSimilarityData(works);
     }, [works]);
-
-    console.log(works);
 
     return (
         <div className="table-container">
             <table className="data-table">
                 <thead>
                 <tr>
-                    <th>{t('work', 'tableHeaders')}</th>
+                    <th>{t('work', 'dashboard')}</th>
                     <th>{t('similarity', 'dashboard')}</th>
-                    <th>{t('category', 'tableHeaders')}</th>
+                    <th>{t('category', 'dashboard')}</th>
                     <th>{t('visualization', 'dashboard')}</th>
                 </tr>
                 </thead>
                 <tbody>
                 {similarityData.map((item, index) => {
-                    const backgroundColor = getSimilarityColor(item.similarity * 100, chartColors);
-                    const textColor = item.similarity > 0.5 ? "#000000" : "#ffffff";
+                    const backgroundColor = getSimilarityColor(item.similarity * 100, chartColors, {high: 95, medium: 90});
 
                     return (
                         <tr key={item.key} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
@@ -53,7 +42,6 @@ const SimilarityTableComponent = ({ works }) => {
                                     className="similarity-indicator"
                                     style={{
                                         backgroundColor,
-                                        color: textColor,
                                         padding: '4px 8px',
                                         borderRadius: '4px',
                                         textAlign: 'center',

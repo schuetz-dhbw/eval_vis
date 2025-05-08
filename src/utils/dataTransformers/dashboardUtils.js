@@ -1,6 +1,7 @@
 import {calculateMean, calculateStdDev} from '../dataUtils';
 import {DATA_KEYS} from '../../constants/chartConstants';
 import {createCalculationCache, generateCacheKey, getFromCacheOrCompute} from './cacheUtils';
+import {calculateCosineSimilarity} from "./mathUtils";
 
 // Einheitlicher Cache mit derselben Struktur wie andere Komponenten
 const dashboardCache = createCalculationCache();
@@ -310,4 +311,28 @@ const calculateQuantile = (values, q) => {
     } else {
         return sorted[base];
     }
+};
+
+/**
+ * Berechnet Ähnlichkeitsdaten für alle Arbeiten
+ * @param {Array} works - Alle Arbeiten
+ * @returns {Array} - Ähnlichkeitsdaten sortiert nach Ähnlichkeit
+ */
+export const calculateSimilarityData = (works) => {
+    const cacheKey = generateCacheKey({ key: 'similarity_data' });
+
+    return getFromCacheOrCompute(dashboardCache.statistics, cacheKey, () => {
+        return works.map(work => {
+            const similarity = calculateCosineSimilarity(work.aiScores, work.humanScores);
+            return {
+                key: work.key,
+                title: work.title || work.key,
+                similarity: similarity,
+                // Normalisierte Similarity für die Darstellung (0-100%)
+                value: similarity * 100,
+                // Eine vereinfachte Kategorisierung der Ähnlichkeit
+                category: similarity > 0.95 ? 'high' : (similarity > 0.9 ? 'medium' : 'low')
+            };
+        }).sort((a, b) => b.similarity - a.similarity); // Sortieren nach Ähnlichkeit (absteigend)
+    });
 };

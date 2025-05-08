@@ -61,8 +61,8 @@ const ParallelCoordinatePlotComponent = ({ data }) => {
         return data.map(item => {
             const y1 = yScale(item.aiGrade);
             const y2 = yScale(item.humanGrade);
-            const lineColor = getDifferenceColor(item.difference * 25, chartColors);
-
+            const lineColor = getDifferenceColor(item.difference, chartColors, {high: 1, medium: 0.5});
+console.log(item.difference);
             return {
                 key: item.id || item.title,
                 title: item.title,
