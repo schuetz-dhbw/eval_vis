@@ -82,8 +82,8 @@ export const en = {
         lowSimilarity: "Low Similarity"
     },
     criteriaSection: {
-        contentProcessing: "Content Processing",
-        scientificWork: "Scientific Work"
+        contentProcessing: "Professional Treatment",
+        scientificWork: "Scientific Working"
     },
     metricsDescriptions: {
         cosineDescription: "Measures angle similarity between AI and human ratings (1.0 = identical, 0.0 = completely different)",

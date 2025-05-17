@@ -2,7 +2,8 @@ import React, {useMemo} from 'react';
 import { getSimilarityColor} from '../../utils/chartUtils';
 import useChart from '../../hooks/useChart';
 import { CHART_TYPES, ANALYSIS_TYPES } from '../../constants/chartConstants';
-import {calculateSimilarityData} from "../../utils/dataTransformers/dashboardUtils";
+import {calculateSimilarityMetrics} from "../../utils/dataTransformers";
+import {QUALITY_THRESHOLDS} from "../../constants/metrics";
 
 const SimilarityTableComponent = ({ works }) => {
     const {
@@ -14,7 +15,30 @@ const SimilarityTableComponent = ({ works }) => {
     });
 
     const similarityData = useMemo(() => {
-        return calculateSimilarityData(works);
+        return works.map(work => {
+            // Wir nutzen die bestehende Funktion calculateSimilarityMetrics
+            const metrics = calculateSimilarityMetrics(work);
+            const similarity = metrics.similarity;
+
+            // Kategorie basierend auf den definierten Schwellenwerten
+            let category;
+            if (similarity > QUALITY_THRESHOLDS.COSINE.EXCELLENT) {
+                category = 'high';
+            } else if (similarity > QUALITY_THRESHOLDS.COSINE.GOOD) {
+                category = 'medium';
+            }
+            else {
+                category = 'low';
+            }
+
+            return {
+                key: work.key,
+                title: work.title || work.key,
+                similarity: similarity,
+                value: similarity * 100,
+                category: category
+            };
+        }).sort((a, b) => b.similarity - a.similarity);
     }, [works]);
 
     return (

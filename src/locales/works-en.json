@@ -27,17 +27,17 @@
     "constructive": "Constructive Work"
   },
   "typeDescriptions": {
-    "theory_disc": "Theoretical Development, Discussion",
-    "theory_eval": "Theoretical Development, Evaluation",
-    "theory_impl": "Theoretical Development, Implementation",
-    "theory_impl_eval": "Theoretical Development, Implementation, Evaluation",
+    "theory_disc": "Theoretical Elaboration, Discussion",
+    "theory_eval": "Theoretical Elaboration, Evaluation",
+    "theory_impl": "Theoretical Elaboration, Implementation",
+    "theory_impl_eval": "Theoretical Elaboration, Implementation, Evaluation",
     "concept_impl_doc": "Concept, Implementation, Documentation, User Guide",
-    "concept_impl": "Theoretical Development, Conceptual Design, Implementation",
-    "theory_concept_impl_eval": "Theoretical Development, Conceptual Design, Implementation, Evaluation",
-    "theory_concept_impl": "Theoretical Development, Conceptual Design, Implementation",
+    "concept_impl": "Theoretical Elaboration, Conceptual Design, Implementation",
+    "theory_concept_impl_eval": "Theoretical Elaboration, Conceptual Design, Implementation, Evaluation",
+    "theory_concept_impl": "Theoretical Elaboration, Conceptual Design, Implementation",
     "concept_impl_proto": "Conceptual Design, Implementation, Prototype",
-    "theory_empeval": "Theoretical Development, Empirical Evaluation",
-    "theory_example": "Theoretical Development, Exemplary Implementation"
+    "theory_empeval": "Theoretical Elaboration, Empirical Evaluation",
+    "theory_example": "Theoretical Elaboration, Exemplary Implementation"
   },
   "criteriaLabels": {
     "professionalCompetence": "Professional Competence",
