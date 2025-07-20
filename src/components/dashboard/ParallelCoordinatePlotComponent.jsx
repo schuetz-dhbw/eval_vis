@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, {useMemo} from 'react';
 import BaseChartComponent from '../charts/BaseChartComponent';
 import useChart from '../../hooks/useChart';
 import { CHART_TYPES, ANALYSIS_TYPES } from '../../constants/chartConstants';
@@ -62,7 +62,6 @@ const ParallelCoordinatePlotComponent = ({ data }) => {
             const y1 = yScale(item.aiGrade);
             const y2 = yScale(item.humanGrade);
             const lineColor = getDifferenceColor(item.difference, chartColors, {high: 1, medium: 0.5});
-console.log(item.difference);
             return {
                 key: item.id || item.title,
                 title: item.title,
@@ -76,7 +75,23 @@ console.log(item.difference);
         });
     }, [data, yScale, chartColors]);
 
+
+    // Prepare table data sorted by title
+    const tableData = useMemo(() => {
+        return data
+            .map(item => ({
+                key: item.key,
+                title: item.title,
+                aiGrade: item.aiGrade,
+                humanGrade: item.humanGrade,
+                difference: item.difference,
+                differenceColor: getDifferenceColor(item.difference, chartColors, {high: 1, medium: 0.5})
+            }))
+            .sort((a, b) => Math.abs(a.difference) - Math.abs(b.difference));
+    }, [data, chartColors]);
+
     return (
+        <div className="component-container">
         <BaseChartComponent height={height}>
             <svg width="100%" height="100%" viewBox={`0 0 ${width} ${height}`}>
                 {/* Achsen zeichnen */}
@@ -164,6 +179,31 @@ console.log(item.difference);
                 </g>
             </svg>
         </BaseChartComponent>
+            <div className="grade-comparison-table">
+                <table className="data-table">
+                    <thead>
+                    <tr>
+                        <th>{t('work', 'tableHeaders')}</th>
+                        <th>{t('ai', 'labels')} {t('grade', 'labels')}</th>
+                        <th>{t('human', 'labels')} {t('grade', 'labels')}</th>
+                        <th>{t('difference', 'labels')}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {tableData.map((item, index) => (
+                        <tr key={index} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
+                            <td>{item.title}</td>
+                            <td style={{ color: chartColors.PRIMARY }}>{item.aiGrade.toFixed(1)}</td>
+                            <td style={{ color: chartColors.SECONDARY }}>{item.humanGrade.toFixed(1)}</td>
+                            <td style={{ color: item.differenceColor }}>
+                                {item.difference > 0 ? '+' : ''}{item.difference.toFixed(1)}
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     );
 };
 

@@ -13,7 +13,8 @@ const CriteriaSectionComparisonComponent = ({ works = [] }) => {
         chartColors,
         chartDimensions,
         commonChartConfig,
-        defaultLegendProps
+        defaultLegendProps,
+        formatValue
     } = useChart({
         analysisType: ANALYSIS_TYPES.DASHBOARD,
         chartType: CHART_TYPES.BAR
@@ -31,7 +32,8 @@ const CriteriaSectionComparisonComponent = ({ works = [] }) => {
             sectionStats[sectionKey] = {
                 aiScores: [],
                 humanScores: [],
-                differences: []
+                differences: [],
+                criteriaCount: 0
             };
         });
 
@@ -39,33 +41,60 @@ const CriteriaSectionComparisonComponent = ({ works = [] }) => {
         works.forEach(work => {
             if (!work.criteriaKeys || !work.aiScores || !work.humanScores) return;
 
-            work.criteriaKeys.forEach((key, index) => {
+            // Validiere dass alle Arrays dieselbe Länge haben
+            const minLength = Math.min(
+                work.criteriaKeys.length,
+                work.aiScores.length,
+                work.humanScores.length
+            );
+
+            for (let index = 0; index < minLength; index++) {
+                const key = work.criteriaKeys[index];
+                const aiScore = work.aiScores[index];
+                const humanScore = work.humanScores[index];
+
+                // Überspringe ungültige Werte
+                if (aiScore == null || humanScore == null || isNaN(aiScore) || isNaN(humanScore)) {
+                    continue;
+                }
+
                 // Finde die Sektion für dieses Kriterium
                 const sectionKey = Object.keys(CRITERIA_SECTIONS).find(section =>
                     CRITERIA_SECTIONS[section].includes(key)
                 );
 
                 if (sectionKey && sectionStats[sectionKey]) {
-                    sectionStats[sectionKey].aiScores.push(work.aiScores[index]);
-                    sectionStats[sectionKey].humanScores.push(work.humanScores[index]);
+                    sectionStats[sectionKey].aiScores.push(Number(aiScore));
+                    sectionStats[sectionKey].humanScores.push(Number(humanScore));
                     sectionStats[sectionKey].differences.push(
-                        Math.abs(work.aiScores[index] - work.humanScores[index])
+                        Math.abs(Number(aiScore) - Number(humanScore))
                     );
+                    sectionStats[sectionKey].criteriaCount++;
                 }
-            });
+            }
         });
 
         // Berechne Durchschnittswerte für die Visualisierung
         return Object.keys(sectionStats)
             .filter(sectionKey => sectionStats[sectionKey].aiScores.length > 0)
-            .map(sectionKey => ({
-                key: sectionKey,
-                name: t(sectionKey, 'criteriaSection'), // Übersetze über den hook
-                ai: calculateMean(sectionStats[sectionKey].aiScores),
-                human: calculateMean(sectionStats[sectionKey].humanScores),
-                diff: calculateMean(sectionStats[sectionKey].differences),
-                count: sectionStats[sectionKey].aiScores.length
-            }));
+            .map(sectionKey => {
+                const stats = sectionStats[sectionKey];
+                return {
+                    key: sectionKey,
+                    name: t(sectionKey, 'criteriaSection'),
+                    ai: calculateMean(stats.aiScores),
+                    human: calculateMean(stats.humanScores),
+                    diff: calculateMean(stats.differences),
+                    count: stats.aiScores.length,
+                    criteriaInSection: CRITERIA_SECTIONS[sectionKey].length,
+                    // Zusätzliche Statistiken
+                    aiMin: Math.min(...stats.aiScores),
+                    aiMax: Math.max(...stats.aiScores),
+                    humanMin: Math.min(...stats.humanScores),
+                    humanMax: Math.max(...stats.humanScores)
+                };
+            })
+            .sort((a, b) => b.diff - a.diff); // Sortiere nach größter Differenz
     }, [works, t]);
 
     // Wenn keine Daten, zeige eine Nachricht
@@ -73,7 +102,10 @@ const CriteriaSectionComparisonComponent = ({ works = [] }) => {
         return <div className="no-data-message">{t('noDataAvailable', 'errors')}</div>;
     }
 
+    const maxDiff = Math.max(...sectionData.map(item => item.diff));
+
     return (
+        <div className="component-container">
         <BaseChartComponent height={chartDimensions.height * 1.5}>
             <BarChart
                 data={sectionData}
@@ -103,6 +135,78 @@ const CriteriaSectionComparisonComponent = ({ works = [] }) => {
                 </Bar>
             </BarChart>
         </BaseChartComponent>
+            <h4 className="subtitle">{t('criteriaSectionComparison', 'dashboard')}</h4>
+
+            <table className="data-table criteria-section-table">
+                <thead>
+                <tr>
+                    <th>{t('section', 'tableHeaders')}</th>
+                    <th>{t('aiAverage', 'tableHeaders')}</th>
+                    <th>{t('humanAverage', 'tableHeaders')}</th>
+                    <th>{t('avgDifference', 'tableHeaders')}</th>
+                    <th>{t('evaluations', 'tableHeaders')}</th>
+                    <th>{t('aiRange', 'tableHeaders')}</th>
+                    <th>{t('humanRange', 'tableHeaders')}</th>
+                    <th>{t('visualization', 'dashboard')}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {sectionData.map((item, index) => {
+                    const diffColor = getDifferenceColor(item.diff, chartColors, { high: 25, medium: 15 });
+                    const barWidth = (item.diff / maxDiff) * 100;
+
+                    return (
+                        <tr key={item.key} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
+                            <td className="section-name">
+                                <div className="section-info">
+                                    <div className="section-title">{item.name}</div>
+                                    <div className="section-subtitle">
+                                        {item.criteriaInSection} {t('criteria', 'labels')}
+                                    </div>
+                                </div>
+                            </td>
+                            <td className="score-cell">
+                                    <span className="score-value ai-score">
+                                        {formatValue(item.ai)}%
+                                    </span>
+                            </td>
+                            <td className="score-cell">
+                                    <span className="score-value human-score">
+                                        {formatValue(item.human)}%
+                                    </span>
+                            </td>
+                            <td className="score-cell">
+                                    <span
+                                        className="score-value difference-value"
+                                        style={{ color: diffColor }}
+                                    >
+                                        {formatValue(item.diff)}%
+                                    </span>
+                            </td>
+                            <td className="count-cell">{item.count}</td>
+                            <td className="range-cell">
+                                {formatValue(item.aiMin)}% - {formatValue(item.aiMax)}%
+                            </td>
+                            <td className="range-cell">
+                                {formatValue(item.humanMin)}% - {formatValue(item.humanMax)}%
+                            </td>
+                            <td className="visualization-cell">
+                                <div className="difference-bar-container">
+                                    <div
+                                        className="difference-bar"
+                                        style={{
+                                            width: `${barWidth}%`,
+                                            backgroundColor: diffColor
+                                        }}
+                                    ></div>
+                                </div>
+                            </td>
+                        </tr>
+                    );
+                })}
+                </tbody>
+            </table>
+        </div>
     );
 };
 

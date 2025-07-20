@@ -213,14 +213,13 @@ export const generateViolinPlotData = (works) => {
 
 /**
  * Generiert Daten für Parallel Coordinate Plot
- * @param {Array} works - Alle Arbeiten
+ * @param {Array} translatedWorks - Übersetzte Arbeiten
  * @returns {Array} - Daten für Parallel Coordinate Plot
  */
-export const generateParallelCoordinateData = (works) => {
+export const generateParallelCoordinateData = (translatedWorks) => {
     const cacheKey = generateCacheKey({ key: 'parallel_coordinate' });
 
-    return getFromCacheOrCompute(dashboardCache.statistics, cacheKey, () => {
-        return works.map(work => ({
+        return translatedWorks.map(work => ({
             id: work.key,
             title: work.title || work.key,
             aiGrade: work.aiGrade,
@@ -228,7 +227,6 @@ export const generateParallelCoordinateData = (works) => {
             // Differenz für Farbkodierung
             difference: Math.abs(work.aiGrade - work.humanGrade)
         }));
-    });
 };
 
 /**

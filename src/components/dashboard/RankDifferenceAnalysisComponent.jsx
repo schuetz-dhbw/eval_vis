@@ -13,7 +13,7 @@ const RankDifferenceAnalysisComponent = ({ data }) => {
     });
 
     // Maximum Differenz für die Skalierung
-    const maxDiff = Math.max(...data.topDifferenceItems.map(item => item.absDiff));
+    const maxDiff = Math.max(...data.ranks.map(item => Math.abs(item.rankDiff)));
 
     return (
         <div className="component-container">

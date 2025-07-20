@@ -19,6 +19,7 @@ const SimilarityTableComponent = ({ works }) => {
             // Wir nutzen die bestehende Funktion calculateSimilarityMetrics
             const metrics = calculateSimilarityMetrics(work);
             const similarity = metrics.similarity;
+            const distance = metrics.distance;
 
             // Kategorie basierend auf den definierten Schwellenwerten
             let category;
@@ -36,6 +37,7 @@ const SimilarityTableComponent = ({ works }) => {
                 title: work.title || work.key,
                 similarity: similarity,
                 value: similarity * 100,
+                distance: distance,
                 category: category
             };
         }).sort((a, b) => b.similarity - a.similarity);
@@ -48,18 +50,21 @@ const SimilarityTableComponent = ({ works }) => {
                 <tr>
                     <th>{t('work', 'dashboard')}</th>
                     <th>{t('similarity', 'dashboard')}</th>
+                    <th>{t('euclideanDistance', 'dashboard') || 'Euclidean Distance'}</th>
                     <th>{t('category', 'dashboard')}</th>
                     <th>{t('visualization', 'dashboard')}</th>
                 </tr>
                 </thead>
                 <tbody>
                 {similarityData.map((item, index) => {
-                    const backgroundColor = getSimilarityColor(item.similarity * 100, chartColors, {high: 95, medium: 90});
+                    const backgroundColor = getSimilarityColor(item.similarity * 100, chartColors, {high: 90, medium: 80});
+                    const distanceColor = getSimilarityColor(item.distance, chartColors, {high: 1, medium: 0.5});
 
                     return (
                         <tr key={item.key} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
                             <td>{item.title}</td>
                             <td>{item.similarity.toFixed(3)}</td>
+                            <td>{item.distance.toFixed(3)}</td>
                             <td>{t(item.category + 'Similarity', 'dashboard')}</td>
                             <td>
                                 <div

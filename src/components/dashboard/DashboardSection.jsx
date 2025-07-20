@@ -54,8 +54,8 @@ const DashboardSection = () => {
 
     // Datenaufbereitung für ParallelCoordinatePlot
     const parallelData = useMemo(() => {
-        return generateParallelCoordinateData(rawWorks);
-    }, [rawWorks]);
+        return generateParallelCoordinateData(translatedWorks);
+    }, [translatedWorks]);
 
     // Rangdaten berechnen
     const rankAnalysisData = useMemo(() => {
