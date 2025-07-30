@@ -19,7 +19,7 @@ const SimilarityTableComponent = ({ works }) => {
             // Wir nutzen die bestehende Funktion calculateSimilarityMetrics
             const metrics = calculateSimilarityMetrics(work);
             const similarity = metrics.similarity;
-            const distance = metrics.distance;
+            const normalizedDistance = metrics.normalizedDistance;
 
             // Kategorie basierend auf den definierten Schwellenwerten
             let category;
@@ -37,7 +37,9 @@ const SimilarityTableComponent = ({ works }) => {
                 title: work.title || work.key,
                 similarity: similarity,
                 value: similarity * 100,
-                distance: distance,
+                distance: metrics.distance,
+                normalizedDistance: normalizedDistance,
+                normalizedDistancePercent: normalizedDistance * 100,
                 category: category
             };
         }).sort((a, b) => b.similarity - a.similarity);
@@ -50,7 +52,8 @@ const SimilarityTableComponent = ({ works }) => {
                 <tr>
                     <th>{t('work', 'dashboard')}</th>
                     <th>{t('similarity', 'dashboard')}</th>
-                    <th>{t('euclideanDistance', 'dashboard') || 'Euclidean Distance'}</th>
+                    <th>{t('normalizedDistance', 'metrics') || 'Normalized Distance'}</th>
+                    <th>{t('euclideanDistance', 'dashboard') || 'Raw Distance'}</th>
                     <th>{t('category', 'dashboard')}</th>
                     <th>{t('visualization', 'dashboard')}</th>
                 </tr>
@@ -58,13 +61,20 @@ const SimilarityTableComponent = ({ works }) => {
                 <tbody>
                 {similarityData.map((item, index) => {
                     const backgroundColor = getSimilarityColor(item.similarity * 100, chartColors, {high: 90, medium: 80});
-                    const distanceColor = getSimilarityColor(item.distance, chartColors, {high: 1, medium: 0.5});
+
+                    // Use normalized distance for more intuitive color coding
+                    const distanceColor = getSimilarityColor((1 - item.normalizedDistance) * 100, chartColors, {high: 85, medium: 75});
 
                     return (
                         <tr key={item.key} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
                             <td>{item.title}</td>
                             <td>{item.similarity.toFixed(3)}</td>
-                            <td>{item.distance.toFixed(3)}</td>
+                            <td style={{ color: distanceColor, fontWeight: 'bold' }}>
+                                {item.normalizedDistancePercent.toFixed(1)}%
+                            </td>
+                            <td style={{ fontSize: '0.9em', color: 'var(--color-text-light)' }}>
+                                {item.distance.toFixed(1)}
+                            </td>
                             <td>{t(item.category + 'Similarity', 'dashboard')}</td>
                             <td>
                                 <div
@@ -76,6 +86,8 @@ const SimilarityTableComponent = ({ works }) => {
                                         textAlign: 'center',
                                         width: `${item.similarity * 100}%`,
                                         minWidth: '40px',
+                                        color: 'white',
+                                        fontSize: '0.85em'
                                     }}
                                 >
                                     {(item.similarity * 100).toFixed(1)}%

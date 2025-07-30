@@ -79,7 +79,27 @@ export const en = {
         sectionComparisonDescription: "This analysis shows the average differences between AI and human evaluations, divided by criteria sections.",
         highSimilarity: "High Similarity",
         mediumSimilarity: "Medium Similarity",
-        lowSimilarity: "Low Similarity"
+        lowSimilarity: "Low Similarity",
+        enhancedCriteriaAnalysis: "Enhanced Criteria Analysis",
+        validComparisons: "Valid Comparisons",
+        weightingDisagreements: "Weighting Disagreements",
+        zeroWeightAnalysis: "Relevance Analysis",
+        validComparisonsDescription: "This analysis shows only criteria where both AI and human evaluators assigned a weight > 0%, indicating both considered the criterion relevant for evaluation.",
+        weightingDisagreementsDescription: "This shows criteria where evaluators disagreed on relevance - one assigned weight > 0% while the other assigned 0%.",
+        zeroWeightAnalysisDescription: "This shows how often criteria were deemed completely irrelevant (0% weight by both evaluators) and overall relevance rates.",
+        enhancedSectionComparisonDescription: "This enhanced analysis compares criteria sections based only on evaluations where both AI and human assigned relevance (weight > 0%). This provides a more accurate comparison by excluding criteria where evaluators disagreed on relevance.",
+        totalCriteria: "Total Criteria",
+        avgValidComparisons: "Avg Valid Comparisons",
+        criteriaWithDisagreements: "Criteria with Disagreements",
+        criteriaOftenIgnored: "Often Ignored Criteria",
+        disagreementRate: "Disagreement Rate",
+        relevanceRate: "Relevance Rate",
+        bothIgnoredRate: "Both Ignored Rate",
+        avgRelevanceRate: "Average Relevance Rate",
+        avgDisagreementRate: "Average Disagreement Rate",
+        avgRelevanceRateDescription: "Percentage of evaluations where both AI and human considered criteria relevant",
+        avgDisagreementRateDescription: "Percentage of evaluations where evaluators disagreed on criterion relevance",
+        enhancedCriteriaSectionComparison: "Enhanced Criteria Section Comparison"
     },
     criteriaSection: {
         contentProcessing: "Professional Treatment",
@@ -88,7 +108,8 @@ export const en = {
     metricsDescriptions: {
         cosineDescription: "Measures angle similarity between AI and human ratings (1.0 = identical, 0.0 = completely different)",
         distanceDescription: "Euclidean distance between AI and human ratings (lower = more similar)",
-        gradeDifferenceDescription: "Difference between AI and human final grades"
+        normalizedDistanceDescription: "Percentage of theoretical maximum disagreement between ratings", // NEW
+        gradeDifferenceDescription: "Difference between the final grades of AI and human"
     },
     metricsQuality: {
         excellent: "Excellent",
@@ -99,6 +120,7 @@ export const en = {
     metrics: {
         cosine: "Cosine Similarity",
         distance: "Euclidean Distance",
+        normalizedDistance: "Normalized Distance", // NEW
         avgDifference: "Average Difference",
         maxDiff: "Max",
         minDiff: "Min",
@@ -154,7 +176,10 @@ export const en = {
         workType: "Work Type",
         avgByType: "Averagy by Type",
         count: "Count",
-        total: "Total"
+        total: "Total",
+        validComparisons: "Valid Comparisons",
+        weightingDisagreements: "Weighting Disagreements",
+        relevanceRate: "Relevance Rate"
     },
     hints: {
         title: "Usage Notes:",

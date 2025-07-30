@@ -217,7 +217,6 @@ export const generateViolinPlotData = (works) => {
  * @returns {Array} - Daten für Parallel Coordinate Plot
  */
 export const generateParallelCoordinateData = (translatedWorks) => {
-    const cacheKey = generateCacheKey({ key: 'parallel_coordinate' });
 
         return translatedWorks.map(work => ({
             id: work.key,

@@ -78,7 +78,32 @@ export const de = {
         sectionComparisonDescription: "Diese Analyse zeigt die durchschnittlichen Unterschiede zwischen KI und menschlichen Bewertungen, aufgeteilt nach Kriterienbereichen.",
         highSimilarity: "Hohe Ähnlichkeit",
         mediumSimilarity: "Mittlere Ähnlichkeit",
-        lowSimilarity: "Niedrige Ähnlichkeit"
+        lowSimilarity: "Niedrige Ähnlichkeit",
+        enhancedCriteriaAnalysis: "Erweiterte Kriterien-Analyse",
+        validComparisons: "Gültige Vergleiche",
+        weightingDisagreements: "Gewichtungs-Meinungsverschiedenheiten",
+        zeroWeightAnalysis: "Relevanz-Analyse",
+
+        validComparisonsDescription: "Diese Analyse zeigt nur Kriterien, bei denen sowohl KI als auch menschliche Gutachter eine Gewichtung > 0% vergeben haben, was bedeutet, dass beide das Kriterium als relevant für die Bewertung betrachteten.",
+        weightingDisagreementsDescription: "Dies zeigt Kriterien, bei denen sich die Gutachter über die Relevanz uneinig waren - einer vergab eine Gewichtung > 0%, während der andere 0% vergab.",
+        zeroWeightAnalysisDescription: "Dies zeigt, wie oft Kriterien als völlig irrelevant eingestuft wurden (0% Gewichtung von beiden Gutachtern) und die allgemeinen Relevanzraten.",
+        enhancedSectionComparisonDescription: "Diese erweiterte Analyse vergleicht Kriterienbereiche nur auf Basis von Bewertungen, bei denen sowohl KI als auch Mensch Relevanz zugewiesen haben (Gewichtung > 0%). Dies liefert einen genaueren Vergleich durch Ausschluss von Kriterien, bei denen sich die Gutachter über die Relevanz uneinig waren.",
+
+        totalCriteria: "Kriterien Gesamt",
+        avgValidComparisons: "Ø Gültige Vergleiche",
+        criteriaWithDisagreements: "Kriterien mit Meinungsverschiedenheiten",
+        criteriaOftenIgnored: "Oft Ignorierte Kriterien",
+
+        disagreementRate: "Meinungsverschiedenheits-Rate",
+        relevanceRate: "Relevanz-Rate",
+        bothIgnoredRate: "Beide Ignoriert Rate",
+        avgRelevanceRate: "Durchschnittliche Relevanz-Rate",
+        avgDisagreementRate: "Durchschnittliche Meinungsverschiedenheits-Rate",
+
+        avgRelevanceRateDescription: "Prozentsatz der Bewertungen, bei denen sowohl KI als auch Mensch die Kriterien als relevant betrachteten",
+        avgDisagreementRateDescription: "Prozentsatz der Bewertungen, bei denen sich die Gutachter über die Kriterienrelevanz uneinig waren",
+
+        enhancedCriteriaSectionComparison: "Erweiterte Kriterien-Bereichs-Vergleich"
     },
     criteriaSection: {
         contentProcessing: "Inhaltliche Bearbeitung",
@@ -87,6 +112,7 @@ export const de = {
     metricsDescriptions: {
         cosineDescription: "Misst die Winkelähnlichkeit zwischen KI- und Human-Bewertungen (1,0 = identisch, 0,0 = völlig unterschiedlich)",
         distanceDescription: "Euklidische Distanz zwischen KI- und Human-Bewertungen (niedriger = ähnlicher)",
+        normalizedDistanceDescription: "Prozentsatz der theoretischen maximalen Uneinigkeit zwischen Bewertungen", // NEW
         gradeDifferenceDescription: "Unterschied zwischen den finalen Noten von KI und Human"
     },
     metricsQuality: {
@@ -98,6 +124,7 @@ export const de = {
     metrics: {
         cosine: "Kosinus-Ähnlichkeit",
         distance: "Euklidische Distanz",
+        normalizedDistance: "Normalisierte Distanz", // NEW
         avgDifference: "Durchschnittliche Differenz",
         maxDiff: "Max",
         minDiff: "Min",
@@ -153,7 +180,10 @@ export const de = {
         workType: "Arbeitstyp",
         avgByType: "Durchschnitt nach Typ",
         count: "Anzahl",
-        total: "Gesamt"
+        total: "Gesamt",
+        validComparisons: "Gültige Vergleiche",
+        weightingDisagreements: "Gewichtungs-Meinungsverschiedenheiten",
+        relevanceRate: "Relevanz-Rate"
     },
     hints: {
         title: "Hinweise zur Nutzung:",

@@ -16,6 +16,18 @@ const calculationCache = {
 // Maximale Cache-Größe
 const MAX_STATS_CACHE_SIZE = 50;
 
+/**
+ * Calculate the theoretical maximum Euclidean distance for normalization
+ * @param {number} numCriteria - Number of criteria being compared
+ * @param {number} maxScore - Maximum possible score (default 100)
+ * @returns {number} - Theoretical maximum distance
+ */
+const calculateTheoreticalMaxDistance = (numCriteria, maxScore = METRICS.FULL_MARK) => {
+    // Maximum distance occurs when one vector is all 0s and other is all maxScore
+    // Distance = sqrt(sum(maxScore^2)) = sqrt(numCriteria * maxScore^2) = maxScore * sqrt(numCriteria)
+    return maxScore * Math.sqrt(numCriteria);
+};
+
 // Calculate similarity metrics for a work
 export const calculateSimilarityMetrics = (work) => {
     const cacheKey = generateCacheKey(work);
@@ -25,11 +37,20 @@ export const calculateSimilarityMetrics = (work) => {
     }
 
     const similarity = calculateCosineSimilarity(work.aiScores, work.humanScores);
-    const distance = calculateEuclideanDistance(work.aiScores, work.humanScores);
+    const rawDistance = calculateEuclideanDistance(work.aiScores, work.humanScores);
+
+    // Calculate theoretical maximum distance for normalization
+    const theoreticalMaxDistance = calculateTheoreticalMaxDistance(work.aiScores.length);
+
+    // Normalize the distance to 0-1 scale
+    const normalizedDistance = rawDistance / theoreticalMaxDistance;
 
     const result = {
         similarity,
-        distance
+        distance: rawDistance,           // Keep raw distance for backward compatibility
+        normalizedDistance,              // New normalized distance (0-1 scale)
+        theoreticalMaxDistance,          // For reference/debugging
+        distanceAsPercentage: normalizedDistance * 100  // As percentage for easier interpretation
     };
 
     limitCacheSize(calculationCache.similarityMetrics, MAX_STATS_CACHE_SIZE);

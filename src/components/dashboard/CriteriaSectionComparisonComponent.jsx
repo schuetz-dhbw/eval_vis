@@ -1,11 +1,13 @@
+// src/components/dashboard/EnhancedCriteriaSectionComparisonComponent.jsx
+
 import React, { useMemo } from 'react';
 import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, Cell } from 'recharts';
-import { calculateMean } from '../../utils/dataUtils';
 import { getDifferenceColor } from '../../utils/chartUtils';
 import BaseChartComponent from '../charts/BaseChartComponent';
 import useChart from '../../hooks/useChart';
 import { CHART_TYPES, ANALYSIS_TYPES } from '../../constants/chartConstants';
-import {CRITERIA_SECTIONS} from "../../constants/criteriaConstants";
+import { CRITERIA_SECTIONS } from "../../constants/criteriaConstants";
+import { calculateEnhancedSectionMetrics } from '../../utils/dataTransformers/enhancedCriteriaUtils';
 
 const CriteriaSectionComparisonComponent = ({ works = [] }) => {
     const {
@@ -20,122 +22,64 @@ const CriteriaSectionComparisonComponent = ({ works = [] }) => {
         chartType: CHART_TYPES.BAR
     });
 
-    // Berechne die durchschnittlichen Differenzen pro Bereich
+    // Calculate enhanced section metrics
     const sectionData = useMemo(() => {
-        // Sicherheitscheck
         if (!works || works.length === 0) return [];
+        return calculateEnhancedSectionMetrics(works, CRITERIA_SECTIONS);
+    }, [works]);
 
-        const sectionStats = {};
+    // Transform data with translations
+    const chartData = sectionData.map(item => ({
+        ...item,
+        name: t(item.key, 'criteriaSection')
+    }));
 
-        // Initialisiere Datenstruktur für jede Sektion
-        Object.keys(CRITERIA_SECTIONS).forEach(sectionKey => {
-            sectionStats[sectionKey] = {
-                aiScores: [],
-                humanScores: [],
-                differences: [],
-                criteriaCount: 0
-            };
-        });
-
-        // Sammle Daten für jede Arbeit und jedes Kriterium
-        works.forEach(work => {
-            if (!work.criteriaKeys || !work.aiScores || !work.humanScores) return;
-
-            // Validiere dass alle Arrays dieselbe Länge haben
-            const minLength = Math.min(
-                work.criteriaKeys.length,
-                work.aiScores.length,
-                work.humanScores.length
-            );
-
-            for (let index = 0; index < minLength; index++) {
-                const key = work.criteriaKeys[index];
-                const aiScore = work.aiScores[index];
-                const humanScore = work.humanScores[index];
-
-                // Überspringe ungültige Werte
-                if (aiScore == null || humanScore == null || isNaN(aiScore) || isNaN(humanScore)) {
-                    continue;
-                }
-
-                // Finde die Sektion für dieses Kriterium
-                const sectionKey = Object.keys(CRITERIA_SECTIONS).find(section =>
-                    CRITERIA_SECTIONS[section].includes(key)
-                );
-
-                if (sectionKey && sectionStats[sectionKey]) {
-                    sectionStats[sectionKey].aiScores.push(Number(aiScore));
-                    sectionStats[sectionKey].humanScores.push(Number(humanScore));
-                    sectionStats[sectionKey].differences.push(
-                        Math.abs(Number(aiScore) - Number(humanScore))
-                    );
-                    sectionStats[sectionKey].criteriaCount++;
-                }
-            }
-        });
-
-        // Berechne Durchschnittswerte für die Visualisierung
-        return Object.keys(sectionStats)
-            .filter(sectionKey => sectionStats[sectionKey].aiScores.length > 0)
-            .map(sectionKey => {
-                const stats = sectionStats[sectionKey];
-                return {
-                    key: sectionKey,
-                    name: t(sectionKey, 'criteriaSection'),
-                    ai: calculateMean(stats.aiScores),
-                    human: calculateMean(stats.humanScores),
-                    diff: calculateMean(stats.differences),
-                    count: stats.aiScores.length,
-                    criteriaInSection: CRITERIA_SECTIONS[sectionKey].length,
-                    // Zusätzliche Statistiken
-                    aiMin: Math.min(...stats.aiScores),
-                    aiMax: Math.max(...stats.aiScores),
-                    humanMin: Math.min(...stats.humanScores),
-                    humanMax: Math.max(...stats.humanScores)
-                };
-            })
-            .sort((a, b) => b.diff - a.diff); // Sortiere nach größter Differenz
-    }, [works, t]);
-
-    // Wenn keine Daten, zeige eine Nachricht
-    if (!sectionData || sectionData.length === 0) {
+    if (!chartData || chartData.length === 0) {
         return <div className="no-data-message">{t('noDataAvailable', 'errors')}</div>;
     }
 
-    const maxDiff = Math.max(...sectionData.map(item => item.diff));
+    const maxDiff = Math.max(...chartData.map(item => item.diff));
 
     return (
         <div className="component-container">
-        <BaseChartComponent height={chartDimensions.height * 1.5}>
-            <BarChart
-                data={sectionData}
-                margin={commonChartConfig.margin}
-            >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis domain={[0, 100]} />
-                <Tooltip
-                    formatter={(value, name) => [
-                        `${value.toFixed(1)}%`,
-                        name === 'diff'
-                            ? t('avgDifference', 'metrics')
-                            : (name === 'ai' ? t('ai', 'labels') : t('human', 'labels'))
-                    ]}
-                />
-                <Legend {...defaultLegendProps} />
-                <Bar dataKey="ai" name={t('ai', 'labels')} fill={chartColors.PRIMARY} />
-                <Bar dataKey="human" name={t('human', 'labels')} fill={chartColors.SECONDARY} />
-                <Bar dataKey="diff" name={t('avgDifference', 'metrics')}>
-                    {sectionData.map((entry, index) => (
-                        <Cell
-                            key={`cell-${index}`}
-                            fill={getDifferenceColor(entry.diff, chartColors, { high: 25, medium: 15 })}
-                        />
-                    ))}
-                </Bar>
-            </BarChart>
-        </BaseChartComponent>
-            <h4 className="subtitle">{t('criteriaSectionComparison', 'dashboard')}</h4>
+            <div className="interpretation-box">
+                <div className="interpretation-content">
+                    {t('enhancedSectionComparisonDescription', 'dashboard') ||
+                        'This enhanced analysis compares criteria sections based only on evaluations where both AI and human assigned relevance (weight > 0%). This provides a more accurate comparison by excluding criteria where evaluators disagreed on relevance.'}
+                </div>
+            </div>
+
+            <BaseChartComponent height={chartDimensions.height * 1.5}>
+                <BarChart
+                    data={chartData}
+                    margin={commonChartConfig.margin}
+                >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis domain={[0, 100]} />
+                    <Tooltip
+                        formatter={(value, name) => [
+                            `${value.toFixed(1)}%`,
+                            name === 'diff'
+                                ? t('avgDifference', 'metrics')
+                                : (name === 'ai' ? t('ai', 'labels') : t('human', 'labels'))
+                        ]}
+                    />
+                    <Legend {...defaultLegendProps} />
+                    <Bar dataKey="ai" name={t('ai', 'labels')} fill={chartColors.PRIMARY} />
+                    <Bar dataKey="human" name={t('human', 'labels')} fill={chartColors.SECONDARY} />
+                    <Bar dataKey="diff" name={t('avgDifference', 'metrics')}>
+                        {chartData.map((entry, index) => (
+                            <Cell
+                                key={`cell-${index}`}
+                                fill={getDifferenceColor(entry.diff, chartColors, { high: 25, medium: 15 })}
+                            />
+                        ))}
+                    </Bar>
+                </BarChart>
+            </BaseChartComponent>
+
+            <h4 className="subtitle">{t('enhancedCriteriaSectionComparison', 'dashboard') || 'Enhanced Criteria Section Comparison'}</h4>
 
             <table className="data-table criteria-section-table">
                 <thead>
@@ -144,14 +88,14 @@ const CriteriaSectionComparisonComponent = ({ works = [] }) => {
                     <th>{t('aiAverage', 'tableHeaders')}</th>
                     <th>{t('humanAverage', 'tableHeaders')}</th>
                     <th>{t('avgDifference', 'tableHeaders')}</th>
-                    <th>{t('evaluations', 'tableHeaders')}</th>
-                    <th>{t('aiRange', 'tableHeaders')}</th>
-                    <th>{t('humanRange', 'tableHeaders')}</th>
+                    <th>{t('validComparisons', 'tableHeaders') || 'Valid Comparisons'}</th>
+                    <th>{t('weightingDisagreements', 'tableHeaders') || 'Weighting Disagreements'}</th>
+                    <th>{t('relevanceRate', 'tableHeaders') || 'Relevance Rate'}</th>
                     <th>{t('visualization', 'dashboard')}</th>
                 </tr>
                 </thead>
                 <tbody>
-                {sectionData.map((item, index) => {
+                {chartData.map((item, index) => {
                     const diffColor = getDifferenceColor(item.diff, chartColors, { high: 25, medium: 15 });
                     const barWidth = (item.diff / maxDiff) * 100;
 
@@ -161,34 +105,38 @@ const CriteriaSectionComparisonComponent = ({ works = [] }) => {
                                 <div className="section-info">
                                     <div className="section-title">{item.name}</div>
                                     <div className="section-subtitle">
-                                        {item.criteriaInSection} {t('criteria', 'labels')}
+                                        {CRITERIA_SECTIONS[item.key]?.length || 0} {t('criteria', 'labels')}
                                     </div>
                                 </div>
                             </td>
                             <td className="score-cell">
-                                    <span className="score-value ai-score">
-                                        {formatValue(item.ai)}%
-                                    </span>
+                                <span className="score-value ai-score">
+                                    {formatValue(item.ai)}%
+                                </span>
                             </td>
                             <td className="score-cell">
-                                    <span className="score-value human-score">
-                                        {formatValue(item.human)}%
-                                    </span>
+                                <span className="score-value human-score">
+                                    {formatValue(item.human)}%
+                                </span>
                             </td>
                             <td className="score-cell">
-                                    <span
-                                        className="score-value difference-value"
-                                        style={{ color: diffColor }}
-                                    >
-                                        {formatValue(item.diff)}%
-                                    </span>
+                                <span
+                                    className="score-value difference-value"
+                                    style={{ color: diffColor }}
+                                >
+                                    {formatValue(item.diff)}%
+                                </span>
                             </td>
-                            <td className="count-cell">{item.count}</td>
-                            <td className="range-cell">
-                                {formatValue(item.aiMin)}% - {formatValue(item.aiMax)}%
+                            <td className="count-cell">{item.validComparisons}</td>
+                            <td className="count-cell">
+                                <span style={{ color: item.disagreementRate > 0.3 ? chartColors.CRITICAL : chartColors.MODERATE }}>
+                                    {item.weightingDisagreements} ({formatValue(item.disagreementRate * 100)}%)
+                                </span>
                             </td>
-                            <td className="range-cell">
-                                {formatValue(item.humanMin)}% - {formatValue(item.humanMax)}%
+                            <td className="count-cell">
+                                <span style={{ color: item.relevanceRate > 0.7 ? chartColors.OPTIMAL : chartColors.MODERATE }}>
+                                    {formatValue(item.relevanceRate * 100)}%
+                                </span>
                             </td>
                             <td className="visualization-cell">
                                 <div className="difference-bar-container">
@@ -206,6 +154,30 @@ const CriteriaSectionComparisonComponent = ({ works = [] }) => {
                 })}
                 </tbody>
             </table>
+
+            {/* Additional insights */}
+            <div className="component-grid grid-2-cols" style={{ marginTop: 'var(--space-lg)' }}>
+                <div className="info-box">
+                    <h5 className="data-label">{t('avgRelevanceRate', 'dashboard') || 'Average Relevance Rate'}</h5>
+                    <div className="data-value">
+                        {formatValue(chartData.reduce((sum, item) => sum + item.relevanceRate, 0) / chartData.length * 100)}%
+                    </div>
+                    <div className="item-description">
+                        {t('avgRelevanceRateDescription', 'dashboard') ||
+                            'Percentage of evaluations where both AI and human considered criteria relevant'}
+                    </div>
+                </div>
+                <div className="info-box">
+                    <h5 className="data-label">{t('avgDisagreementRate', 'dashboard') || 'Average Disagreement Rate'}</h5>
+                    <div className="data-value">
+                        {formatValue(chartData.reduce((sum, item) => sum + item.disagreementRate, 0) / chartData.length * 100)}%
+                    </div>
+                    <div className="item-description">
+                        {t('avgDisagreementRateDescription', 'dashboard') ||
+                            'Percentage of evaluations where evaluators disagreed on criterion relevance'}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

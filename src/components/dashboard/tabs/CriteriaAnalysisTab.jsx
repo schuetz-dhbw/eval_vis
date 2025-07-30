@@ -5,7 +5,7 @@ import CriteriaSectionComparisonComponent from '../CriteriaSectionComparisonComp
 import InterpretationBox from '../InterpretationBox';
 import { ANALYSIS_TYPES } from '../../../constants/chartConstants';
 
-const CriteriaAnalysisTab = ({ criteriaAverages, translatedWorks, rawWorks }) => {
+const CriteriaAnalysisTab = ({ criteriaAverages, rawWorks }) => {
     const t = useTranslation();
 
     // Kriterium mit größter Differenz identifizieren
@@ -35,8 +35,7 @@ const CriteriaAnalysisTab = ({ criteriaAverages, translatedWorks, rawWorks }) =>
             <div className="dashboard-container">
                 <h4 className="subtitle">{t('criteriaDifferences', 'dashboard')}</h4>
                 <CriteriaComparisonComponent
-                    data={criteriaAverages}
-                    works={translatedWorks}
+                    rawWorks={rawWorks}
                     analysisType={ANALYSIS_TYPES.DASHBOARD}
                 />
             </div>
