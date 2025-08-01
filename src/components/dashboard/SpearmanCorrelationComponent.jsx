@@ -15,7 +15,7 @@ const SpearmanCorrelationComponent = ({ data }) => {
         chartType: CHART_TYPES.RANK_CORRELATION
     });
 
-    // Dimensionen
+    // Dimensions
     const height = chartDimensions.height;
     const width = 300;
     const padding = { top: 20, right: 20, bottom: 40, left: 50 };
@@ -23,13 +23,14 @@ const SpearmanCorrelationComponent = ({ data }) => {
     // Anzahl der Arbeiten
     const n = data.ranks.length;
 
-    // Skalen für x und y
+    // FIXED: Scales - rank 1 should be at BOTTOM, rank n at TOP
     const xScale = (rank) => {
-        return padding.left + (width - padding.left - padding.right) * (rank - 1) / n;
+        return padding.left + (width - padding.left - padding.right) * (rank - 1) / (n - 1);
     };
 
     const yScale = (rank) => {
-        return padding.top + (height - padding.top - padding.bottom) * (rank - 1) / n;
+        // FIXED: Invert the scale so rank 1 is at bottom, rank n at top
+        return padding.top + (height - padding.top - padding.bottom) * (n - rank) / (n - 1);
     };
 
     // Bestimme Stärke-Klasse für Spearman
@@ -60,6 +61,10 @@ const SpearmanCorrelationComponent = ({ data }) => {
                     <line x1={padding.left} y1={height-padding.bottom} x2={width-padding.right} y2={height-padding.bottom}
                           stroke="currentColor" strokeWidth="1" />
 
+                    {/* FIXED: Perfect correlation line - now goes from bottom-left to top-right */}
+                    <line x1={padding.left} y1={height-padding.bottom} x2={width-padding.right} y2={padding.top}
+                          stroke="currentColor" strokeWidth="1" strokeDasharray="3,3" />
+
                     {/* Achsenbeschriftungen */}
                     <text x={width/2} y={height-5} textAnchor="middle" fontSize="11" fill="currentColor">
                         {t('humanRank', 'dashboard')}
@@ -69,9 +74,43 @@ const SpearmanCorrelationComponent = ({ data }) => {
                         {t('aiRank', 'dashboard')}
                     </text>
 
-                    {/* Datenpunkte und Linien für die perfekte Korrelation */}
-                    <line x1={padding.left} y1={padding.top} x2={width-padding.right} y2={height-padding.bottom}
-                          stroke="currentColor" strokeWidth="1" strokeDasharray="3,3" />
+                    {/* X-axis ticks and labels - every second tick */}
+                    {Array.from({length: Math.ceil(n/2)}, (_, i) => {
+                        const rank = (i + 1) * 2; // 2, 4, 6, 8, ...
+                        if (rank <= n) {
+                            const x = xScale(rank);
+                            return (
+                                <g key={`x-tick-${i}`}>
+                                    <line x1={x} y1={height-padding.bottom} x2={x} y2={height-padding.bottom+5}
+                                          stroke="currentColor" strokeWidth="1" />
+                                    <text x={x} y={height-padding.bottom+15} textAnchor="middle" fontSize="10"
+                                          fill="currentColor">
+                                        {rank}
+                                    </text>
+                                </g>
+                            );
+                        }
+                        return null;
+                    })}
+
+                    {/* Y-axis ticks and labels - every second tick */}
+                    {Array.from({length: Math.ceil(n/2)}, (_, i) => {
+                        const rank = (i + 1) * 2; // 2, 4, 6, 8, ...
+                        if (rank <= n) {
+                            const y = yScale(rank);
+                            return (
+                                <g key={`y-tick-${i}`}>
+                                    <line x1={padding.left-5} y1={y} x2={padding.left} y2={y}
+                                          stroke="currentColor" strokeWidth="1" />
+                                    <text x={padding.left-8} y={y+3} textAnchor="end" fontSize="10"
+                                          fill="currentColor">
+                                        {rank}
+                                    </text>
+                                </g>
+                            );
+                        }
+                        return null;
+                    })}
 
                     {/* Scatter Plot */}
                     {data.ranks.map((item, i) => (

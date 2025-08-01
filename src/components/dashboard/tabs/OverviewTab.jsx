@@ -3,8 +3,10 @@ import { useTranslation } from '../../../hooks/useTranslation';
 import GradeDistributionComponent from '../GradeDistributionComponent';
 import InterpretationBox from '../InterpretationBox';
 import { ANALYSIS_TYPES } from '../../../constants/chartConstants';
+import GradeAgreementAnalysisComponent from "../GradeAgreementAnalysisComponent";
+import GradeBoxplotComponent from "../GradeBoxplotComponent";
 
-const OverviewTab = ({ boxPlotData }) => {
+const OverviewTab = ({ boxPlotData, rawWorks, translatedWorks  }) => {
     const t = useTranslation();
 
     return (
@@ -19,6 +21,22 @@ const OverviewTab = ({ boxPlotData }) => {
                 <GradeDistributionComponent
                     data={boxPlotData}
                     analysisType={ANALYSIS_TYPES.DASHBOARD}
+                />
+            </div>
+
+            <div className="dashboard-container">
+                <h4 className="subtitle">{t('gradeDistribution', 'dashboard')} - {t('gradeBoxplot', 'dashboard')}</h4>
+                <GradeBoxplotComponent
+                    data={boxPlotData}
+                    analysisType={ANALYSIS_TYPES.DASHBOARD}
+                    works={translatedWorks}
+                />
+            </div>
+
+            <div className="dashboard-container">
+                <GradeAgreementAnalysisComponent
+                    works={rawWorks}
+                    translatedWorks={translatedWorks}
                 />
             </div>
         </div>

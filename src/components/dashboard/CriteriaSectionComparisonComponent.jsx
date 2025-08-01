@@ -58,12 +58,13 @@ const CriteriaSectionComparisonComponent = ({ works = [] }) => {
                     <XAxis dataKey="name" />
                     <YAxis domain={[0, 100]} />
                     <Tooltip
-                        formatter={(value, name) => [
-                            `${value.toFixed(1)}%`,
-                            name === 'diff'
-                                ? t('avgDifference', 'metrics')
-                                : (name === 'ai' ? t('ai', 'labels') : t('human', 'labels'))
-                        ]}
+                        formatter={(value, name) => {
+                            if (name === 'ai') return [`${value.toFixed(1)}%`, t('ai', 'labels')];
+                            if (name === 'human') return [`${value.toFixed(1)}%`, t('human', 'labels')];
+                            if (name === 'diff') return [`${value.toFixed(1)}%`, t('avgDifference', 'metrics')];
+                            return [`${value.toFixed(1)}%`, name];
+                        }}
+                        labelFormatter={(label) => label}
                     />
                     <Legend {...defaultLegendProps} />
                     <Bar dataKey="ai" name={t('ai', 'labels')} fill={chartColors.PRIMARY} />

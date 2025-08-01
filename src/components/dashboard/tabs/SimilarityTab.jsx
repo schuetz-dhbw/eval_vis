@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from '../../../hooks/useTranslation';
 import SimilarityTableComponent from '../SimilarityTableComponent';
 import InterpretationBox from '../InterpretationBox';
+import SimilarityAgreementDistributionComponent from "../SimilarityAgreementDistributionComponent";
 
 const SimilarityTab = ({ works }) => {
     const t = useTranslation();
@@ -16,6 +17,15 @@ const SimilarityTab = ({ works }) => {
                 <h4 className="subtitle">{t('similarityTable', 'dashboard')}</h4>
                 <SimilarityTableComponent works={works} />
             </div>
+
+            <div className="dashboard-container">
+                <SimilarityAgreementDistributionComponent
+                    works={works}
+                    translatedWorks={works}
+                />
+            </div>
+
+
         </div>
     );
 };

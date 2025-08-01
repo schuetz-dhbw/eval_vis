@@ -9,17 +9,18 @@ export const METRICS = {
 
 // Qualitätsschwellenwerte für verschiedene Metriken
 export const QUALITY_THRESHOLDS = {
-    COSINE: {                    // Kosinus-Ähnlichkeit (höher = besser)
+    COSINE: {                    // Cosine similarity (higher = better)
         EXCELLENT: 0.9,
-        GOOD: 0.7,
+        GOOD: 0.8,
         MODERATE: 0.5
     },
-    DISTANCE: {                  // Euklidische Distanz (niedriger = besser)
-        EXCELLENT: 50,
-        GOOD: 100,
-        MODERATE: 150
+    DISTANCE: {                  // Normalized Euclidean distance (lower = better)
+        EXCELLENT: 0.3,
+        GOOD: 0.45,
+        MODERATE: 0.6
     },
-    GRADE_DIFFERENCE: {          // Notendifferenz (niedriger = besser)
+    // Keep existing grade difference thresholds
+    GRADE_DIFFERENCE: {
         EXCELLENT: 0.4,
         GOOD: 0.6,
         MODERATE: 1.1

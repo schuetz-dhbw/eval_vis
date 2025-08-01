@@ -124,6 +124,8 @@ const DashboardSection = () => {
                     <OverviewTab
                         metrics={dashboardMetrics.summary}
                         boxPlotData={boxPlotData}
+                        rawWorks={rawWorks}
+                        translatedWorks={translatedWorks}
                     />
                 </TabContent>
 

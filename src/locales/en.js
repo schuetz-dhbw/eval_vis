@@ -99,11 +99,47 @@ export const en = {
         avgDisagreementRate: "Average Disagreement Rate",
         avgRelevanceRateDescription: "Percentage of evaluations where both AI and human considered criteria relevant",
         avgDisagreementRateDescription: "Percentage of evaluations where evaluators disagreed on criterion relevance",
-        enhancedCriteriaSectionComparison: "Enhanced Criteria Section Comparison"
+        enhancedCriteriaSectionComparison: "Enhanced Criteria Section Comparison",
+        strongAgreement: "Strong Agreement",
+        moderateAgreement: "Moderate Agreement",
+        substantialDisagreement: "Substantial Disagreement",
+        gradeAgreementAnalysis: "Grade Agreement Analysis",
+        agreementLevel: "Agreement Level",
+        detailedAgreementAnalysis: "Detailed Agreement Analysis",
+        gradeDiff: "Grade Difference",
+        gradeTable: "Grade Statistics Table",
+        works: "Works",
+        percentage: "Percentage",
+
+        similarityAgreementDistribution: "Similarity Agreement Distribution",
+        highAgreement: "High Agreement",
+        mediumAgreement: "Medium Agreement",
+        lowAgreement: "Low Agreement",
+        distribution: "Distribution",
+
+        weightingAdaptation: "Weighting Adaptation",
+        adapted: "Adapted",
+        equalWeights: "Equal Weights",
+        adaptedWeights: "adapted weights",
+        weightingStrategy: "Weighting Strategy",
+        weightingAdaptationDescription: "Analysis shows contrasting weighting strategies",
+        standardWeights: "Standard Weights",
+        section: "Section",
+        aiAverage: "AI Average",
+        humanAverage: "Human Average",
+        avgDifference: "Average Difference",
+
+        weightedContributionAnalysis: "Weighted Contribution Analysis",
+        weightedContributionDescription: "This analysis shows the average weighted contribution (score × weight) of each criterion to final grades. Higher contribution differences indicate criteria that most influence grade disagreements between AI and human evaluators.",
+        avgContributionDiff: "Avg. Contribution Difference",
+        contribution: "Contribution",
+        contributionDifference: "Contribution Difference",
+        avgContribution: "Avg. Contribution",
+        detailedContributionAnalysis: "Detailed Contribution Analysis"
     },
     criteriaSection: {
-        contentProcessing: "Professional Treatment",
-        scientificWork: "Scientific Working"
+        contentProcessing: "Technical and Conceptual Execution",
+        scientificWork: "Academic Work and Methodology"
     },
     metricsDescriptions: {
         cosineDescription: "Measures angle similarity between AI and human ratings (1.0 = identical, 0.0 = completely different)",
@@ -120,7 +156,7 @@ export const en = {
     metrics: {
         cosine: "Cosine Similarity",
         distance: "Euclidean Distance",
-        normalizedDistance: "Normalized Distance", // NEW
+        normalizedDistance: "Normalized Euclidean Distance", // NEW
         avgDifference: "Average Difference",
         maxDiff: "Max",
         minDiff: "Min",

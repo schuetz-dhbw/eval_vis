@@ -4,6 +4,7 @@ import CriteriaComparisonComponent from '../CriteriaComparisonComponent';
 import CriteriaSectionComparisonComponent from '../CriteriaSectionComparisonComponent';
 import InterpretationBox from '../InterpretationBox';
 import { ANALYSIS_TYPES } from '../../../constants/chartConstants';
+import WeightingAdaptationComponent from "../WeightingAdaptionComponent";
 
 const CriteriaAnalysisTab = ({ criteriaAverages, rawWorks }) => {
     const t = useTranslation();
@@ -38,6 +39,10 @@ const CriteriaAnalysisTab = ({ criteriaAverages, rawWorks }) => {
                     rawWorks={rawWorks}
                     analysisType={ANALYSIS_TYPES.DASHBOARD}
                 />
+            </div>
+
+            <div className="dashboard-container">
+                <WeightingAdaptationComponent works={rawWorks} />
             </div>
         </div>
     );

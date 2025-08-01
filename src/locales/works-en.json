@@ -40,29 +40,29 @@
     "theory_example": "Theoretical Elaboration, Exemplary Implementation"
   },
   "criteriaLabels": {
-    "professionalCompetence": "Professional Competence",
-    "useOfExpertise": "Use of Expertise",
-    "useMethods": "Use of Methods",
-    "feasibility": "Feasibility",
+    "professionalCompetence": "Subject-related Work",
+    "useOfExpertise": "Application of Expertise",
+    "useMethods": "Application of Methods and Tools",
+    "feasibility": "Feasibility and Practical Relevance of Results",
     "creativity": "Creativity",
-    "economic": "Economic Evaluation",
-    "independence": "Independence, Initiative",
+    "economic": "Economic Assessment",
+    "independence": "Independence and Initiative",
     "systematic": "Systematic Approach",
     "documentation": "Documentation",
-    "litResearch": "Literature Research",
-    "litUse": "Use of Literature"
+    "litResearch": "Literature Review",
+    "litUse": "Use and Integration of Sources"
   },
   "criteriaShortLabels": {
-    "professionalCompetence": "Prof. Competence",
-    "useOfExpertise": "Use of Expertise",
-    "useMethods": "Use of Methods",
+    "professionalCompetence": "Subj.-related Work",
+    "useOfExpertise": "Appl. of Expertise",
+    "useMethods": "Appl. of Methods",
     "feasibility": "Feasibility",
     "creativity": "Creativity",
-    "economic": "Economic Eval.",
+    "economic": "Economic Assess.",
     "independence": "Independence",
     "systematic": "Systematics",
     "documentation": "Documentation",
-    "litResearch": "Literature Research",
+    "litResearch": "Lit. Review",
     "litUse": "Use of Literature"
   }
 }

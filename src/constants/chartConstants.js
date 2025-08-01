@@ -5,6 +5,7 @@ export const CHART_TYPES = {
     BAR: 'bar',
     LINE: 'line',
     RADAR: 'radar',
+    PIE: 'pie',
     SCATTER: 'scatter',
     HEATMAP: 'heatmap',
     COMBINED: 'combined',

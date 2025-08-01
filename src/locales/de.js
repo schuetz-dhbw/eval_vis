@@ -103,7 +103,44 @@ export const de = {
         avgRelevanceRateDescription: "Prozentsatz der Bewertungen, bei denen sowohl KI als auch Mensch die Kriterien als relevant betrachteten",
         avgDisagreementRateDescription: "Prozentsatz der Bewertungen, bei denen sich die Gutachter über die Kriterienrelevanz uneinig waren",
 
-        enhancedCriteriaSectionComparison: "Erweiterte Kriterien-Bereichs-Vergleich"
+        enhancedCriteriaSectionComparison: "Erweiterte Kriterien-Bereichs-Vergleich",
+
+        strongAgreement: "Starke Übereinstimmung",
+        moderateAgreement: "Mittlere Übereinstimmung",
+        substantialDisagreement: "Erhebliche Meinungsverschiedenheit",
+        gradeAgreementAnalysis: "Bewertungsübereinstimmungs-Analyse",
+        agreementLevel: "Übereinstimmungsgrad",
+        detailedAgreementAnalysis: "Detaillierte Übereinstimmungsanalyse",
+        gradeDiff: "Notendifferenz",
+        gradeTable: "Noten-Statistiktabelle",
+        works: "Arbeiten",
+        percentage: "Prozentsatz",
+
+        similarityAgreementDistribution: "Ähnlichkeits-Übereinstimmungsverteilung",
+        highAgreement: "Hohe Übereinstimmung",
+        mediumAgreement: "Mittlere Übereinstimmung",
+        lowAgreement: "Niedrige Übereinstimmung",
+        distribution: "Verteilung",
+
+        weightingAdaptation: "Gewichtungsanpassung",
+        adapted: "Angepasst",
+        equalWeights: "Gleichgewichtung",
+        adaptedWeights: "angepasste Gewichtungen",
+        weightingStrategy: "Gewichtungsstrategie",
+        weightingAdaptationDescription: "Die Analyse zeigt unterschiedliche Gewichtungsstrategien",
+        standardWeights: "Standardgewichtungen",
+        section: "Bereich",
+        aiAverage: "KI Durchschnitt",
+        humanAverage: "Human Durchschnitt",
+        avgDifference: "Durchschnittliche Differenz",
+
+        weightedContributionAnalysis: "Gewichtete Beitragsanalyse",
+        weightedContributionDescription: "Diese Analyse zeigt den durchschnittlichen gewichteten Beitrag (Wert × Gewichtung) jedes Kriteriums zur Endnote. Höhere Beitragsdifferenzen zeigen Kriterien, die am meisten zu Notenunterschieden zwischen KI- und Human-Bewertungen beitragen.",
+        avgContributionDiff: "Ø Beitragsdifferenz",
+        contribution: "Beitrag",
+        contributionDifference: "Beitragsdifferenz",
+        avgContribution: "Ø Beitrag",
+        detailedContributionAnalysis: "Detaillierte Beitragsanalyse"
     },
     criteriaSection: {
         contentProcessing: "Inhaltliche Bearbeitung",
@@ -124,7 +161,7 @@ export const de = {
     metrics: {
         cosine: "Kosinus-Ähnlichkeit",
         distance: "Euklidische Distanz",
-        normalizedDistance: "Normalisierte Distanz", // NEW
+        normalizedDistance: "Normalisierte Euklidische Distanz", // NEW
         avgDifference: "Durchschnittliche Differenz",
         maxDiff: "Max",
         minDiff: "Min",
